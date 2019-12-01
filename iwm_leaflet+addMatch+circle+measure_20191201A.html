@@ -1,4 +1,4 @@
-<!-- Ver.20191201_1329 'U-2S' -->
+<!-- Ver.20191201_2036 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -475,7 +475,7 @@ option
 -------------*/
 #_GCircle
 {
-	background-color:rgba(0, 0, 0, 0.5);	
+	background-color:rgba(0, 0, 0, 0.5);
 	color:#fff;
 	font-size:8pt;
 	padding:0 0 0 4px;
@@ -622,7 +622,7 @@ function subInitDisp(){
 	with(obj1){
 		height = "20px";
 		left   = "0px";
-		top	= "0px";
+		top    = "0px";
 		width  = (mapW - 16) + "px";
 	}
 
@@ -631,7 +631,7 @@ function subInitDisp(){
 	with(obj2){
 		height = (mapH - 30) + "px";
 		left   = "0px";
-		top	= "26px";
+		top    = "26px";
 		width  = (mapW - 4) + "px";
 	}
 	obj1 = obj2 = null;
@@ -657,8 +657,8 @@ function subIwmInput_init(){
 }
 function subIwmInputZoomA_open(
 	$outputId, // [id]
-	$posX,	   // INT
-	$posY	   // INT
+	$posX,     // INT
+	$posY      // INT
 ){
 	subIwmInput_open("_InputZoomA", $outputId, $posX, $posY, true);
 }
@@ -795,8 +795,8 @@ function subIwmInputBL_keydown(
 function subIwmInput_open(
 	$inputId,   // [id]
 	$outputId,  // [id]
-	$posX,	    // iNT
-	$posY,	    // INT
+	$posX,      // iNT
+	$posY,      // INT
 	$autoHidden // BOOL
 ){
 	$IwmInput_ctrlId = $outputId;
@@ -1733,22 +1733,22 @@ function rtnCalcLatLngDistanceA(
 	$lng2
 ){
 	var rad01 = $lat1 / 180.0 * Math.PI;
-	var	rad11 = $lat2 / 180.0 * Math.PI;
+	var rad11 = $lat2 / 180.0 * Math.PI;
 
-	var r01 = Math.pow(Math.sin(rad01), 2);
+	var r01  = Math.pow(Math.sin(rad01), 2);
 	var m01  = $P1 * $A * (1 - $E) / Math.pow(1 - $E * r01, 1.5);
-	var	km01 = m01 * 3.6;
+	var km01 = m01 * 3.6;
 	var m02  = $P2 * $A * Math.cos(rad01) / Math.sqrt(1 - $E * r01);
-	var	km02 = m02 * 3.6;
+	var km02 = m02 * 3.6;
 
-	var r11 = Math.pow(Math.sin(rad11), 2);
+	var r11  = Math.pow(Math.sin(rad11), 2);
 	var m11  = $P1 * $A * (1 - $E) / Math.pow(1 - $E * r11, 1.5);
-	var	km11 = m11 * 3.6;
-	var	m12  = $P2 * $A * Math.cos(rad11) / Math.sqrt(1 - $E * r11);
-	var	km12 = m12 * 3.6;
+	var km11 = m11 * 3.6;
+	var m12  = $P2 * $A * Math.cos(rad11) / Math.sqrt(1 - $E * r11);
+	var km12 = m12 * 3.6;
 
-	var	diffLatKm = ($lat2 - $lat1) * ((km01 + km11) / 2);
-	var	diffLngKm = ($lng2 - $lng1) * ((km02 + km12) / 2);
+	var diffLatKm = ($lat2 - $lat1) * ((km01 + km11) / 2);
+	var diffLngKm = ($lng2 - $lng1) * ((km02 + km12) / 2);
 
 	return Math.sqrt(Math.pow(diffLatKm, 2) + Math.pow(diffLngKm, 2));
 }
@@ -2073,8 +2073,8 @@ function subAddTabCtrl(
 	$e.preventDefault();
 
 	var cursorPosition = $obj.selectionStart;
-	var cursorLeft	 = $obj.value.substr(0, cursorPosition);
-	var cursorRight	= $obj.value.substr(cursorPosition, $obj.value.length);
+	var cursorLeft  = $obj.value.substr(0, cursorPosition);
+	var cursorRight = $obj.value.substr(cursorPosition, $obj.value.length);
 
 	$obj.value = cursorLeft + "\t" + cursorRight;
 	$obj.selectionEnd = cursorPosition + 1;
@@ -2327,7 +2327,7 @@ function subAddTabCtrl(
 			img.onload = function(){
 				ctx.drawImage(this, 0, 0);
 				var rtnImg = ctx.getImageData(0, 0, 256, 256);
-				var	rtnImgData = rtnImg.data;
+				var rtnImgData = rtnImg.data;
 				// 透過画像を作成
 				for(var i = 0; i < rtnImgData.length; i+=4){
 					if(rtnImgData[i + 0] > 180 && rtnImgData[i + 1] > 180 && rtnImgData[i + 2] > 180){
@@ -2359,7 +2359,7 @@ function subAddTabCtrl(
 			img.onload = function(){
 				ctx.drawImage(this, 0, 0);
 				var rtnImg = ctx.getImageData(0, 0, 256, 256);
-				var	rtnImgData = rtnImg.data;
+				var rtnImgData = rtnImg.data;
 				// 透過画像を作成
 				for(var i = 0; i < rtnImgData.length; i+=4){
 					// 各カラーチャンネルで、一番暗い値を取得
