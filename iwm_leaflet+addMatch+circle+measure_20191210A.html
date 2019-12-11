@@ -1,4 +1,4 @@
-<!-- Ver.20191210_1210 'U-2S' -->
+<!-- Ver.20191211_1345 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -991,7 +991,7 @@ function cnvIBLto10(
 	return ($d1 + (($d2 * 60.0) + $d3) / 3600.0);
 }
 function cnv10toIBL(
-	$d1 // 度分秒10進法
+	$d1 // 十進法
 ){
 	try{
 		$d1 = parseFloat($d1);
@@ -1003,18 +1003,16 @@ function cnv10toIBL(
 		///console.log(e);
 		$d1 = 0.0;
 	}
-	var a1 = [];
-	a1[0] = ($d1 | 0);
-		$d1 = ($d1 % 1) * 60;
-	a1[1] = ($d1 | 0);
-		$d1 -= a1[1];
-	a1[2] = ($d1 * 60.0).toFixed(5);
-
-	if((a1[2] | 0) >= 60){
-		a1[1] += 1;
-		a1[2] = (a1[2] % 1).toFixed(5);
+	var deg = parseInt($d1, 10);
+		$d1 = ($d1 - deg) * 60.0;
+	var min = parseInt($d1, 10);
+		$d1 -= min;
+	var sec = ($d1 * 60.0);
+	if(sec >= 60.0){
+		min += 1;
 	}
-	return a1;
+	///console.log([deg, min, sec]);
+	return [deg, min, sec];
 }
 /*-------------
 // エイリアス
