@@ -1834,23 +1834,34 @@ function rtnCalcLatLngPobDist(
 	var dLamda;
 	var count = 0;
 
+	var sinLamda  = 0.0;
+	var cosLamda  = 0.0;
+	var sin2sigma = 0.0;
+	var sinSigma  = 0.0;
+	var cosSigma  = 0.0;
+	var sigma     = 0.0;
+	var sinAlpha  = 0.0;
+	var cos2alpha = 0.0;
+	var cos2sm    = 0.0;
+	var C = 0.0;
+
 	do{
-		var sinLamda = Math.sin(lamda);
-		var cosLamda = Math.cos(lamda);
-		var sin2sigma = (cosU2 * sinLamda) * (cosU2 * sinLamda) + (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda);
+		sinLamda = Math.sin(lamda);
+		cosLamda = Math.cos(lamda);
+		sin2sigma = (cosU2 * sinLamda) * (cosU2 * sinLamda) + (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda);
 		if(sin2sigma < 0){
-			return 0;
+			return [0, 0];
 		}
-		var sinSigma = Math.sqrt(sin2sigma);
-		var cosSigma = sinU1 * sinU2 + cosU1 * cosU2 * cosLamda;
-		var sigma = Math.atan2(sinSigma, cosSigma);
-		var sinAlpha = cosU1 * cosU2 * sinLamda / sinSigma;
-		var cos2alpha = 1 - sinAlpha * sinAlpha;
-		var cos2sm = cosSigma - 2 * sinU1 * sinU2 / cos2alpha;
+		sinSigma = Math.sqrt(sin2sigma);
+		cosSigma = sinU1 * sinU2 + cosU1 * cosU2 * cosLamda;
+		sigma = Math.atan2(sinSigma, cosSigma);
+		sinAlpha = cosU1 * cosU2 * sinLamda / sinSigma;
+		cos2alpha = 1 - sinAlpha * sinAlpha;
+		cos2sm = cosSigma - 2 * sinU1 * sinU2 / cos2alpha;
 		if(isNaN(cos2sm)){
 			cos2sm = 0;
 		}
-		var C = $F / 16 * cos2alpha * (4 + $F * (4 - 3 * cos2alpha));
+		C = $F / 16 * cos2alpha * (4 + $F * (4 - 3 * cos2alpha));
 		dLamda = lamda;
 		lamda = omega + (1 - C) * $F * sinAlpha * (sigma + C * sinSigma * (cos2sm + C * cosSigma * (-1 + 2 * cos2sm * cos2sm)));
 		if(count++ > 10){
