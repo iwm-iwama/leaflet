@@ -1,4 +1,4 @@
-<!-- Ver.20191211_1345 'U-2S' -->
+<!-- Ver.20191212_1050 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -1796,7 +1796,7 @@ function rtnCalcLatLngDistance(
 	$lat2,
 	$lng2
 ){
-	return rtnCalcLatLngPobDist($lat1, $lng1, $lat2, $lng2)[1] / 1000.0;
+	return rtnCalcLatLngPobDist($lat1, $lng1, $lat2, $lng2)[0] / 1000.0; // m => km
 }
 /*-------------------------------
 // Vincenty法による２点間の距離
@@ -1841,7 +1841,7 @@ function rtnCalcLatLngPobDist(
 	var sinAlpha  = 0.0;
 	var cos2alpha = 0.0;
 	var cos2sm    = 0.0;
-	var C = 0.0;
+	var c = 0.0;
 
 	do{
 		sinLamda = Math.sin(lamda);
@@ -1859,23 +1859,22 @@ function rtnCalcLatLngPobDist(
 		if(isNaN(cos2sm)){
 			cos2sm = 0;
 		}
-		C = $F / 16 * cos2alpha * (4 + $F * (4 - 3 * cos2alpha));
+		c = $F / 16 * cos2alpha * (4 + $F * (4 - 3 * cos2alpha));
 		dLamda = lamda;
-		lamda = omega + (1 - C) * $F * sinAlpha * (sigma + C * sinSigma * (cos2sm + C * cosSigma * (-1 + 2 * cos2sm * cos2sm)));
+		lamda = omega + (1 - c) * $F * sinAlpha * (sigma + c * sinSigma * (cos2sm + c * cosSigma * (-1 + 2 * cos2sm * cos2sm)));
 		if(count++ > 10){
 			break;
 		}
 	}while(Math.abs(lamda - dLamda) > 1e-12);
 
 	var u2 = cos2alpha * (1 - f1 * f1) / (f1 * f1);
-	var A = 1 + u2 / 16384 * (4096 + u2 * (-768 + u2 * (320 - 175 * u2)));
-	var B = u2 / 1024 * (256 + u2 * (-128 + u2 * (74 - 47 * u2)));
-	var dSigma = B * sinSigma * (cos2sm + B / 4 * (cosSigma * (-1 + 2 * cos2sm * cos2sm) - B / 6 * cos2sm * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2sm * cos2sm)));
+	var a = 1 + u2 / 16384 * (4096 + u2 * (-768 + u2 * (320 - 175 * u2)));
+	var b = u2 / 1024 * (256 + u2 * (-128 + u2 * (74 - 47 * u2)));
+	var dSigma = b * sinSigma * (cos2sm + b / 4 * (cosSigma * (-1 + 2 * cos2sm * cos2sm) - b / 6 * cos2sm * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2sm * cos2sm)));
 	var alpha12 = Math.atan2(cosU2 * sinLamda, cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * 180 / Math.PI;
-	var dist =  $B * A * (sigma - dSigma);
+	var dist =  $B * a * (sigma - dSigma);
 
-	///console.log([alpha12, dist]);
-	return [alpha12, dist];
+	return [dist, alpha12];
 }
 /*---------------------------
 // BL座標をタイル座標に変換
