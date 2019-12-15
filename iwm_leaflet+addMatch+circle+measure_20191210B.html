@@ -1,4 +1,4 @@
-<!-- Ver.20191212_1942 'U-2S' -->
+<!-- Ver.20191215_0054 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -839,7 +839,7 @@ function subIwmInputBL_keydown(
 		switch(evt.keyCode){
 			case(13): // [Enter]
 				var obj = document.getElementById($outputId);
-					var d1 = rtnIwmInput_parse(obj.value, true);
+					var d1 = parseFloat(obj.value).toFixed(8);
 				obj.value = d1;
 				obj = null;
 
@@ -950,34 +950,6 @@ function subIwmInput_del(){
 		}
 	obj = null;
 }
-function rtnIwmInput_parse(
-	$str,   // STR
-	$bFloat // true=DBL／false=INT／null=無視／Num=有効小数桁
-){
-	// 数値化
-	switch($bFloat){
-		// Double
-		case(true):
-			$str = parseFloat($str);
-		break;
-		// Int
-		case(false):
-			$str = parseInt($str, 10);
-		break;
-		// 無視
-		case(null):
-			;
-		break;
-		// 有効小数桁(切捨て)
-		default:
-			var i1 = parseInt($bFloat, 10);
-			if(i1 >= 0){
-				$str = parseFloat($str).toFixed(i1);
-			}
-		break;
-	}
-	return (isNaN($str) ? 0 : $str);
-}
 function cnvIBLto10(
 	$d1, // 度
 	$d2, // 分
@@ -1016,13 +988,13 @@ function _iwmIBL(
 	if(isNaN($d1)){
 		$d1 = document.getElementById($d1).value;
 	}
-	_a1 = cnv10toIBL($d1);
+	var a1 = cnv10toIBL($d1);
 	var i1 = 0;
-	var i2 = _a1.length;
-	for(; i1 < i2; i1++){
-		document.getElementById($AryIwmIBL[i1]).value = _a1[i1];
-	}
-	_a1 = null;
+	var i2 = a1.length;
+
+	document.getElementById($AryIwmIBL[0]).value = a1[0];
+	document.getElementById($AryIwmIBL[1]).value = a1[1];
+	document.getElementById($AryIwmIBL[2]).value = a1[2].toFixed(8);
 }
 // ベースマーカー再描画
 function _iwmBMN(){
@@ -1418,8 +1390,8 @@ function subMapToPoint(
 	var i1 = 0;
 	var i2 = aSM.length;
 	for(; i1 < i2; i1++){
-		s1 += aSM[i1]._latlng.lat.toFixed(6) + "\t";
-		s1 += aSM[i1]._latlng.lng.toFixed(6) + "\t";
+		s1 += aSM[i1]._latlng.lat.toFixed(8) + "\t";
+		s1 += aSM[i1]._latlng.lng.toFixed(8) + "\t";
 		s1 += aSM[i1].options.title + "\n";
 	}
 
@@ -1427,8 +1399,8 @@ function subMapToPoint(
 	var i1 = 0;
 	var i2 = aLM.length;
 	for(; i1 < i2; i1++){
-		s1 += aLM[i1]._latlng.lat.toFixed(6) + "\t";
-		s1 += aLM[i1]._latlng.lng.toFixed(6) + "\t";
+		s1 += aLM[i1]._latlng.lat.toFixed(8) + "\t";
+		s1 += aLM[i1]._latlng.lng.toFixed(8) + "\t";
 		s1 += aLM[i1].options.title + "\n";
 	}
 	document.getElementById($textareaId).value += s1;
@@ -1496,8 +1468,8 @@ function subM2P_Geocoding(
 					var a3 = aJson[0].geometry.coordinates;
 					var tmp = a3[0]; a3[0] = a3[1]; a3[1] = tmp;
 
-					a3[0] = a3[0].toFixed(6);
-					a3[1] = a3[1].toFixed(6);
+					a3[0] = a3[0].toFixed(8);
+					a3[1] = a3[1].toFixed(8);
 
 					s1 += a3.join("\t") + "\t" + a1[i1];
 				}
@@ -1576,12 +1548,6 @@ function subM2P_PointToMap(
 				$lngOld = a2[1];
 			}
 			else{
-				$iKm = rtnCalcLatLngDistance(
-					$latOld,
-					$lngOld,
-					a2[0],
-					a2[1]
-				);
 				$latOld = a2[0];
 				$lngOld = a2[1];
 			}
@@ -1708,8 +1674,8 @@ function subChangeUrl(
 		}
 	}
 	with(document){
-		getElementById("_NaviLat").value  = $Lat;
-		getElementById("_NaviLng").value  = $Lng;
+		getElementById("_NaviLat").value  = parseFloat($Lat).toFixed(8);
+		getElementById("_NaviLng").value  = parseFloat($Lng).toFixed(8);
 		getElementById("_NaviZoom").value = $Zoom;
 	}
 	// URL置換
@@ -1779,26 +1745,16 @@ function subM2P_GCircle(
 		$AryM2P_Circle[i1].addTo($Map);
 	}
 }
-/*-----------------
-// 経緯度間の距離
------------------*/
-function rtnCalcLatLngDistance(
-	$lat1,
-	$lng1,
-	$lat2,
-	$lng2
-){
-	return rtnCalcLatLngPobDist($lat1, $lng1, $lat2, $lng2)[0] / 1000.0; // m => km
-}
 /*-------------------------------
 // Vincenty法による２点間の距離
 -------------------------------*/
 /*【参考】
 	http://tancro.e-central.tv/grandmaster/script/vincentyJS.html
 */
-$A = 6378137.0;
-$B = 6356752.314;
-$F = 1 / 298.257222101;
+$A   = 6378137.0;
+$B   = 6356752.314;
+$F   = 1 / 298.257222101;
+$RAD = Math.PI / 180.0
 
 function rtnCalcLatLngPobDist(
 	$lat1,
@@ -1806,10 +1762,19 @@ function rtnCalcLatLngPobDist(
 	$lat2,
 	$lng2
 ){
-	var latR1 = $lat1 / 180 * Math.PI;
-	var lngR1 = $lng1 / 180 * Math.PI;
-	var latR2 = $lat2 / 180 * Math.PI;
-	var lngR2 = $lng2 / 180 * Math.PI;
+	$lat1 = parseFloat($lat1);
+	$lng1 = parseFloat($lng1);
+	$lat2 = parseFloat($lat2);
+	$lng2 = parseFloat($lng2);
+
+	if ($lat1 == $lat2 && $lng1 == $lng2){
+		return [0, 0];
+	}
+
+	var latR1 = $lat1 * $RAD;
+	var lngR1 = $lng1 * $RAD;
+	var latR2 = $lat2 * $RAD;
+	var lngR2 = $lng2 * $RAD;
 
 	var f1 = 1 - $F;
 
@@ -1865,6 +1830,12 @@ function rtnCalcLatLngPobDist(
 	var dSigma = b * sinSigma * (cos2sm + b / 4 * (cosSigma * (-1 + 2 * cos2sm * cos2sm) - b / 6 * cos2sm * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2sm * cos2sm)));
 	var alpha12 = Math.atan2(cosU2 * sinLamda, cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * 180 / Math.PI;
 	var dist =  $B * a * (sigma - dSigma);
+
+	// 変換
+	if(alpha12 < 0){
+		alpha12 += 360.0; // "度"
+	}
+	dist /= 1000.0; // "m" => "km"
 
 	return [dist, alpha12];
 }
@@ -1999,10 +1970,10 @@ function rtnMarkerPopup1(
 		null
 	);
 	a1 = cnv10toIBL($lat);
-	var latRem = a1[0] + "度" + a1[1] + "分" + parseFloat(a1[2]).toFixed(3) + "秒";
+	var latRem = a1[0] + "度" + a1[1] + "分" + parseFloat(a1[2]).toFixed(6) + "秒";
 
 	a1 = cnv10toIBL($lng);
-	var lngRem = a1[0] + "度" + a1[1] + "分" + parseFloat(a1[2]).toFixed(3) + "秒";
+	var lngRem = a1[0] + "度" + a1[1] + "分" + parseFloat(a1[2]).toFixed(6) + "秒";
 
 	a1 = null;
 
@@ -2037,19 +2008,46 @@ function rtnMarkerPopup2(
 		null
 	);
 	a1 = cnv10toIBL($latTo);
-	var latRem = a1[0] + "度" + a1[1] + "分" + parseFloat(a1[2]).toFixed(3) + "秒";
+	var latRem = a1[0] + "度" + a1[1] + "分" + parseFloat(a1[2]).toFixed(6) + "秒";
 
 	a1 = cnv10toIBL($lngTo);
-	var lngRem = a1[0] + "度" + a1[1] + "分" + parseFloat(a1[2]).toFixed(3) + "秒";
+	var lngRem = a1[0] + "度" + a1[1] + "分" + parseFloat(a1[2]).toFixed(6) + "秒";
 
 	a1 = null;
 
 	var elevation = "---";
 
-	var latLngRem = rtnCompass16($latFrom, $lngFrom, $latTo, $lngTo);
-	var d1 = rtnCalcLatLngDistance($latFrom, $lngFrom, $latTo, $lngTo);
+	var ad1 = rtnCalcLatLngPobDist($latFrom, $lngFrom, $latTo, $lngTo);
 
-	var distRem = d1.toFixed(3) + "km";
+	var distRem  = ad1[0].toFixed(4) + "km";
+
+	var angleRem = "";
+	var d2 = ad1[1].toFixed(4);
+	if(d2 >= 337.5 || d2 <= 22.5){
+		angleRem = "北";
+	}
+	else if(d2 > 22.5 && d2 < 67.5){
+		angleRem = "北東";
+	}
+	else if(d2 >= 67.5 && d2 <= 112.5){
+		angleRem = "東";
+	}
+	else if(d2 > 112.5 && d2 < 157.5){
+		angleRem = "南東";
+	}
+	else if(d2 >= 157.5 && d2 <= 202.5){
+		angleRem = "南";
+	}
+	else if(d2 > 202.5 && d2 < 247.5){
+		angleRem = "南西";
+	}
+	else if(d2 >= 247.5 && d2 <= 292.5){
+		angleRem = "西";
+	}
+	else if(d2 > 292.5 && d2 < 337.5){
+		angleRem = "北西";
+	}
+	angleRem += d2 + "度";
 
 	var elevation = "---";
 
@@ -2062,53 +2060,8 @@ function rtnMarkerPopup2(
 		"<font color='#3d7cce'>北緯</font>" + latRem + "／" + $latTo.toFixed(6) + "<br>" + 
 		"<font color='#3d7cce'>東経</font>" + lngRem + "／" + $lngTo.toFixed(6) + "<br>" + 
 		"<font color='#3d7cce'>標高</font>" + elevation + "<br>" +
-		"<font color='#3d7cce'>距離</font>" + distRem + " " + latLngRem
+		"<font color='#3d7cce'>距離</font>" + distRem + "／" + angleRem
 	);
-}
-/*---------------
-// 16方位を返す
----------------*/
-function rtnCompass16(
-	$latFrom,
-	$lngFrom,
-	$latTo,
-	$lngTo
-){
-	var NS = parseFloat($latTo - $latFrom);
-	var EW = parseFloat($lngTo - $lngFrom);
-
-	var rtn = null;
-
-	var d2 = Math.atan2(EW, NS)/(Math.PI / 180); // 度
-	if(d2 < 0){
-		d2 += 360;
-	}
-
-	if(d2 >= 337.5 || d2 <= 22.5){
-		rtn = "北";
-	}
-	else if(d2 > 22.5 && d2 < 67.5){
-		rtn = "北東";
-	}
-	else if(d2 >= 67.5 && d2 <= 112.5){
-		rtn = "東";
-	}
-	else if(d2 > 112.5 && d2 < 157.5){
-		rtn = "南東";
-	}
-	else if(d2 >= 157.5 && d2 <= 202.5){
-		rtn = "南";
-	}
-	else if(d2 > 202.5 && d2 < 247.5){
-		rtn = "南西";
-	}
-	else if(d2 >= 247.5 && d2 <= 292.5){
-		rtn = "西";
-	}
-	else if(d2 > 292.5 && d2 < 337.5){
-		rtn = "北西";
-	}
-	return rtn + d2.toFixed(2) + "°";
 }
 /*------------------------------------
 // [マーカー削除]ボタン 表示／非表示
@@ -2294,8 +2247,8 @@ function subAddTabCtrl(
 
 		// _divNaviCommander 初期座標＠皇居
 		with(document){
-			getElementById("_NaviLat").value  = 35.68518697509636;
-			getElementById("_NaviLng").value  = 139.7522735595703;
+			getElementById("_NaviLat").value  = (35.68518697509636).toFixed(8);
+			getElementById("_NaviLng").value  = (139.7522735595703).toFixed(8);
 			getElementById("_NaviZoom").value = 5;
 		}
 		// URLからXYZ値を取得
@@ -2308,8 +2261,8 @@ function subAddTabCtrl(
 			var aHash = hash.split("/");
 			with(document){
 				getElementById("_NaviZoom").value = aHash[0].substr(1); // 先頭の'#'より後
-				getElementById("_NaviLat").value  = aHash[1];
-				getElementById("_NaviLng").value  = aHash[2];
+				getElementById("_NaviLat").value  = parseFloat(aHash[1]).toFixed(8);
+				getElementById("_NaviLng").value  = parseFloat(aHash[2]).toFixed(8);
 			}
 		}
 
