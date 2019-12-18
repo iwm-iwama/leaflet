@@ -1,12 +1,12 @@
-#!ruby
-#coding:utf-8
+#!julia
+# > julia -O3 geo.jl
 
 #---------------------------------------------------------------------
 # [北緯1]	[東経1]	[北緯2]	[東経2]	[その他]
 #---------------------------------------------------------------------
 # 十進法 ddd.d...
 #---------------------------------------------------------------------
-$data1 = <<'EOD' # 非展開
+Data1 = """
 35.685187	139.752274	45.416799	141.677155	皇居～稚内駅
 35.685187	139.752274	43.385277	145.816641	皇居～納沙布岬
 35.685187	139.752274	43.068637	141.350784	皇居～札幌駅
@@ -39,45 +39,41 @@ $data1 = <<'EOD' # 非展開
 35.685187	139.752274	24.192485	123.556720	皇居～中御神島
 35.685187	139.752274	24.059749	123.805554	皇居～波照間空港
 35.685187	139.752274	20.423690	136.075829	皇居～沖ノ鳥島
-EOD
+"""
 #---------------------------------------------------------------------
 # 度分秒 dddmmss.s...
 #---------------------------------------------------------------------
-$data2 = <<'EOD' # 非展開
+Data2 = """
 354106.6732	1394508.1864	240335.0964	1234819.9944	皇居～波照間空港
 354106.6732	1394508.1864	202525.284	1360432.9844	皇居～沖ノ鳥島
-EOD
+"""
 #---------------------------------------------------------------------
-
-Signal.trap(:INT) do
-	exit
-end
 
 #-------------------
 # 度分秒 => 十進法
 #-------------------
 #【使用例】
-#	printf("%f度\n", rtnGeoIBLto10A(24, 26, 58.495200))
+#	using Printf
+#	@printf("%f度\n", rtnGeoIBLto10A(24, 26, 58.495200))
 #
-def rtnGeoIBLto10A(
-	deg, # 度
-	min, # 分
-	sec  # 秒
+function rtnGeoIBLto10A(
+	deg::Int64,  # 度
+	min::Int64,  # 分
+	sec::Float64 # 秒
 )
-	deg, min, sec = deg.to_f, min.to_f, sec.to_f
 	return deg + min / 60.0 + sec / 3600.0
 end
 #-------------------
 #【使用例】
-#	printf("%f度\n", rtnGeoIBLto10B(242658.495200))
+#	using Printf
+#	@printf("%f度\n", rtnGeoIBLto10B(242658.495200))
 #
-def rtnGeoIBLto10B(
-	ddmmss # ddmmss.s...
+function rtnGeoIBLto10B(
+	ddmmss::Float64 # ddmmss.s...
 )
-	ddmmss = ddmmss.to_f
 	sec = ddmmss % 100
-	min = ((ddmmss / 100).to_i) % 100
-	deg = (ddmmss / 10000).to_i
+	min = Int64(floor(ddmmss / 100)) % 100
+	deg = Int64(floor(ddmmss / 10000))
 	return deg +  min / 60.0 + sec / 3600.0
 end
 
@@ -85,19 +81,18 @@ end
 # 十進法 => 度分秒
 #-------------------
 #【使用例】
+#	using Printf
 #	deg, min, sec = rtnGeo10toIBL(24.449582)
-#	printf("%d度%d分%f秒\n", deg, min, sec)
+#	@printf("%d度%d分%f秒\n", deg, min, sec)
 #
-def rtnGeo10toIBL(
-	angle # 十進法
+function rtnGeo10toIBL(
+	angle::Float64 # 十進法
 )
-	angle = angle.to_f
-
-	deg = angle.to_i
+	deg = Int64(floor(angle))
 		angle = (angle - deg) * 60.0
-	min = angle.to_i
+	min = Int64(floor(angle))
 		angle -= min
-	sec = angle.to_f * 60.0
+	sec = angle * 60.0
 
 	# 0.999... * 60 => 60.0 対策
 	if sec == 60.0
@@ -105,52 +100,48 @@ def rtnGeo10toIBL(
 		sec = 0
 	end
 
-	return [deg.to_i, min.to_i, sec.to_f]
+	return (deg, min, sec)
 end
 
 #-------------------------------
 # Vincenty法による２点間の距離
 #-------------------------------
 #【参考】
-#	http:#tancro.e-central.tv/grandmaster/script/vincentyJS.html
+#	http://tancro.e-central.tv/grandmaster/script/vincentyJS.html
 #
 #【使用例】
+#	using Printf
 #	dist, angle = rtnGeoVincentry(35.685187, 139.752274, 24.449582, 122.93434)
-#	printf("%fkm %f度\n", dist, angle)
+#	@printf("%fkm %f度\n", dist, angle)
 #
-$A   = 6378137.0
-$B   = 6356752.314
-$F   = (1 / 298.257222101)
-$RAD = Math::PI / 180.0
+const A   = 6378137.0
+const B   = 6356752.314
+const F   = (1 / 298.257222101)
+const RAD = pi / 180.0
 
-def rtnGeoVincentry(
-	lat1, # 開始～緯度
-	lng1, # 開始～経度
-	lat2, # 終了～緯度
-	lng2  # 終了～経度
+function rtnGeoVincentry(
+	lat1::Float64, # 開始～緯度
+	lng1::Float64, # 開始～経度
+	lat2::Float64, # 終了～緯度
+	lng2::Float64  # 終了～経度
 )
-	lat1 = lat1.to_f
-	lng1 = lng1.to_f
-	lat2 = lat2.to_f
-	lng2 = lng2.to_f
-
 	if lat1 == lat2 && lng1 == lng2
-		return [0, 0]
+		return (0, 0)
 	end
 
-	latR1 = lat1 * $RAD
-	lngR1 = lng1 * $RAD
-	latR2 = lat2 * $RAD
-	lngR2 = lng2 * $RAD
+	latR1 = lat1 * RAD
+	lngR1 = lng1 * RAD
+	latR2 = lat2 * RAD
+	lngR2 = lng2 * RAD
 
-	f1 = 1 - $F
+	f1 = 1 - F
 
 	omega  = lngR2 - lngR1
-	tanU1  = f1 * Math.tan(latR1)
-	cosU1  = 1 / Math.sqrt(1 + (tanU1 * tanU1))
+	tanU1  = f1 * tan(latR1)
+	cosU1  = 1 / sqrt(1 + (tanU1 * tanU1))
 	sinU1  = tanU1 * cosU1
-	tanU2  = f1 * Math.tan(latR2)
-	cosU2  = 1 / Math.sqrt(1 + (tanU2 * tanU2))
+	tanU2  = f1 * tan(latR2)
+	cosU2  = 1 / sqrt(1 + (tanU2 * tanU2))
 	sinU2  = tanU2 * cosU2
 	lamda  = omega
 	dLamda = 0.0
@@ -169,73 +160,93 @@ def rtnGeoVincentry(
 	count = 0
 
 	while true
-		sinLamda = Math.sin(lamda)
-		cosLamda = Math.cos(lamda)
+		sinLamda = sin(lamda)
+		cosLamda = cos(lamda)
 		sin2sigma = (cosU2 * sinLamda) * (cosU2 * sinLamda) + (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda)
 		if sin2sigma < 0.0
-			return [0, 0]
+			return (0, 0)
 		end
-		sinSigma = Math.sqrt(sin2sigma)
+		sinSigma = sqrt(sin2sigma)
 		cosSigma = sinU1 * sinU2 + cosU1 * cosU2 * cosLamda
-		sigma = Math.atan2(sinSigma, cosSigma)
+
+		sigma = atan(sinSigma, cosSigma)
+
 		sinAlpha = cosU1 * cosU2 * sinLamda / sinSigma
 		cos2alpha = 1 - sinAlpha * sinAlpha
 		cos2sm = cosSigma - 2 * sinU1 * sinU2 / cos2alpha
-		if !cos2sm
+		if cos2sm == 0
 			cos2sm = 0
 		end
-		c = $F / 16 * cos2alpha * (4 + $F * (4 - 3 * cos2alpha))
+		c = F / 16 * cos2alpha * (4 + F * (4 - 3 * cos2alpha))
 		dLamda = lamda
-		lamda = omega + (1 - c) * $F * sinAlpha * (sigma + c * sinSigma * (cos2sm + c * cosSigma * (-1 + 2 * cos2sm * cos2sm)))
+		lamda = omega + (1 - c) * F * sinAlpha * (sigma + c * sinSigma * (cos2sm + c * cosSigma * (-1 + 2 * cos2sm * cos2sm)))
 
-		break if (count += 1) > 10 || (lamda - dLamda).abs <= 1e-12
+		if (count += 1) > 10 || abs(lamda - dLamda) <= 1e-12
+			break 
+		end
 	end
 
 	u2 = cos2alpha * (1 - f1 * f1) / (f1 * f1)
+
 	a = 1 + u2 / 16384 * (4096 + u2 * (-768 + u2 * (320 - 175 * u2)))
 	b = u2 / 1024 * (256 + u2 * (-128 + u2 * (74 - 47 * u2)))
 	dSigma = b * sinSigma * (cos2sm + b / 4 * (cosSigma * (-1 + 2 * cos2sm * cos2sm) - b / 6 * cos2sm * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2sm * cos2sm)))
-	alpha12 = Math.atan2(cosU2 * sinLamda, cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * 180 / Math::PI
-	dist = $B * a * (sigma - dSigma)
+	alpha12 = atan(cosU2 * sinLamda, cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * 180 / pi
+	dist = B * a * (sigma - dSigma)
 
 	# 変換
-	alpha12 += 360.0 if alpha12 < 0 # 360度表記
+	if alpha12 < 0
+		alpha12 += 360.0 # 360度表記
+	end
 	dist /= 1000.0 # m => km
 
-	return [dist.to_f, alpha12.to_f]
+	return (dist, alpha12)
 end
 
 #---------
 # main()
 #---------
-Separater = " "
+using Printf
+
+const CRLF = "\r\n"
+const Separater = " "
 
 #---------------
 # 計算／十進法
 #---------------
-def main_data1()
-	$data1.split("\n").each do
-		|_s|
-		_s.strip!
+function main_data1()
+	as1 = split(Data1, "\n")
 
-		if _s.size > 0
-			_s.gsub!(/[\t\s,]+/, Separater)
-			puts _s
+	for _s1 in as1
+		_s1 = strip(_s1)
 
-			lat1, lng1, lat2, lng2 = _s.split(Separater)
-			as1 = []
 
-			[lat1, lng1, lat2, lng2].each do
-				|_s|
-				deg, min, sec = rtnGeo10toIBL(_s)
-				as1 << sprintf("%d度%d分%f秒", deg, min, sec)
+		if length(_s1) > 0
+			_s1 = replace(_s1, r"[\t\s,]+" => Separater)
+			@printf("%s%s", _s1, CRLF)
+
+			_ad1 = split(_s1, Separater)
+				lat1 = lng1 = lat2 = lng2 = 0.0
+			try
+				lat1 = parse(Float64, _ad1[1])
+				lng1 = parse(Float64, _ad1[2])
+				lat2 = parse(Float64, _ad1[3])
+				lng2 = parse(Float64, _ad1[4])
+			catch
 			end
-			puts as1.join(Separater)
+
+			_as1 = []
+
+			for _d1 in [lat1, lng1, lat2, lng2]
+				deg, min, sec = rtnGeo10toIBL(_d1)
+				push!(_as1, @sprintf("%d度%d分%f秒", deg, min, sec))
+			end
+			@printf("%s%s", join(_as1, Separater), CRLF)
 
 			dist, angle = rtnGeoVincentry(lat1, lng1, lat2, lng2)
-			printf("%fkm%s%f度\n", dist, Separater, angle)
+			@printf("%fkm %f度%s", dist, angle, CRLF)
 
-			puts
+			@printf("%s", CRLF)
 		end
 	end
 end
@@ -243,30 +254,40 @@ end
 #---------------
 # 計算／度分秒
 #---------------
-def main_data2()
-	$data2.split("\n").each do
-		|_s|
-		_s.strip!
+function main_data2()
+	as1 = split(Data2, "\n")
 
-		if _s.size > 0
-			_s.gsub!(/[\t\s,]+/, Separater)
-			puts _s
+	for _s1 in as1
+		_s1 = strip(_s1)
 
-			lat1, lng1, lat2, lng2 = _s.split(Separater)
-			aLatLng = []
-			as1 = []
+		if length(_s1) > 0
+			_s1 = replace(_s1, r"[\t\s,]+" => Separater)
+			@printf("%s%s", _s1, CRLF)
 
-			[lat1, lng1, lat2, lng2].each do
-				|_s|
-				aLatLng << _deg = rtnGeoIBLto10B(_s)
-				as1 << sprintf("%f度", _deg)
+			_ad1 = split(_s1, Separater)
+				lat1 = lng1 = lat2 = lng2 = 0.0
+			try
+				lat1 = parse(Float64, _ad1[1])
+				lng1 = parse(Float64, _ad1[2])
+				lat2 = parse(Float64, _ad1[3])
+				lng2 = parse(Float64, _ad1[4])
+			catch
 			end
-			puts as1.join(Separater)
 
-			dist, angle = rtnGeoVincentry(aLatLng[0], aLatLng[1], aLatLng[2], aLatLng[3])
-			printf("%fkm%s%f度\n", dist, Separater, angle)
+			_aLatLng = []
+			_as1 = []
 
-			puts
+			for _d1 in [lat1, lng1, lat2, lng2]
+				angle = rtnGeoIBLto10B(_d1)
+				push!(_aLatLng, angle)
+				push!(_as1, @sprintf("%f度", angle))
+			end
+			@printf("%s%s", join(_as1, Separater), CRLF)
+
+			dist, angle = rtnGeoVincentry(_aLatLng[1], _aLatLng[2], _aLatLng[3], _aLatLng[4])
+			@printf("%fkm %f度%s", dist, angle, CRLF)
+
+			@printf("%s", CRLF)
 		end
 	end
 end
