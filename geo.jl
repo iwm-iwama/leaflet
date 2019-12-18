@@ -61,7 +61,7 @@ function rtnGeoIBLto10A(
 	min::Int64,  # 分
 	sec::Float64 # 秒
 )
-	return deg + min / 60.0 + sec / 3600.0
+	return (deg + min / 60.0 + sec / 3600.0)::Float64
 end
 #-------------------
 #【使用例】
@@ -72,9 +72,9 @@ function rtnGeoIBLto10B(
 	ddmmss::Float64 # ddmmss.s...
 )
 	sec = ddmmss % 100
-	min = Int64(floor(ddmmss / 100)) % 100
-	deg = Int64(floor(ddmmss / 10000))
-	return deg +  min / 60.0 + sec / 3600.0
+	min = floor(ddmmss / 100) % 100
+	deg = floor(ddmmss / 10000)
+	return (deg +  min / 60.0 + sec / 3600.0)::Float64
 end
 
 #-------------------
@@ -100,7 +100,7 @@ function rtnGeo10toIBL(
 		sec = 0
 	end
 
-	return (deg, min, sec)
+	return (deg::Int64, min::Int64, sec::Float64)
 end
 
 #-------------------------------
@@ -200,7 +200,7 @@ function rtnGeoVincentry(
 	end
 	dist /= 1000.0 # m => km
 
-	return (dist, alpha12)
+	return (dist::Float64, alpha12::Float64)
 end
 
 #---------
