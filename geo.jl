@@ -52,7 +52,7 @@ Data2 = """
 #-------------------
 # 度分秒 => 十進法
 #-------------------
-#【使用例】
+# (例)
 #	using Printf
 #	@printf("%f度\n", rtnGeoIBLto10A(24, 26, 58.495200))
 #
@@ -64,7 +64,7 @@ function rtnGeoIBLto10A(
 	return (deg + min / 60.0 + sec / 3600.0)::Float64
 end
 #-------------------
-#【使用例】
+# (例)
 #	using Printf
 #	@printf("%f度\n", rtnGeoIBLto10B(242658.495200))
 #
@@ -80,7 +80,7 @@ end
 #-------------------
 # 十進法 => 度分秒
 #-------------------
-#【使用例】
+# (例)
 #	using Printf
 #	deg, min, sec = rtnGeo10toIBL(24.449582)
 #	@printf("%d度%d分%f秒\n", deg, min, sec)
@@ -106,10 +106,10 @@ end
 #-------------------------------
 # Vincenty法による２点間の距離
 #-------------------------------
-#【参考】
+# (参考)
 #	http://tancro.e-central.tv/grandmaster/script/vincentyJS.html
 #
-#【使用例】
+# (例)
 #	using Printf
 #	dist, angle = rtnGeoVincentry(35.685187, 139.752274, 24.449582, 122.93434)
 #	@printf("%fkm %f度\n", dist, angle)
@@ -187,7 +187,6 @@ function rtnGeoVincentry(
 	end
 
 	u2 = cos2alpha * (1 - f1 * f1) / (f1 * f1)
-
 	a = 1 + u2 / 16384 * (4096 + u2 * (-768 + u2 * (320 - 175 * u2)))
 	b = u2 / 1024 * (256 + u2 * (-128 + u2 * (74 - 47 * u2)))
 	dSigma = b * sinSigma * (cos2sm + b / 4 * (cosSigma * (-1 + 2 * cos2sm * cos2sm) - b / 6 * cos2sm * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2sm * cos2sm)))

@@ -56,7 +56,7 @@ end
 #-------------------
 # 度分秒 => 十進法
 #-------------------
-#【使用例】
+# (例)
 #	printf("%f度\n", rtnGeoIBLto10A(24, 26, 58.495200))
 #
 def rtnGeoIBLto10A(
@@ -68,7 +68,7 @@ def rtnGeoIBLto10A(
 	return (deg + min / 60.0 + sec / 3600.0).to_f
 end
 #-------------------
-#【使用例】
+# (例)
 #	printf("%f度\n", rtnGeoIBLto10B(242658.495200))
 #
 def rtnGeoIBLto10B(
@@ -84,7 +84,7 @@ end
 #-------------------
 # 十進法 => 度分秒
 #-------------------
-#【使用例】
+# (例)
 #	deg, min, sec = rtnGeo10toIBL(24.449582)
 #	printf("%d度%d分%f秒\n", deg, min, sec)
 #
@@ -111,10 +111,10 @@ end
 #-------------------------------
 # Vincenty法による２点間の距離
 #-------------------------------
-#【参考】
-#	http:#tancro.e-central.tv/grandmaster/script/vincentyJS.html
+# (参考)
+#	http://tancro.e-central.tv/grandmaster/script/vincentyJS.html
 #
-#【使用例】
+# (例)
 #	dist, angle = rtnGeoVincentry(35.685187, 139.752274, 24.449582, 122.93434)
 #	printf("%fkm %f度\n", dist, angle)
 #
@@ -181,14 +181,16 @@ def rtnGeoVincentry(
 		sinAlpha = cosU1 * cosU2 * sinLamda / sinSigma
 		cos2alpha = 1 - sinAlpha * sinAlpha
 		cos2sm = cosSigma - 2 * sinU1 * sinU2 / cos2alpha
-		if !cos2sm
+		if cos2sm == 0
 			cos2sm = 0
 		end
 		c = $F / 16 * cos2alpha * (4 + $F * (4 - 3 * cos2alpha))
 		dLamda = lamda
 		lamda = omega + (1 - c) * $F * sinAlpha * (sigma + c * sinSigma * (cos2sm + c * cosSigma * (-1 + 2 * cos2sm * cos2sm)))
 
-		break if (count += 1) > 10 || (lamda - dLamda).abs <= 1e-12
+		if (count += 1) > 10 || (lamda - dLamda).abs <= 1e-12
+			break
+		end
 	end
 
 	u2 = cos2alpha * (1 - f1 * f1) / (f1 * f1)
