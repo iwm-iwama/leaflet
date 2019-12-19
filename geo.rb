@@ -64,8 +64,8 @@ def rtnGeoIBLto10A(
 	min, # 分
 	sec  # 秒
 )
-	deg, min, sec = deg.to_f, min.to_f, sec.to_f
-	return (deg + (min / 60.0) + (sec / 3600.0)).to_f
+	deg, min, sec = deg.to_i, min.to_i, sec.to_f
+	return (deg.to_f + (min.to_f / 60.0) + (sec / 3600.0)).to_f
 end
 #-------------------
 # (例)
