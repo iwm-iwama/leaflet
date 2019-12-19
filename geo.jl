@@ -6,7 +6,7 @@
 #---------------------------------------------------------------------
 # 十進法 ddd.d...
 #---------------------------------------------------------------------
-Data1 = """
+const Data1 = """
 35.685187	139.752274	45.416799	141.677155	皇居～稚内駅
 35.685187	139.752274	43.385277	145.816641	皇居～納沙布岬
 35.685187	139.752274	43.068637	141.350784	皇居～札幌駅
@@ -43,7 +43,7 @@ Data1 = """
 #---------------------------------------------------------------------
 # 度分秒 dddmmss.s...
 #---------------------------------------------------------------------
-Data2 = """
+const Data2 = """
 354106.6732	1394508.1864	240335.0964	1234819.9944	皇居～波照間空港
 354106.6732	1394508.1864	202525.284	1360432.9844	皇居～沖ノ鳥島
 """
@@ -61,7 +61,7 @@ function rtnGeoIBLto10A(
 	min::Int64,  # 分
 	sec::Float64 # 秒
 )
-	return (deg + min / 60.0 + sec / 3600.0)::Float64
+	return (deg + (min / 60.0) + (sec / 3600.0))::Float64
 end
 #-------------------
 # (例)
@@ -74,7 +74,7 @@ function rtnGeoIBLto10B(
 	sec = ddmmss % 100
 	min = floor(ddmmss / 100) % 100
 	deg = floor(ddmmss / 10000)
-	return (deg +  min / 60.0 + sec / 3600.0)::Float64
+	return (deg + (min / 60.0) + (sec / 3600.0))::Float64
 end
 
 #-------------------
@@ -114,11 +114,6 @@ end
 #	dist, angle = rtnGeoVincentry(35.685187, 139.752274, 24.449582, 122.93434)
 #	@printf("%fkm %f度\n", dist, angle)
 #
-const A   = 6378137.0
-const B   = 6356752.314
-const F   = (1 / 298.257222101)
-const RAD = pi / 180.0
-
 function rtnGeoVincentry(
 	lat1::Float64, # 開始～緯度
 	lng1::Float64, # 開始～経度
@@ -129,12 +124,17 @@ function rtnGeoVincentry(
 		return (0, 0)
 	end
 
-	latR1 = lat1 * RAD
-	lngR1 = lng1 * RAD
-	latR2 = lat2 * RAD
-	lngR2 = lng2 * RAD
+	_A   = 6378137.0
+	_B   = 6356752.314
+	_F   = (1 / 298.257222101)
+	_RAD = pi / 180.0
 
-	f1 = 1 - F
+	latR1 = lat1 * _RAD
+	lngR1 = lng1 * _RAD
+	latR2 = lat2 * _RAD
+	lngR2 = lng2 * _RAD
+
+	f1 = 1 - _F
 
 	omega  = lngR2 - lngR1
 	tanU1  = f1 * tan(latR1)
@@ -177,12 +177,12 @@ function rtnGeoVincentry(
 		if cos2sm == 0
 			cos2sm = 0
 		end
-		c = F / 16 * cos2alpha * (4 + F * (4 - 3 * cos2alpha))
+		c = _F / 16 * cos2alpha * (4 + _F * (4 - 3 * cos2alpha))
 		dLamda = lamda
-		lamda = omega + (1 - c) * F * sinAlpha * (sigma + c * sinSigma * (cos2sm + c * cosSigma * (-1 + 2 * cos2sm * cos2sm)))
+		lamda = omega + (1 - c) * _F * sinAlpha * (sigma + c * sinSigma * (cos2sm + c * cosSigma * (-1 + 2 * cos2sm * cos2sm)))
 
 		if (count += 1) > 10 || abs(lamda - dLamda) <= 1e-12
-			break 
+			break
 		end
 	end
 
@@ -191,7 +191,7 @@ function rtnGeoVincentry(
 	b = u2 / 1024 * (256 + u2 * (-128 + u2 * (74 - 47 * u2)))
 	dSigma = b * sinSigma * (cos2sm + b / 4 * (cosSigma * (-1 + 2 * cos2sm * cos2sm) - b / 6 * cos2sm * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2sm * cos2sm)))
 	alpha12 = atan(cosU2 * sinLamda, cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * 180 / pi
-	dist = B * a * (sigma - dSigma)
+	dist = _B * a * (sigma - dSigma)
 
 	# 変換
 	if alpha12 < 0

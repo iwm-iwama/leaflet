@@ -6,7 +6,7 @@
 #---------------------------------------------------------------------
 # 十進法 ddd.d...
 #---------------------------------------------------------------------
-$data1 = <<'EOD' # 非展開
+Data1 = <<'EOD' # 非展開
 35.685187	139.752274	45.416799	141.677155	皇居～稚内駅
 35.685187	139.752274	43.385277	145.816641	皇居～納沙布岬
 35.685187	139.752274	43.068637	141.350784	皇居～札幌駅
@@ -43,7 +43,7 @@ EOD
 #---------------------------------------------------------------------
 # 度分秒 dddmmss.s...
 #---------------------------------------------------------------------
-$data2 = <<'EOD' # 非展開
+Data2 = <<'EOD' # 非展開
 354106.6732	1394508.1864	240335.0964	1234819.9944	皇居～波照間空港
 354106.6732	1394508.1864	202525.284	1360432.9844	皇居～沖ノ鳥島
 EOD
@@ -65,7 +65,7 @@ def rtnGeoIBLto10A(
 	sec  # 秒
 )
 	deg, min, sec = deg.to_f, min.to_f, sec.to_f
-	return (deg + min / 60.0 + sec / 3600.0).to_f
+	return (deg + (min / 60.0) + (sec / 3600.0)).to_f
 end
 #-------------------
 # (例)
@@ -78,7 +78,7 @@ def rtnGeoIBLto10B(
 	sec = ddmmss % 100
 	min = ((ddmmss / 100).to_i) % 100
 	deg = (ddmmss / 10000).to_i
-	return (deg.to_f +  min / 60.0 + sec / 3600.0).to_f
+	return (deg.to_f + (min / 60.0) + (sec / 3600.0)).to_f
 end
 
 #-------------------
@@ -118,32 +118,29 @@ end
 #	dist, angle = rtnGeoVincentry(35.685187, 139.752274, 24.449582, 122.93434)
 #	printf("%fkm %f度\n", dist, angle)
 #
-$A   = 6378137.0
-$B   = 6356752.314
-$F   = (1 / 298.257222101)
-$RAD = Math::PI / 180.0
-
 def rtnGeoVincentry(
 	lat1, # 開始～緯度
 	lng1, # 開始～経度
 	lat2, # 終了～緯度
 	lng2  # 終了～経度
 )
-	lat1 = lat1.to_f
-	lng1 = lng1.to_f
-	lat2 = lat2.to_f
-	lng2 = lng2.to_f
+	lat1, lng1, lat2, lng2 = lat1.to_f, lng1.to_f, lat2.to_f, lng2.to_f
 
 	if lat1 == lat2 && lng1 == lng2
 		return [0, 0]
 	end
 
-	latR1 = lat1 * $RAD
-	lngR1 = lng1 * $RAD
-	latR2 = lat2 * $RAD
-	lngR2 = lng2 * $RAD
+	_A   = 6378137.0
+	_B   = 6356752.314
+	_F   = (1 / 298.257222101)
+	_RAD = Math::PI / 180.0
 
-	f1 = 1 - $F
+	latR1 = lat1 * _RAD
+	lngR1 = lng1 * _RAD
+	latR2 = lat2 * _RAD
+	lngR2 = lng2 * _RAD
+
+	f1 = 1 - _F
 
 	omega  = lngR2 - lngR1
 	tanU1  = f1 * Math.tan(latR1)
@@ -184,9 +181,9 @@ def rtnGeoVincentry(
 		if cos2sm == 0
 			cos2sm = 0
 		end
-		c = $F / 16 * cos2alpha * (4 + $F * (4 - 3 * cos2alpha))
+		c = _F / 16 * cos2alpha * (4 + _F * (4 - 3 * cos2alpha))
 		dLamda = lamda
-		lamda = omega + (1 - c) * $F * sinAlpha * (sigma + c * sinSigma * (cos2sm + c * cosSigma * (-1 + 2 * cos2sm * cos2sm)))
+		lamda = omega + (1 - c) * _F * sinAlpha * (sigma + c * sinSigma * (cos2sm + c * cosSigma * (-1 + 2 * cos2sm * cos2sm)))
 
 		if (count += 1) > 10 || (lamda - dLamda).abs <= 1e-12
 			break
@@ -198,7 +195,7 @@ def rtnGeoVincentry(
 	b = u2 / 1024 * (256 + u2 * (-128 + u2 * (74 - 47 * u2)))
 	dSigma = b * sinSigma * (cos2sm + b / 4 * (cosSigma * (-1 + 2 * cos2sm * cos2sm) - b / 6 * cos2sm * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2sm * cos2sm)))
 	alpha12 = Math.atan2(cosU2 * sinLamda, cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * 180 / Math::PI
-	dist = $B * a * (sigma - dSigma)
+	dist = _B * a * (sigma - dSigma)
 
 	# 変換
 	alpha12 += 360.0 if alpha12 < 0 # 360度表記
@@ -216,7 +213,7 @@ Separater = " "
 # 計算／十進法
 #---------------
 def main_data1()
-	$data1.split("\n").each do
+	Data1.split("\n").each do
 		|_s|
 		_s.strip!
 
@@ -246,7 +243,7 @@ end
 # 計算／度分秒
 #---------------
 def main_data2()
-	$data2.split("\n").each do
+	Data2.split("\n").each do
 		|_s|
 		_s.strip!
 
