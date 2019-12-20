@@ -78,7 +78,7 @@ def rtnGeoIBLto10B(
 	sec = ddmmss % 100
 	min = ((ddmmss / 100).to_i) % 100
 	deg = (ddmmss / 10000).to_i
-	return (deg.to_f + (min / 60.0) + (sec / 3600.0)).to_f
+	return (deg + (min / 60.0) + (sec / 3600.0)).to_f
 end
 
 #-------------------
