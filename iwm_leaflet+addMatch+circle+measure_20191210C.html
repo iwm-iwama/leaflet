@@ -1,4 +1,4 @@
-<!-- Ver.20191220_2111 'U-2S' -->
+<!-- Ver.20191221_1449 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -67,17 +67,18 @@
 {
 	background:#fff;
 	border-color:#404040;
-	-webkit-border-radius:6px !important;
-	-moz-border-radius:6px !important;
-	border-radius:6px !important;
+	-webkit-border-radius:3px !important;
+	-moz-border-radius:3px !important;
+	border-radius:3px !important;
 }
 .leaflet-popup-content,
 .leaflet-popup-close-button
 {
 	color:#303030 !important;
 	font:11px Sans-serif;
+	line-height:14px;
 	margin:0;
-	padding:4px 6px 3px 6px;
+	padding:2px 5px;
 }
 .leaflet-container
 {
@@ -1557,7 +1558,7 @@ function subM2P_PointToMap(
 					s2,
 					{
 						autoPan: false,
-						closeButton: false
+						closeButton: true
 					}
 				).openPopup();
 			}
@@ -1838,7 +1839,7 @@ function rtnGeoVincentry(
 	var b = u2 / 1024 * (256 + u2 * (-128 + u2 * (74 - 47 * u2)));
 	var dSigma = b * sinSigma * (cos2sm + b / 4 * (cosSigma * (-1 + 2 * cos2sm * cos2sm) - b / 6 * cos2sm * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2sm * cos2sm)));
 	var alpha12 = Math.atan2(cosU2 * sinLamda, cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * 180 / Math.PI;
-	var dist =  _B * a * (sigma - dSigma);
+	var dist = _B * a * (sigma - dSigma);
 
 	// 変換
 	if(alpha12 < 0){
@@ -1938,7 +1939,7 @@ function subMarkerPopup2(
 
 	var ad1 = rtnGeoVincentry($latFrom, $lngFrom, $latTo, $lngTo);
 
-	var distRem  = ad1[0].toFixed(4) + "km";
+	var distRem = ad1[0].toFixed(4) + "km";
 
 	var angleRem = "";
 	var d2 = ad1[1].toFixed(4);
@@ -2099,7 +2100,7 @@ function subAddTabCtrl(
 		北緯：<input type="text" id="_NaviLat" onclick="subIwmInputBL_open(this.id);" onkeydown="subIwmInputBL_keydown(this.id, 8);" placeholder="緯度入力"/>
 		東経：<input type="text" id="_NaviLng" onclick="subIwmInputBL_open(this.id);" onkeydown="subIwmInputBL_keydown(this.id, 8);" placeholder="経度入力"/>
 		<!-- ズーム --><input type="hidden" id="_NaviZoom"/>
-		<input type="button" class="_btnNavi2" value="＋" onclick="_iwmZA2();"/>
+		<input type="button" class="_btnNavi1" value="＋" onclick="_iwmZA2();"/>
 		<input type="button" id="_btnMarker" class="_btnNavi2" value="マーカー削除" onclick="subMyObj_remove($AryLocalMarker);"/>
 		<!---------
 		// ヘルプ
@@ -2323,7 +2324,7 @@ function subAddTabCtrl(
 					rtnImgData[i + 1] -= minLuminance;
 					rtnImgData[i + 2] -= minLuminance;
 					// 一番暗い値をアルファチャンネルに反映(明るいところほど透明に)
-					rtnImgData[i + 3]  = 255 - minLuminance;
+					rtnImgData[i + 3] = 255 - minLuminance;
 				}
 				ctx.putImageData(rtnImg, 0, 0);
 				ctx = null;
@@ -2708,7 +2709,7 @@ function subAddTabCtrl(
 					this.closePopup();
 				}
 			);
-			// 全ポップアップ表示 <= contextmenu
+			// 何もしない <= mouseover
 			$BaseMarker.on(
 				"mouseover",
 				function(e){
@@ -2957,17 +2958,26 @@ function subAddTabCtrl(
  <ol class="_ol">
   <li class="_li1">青マーカー
    <ul class="_ul">
-    <li class="_li2">左クリック：ズームレベル補完表示</li>
-    <li class="_li2">右クリック：全ポップアップ表示／更新</li>
+    <li class="_li2">左クリック：ズームレベル</li>
+    <li class="_li2">右クリック：全ポップアップ</li>
     <li class="_li2">ドラッグ：移動</li>
+    <li class="_li2">マウスオーバー：何もしない</li>
    </ul>
   </li>
   <li class="_li1">赤マーカー
    <ul class="_ul">
-    <li class="_li2">左クリック：ズームレベル補完表示</li>
+    <li class="_li2">左クリック：ズームレベル</li>
     <li class="_li2">右クリック：消去</li>
-    <li class="_li2">ドラッグ：移動／再計算</li>
-    <li class="_li2">マウスオーバー：ポップアップ再表示</li>
+    <li class="_li2">ドラッグ：移動</li>
+    <li class="_li2">マウスオーバー：ポップアップ</li>
+   </ul>
+  </li>
+  <li class="_li1">オレンジマーカー
+   <ul class="_ul">
+    <li class="_li2">左クリック：ズームレベル</li>
+    <li class="_li2">右クリック：消去</li>
+    <li class="_li2">ドラッグ：何もしない</li>
+    <li class="_li2">マウスオーバー：ポップアップ</li>
    </ul>
   </li>
  </ol>
