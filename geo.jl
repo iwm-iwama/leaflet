@@ -219,33 +219,32 @@ function main_data1()
 	for _s1 in as1
 		_s1 = strip(_s1)
 
-
 		if length(_s1) > 0
 			_s1 = replace(_s1, r"[\t\s,]+" => Separater)
-			@printf("%s%s", _s1, CRLF)
+			print(_s1 * CRLF)
 
-			_ad1 = split(_s1, Separater)
+			ad1 = split(_s1, Separater)
 				lat1 = lng1 = lat2 = lng2 = 0.0
 			try
-				lat1 = parse(Float64, _ad1[1])
-				lng1 = parse(Float64, _ad1[2])
-				lat2 = parse(Float64, _ad1[3])
-				lng2 = parse(Float64, _ad1[4])
+				lat1 = parse(Float64, ad1[1])
+				lng1 = parse(Float64, ad1[2])
+				lat2 = parse(Float64, ad1[3])
+				lng2 = parse(Float64, ad1[4])
 			catch
 			end
 
-			_as1 = []
+			as1 = []
 
 			for _d1 in [lat1, lng1, lat2, lng2]
 				deg, min, sec = rtnGeo10toIBL(_d1)
-				push!(_as1, @sprintf("%d度%d分%f秒", deg, min, sec))
+				push!(as1, @sprintf("%d度%d分%f秒", deg, min, sec))
 			end
-			@printf("%s%s", join(_as1, Separater), CRLF)
+			print(join(as1, Separater) * CRLF)
 
 			dist, angle = rtnGeoVincentry(lat1, lng1, lat2, lng2)
 			@printf("%fkm %f度%s", dist, angle, CRLF)
 
-			@printf("%s", CRLF)
+			print(CRLF)
 		end
 	end
 end
@@ -261,32 +260,32 @@ function main_data2()
 
 		if length(_s1) > 0
 			_s1 = replace(_s1, r"[\t\s,]+" => Separater)
-			@printf("%s%s", _s1, CRLF)
+			print(_s1 * CRLF)
 
-			_ad1 = split(_s1, Separater)
+			ad1 = split(_s1, Separater)
 				lat1 = lng1 = lat2 = lng2 = 0.0
 			try
-				lat1 = parse(Float64, _ad1[1])
-				lng1 = parse(Float64, _ad1[2])
-				lat2 = parse(Float64, _ad1[3])
-				lng2 = parse(Float64, _ad1[4])
+				lat1 = parse(Float64, ad1[1])
+				lng1 = parse(Float64, ad1[2])
+				lat2 = parse(Float64, ad1[3])
+				lng2 = parse(Float64, ad1[4])
 			catch
 			end
 
-			_aLatLng = []
-			_as1 = []
+			aLatLng = []
+			as1 = []
 
 			for _d1 in [lat1, lng1, lat2, lng2]
 				angle = rtnGeoIBLto10B(_d1)
-				push!(_aLatLng, angle)
-				push!(_as1, @sprintf("%f度", angle))
+				push!(aLatLng, angle)
+				push!(as1, @sprintf("%f度", angle))
 			end
-			@printf("%s%s", join(_as1, Separater), CRLF)
+			print(join(as1, Separater) * CRLF)
 
-			dist, angle = rtnGeoVincentry(_aLatLng[1], _aLatLng[2], _aLatLng[3], _aLatLng[4])
+			dist, angle = rtnGeoVincentry(aLatLng[1], aLatLng[2], aLatLng[3], aLatLng[4])
 			@printf("%fkm %f度%s", dist, angle, CRLF)
 
-			@printf("%s", CRLF)
+			print(CRLF)
 		end
 	end
 end
