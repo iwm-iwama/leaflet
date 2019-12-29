@@ -1,4 +1,4 @@
-<!-- Ver.20191223_1351 'U-2S' -->
+<!-- Ver.20191229_2036 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -1781,23 +1781,23 @@ function rtnGeoVincentry(
 	const _F   = 1 / 298.257222101;
 	const _RAD = Math.PI / 180.0
 
-	var latR1 = $lat1 * _RAD;
-	var lngR1 = $lng1 * _RAD;
-	var latR2 = $lat2 * _RAD;
-	var lngR2 = $lng2 * _RAD;
+	const latR1 = $lat1 * _RAD;
+	const lngR1 = $lng1 * _RAD;
+	const latR2 = $lat2 * _RAD;
+	const lngR2 = $lng2 * _RAD;
 
-	var f1 = 1 - _F;
+	const f1 = 1 - _F;
 
-	var omega = lngR2 - lngR1;
-	var tanU1 = f1 * Math.tan(latR1);
-	var cosU1 = 1 / Math.sqrt(1 + tanU1 * tanU1);
-	var sinU1 = tanU1 * cosU1;
-	var tanU2 = f1 * Math.tan(latR2);
-	var cosU2 = 1 / Math.sqrt(1 + tanU2 * tanU2);
-	var sinU2 = tanU2 * cosU2;
+	const omega = lngR2 - lngR1;
+	const tanU1 = f1 * Math.tan(latR1);
+	const cosU1 = 1 / Math.sqrt(1 + tanU1 * tanU1);
+	const sinU1 = tanU1 * cosU1;
+	const tanU2 = f1 * Math.tan(latR2);
+	const cosU2 = 1 / Math.sqrt(1 + tanU2 * tanU2);
+	const sinU2 = tanU2 * cosU2;
+
 	var lamda = omega;
-	var dLamda;
-	var count = 0;
+	var dLamda = 0;
 
 	var sinLamda  = 0.0;
 	var cosLamda  = 0.0;
@@ -1809,6 +1809,8 @@ function rtnGeoVincentry(
 	var cos2alpha = 0.0;
 	var cos2sm    = 0.0;
 	var c = 0.0;
+
+	var count = 0;
 
 	do{
 		sinLamda = Math.sin(lamda);
@@ -1838,16 +1840,16 @@ function rtnGeoVincentry(
 	var a = 1 + u2 / 16384 * (4096 + u2 * (-768 + u2 * (320 - 175 * u2)));
 	var b = u2 / 1024 * (256 + u2 * (-128 + u2 * (74 - 47 * u2)));
 	var dSigma = b * sinSigma * (cos2sm + b / 4 * (cosSigma * (-1 + 2 * cos2sm * cos2sm) - b / 6 * cos2sm * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2sm * cos2sm)));
-	var alpha12 = Math.atan2(cosU2 * sinLamda, cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * 180 / Math.PI;
+	var angle = Math.atan2(cosU2 * sinLamda, cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * 180 / Math.PI;
 	var dist = _B * a * (sigma - dSigma);
 
 	// 変換
-	if(alpha12 < 0){
-		alpha12 += 360.0; // "度"
+	if(angle < 0){
+		angle += 360.0; // "度"
 	}
 	dist /= 1000.0; // "m" => "km"
 
-	return [parseFloat(dist), parseFloat(alpha12)];
+	return [parseFloat(dist), parseFloat(angle)];
 }
 /*-----------
 // 標高取得
@@ -1937,37 +1939,38 @@ function subMarkerPopup2(
 
 	var elevation = "---";
 
-	var ad1 = rtnGeoVincentry($latFrom, $lngFrom, $latTo, $lngTo);
+	var [dist, angle] = rtnGeoVincentry($latFrom, $lngFrom, $latTo, $lngTo);
+		dist = dist.toFixed(4);
+		angle = angle.toFixed(4);
 
-	var distRem = ad1[0].toFixed(4) + "km";
+	var distRem = dist + "km";
 
 	var angleRem = "";
-	var d2 = ad1[1].toFixed(4);
-	if(d2 >= 337.5 || d2 <= 22.5){
+	if(angle >= 337.5 || angle <= 22.5){
 		angleRem = "北";
 	}
-	else if(d2 > 22.5 && d2 < 67.5){
+	else if(angle > 22.5 && angle < 67.5){
 		angleRem = "北東";
 	}
-	else if(d2 >= 67.5 && d2 <= 112.5){
+	else if(angle >= 67.5 && angle <= 112.5){
 		angleRem = "東";
 	}
-	else if(d2 > 112.5 && d2 < 157.5){
+	else if(angle > 112.5 && angle < 157.5){
 		angleRem = "南東";
 	}
-	else if(d2 >= 157.5 && d2 <= 202.5){
+	else if(angle >= 157.5 && angle <= 202.5){
 		angleRem = "南";
 	}
-	else if(d2 > 202.5 && d2 < 247.5){
+	else if(angle > 202.5 && angle < 247.5){
 		angleRem = "南西";
 	}
-	else if(d2 >= 247.5 && d2 <= 292.5){
+	else if(angle >= 247.5 && angle <= 292.5){
 		angleRem = "西";
 	}
-	else if(d2 > 292.5 && d2 < 337.5){
+	else if(angle > 292.5 && angle < 337.5){
 		angleRem = "北西";
 	}
-	angleRem += d2 + "度";
+	angleRem += angle + "度";
 
 	var elevation = "---";
 
