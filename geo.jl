@@ -207,7 +207,6 @@ end
 #---------
 using Printf
 
-const CRLF = "\r\n"
 const Separater = " "
 
 #---------------
@@ -219,7 +218,7 @@ function main_data1()
 
 		if length(_s1) > 0
 			_s1 = replace(_s1, r"[\t\s,]+" => Separater)
-			print(_s1 * CRLF)
+			println(_s1)
 
 			ad1 = split(_s1, Separater)
 				lat1 = lng1 = lat2 = lng2 = 0.0
@@ -237,12 +236,12 @@ function main_data1()
 				deg, min, sec = rtnGeo10toIBL(_d1)
 				push!(as1, @sprintf("%d度%d分%f秒", deg, min, sec))
 			end
-			print(join(as1, Separater) * CRLF)
+			println(join(as1, Separater))
 
 			dist, angle = rtnGeoVincentry(lat1, lng1, lat2, lng2)
-			@printf("%fkm %f度%s", dist, angle, CRLF)
+			@printf("%fkm %f度\n", dist, angle)
 
-			print(CRLF)
+			println()
 		end
 	end
 end
@@ -256,7 +255,7 @@ function main_data2()
 
 		if length(_s1) > 0
 			_s1 = replace(_s1, r"[\t\s,]+" => Separater)
-			print(_s1 * CRLF)
+			println(_s1)
 
 			ad1 = split(_s1, Separater)
 				lat1 = lng1 = lat2 = lng2 = 0.0
@@ -276,12 +275,12 @@ function main_data2()
 				push!(aLatLng, angle)
 				push!(as1, @sprintf("%f度", angle))
 			end
-			print(join(as1, Separater) * CRLF)
+			println(join(as1, Separater))
 
 			dist, angle = rtnGeoVincentry(aLatLng[1], aLatLng[2], aLatLng[3], aLatLng[4])
-			@printf("%fkm %f度%s", dist, angle, CRLF)
+			@printf("%fkm %f度\n", dist, angle)
 
-			print(CRLF)
+			println()
 		end
 	end
 end
