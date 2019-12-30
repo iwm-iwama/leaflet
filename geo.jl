@@ -214,9 +214,7 @@ const Separater = " "
 # 計算／十進法
 #---------------
 function main_data1()
-	as1 = split(Data1, "\n")
-
-	for _s1 in as1
+	for _s1 in split(Data1, "\n")
 		_s1 = strip(_s1)
 
 		if length(_s1) > 0
@@ -253,9 +251,7 @@ end
 # 計算／度分秒
 #---------------
 function main_data2()
-	as1 = split(Data2, "\n")
-
-	for _s1 in as1
+	for _s1 in split(Data2, "\n")
 		_s1 = strip(_s1)
 
 		if length(_s1) > 0
