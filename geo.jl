@@ -220,27 +220,22 @@ function main_data1()
 			_s1 = replace(_s1, r"[\t\s,]+" => Separater)
 			println(_s1)
 
-			ad1 = split(_s1, Separater)
-				lat1 = lng1 = lat2 = lng2 = 0.0
-			try
-				lat1 = parse(Float64, ad1[1])
-				lng1 = parse(Float64, ad1[2])
-				lat2 = parse(Float64, ad1[3])
-				lng2 = parse(Float64, ad1[4])
-			catch
-			end
-
 			as1 = []
 
-			for _d1 in [lat1, lng1, lat2, lng2]
-				deg, min, sec = rtnGeo10toIBL(_d1)
+			ad1 = split(_s1, Separater)[1:4]
+			for _d1 in ad1
+				deg, min, sec = rtnGeo10toIBL(parse(Float64, _d1))
 				push!(as1, @sprintf("%d度%d分%f秒", deg, min, sec))
 			end
 			println(join(as1, Separater))
 
-			dist, angle = rtnGeoVincentry(lat1, lng1, lat2, lng2)
+			dist, angle = rtnGeoVincentry(
+				parse(Float64, ad1[1]),
+				parse(Float64, ad1[2]),
+				parse(Float64, ad1[3]),
+				parse(Float64, ad1[4])
+			)
 			@printf("%fkm %f度\n", dist, angle)
-
 			println()
 		end
 	end
@@ -257,29 +252,23 @@ function main_data2()
 			_s1 = replace(_s1, r"[\t\s,]+" => Separater)
 			println(_s1)
 
-			ad1 = split(_s1, Separater)
-				lat1 = lng1 = lat2 = lng2 = 0.0
-			try
-				lat1 = parse(Float64, ad1[1])
-				lng1 = parse(Float64, ad1[2])
-				lat2 = parse(Float64, ad1[3])
-				lng2 = parse(Float64, ad1[4])
-			catch
-			end
-
 			aLatLng = []
 			as1 = []
 
-			for _d1 in [lat1, lng1, lat2, lng2]
-				angle = rtnGeoIBLto10B(_d1)
+			for _d1 in split(_s1, Separater)[1:4]
+				angle = rtnGeoIBLto10B(parse(Float64, _d1))
 				push!(aLatLng, angle)
 				push!(as1, @sprintf("%f度", angle))
 			end
 			println(join(as1, Separater))
 
-			dist, angle = rtnGeoVincentry(aLatLng[1], aLatLng[2], aLatLng[3], aLatLng[4])
+			dist, angle = rtnGeoVincentry(
+				aLatLng[1],
+				aLatLng[2],
+				aLatLng[3],
+				aLatLng[4]
+			)
 			@printf("%fkm %f度\n", dist, angle)
-
 			println()
 		end
 	end

@@ -221,19 +221,23 @@ def main_data1()
 			_s.gsub!(/[\t\s,]+/, Separater)
 			puts _s
 
-			lat1, lng1, lat2, lng2 = _s.split(Separater)
 			as1 = []
 
-			[lat1, lng1, lat2, lng2].each do
+			ad1 = _s.split(Separater).slice(0, 4)
+			ad1.each do
 				|_s|
 				deg, min, sec = rtnGeo10toIBL(_s)
 				as1 << sprintf("%d度%d分%f秒", deg, min, sec)
 			end
 			puts as1.join(Separater)
 
-			dist, angle = rtnGeoVincentry(lat1, lng1, lat2, lng2)
+			dist, angle = rtnGeoVincentry(
+				ad1[0],
+				ad1[1],
+				ad1[2],
+				ad1[3]
+			)
 			printf("%fkm%s%f度\n", dist, Separater, angle)
-
 			puts
 		end
 	end
@@ -251,20 +255,23 @@ def main_data2()
 			_s.gsub!(/[\t\s,]+/, Separater)
 			puts _s
 
-			lat1, lng1, lat2, lng2 = _s.split(Separater)
 			aLatLng = []
 			as1 = []
 
-			[lat1, lng1, lat2, lng2].each do
+			_s.split(Separater).slice(0, 4).each do
 				|_s|
 				aLatLng << _deg = rtnGeoIBLto10B(_s)
 				as1 << sprintf("%f度", _deg)
 			end
 			puts as1.join(Separater)
 
-			dist, angle = rtnGeoVincentry(aLatLng[0], aLatLng[1], aLatLng[2], aLatLng[3])
+			dist, angle = rtnGeoVincentry(
+				aLatLng[0],
+				aLatLng[1],
+				aLatLng[2],
+				aLatLng[3]
+			)
 			printf("%fkm%s%f度\n", dist, Separater, angle)
-
 			puts
 		end
 	end
