@@ -116,7 +116,7 @@ function rtnGeo10toIBL(
 */
 /* (例)
 	var [dist, angle] = rtnGeoVincentry(35.685187, 139.752274, 24.449582, 122.934340);
-	console.log("%fkm %f度", dist.toFixed(6), angle.toFixed(6));
+	console.log("%skm %s度", dist.toFixed(6), angle.toFixed(6));
 */
 function rtnGeoVincentry(
 	$lat1,
@@ -252,7 +252,7 @@ function main_data1()
 				ad1[2],
 				ad1[3]
 			);
-			console.log("%fkm %f度", dist.toFixed(6), angle.toFixed(6));
+			console.log("%skm %s度", dist.toFixed(6), angle.toFixed(6));
 
 			console.log();
 		}
@@ -291,7 +291,7 @@ function main_data2()
 				aLatLng[2],
 				aLatLng[3]
 			);
-			console.log("%fkm %f度", dist.toFixed(6), angle.toFixed(6));
+			console.log("%skm %s度", dist.toFixed(6), angle.toFixed(6));
 
 			console.log();
 		}
