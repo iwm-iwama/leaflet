@@ -1,4 +1,4 @@
-<!-- Ver.20191231_1528 'U-2S' -->
+<!-- Ver.20200104_2100 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -13,8 +13,8 @@
 <!--------------------------------------------------------------------
 // leaflet
 --------------------------------------------------------------------->
-<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
 
 <!--------------------------------------------------------------------
 // Control.MiniMap
@@ -103,9 +103,6 @@ body
 	margin:0;
 	padding:0;
 }
-/*-------
-// 共通
--------*/
 select
 {
 	background:#fff;
@@ -377,7 +374,7 @@ option
 ---------------------*/
 #_AddMatchInput
 {
-	background:#3d7cce;
+	background:orange;
 	border:0;
 	line-height:14px;
 	margin:0;
@@ -391,7 +388,7 @@ option
 #_AddMatchInput1
 {
 	background:#fff;
-	border:1px solid #000;
+	border:1px solid orange;
 	color:#000;
 	cursor:text;
 	font-size:14px;
@@ -403,10 +400,11 @@ option
 }
 #_AddMatchInput1:hover
 {
-	background:#ff0 !important;
+	background:#ff5 !important;
 }
 #_AddMatchInput2
 {
+	border:0;
 	color:#fff;
 	font-size:14px;
 	font-weight:500;
@@ -415,6 +413,7 @@ option
 }
 #_AddMatchInput3
 {
+	border:0;
 	color:#fff;
 	font-size:16px;
 	font-weight:900;
@@ -429,9 +428,8 @@ option
 }
 #_AddMatchOutput
 {
-	background-color:rgba(255, 255, 255, 0.3);
-	border:0;
-	box-shadow:0 0 2px #000;
+	background-color:rgba(255, 255, 255, 0.4);
+	border:1px solid orange;
 	color:#000;
 	font-size:13px;
 	left:0;
@@ -469,7 +467,7 @@ option
 }
 #_AddMatchOutput1:hover
 {
-	background:#ff0 !important;
+	background:#ff5 !important;
 }
 ._AddMatchRem
 {
@@ -709,6 +707,7 @@ var $IwmInputZoom_value = null;
 const $AryIwmInput = ["_InputNum", "_InputBL"];
 */
 const $AryIwmInput = ["_InputBL"];
+
 function subIwmInput_init(){
 	var i1 = 0;
 	var i2 = $AryIwmInput.length;
@@ -1091,8 +1090,9 @@ function subAddMatchInit(){
 
 		var obj = document.getElementById("_AddMatchInput1");
 		var rect = obj.getBoundingClientRect();
-			style.left = (rect.left + window.pageXOffset - 1) + "px";
-			style.top  = (rect.top + window.pageYOffset + obj.clientHeight + 2) + "px";
+			style.left = (rect.left + window.pageXOffset - 2) + "px";
+			style.top  = (rect.top + window.pageYOffset + obj.clientHeight - 1) + "px";
+
 		obj = rect = null;
 		innerHTML = "";
 	}
@@ -1104,7 +1104,7 @@ function subAddMatch1(){
 		subAddMatchInit();
 		return;
 	}
-	var url = "https://msearch.gsi.go.jp/address-search/AddressSearch?q=" + query;
+	const _Url = "https://msearch.gsi.go.jp/address-search/AddressSearch?q=" + query;
 
 	var xhr = new XMLHttpRequest();
 	xhr.onload = function(){
@@ -1149,8 +1149,8 @@ function subAddMatch1(){
 			}
 		}
 	}
-	xhr.open("GET", url, true);
-	xhr.overrideMimeType("text/javascript");
+	xhr.open("GET", _Url, true);
+	/// xhr.overrideMimeType("text/javascript");
 	xhr.send(null);
 }
 function subAddMatch2(){
@@ -1247,7 +1247,7 @@ function subLngLatToPlaceName(
 	$oMarker,
 	$placeName
 ){
-	var url = "https://mreversegeocoder.gsi.go.jp/reverse-geocoder/LonLatToAddress" +
+	const _Url = "https://mreversegeocoder.gsi.go.jp/reverse-geocoder/LonLatToAddress" +
 		"?lat=" + $lat +
 		"&lon=" + $lng;
 
@@ -1276,8 +1276,8 @@ function subLngLatToPlaceName(
 		}
 		obj = null;
 	};
-	xhr.open("GET", url, true);
-	xhr.overrideMimeType("text/javascript");
+	xhr.open("GET", _Url, true);
+	/// xhr.overrideMimeType("text/javascript");
 	xhr.send(null);
 }
 /*-------------
@@ -1411,30 +1411,29 @@ function subAddReadFile(
 function subM2P_Geocoding(
 	$textareaId
 ){
-	var $Url = "https://msearch.gsi.go.jp/address-search/AddressSearch?q=";
+	const _Url = "https://msearch.gsi.go.jp/address-search/AddressSearch?q=";
+
 	var xhr = new XMLHttpRequest();
 
 	var a1 = document.getElementById($textareaId).value.replace(/\\t/g, "\t").split("\n");
-
-	var $ErrCnt = 0;
-
 	var s1 = "";
 	var i1 = 0;
 	var i2 = a1.length;
+	var errCnt = 0;
 
 	for(; i1 < i2; i1++){
 		var a2 = a1[i1].trim().split("\t");
-		var Query = a2[0];
+		var query = a2[0];
 
-		if(Query){
-			if(Query[0].match(/#|[0-9]/)){
+		if(query){
+			if(query[0].match(/#|[0-9]/)){
 				s1 += a1[i1] + "\n";
 			}
 			else{
-				var url = $Url + Query;
+				var url = _Url + query;
 
 				xhr.open("GET", url, false);
-				xhr.overrideMimeType("text/javascript");
+				/// xhr.overrideMimeType("text/javascript");
 				xhr.send(null);
 
 				var aJson = JSON.parse(xhr.responseText);
@@ -1449,7 +1448,7 @@ function subM2P_Geocoding(
 					s1 += a3.join("\t") + "\t" + a1[i1];
 				}
 				else{
-					$ErrCnt++;
+					errCnt++;
 					s1 += "# Err " + (aJson.length == 0 ? "該当なし" : "複数該当あり") + " => " + a1[i1];
 				}
 				s1 += "\n";
@@ -1462,13 +1461,13 @@ function subM2P_Geocoding(
 	}
 
 	with(document.getElementById($textareaId).style){
-		if($ErrCnt){
-			color = "#ffffff";
-			backgroundColor = "#ff0000";
+		if(errCnt){
+			color = "#fff";
+			backgroundColor = "#f00";
 		}
 		else{
-			color = "#000000";
-			backgroundColor = "#ffffff";
+			color = "#000";
+			backgroundColor = "#fff";
 		}
 	}
 	xhr = s1 = a1 = null;
@@ -1500,13 +1499,13 @@ function subM2P_PointToMap(
 ){
 	var i1 = $AryPoint.length;
 	while(i1--){
-		// マーカー削除
+		// マーカー消去
 		$Map.removeLayer($AryPoint[i1]);
 		// 配列から削除
 		$AryPoint.splice(i1, 1);
 	}
-	var $latOld = null;
-	var $lngOld = null;
+	var latOld = null;
+	var lngOld = null;
 
 	var rtn ="";
 
@@ -1518,13 +1517,13 @@ function subM2P_PointToMap(
 		try{
 			var a2 = a1[i1].trim().split("\t");
 
-			if($latOld == null){
-				$latOld = a2[0];
-				$lngOld = a2[1];
+			if(latOld == null){
+				latOld = a2[0];
+				lngOld = a2[1];
 			}
 			else{
-				$latOld = a2[0];
-				$lngOld = a2[1];
+				latOld = a2[0];
+				lngOld = a2[1];
 			}
 
 			var s2 = a2[2];
@@ -1627,7 +1626,7 @@ function subM2P_EditClear(
 
 	var i1 = $AryPoint.length;
 	while(i1--){
-		// マーカー削除
+		// マーカー消去
 		$Map.removeLayer($AryPoint[i1]);
 		// 配列から削除
 		$AryPoint.splice(i1, 1);
@@ -1859,7 +1858,7 @@ function subGetElevation(
 	$lng,
 	$oMarker
 ){
-	var url = "https://cyberjapandata2.gsi.go.jp/general/dem/scripts/getelevation.php?" +
+	const _Url = "https://cyberjapandata2.gsi.go.jp/general/dem/scripts/getelevation.php?" +
 		"lat=" + $lat +
 		"&lon=" + $lng +
 		"&outtype=JSON";
@@ -1874,7 +1873,7 @@ function subGetElevation(
 			$oMarker.elevation = "---";
 		}
 	};
-	xhr.open("GET", url, true);
+	xhr.open("GET", _Url, true);
 	xhr.responseType = "json";
 	xhr.send(null);
 }
@@ -1987,7 +1986,7 @@ function subMarkerPopup2(
 	);
 }
 /*------------------------------------
-// [マーカー削除]ボタン 表示／非表示
+// [マーカー消去]ボタン 表示／非表示
 ------------------------------------*/
 function subMyObj_init(){
 	document.getElementById("_btnMarker").style.display = "none";
@@ -1998,7 +1997,7 @@ function subMyObj_onOff(
 	document.getElementById("_btnMarker").style.display = ($aryObj.length > 0 ? "" : "none");
 }
 /*-----------------------
-// ローカルマーカー削除
+// ローカルマーカー消去
 -----------------------*/
 function subMyObj_remove(
 	$aryObj
@@ -2006,7 +2005,7 @@ function subMyObj_remove(
 	while((obj = $aryObj.pop()) != undefined){
 		$Map.removeLayer(obj);
 	}
-	// [マーカー削除]ボタン 非表示
+	// [マーカー消去]ボタン 非表示
 	document.getElementById("_btnMarker").style.display = "none";
 }
 /*----------------------
@@ -2104,7 +2103,7 @@ function subAddTabCtrl(
 		東経：<input type="text" id="_NaviLng" onclick="subIwmInputBL_open(this.id);" onkeydown="subIwmInputBL_keydown(this.id, 8);" placeholder="経度入力"/>
 		<!-- ズーム --><input type="hidden" id="_NaviZoom"/>
 		<input type="button" class="_btnNavi1" value="＋" onclick="_iwmZA2();"/>
-		<input type="button" id="_btnMarker" class="_btnNavi2" value="マーカー削除" onclick="subMyObj_remove($AryLocalMarker);"/>
+		<input type="button" id="_btnMarker" class="_btnNavi2" value="マーカー消去" onclick="subMyObj_remove($AryLocalMarker);"/>
 		<!---------
 		// ヘルプ
 		---------->
@@ -2245,12 +2244,12 @@ function subAddTabCtrl(
 		-------------------------*/
 		/* 0.7x 対応（1.x 未対応）
 			var xhr = new XMLHttpRequest();
-				xhr.open(
-					"GET",
-					"https://cyberjapandata.gsi.go.jp/xyz/experimental_fgd/style.js",
-					false
-				);
-			xhr.overrideMimeType("text/javascript");
+			xhr.open(
+				"GET",
+				"https://cyberjapandata.gsi.go.jp/xyz/experimental_fgd/style.js",
+				false
+			);
+			/// xhr.overrideMimeType("text/javascript");
 			xhr.send(null);
 			var stylejs = eval( "(" + xhr.responseText + ")" );
 			var $fgdLayer = new L.TileLayer.GeoJSON(
@@ -2782,7 +2781,7 @@ function subAddTabCtrl(
 
 			$AryLocalMarker[$AryLocalMarker.length - 1].elevation = "---";
 
-			// [マーカー削除]ボタン表示
+			// [マーカー消去]ボタン表示
 			subMyObj_onOff($AryLocalMarker);
 
 			// 現在(配列)のローカルマーカー
@@ -2818,20 +2817,20 @@ function subAddTabCtrl(
 					);
 				}
 			);
-			// マーカー削除 <= contextmenu
+			// マーカー消去 <= contextmenu
 			obj.on(
 				"contextmenu",
 				function(e){
 					for(i1 = 0, len = $AryLocalMarker.length; i1 < len; i1++){
 						if(this == $AryLocalMarker[i1]){
-							// マーカー削除
+							// マーカー消去
 							$Map.removeLayer($AryLocalMarker[i1]);
 							// 配列から削除
 							$AryLocalMarker.splice(i1, 1);
 							break;
 						}
 					}
-					// [マーカー削除]ボタン非表示
+					// [マーカー消去]ボタン非表示
 					subMyObj_onOff($AryLocalMarker);
 				}
 			);
