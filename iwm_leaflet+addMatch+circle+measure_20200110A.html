@@ -1,4 +1,4 @@
-<!-- Ver.20200108_0051 'U-2S' -->
+<!-- Ver.20200113_2044 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -1321,8 +1321,15 @@ function subMapToPoint(
 ){
 	var str = "";
 
-	for(var _s1 of $AryLocalMarker.concat($AryPoint)){
-		str += _s1._latlng.lat.toFixed(8) + "\t" + _s1._latlng.lng.toFixed(8) + "\t" + _s1.options.title + "\n";
+	for(var _o1 of $AryLocalMarker.concat($AryPoint)){
+		var _s1 = _o1._popup._content;
+		/// console.log(_s1);
+		if(_s1.match(/\.\d{4}度$/)){
+			_s1 = _s1.substring(0, _s1.lastIndexOf("<br>"));
+		}
+		/// console.log(_s1);
+		_s1 = _s1.replace(/<br></g, "\t<");
+		str += _o1._latlng.lat.toFixed(8) + "\t" + _o1._latlng.lng.toFixed(8) + "\t" + _s1 + "\n";
 	}
 	// 上書き
 	document.getElementById($textareaId).value = str;
@@ -2198,7 +2205,7 @@ function subAddTabCtrl(
 			var ary = [];
 
 			for(var _s1 of document.getElementById("_TA01").value.trimEnd().split("\n")){
-				var _s2 = _s1.trim().substring(0, 1);
+				var _s2 = _s1.trim().substr(0, 1);
 				if(_s2.length > 0 && _s2 != "#"){
 					var _a1 = _s1.split("\t");
 
