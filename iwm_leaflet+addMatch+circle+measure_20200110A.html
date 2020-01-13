@@ -1,4 +1,4 @@
-<!-- Ver.20200113_2044 'U-2S' -->
+<!-- Ver.20200114_0033 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -517,8 +517,8 @@ option
 	background-color:rgba(13, 76, 158, 0.8);
 	color:#fff;
 	float:right;
-	font-size:10px;
-	line-height:14px;
+	font-size:11px;
+	line-height:18px;
 	margin:0;
 	padding:0;
 	position:absolute;
@@ -536,14 +536,15 @@ option
 }
 ._simpleWindowClose
 {
+	color:#f00;
 	float:right;
-	font-size:16px;
+	font-size:18px;
 	font-weight:900;
 	padding:0 3px 0 0;
 }
 ._simpleWindowClose:hover
 {
-	color:#f00;
+	color:#f99;
 	cursor:pointer;
 }
 ._simpleWindowOutput
@@ -823,7 +824,6 @@ function subIwmInputBL_keydown(
 	$outputId,   // [id]
 	$decimalSize // 小数点桁数
 ){
-	/// console.log($decimalSize);
 	if($decimalSize == undefined){
 		$decimalSize = 0;
 	}
@@ -834,7 +834,7 @@ function subIwmInputBL_keydown(
 			case(13): // [Enter]
 				var obj = document.getElementById($outputId);
 				var d1 = parseFloat(obj.value).toFixed($decimalSize);
-				/// console.log(d1);
+
 				if(isNaN(d1)){
 					return;
 				}
@@ -1323,12 +1323,15 @@ function subMapToPoint(
 
 	for(var _o1 of $AryLocalMarker.concat($AryPoint)){
 		var _s1 = _o1._popup._content;
-		/// console.log(_s1);
+
 		if(_s1.match(/\.\d{4}度$/)){
-			_s1 = _s1.substring(0, _s1.lastIndexOf("<br>"));
+			_s1 = _s1.substring(0, _s1.lastIndexOf("<br/>"));
 		}
-		/// console.log(_s1);
-		_s1 = _s1.replace(/<br></g, "\t<");
+
+		// TSVファイルの "\t" は "<br/>"
+		// 通常の改行は "<br>"
+		_s1 = _s1.replace(/<br\/>/g, "\t");
+
 		str += _o1._latlng.lat.toFixed(8) + "\t" + _o1._latlng.lng.toFixed(8) + "\t" + _s1 + "\n";
 	}
 	// 上書き
@@ -1450,13 +1453,23 @@ function subM2P_PointToMap(
 
 	var str ="";
 
-	for(var _s1 of document.getElementById($textareaId).value.trimEnd().replace(/\\t/g, "\t").split("\n")){
-		try{
-			var _a1 = _s1.trim().split("\t");
-			var _s2 = _a1[2];
+	for(var _s1 of document.getElementById($textareaId).value.trimEnd().split("\n")){
+		//	TSVファイルの "\t" は "<br/>"
+		//	通常の改行は "<br>"
+		_s1 = _s1.replace(/\\t/g, "\t");
+		_s1 = _s1.replace(/\\n/g, "<br>");
 
-			for(var _i1 = 3, _i2 = _a1.length; _i1 < _i2; _i1++){
-				_s2 += "<br>" + _a1[_i1];
+		var _a1 = _s1.trim().split("\t");
+
+		if(_a1.length >= 2){
+			if(_a1.length >= 3){
+				_s2 = _a1[2];
+				for(var _i1 = 3, _i2 = _a1.length; _i1 < _i2; _i1++){
+					_s2 += "<br/>" + _a1[_i1];
+				}
+			}
+			else{
+				_s2 = "<br/>";
 			}
 
 			var obj1 = (
@@ -1472,30 +1485,22 @@ function subM2P_PointToMap(
 						fill: true,
 						fillColor: "#00f",
 						fillOpacity: 0.8,
-						title: _s2
+						title: _a1[2]
 					}
 				).addTo($Map)
 			);
 
-			var obj2 = null;
-			if(_a1[2].trim()){
-				obj2 = obj1.bindPopup(
-					_s2,
-					{
-						autoPan: false,
-						closeButton: true
-					}
-				).openPopup();
-			}
-			else{
-				obj2 = obj1;
-			}
+			var obj2 = obj1.bindPopup(
+				_s2,
+				{
+					autoPan: false,
+					closeButton: true
+				}
+			).openPopup();
+
 			$AryPoint.push(obj2);
 
 			str += _s1 + "\n";
-		}
-		catch(e){
-			/// console.log(_s1);
 		}
 	}
 
@@ -1824,9 +1829,9 @@ function subMarkerPopup1(
 	}
 
 	return (
-		"<font color='#ff5858'>" + $BaseMarker.options.title + "</font><br>" +
-		"<font color='#3d7cce'>北緯</font>" + latRem + "／" + $lat.toFixed(6) + "度<br>" +
-		"<font color='#3d7cce'>東経</font>" + lngRem + "／" + $lng.toFixed(6) + "度<br>" +
+		"<font color='#ff5858'>" + $BaseMarker.options.title + "</font><br/>" +
+		"<font color='#3d7cce'>北緯</font>" + latRem + "／" + $lat.toFixed(6) + "度<br/>" +
+		"<font color='#3d7cce'>東経</font>" + lngRem + "／" + $lng.toFixed(6) + "度<br/>" +
 		"<font color='#3d7cce'>標高</font>" + elevation
 	);
 }
@@ -1892,10 +1897,10 @@ function subMarkerPopup2(
 		elevation = $oMarker.elevation;
 	}
 	return (
-		"<font color='#ff5858'>" + $oMarker.options.title + "</font><br>" +
-		"<font color='#3d7cce'>北緯</font>" + latRem + "／" + $latTo.toFixed(6) + "度<br>" +
-		"<font color='#3d7cce'>東経</font>" + lngRem + "／" + $lngTo.toFixed(6) + "度<br>" +
-		"<font color='#3d7cce'>標高</font>" + elevation + "<br>" +
+		"<font color='#ff5858'>" + $oMarker.options.title + "</font><br/>" +
+		"<font color='#3d7cce'>北緯</font>" + latRem + "／" + $latTo.toFixed(6) + "度<br/>" +
+		"<font color='#3d7cce'>東経</font>" + lngRem + "／" + $lngTo.toFixed(6) + "度<br/>" +
+		"<font color='#3d7cce'>標高</font>" + elevation + "<br/>" +
 		"<font color='#3d7cce'>距離</font>" + distRem + "／" + angleRem
 	);
 }
@@ -2054,14 +2059,14 @@ function subAddTabCtrl(
 		<span style="float:right;margin:0 8px;">
 			<font class="_simpleWindowCall" onclick="subSimpleWindowOnOff('_SW03');">マーカー変換</font>
 		</span>
-		<div id="_SW03" class="_simpleWindow" style="width:460px;">
+		<div id="_SW03" class="_simpleWindow" style="width:480px;">
 			<font class="_simpleWindowTitle">マーカーをポイントに変換／[Tab]区切り／UTF-8N）</font>
 			<font class="_simpleWindowClose" onclick="subSimpleWindowOnOff('_SW03');">×</font>
-			<div class="_simpleWindowOutput" style="background:#fafafa;min-height:300px;padding:8px 12px;">
+			<div class="_simpleWindowOutput" style="background:#fafafa;min-height:300px;padding:8px;">
 				<input type="button" class="_btnNavi3" value=">>地図から読込" onclick="subMapToPoint('_TA02');"/>
 				<input type="file" id="_readFn" class="_btnNavi2" onchange="subAddReadFile(this.id,'_TA02');"/>
 				<br>
-				<textarea id="_TA02" class="_editTextBox" wrap="off" style="height:240px;width:418px;"></textarea>
+				<textarea id="_TA02" class="_editTextBox" wrap="off" style="height:240px;width:440px;"></textarea>
 				<script>
 					document.getElementById("_TA02").onkeydown = function(e){subAddTabCtrl(e, this);}
 				</script>
@@ -2118,7 +2123,7 @@ function subAddTabCtrl(
 				}
 			}
 		);
-	
+
 		// 初回表示設定
 		var $Map = L.map(
 			"_divMap",
@@ -2176,7 +2181,6 @@ function subAddTabCtrl(
 			$radioButtonMap.push(["なし", "", 0.0, 18]);
 
 		for(var _a1 of $radioButtonMap){
-			/// console.log(_a1);
 			$radioButtonSelectMap[_a1[0]] = L.tileLayer(
 				_a1[1],
 				{
@@ -2240,7 +2244,7 @@ function subAddTabCtrl(
 					catch(e){
 						_a1[3] = 18;
 					}
-					/// console.log(_a1);
+
 					ary.push([_a1[0], $URL + _a1[0] + "/{z}/{x}/{y}." + _a1[1], _a1[2], _a1[3], ""]);
 				}
 			}
@@ -2424,7 +2428,6 @@ function subAddTabCtrl(
 						$Map.removeLayer($checkBoxSelectMap[e.name]);
 						// 履歴すべてを非表示にする
 						for(key in $checkBoxSelectMap){
-							/// console.log(key);
 							$Map.removeLayer($checkBoxSelectMap[key]);
 						}
 					}
@@ -2517,7 +2520,6 @@ function subAddTabCtrl(
 
 			// ローカルマーカー
 			for(var _s1 of $AryLocalMarker){
-				/// console.log(_s1);
 				_s1.closePopup();
 				_s1.bindPopup(
 					subMarkerPopup2(
