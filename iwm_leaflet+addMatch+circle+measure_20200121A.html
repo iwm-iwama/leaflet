@@ -1,4 +1,4 @@
-<!-- Ver.20200121_2210 'U-2S' -->
+<!-- Ver.20200123_2304 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -646,25 +646,8 @@ a.polyline-measure-clearControl:active {
 // フレームサイズを調整
 -----------------------*/
 function subInitDisp(){
-	var mapH = 0;
-	var mapW = 0;
-
-	// WebBrowserは？
-	//   Opera?
-	if(window.opera){
-		mapH = window.innerHeight;
-		mapW = window.innerWidth;
-	}
-	else if(document.all){
-		with(window.document.documentElement){
-			mapH = clientHeight;
-			mapW = clientWidth;
-		}
-	}
-	else if(document.getElementById){
-		mapH = window.innerHeight;
-		mapW = window.innerWidth;
-	}
+	var mapH = window.innerHeight;
+	var mapW = window.innerWidth;
 
 	// Microsoft?
 	var uA = window.navigator.userAgent.toLowerCase();
@@ -739,33 +722,31 @@ function rtnRgbTo16(
 // 数値入力補完
 ---------------*/
 // 大域変数
-var $IwmInput_ctrlId = null;
-var $IwmInputBL_saveId = null;
-var $IwmInputZoom_value = null;
+var $subIwmInput_BL_now = null;
+var $subIwmInput_BL_toSave = null;
 
 // 環境に合わせて設定
-const $AryIwmInput = ["_InputBL"];
+const $subIwmInput_array = ["_InputBL"];
 
-function subIwmInput_init(){
-	for(var _s1 of $AryIwmInput){
-		subIwmInput_close(_s1);
+function subIwmInput_Init(){
+	for(var _s1 of $subIwmInput_array){
+		subIwmInput_Close(_s1);
 	}
 }
-function subIwmInputZoomA_open(
+function subIwmInput_ZoomA_Open(
 	$outputId, // [id]
 	$posX,     // INT
 	$posY      // INT
 ){
-	subIwmInput_open("_InputZoomA", $outputId, $posX, $posY, true);
+	subIwmInput_Open("_InputZoomA", $outputId, $posX, $posY, true);
 }
-function subIwmInputZoomA_close(){
-	subIwmInput_close("_InputZoomA");
+function subIwmInput_ZoomA_Close(){
+	subIwmInput_Close("_InputZoomA");
 }
-function subIwmInputZoom_change(
+function subIwmInput_Zoom_Change(
 	$str
 ){
-	// 変更前を記憶
-	$IwmInputZoom_value = document.getElementById("_NaviZoom").value = parseInt($str, 10);
+	document.getElementById("_NaviZoom").value = parseInt($str, 10);
 
 	var Color1 = "#000";
 	var Color2 = "#0c4b9d";
@@ -798,36 +779,34 @@ function subIwmInputZoom_change(
 		}
 	}
 
-	subIwmInput_close("_InputZoomA");
+	subIwmInput_Close("_InputZoomA");
 }
-function subIwmInputBL_open(
+function subIwmInput_BL_Open(
 	$outputId // [id]
 ){
-	var iId = "_InputBL";
-	if($IwmInput_ctrlId == $outputId){
-		subIwmInput_close(iId);
+	if(document.getElementById($outputId).value == ""){
 		return;
 	}
-	$IwmInputBL_saveId = $outputId;
-
+	var iId = "_InputBL";
+	$subIwmInput_BL_toSave = $outputId;
 	// "_InputBL" を更新
 	_iwmIBL($outputId);
-	subIwmInput_open(iId, $outputId, null, null, false);
+	subIwmInput_Open(iId, $outputId, null, null, false);
 }
-function subIwmInputBL_close(){
-	document.getElementById($IwmInputBL_saveId).value = rtnGeoIBLto10A(
+function subIwmInput_BL_Close(){
+	document.getElementById($subIwmInput_BL_toSave).value = rtnGeoIBLto10A(
 		document.getElementById("_IBL1").value,
 		document.getElementById("_IBL2").value,
 		document.getElementById("_IBL3").value
 	);
-	subIwmInput_close("_InputBL");
+	subIwmInput_Close("_InputBL");
 }
-function subIwmInputBL_saveId(
+function subIwmInput_BL_GetId(
 	$outputId // [id]
 ){
-	$IwmInput_ctrlId = $outputId;
+	$subIwmInput_BL_now = $outputId;
 }
-function subIwmInputBL_keydown(
+function subIwmInput_BL_Keydown(
 	$outputId,   // [id]
 	$decimalSize // 小数点桁数
 ){
@@ -849,11 +828,11 @@ function subIwmInputBL_keydown(
 				}
 				obj.value = d1;
 
-				if($IwmInput_ctrlId == $IwmInputBL_saveId){
+				if($subIwmInput_BL_now == null){
 					_iwmIBL(d1);
 				}
 				else{
-					document.getElementById($IwmInputBL_saveId).value = rtnGeoIBLto10A(
+					document.getElementById($subIwmInput_BL_toSave).value = rtnGeoIBLto10A(
 						document.getElementById("_IBL1").value,
 						document.getElementById("_IBL2").value,
 						document.getElementById("_IBL3").value
@@ -866,22 +845,22 @@ function subIwmInputBL_keydown(
 				// センタリング
 				_iwmCM();
 				// 距離円再描画
-				subGCircleInit();
+				subGCircle_Init();
 			break;
 		}
 	}
 }
-function subIwmInput_open(
+function subIwmInput_Open(
 	$inputId,   // [id]
 	$outputId,  // [id]
 	$posX,      // iNT
 	$posY,      // INT
 	$autoHidden // BOOL
 ){
-	$IwmInput_ctrlId = $outputId;
+	$subIwmInput_BL_now = $outputId;
 
 	// 他の入力フォームを全て閉じる
-	subIwmInput_init();
+	subIwmInput_Init();
 
 	var obj = document.getElementById($outputId);
 	var rect = obj.getBoundingClientRect();
@@ -897,10 +876,10 @@ function subIwmInput_open(
 
 	// 設定ミリ秒後に自動終了
 	if($autoHidden){
-		setTimeout("subIwmInput_close('" + $inputId + "')", 2500);
+		setTimeout("subIwmInput_Close('" + $inputId + "')", 2500);
 	}
 }
-function subIwmInput_close(
+function subIwmInput_Close(
 	$outputId // [id]
 ){
 	try{
@@ -909,42 +888,56 @@ function subIwmInput_close(
 	catch(e){
 		/// console.log(e);
 	}
-	document.onkeydown = function(evt){} // 初期化
+	// 初期化
+	$subIwmInput_BL_now = null;
+	document.onkeydown = function(evt){}
 }
-function subIwmInput_addText(
+$subIwmInput_strPos = 0;
+function subIwmInput_AddText(
 	$str
 ){
-	var obj = document.getElementById($IwmInput_ctrlId);
+	var obj = document.getElementById($subIwmInput_BL_now);
 	var strBefore = obj.value;
 	var strBeforeLen = strBefore.length;
-	var iSelection = obj.selectionStart;
-	obj.value = strBefore.substr(0, iSelection) + $str + strBefore.substr(iSelection, strBeforeLen);
-	iSelection++;
-	obj.selectionStart = iSelection; // 再フォーカス
+	$subIwmInput_strPos = obj.selectionStart;
+	obj.value = strBefore.substr(0, $subIwmInput_strPos) + $str + strBefore.substr($subIwmInput_strPos, strBeforeLen);
+	$subIwmInput_strPos++;
+	// 再フォーカス
+	document.getElementById($subIwmInput_BL_now).focus();
+	obj.selectionStart = $subIwmInput_strPos;
 }
-function subIwmInput_cls(){
-	document.getElementById($IwmInput_ctrlId).value = "";
+function subIwmInput_Cls(){
+	document.getElementById($subIwmInput_BL_now).value = "";
+	// 再フォーカス
+	document.getElementById($subIwmInput_BL_now).focus();
+	$subIwmInput_strPos = 0;
 }
-function subIwmInput_bs(){
-	var obj = document.getElementById($IwmInput_ctrlId);
+function subIwmInput_Bs(){
+	var obj = document.getElementById($subIwmInput_BL_now);
 	var strBefore = obj.value;
 	var strBeforeLen = strBefore.length;
-	var iSelection = obj.selectionStart;
-	iSelection--;
-	if(iSelection >= 0){
-		obj.value = strBefore.substr(0, iSelection) + strBefore.substr((iSelection + 1), strBeforeLen);
-		obj.selectionStart = iSelection; // 再フォーカス
+	$subIwmInput_strPos = obj.selectionStart;
+	$subIwmInput_strPos--;
+	if($subIwmInput_strPos < 0){
+		$subIwmInput_strPos = 0;
 	}
+	obj.value = strBefore.substr(0, $subIwmInput_strPos) + strBefore.substr(($subIwmInput_strPos + 1), strBeforeLen);
+	// 再フォーカス
+	document.getElementById($subIwmInput_BL_now).focus();
+	obj.selectionStart = $subIwmInput_strPos;
 }
-function subIwmInput_del(){
-	var obj = document.getElementById($IwmInput_ctrlId);
+function subIwmInput_Del(){
+	var obj = document.getElementById($subIwmInput_BL_now);
 	var strBefore = obj.value;
 	var strBeforeLen = strBefore.length;
-	var iSelection = obj.selectionStart;
-	if(iSelection < strBeforeLen){
-		obj.value = strBefore.substr(0, iSelection) + strBefore.substr((iSelection + 1), strBeforeLen);
-		obj.selectionStart = iSelection; // 再フォーカス
+	$subIwmInput_strPos = obj.selectionStart;
+	if($subIwmInput_strPos > strBeforeLen){
+		$subIwmInput_strPos = strBeforeLen;
 	}
+	obj.value = strBefore.substr(0, $subIwmInput_strPos) + strBefore.substr(($subIwmInput_strPos + 1), strBeforeLen);
+	// 再フォーカス
+	document.getElementById($subIwmInput_BL_now).focus();
+	obj.selectionStart = $subIwmInput_strPos;
 }
 /*-------------
 // エイリアス
@@ -977,29 +970,24 @@ function _iwmCU(){
 	);
 }
 // センタリング
-var $HashLatLng = null;
-
+var _iwmCM_hash = null;
 function _iwmCM(){
-	if($HashLatLng){
-		subCenterMap(
-			$HashLatLng.lat,
-			$HashLatLng.lng
-		);
-		$HashLatLng = null;
+	if(_iwmCM_hash){
+		subCenterMap1(_iwmCM_hash.lat, _iwmCM_hash.lng);
+		_iwmCM_hash = null;
 	}
 	else{
-		subCenterMap(
-			"_NaviLat",
-			"_NaviLng"
+		subCenterMap1(
+			document.getElementById("_NaviLat").value,
+			document.getElementById("_NaviLng").value,
 		);
 	}
 }
 function _iwmZA(
 	$str
 ){
-	subIwmInputZoomA_close();
-	subIwmInputZoom_change($str);
-
+	subIwmInput_ZoomA_Close();
+	subIwmInput_Zoom_Change($str);
 	// ベースマーカー再描画
 	_iwmBMN();
 	// URL／BL表示を変更
@@ -1007,36 +995,33 @@ function _iwmZA(
 	// センタリング
 	_iwmCM();
 	// 距離円再描画
-	subGCircleInit();
+	subGCircle_Init();
 }
 function _iwmZA2(){
-	subIwmInputZoomA_close();
+	subIwmInput_ZoomA_Close();
 	// センタリング
 	_iwmCM();
 	// 距離円再描画
-	subGCircleInit();
+	subGCircle_Init();
 }
 function _iwmZB(
 	$str
 ){
-	subIwmInputZoom_change($str);
-
+	subIwmInput_Zoom_Change($str);
 	// URL／BL表示を変更
 	_iwmCU();
 	// センタリング
-	subCenterMap2();
+	_iwmCM();
 	// 距離円再描画
-	subGCircleInit();
+	subGCircle_Init();
 }
 function _iwmBL(){
 	for(var _s1 of ["_IBL1", "_IBL2", "_IBL3"]){
-		console.log(_s1, document.getElementById(_s1).value);
 		if(document.getElementById(_s1).value == ""){
 			return;
 		}
 	}
-	subIwmInputBL_close();
-
+	subIwmInput_BL_Close();
 	// URL／BL表示を変更
 	_iwmCU();
 	// ベースマーカー再描画
@@ -1044,19 +1029,19 @@ function _iwmBL(){
 	// センタリング
 	_iwmCM();
 	// 距離円再描画
-	subGCircleInit();
+	subGCircle_Init();
 }
 /*---------------------
 // アドレスマッチング
 ---------------------*/
-var $IntAddMatchCnt = 0;
+var $subAddMatch_cnt = 0;
 var $AddMatchMarker = null;
 const $HashAddMatchOutputZoom = {exist: "↑", none: "↓"};
 
 // 初期化
-function subAddMatchInit(){
+function subAddMatch_Init(){
 	// 初期化
-	$IntAddMatchCnt = 0;
+	$subAddMatch_cnt = 0;
 
 	// Input
 	with(document.getElementById("_AddMatchInput1")){
@@ -1081,11 +1066,11 @@ function subAddMatchInit(){
 		innerHTML = "";
 	}
 }
-function subAddMatch1(){
+function subAddMatch_1(){
 	var query = document.getElementById("_AddMatchInput1").value;
 
 	if(query.trim() == ""){
-		subAddMatchInit();
+		subAddMatch_Init();
 		return;
 	}
 	const _Url = "https://msearch.gsi.go.jp/address-search/AddressSearch?q=" + query;
@@ -1093,15 +1078,15 @@ function subAddMatch1(){
 	var xhr = new XMLHttpRequest();
 	xhr.onload = function(){
 		var aJson = JSON.parse(xhr.responseText);
-		$IntAddMatchCnt = aJson.length;
+		$subAddMatch_cnt = aJson.length;
 
 		// 再検索時に結果を表示させるため
 		document.getElementById("_AddMatchInput2").innerHTML = $HashAddMatchOutputZoom.none;
 
-		var flg = subAddMatch2();
+		var flg = subAddMatch_2();
 		if(flg){
 			with(document.getElementById("_AddMatchOutput")){
-				var rtn = "<div id='_AddMatchOutputH'>◆ヒット数 " + $IntAddMatchCnt + " 件</div>";
+				var rtn = "<div id='_AddMatchOutputH'>◆ヒット数 " + $subAddMatch_cnt + " 件</div>";
 				for(var _s1 of aJson){
 					with(_s1){
 						var _s2 = "";
@@ -1114,13 +1099,9 @@ function subAddMatch1(){
 						catch(e){
 							/// console.log(e + "\n" + _i1 + " | " + properties.addressCode + " | " + properties.title + " | " + geometry.coordinates);
 						}
-						var a1 = geometry.coordinates;
-						var aLatLng = [
-							a1[1],
-							a1[0]
-						];
+						var [lng, lat] = geometry.coordinates;
 
-						rtn += "<div id=\"_AddMatchOutput1\" onmouseover=\"subAddMatchSpot([" + aLatLng + "],'" + properties.title + "');\" onmouseout=\"subAddMatchSpotClear();\" onclick=\"subMapOnRClick('" + aLatLng[0] + "','" + aLatLng[1] + "','" + properties.title + "');\">" +
+						rtn += "<div id=\"_AddMatchOutput1\" onmouseover=\"subAddMatch_Spot([" + lat + "," + lng + "],'" + properties.title + "');\" onmouseout=\"subAddMatch_SpotClear();\" onclick=\"subMapOnRClick('" + lat + "','" + lng + "','" + properties.title + "');\">" +
 							"<div class='_AddMatchRem'>" + _s2 + "</div>" +
 							properties.title + "</div>";
 					}
@@ -1135,14 +1116,14 @@ function subAddMatch1(){
 	/// xhr.overrideMimeType("text/javascript");
 	xhr.send(null);
 }
-function subAddMatch2(){
+function subAddMatch_2(){
 	var rtn = true;
 
 	var oInput2 = document.getElementById("_AddMatchInput2");
 	var oInput3 = document.getElementById("_AddMatchInput3");
 	var oOutput = document.getElementById("_AddMatchOutput");
 
-	if($IntAddMatchCnt > 1000){
+	if($subAddMatch_cnt > 1000){
 		oInput2.style.display = "none";
 		oInput3.style.display = "";
 		with(oOutput){
@@ -1152,7 +1133,7 @@ function subAddMatch2(){
 		}
 		rtn = false;
 	}
-	else if($IntAddMatchCnt > 0){
+	else if($subAddMatch_cnt > 0){
 		oInput2.style.display = "";
 		oInput3.style.display = "";
 		oOutput.style.display = "";
@@ -1180,16 +1161,13 @@ function subAddMatch2(){
 
 	return rtn;
 }
-function subAddMatchSpot(
+function subAddMatch_Spot(
 	$aLatLng,
 	$title
 ){
 	$AddMatchMarker = (
 		L.circleMarker(
-			[
-				$aLatLng[0],
-				$aLatLng[1]
-			],
+			$aLatLng,
 			{
 				radius: 8,
 				color: "#ff5",
@@ -1208,7 +1186,7 @@ function subAddMatchSpot(
 		).openPopup()
 	);
 }
-function subAddMatchSpotClear(){
+function subAddMatch_SpotClear(){
 	if($AddMatchMarker){
 		$AddMatchMarker.remove($Map);
 		$AddMatchMarker = null;
@@ -1257,7 +1235,7 @@ function subLatLngToPlaceName(
 // Simple Window
 ----------------*/
 // 初期化
-function subSimpleWindowInit(
+function subSimpleWindow_Init(
 	$aryId
 ){
 	var i1 = $aryId.length;
@@ -1265,7 +1243,7 @@ function subSimpleWindowInit(
 		document.getElementById($aryId[i1]).style.display = "none";
 	}
 }
-function subSimpleWindowOnOff(
+function subSimpleWindow_OnOff(
 	$id,
 	$func
 ){
@@ -1279,7 +1257,7 @@ function subSimpleWindowOnOff(
 		eval($func);
 	}
 }
-function subSW01(
+function subSimpleWindow_HDoc01(
 	$id
 ){
 	document.getElementById($id).innerHTML = document.getElementById("_HDoc01").value;
@@ -1337,7 +1315,7 @@ function subAddReadFile(
 /*---------------
 // 住所から変換
 ---------------*/
-function subM2P_Geocoding(
+function subA2P_Geocoding(
 	$textareaId
 ){
 	const _Url = "https://msearch.gsi.go.jp/address-search/AddressSearch?q=";
@@ -1396,7 +1374,7 @@ function subM2P_Geocoding(
 /*---------------
 // サンプル出力
 ---------------*/
-function subM2P_GeocodingSample(
+function subA2P_GeocodingSample(
 	$textareaId
 ){
 	document.getElementById($textareaId).value = "千代田区千代田1-1\t皇居\nつくば市北郷1\t国土地理院\n";
@@ -1404,7 +1382,7 @@ function subM2P_GeocodingSample(
 /*-------------------------
 // クリップボードにコピー
 -------------------------*/
-function subM2P_EditCopy(
+function subA2P_EditCopy(
 	$id
 ){
 	document.getElementById($id).select();
@@ -1415,7 +1393,7 @@ function subM2P_EditCopy(
 -------------*/
 var $AryPoint = [];
 
-function subM2P_PointToMap(
+function subA2P_PointToMap(
 	$textareaId
 ){
 	var i1 = $AryPoint.length;
@@ -1452,10 +1430,7 @@ function subM2P_PointToMap(
 
 				var obj1 = (
 					L.circleMarker(
-						[
-							_a1[0],
-							_a1[1]
-						],
+						[_a1[0], _a1[1]],
 						{
 							radius: 8,
 							color: "#5ff",
@@ -1492,7 +1467,7 @@ function subM2P_PointToMap(
 /*---------------
 // ファイル保存
 ---------------*/
-function subM2P_EditSave(
+function subA2P_EditSave(
 	$textareaId,
 	$hrefId
 ){
@@ -1524,14 +1499,14 @@ function subM2P_EditSave(
 /*---------
 // クリア
 ---------*/
-function subM2P_EditClear(
+function subA2P_EditClear(
 	$textareaId,
 	$selectId
 ){
 	/// document.getElementById($textareaId).value = "";
 	document.getElementById($selectId).value = 0;
 
-	subM2P_GCircle($selectId, $textareaId);
+	subA2P_GCircle($selectId, $textareaId);
 
 	var i1 = $AryPoint.length;
 	while(i1--){
@@ -1546,7 +1521,7 @@ function subM2P_EditClear(
 ---------------*/
 $AryM2P_Circle = [];
 
-function subM2P_GCircle(
+function subA2P_GCircle(
 	$selectId,
 	$textareaId
 ){
@@ -1568,10 +1543,7 @@ function subM2P_GCircle(
 		try{
 			var _a1 = _s1.split("\t");
 			$AryM2P_Circle[i1] = L.greatCircle(
-				[
-					_a1[0],
-					_a1[1]
-				],
+				[_a1[0], _a1[1]],
 				{
 					radius: parseInt(document.getElementById($selectId).value, 10),
 					color: "#f00",
@@ -1837,10 +1809,10 @@ function subMarkerPopup2(
 /*------------------------------------
 // [マーカー消去]ボタン 表示／非表示
 ------------------------------------*/
-function subMyObj_init(){
+function subMyObj_Init(){
 	document.getElementById("_btnMarker").style.display = "none";
 }
-function subMyObj_onOff(
+function subMyObj_OnOff(
 	$aryObj
 ){
 	document.getElementById("_btnMarker").style.display = ($aryObj.length > 0 ? "" : "none");
@@ -1848,7 +1820,7 @@ function subMyObj_onOff(
 /*-----------------------
 // ローカルマーカー消去
 -----------------------*/
-function subMyObj_remove(
+function subMyObj_Remove(
 	$aryObj
 ){
 	var obj = null;
@@ -1947,7 +1919,7 @@ function subDem10ToSeaLevel($id){
 var $GCircle = null;
 
 // 初期化
-function subGCircleInit(){
+function subGCircle_Init(){
 	if($GCircle){
 		$GCircle.remove();
 	}
@@ -1955,7 +1927,7 @@ function subGCircleInit(){
 	$GCircle = L.greatCircle(
 		$BaseMarker.getLatLng(),
 		{
-			radius: subGCircleCnv(),
+			radius: subGCircle_Scale(),
 			color: "#00f",
 			fill: true,
 			fillColor: "#00f",
@@ -1966,20 +1938,20 @@ function subGCircleInit(){
 	$GCircle.bindTo($BaseMarker);
 }
 // スライダー制御
-function subGCircleSlider(){
-	var iDist = subGCircleCnv();
+function subGCircle_Slider(){
+	var iDist = subGCircle_Scale();
 	document.getElementById("$GCircleKm").innerHTML = (iDist / 1000.0).toFixed(2) + "km";
 	$GCircle.setRadius(iDist);
 }
 // 目盛毎の単位で変換 (例)10 => 10mスケール
-function subGCircleCnv(){
+function subGCircle_Scale(){
 	const scale = 10; // Meter単位
 	return parseInt(document.getElementById("_GCircleRange").value, 10) * scale;
 }
 </script>
 </head>
 
-<body onload="subInitDisp();subIwmInput_init();subMyObj_init();subAddMatchInit();subGCircleInit();subSimpleWindowInit(['_SW05','_SW04','_SW03','_SW02','_SW01']);" onresize="subInitDisp();">
+<body onload="subInitDisp();subIwmInput_Init();subMyObj_Init();subAddMatch_Init();subGCircle_Init();subSimpleWindow_Init(['_SW05','_SW04','_SW03','_SW02','_SW01']);" onresize="subInitDisp();">
 	<!---------------
 	// 数値入力補完
 	---------------->
@@ -2012,50 +1984,50 @@ function subGCircleCnv(){
 		<input type="button" class="_ZB" value="5" onclick="_iwmZB('5');">
 	</div>
 	<div id="_InputBL">
-		<input type="text" id="_IBL1" onclick="subIwmInputBL_saveId(this.id);" onkeydown="subIwmInputBL_keydown(this.id, 0);" style="width:37px;">度<input type="text" id="_IBL2" onclick="subIwmInputBL_saveId(this.id);" onkeydown="subIwmInputBL_keydown(this.id, 0);" style="width:37px;">分<br>
-		<input type="text" id="_IBL3" onclick="subIwmInputBL_saveId(this.id);" onkeydown="subIwmInputBL_keydown(this.id, 8);" style="width:96px;">秒<br>
-		<input type="button" class="_Btn1" value="7" onclick="subIwmInput_addText('7');"><input type="button" class="_Btn1" value="8" onclick="subIwmInput_addText('8');"><input type="button" class="_Btn1" value="9" onclick="subIwmInput_addText('9');"><br>
-		<input type="button" class="_Btn1" value="4" onclick="subIwmInput_addText('4');"><input type="button" class="_Btn1" value="5" onclick="subIwmInput_addText('5');"><input type="button" class="_Btn1" value="6" onclick="subIwmInput_addText('6');"><br>
-		<input type="button" class="_Btn1" value="1" onclick="subIwmInput_addText('1');"><input type="button" class="_Btn1" value="2" onclick="subIwmInput_addText('2');"><input type="button" class="_Btn1" value="3" onclick="subIwmInput_addText('3');"><br>
-		<input type="button" class="_Btn1" value="0" onclick="subIwmInput_addText('0');"><input type="button" class="_Btn1" value="." onclick="subIwmInput_addText('.');"><input type="button" class="_Btn2" value="Cls" onclick="subIwmInput_cls();"><br>
-		<input type="button" class="_Btn2" value="BS" onclick="subIwmInput_bs();"><input type="button" class="_Btn2" value="Del" onclick="subIwmInput_del();"><input type="button" class="_Btn3" value="OK" onclick="_iwmBL();">
+		<input type="text" id="_IBL1" onclick="subIwmInput_BL_GetId(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 0);" style="width:37px;">度<input type="text" id="_IBL2" onclick="subIwmInput_BL_GetId(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 0);" style="width:37px;">分<br>
+		<input type="text" id="_IBL3" onclick="subIwmInput_BL_GetId(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 8);" style="width:96px;">秒<br>
+		<input type="button" class="_Btn1" value="7" onclick="subIwmInput_AddText('7');"><input type="button" class="_Btn1" value="8" onclick="subIwmInput_AddText('8');"><input type="button" class="_Btn1" value="9" onclick="subIwmInput_AddText('9');"><br>
+		<input type="button" class="_Btn1" value="4" onclick="subIwmInput_AddText('4');"><input type="button" class="_Btn1" value="5" onclick="subIwmInput_AddText('5');"><input type="button" class="_Btn1" value="6" onclick="subIwmInput_AddText('6');"><br>
+		<input type="button" class="_Btn1" value="1" onclick="subIwmInput_AddText('1');"><input type="button" class="_Btn1" value="2" onclick="subIwmInput_AddText('2');"><input type="button" class="_Btn1" value="3" onclick="subIwmInput_AddText('3');"><br>
+		<input type="button" class="_Btn1" value="0" onclick="subIwmInput_AddText('0');"><input type="button" class="_Btn1" value="." onclick="subIwmInput_AddText('.');"><input type="button" class="_Btn2" value="Cls" onclick="subIwmInput_Cls();"><br>
+		<input type="button" class="_Btn2" value="BS" onclick="subIwmInput_Bs();"><input type="button" class="_Btn2" value="Del" onclick="subIwmInput_Del();"><input type="button" class="_Btn3" value="OK" onclick="_iwmBL();">
 	</div>
 	<!---------------------
 	// アドレスマッチング
 	---------------------->
 	<div id="_AddMatchInput">
-		<input type="text" id="_AddMatchInput1" onchange="subAddMatch1();" placeholder="住所検索"><font id="_AddMatchInput2" onclick="subAddMatch2();"></font><font id="_AddMatchInput3" onclick="subAddMatchInit();">×</font>
+		<input type="text" id="_AddMatchInput1" onchange="subAddMatch_1();" placeholder="住所検索"><font id="_AddMatchInput2" onclick="subAddMatch_2();"></font><font id="_AddMatchInput3" onclick="subAddMatch_Init();">×</font>
 	</div>
 	<div id="_AddMatchOutput"></div>
 	<!-------------------
 	// 地理院地図の設定
 	-------------------->
 	<div id="_divNaviCommander">
-		北緯：<input type="text" id="_NaviLat" onclick="subIwmInputBL_open(this.id);" onkeydown="subIwmInputBL_keydown(this.id, 8);" placeholder="緯度入力"/>
-		東経：<input type="text" id="_NaviLng" onclick="subIwmInputBL_open(this.id);" onkeydown="subIwmInputBL_keydown(this.id, 8);" placeholder="経度入力"/>
+		北緯：<input type="text" id="_NaviLat" onclick="subIwmInput_BL_Open(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 8);" placeholder="緯度入力"/>
+		東経：<input type="text" id="_NaviLng" onclick="subIwmInput_BL_Open(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 8);" placeholder="経度入力"/>
 		<!-- ズーム --><input type="hidden" id="_NaviZoom"/>
 		<input type="button" class="_btnNavi1" value="＋" onclick="_iwmZA2();"/>
-		<input type="button" id="_btnMarker" class="_btnNavi2" value="マーカー消去" onclick="subMyObj_remove($AryLocalMarker);"/>
+		<input type="button" id="_btnMarker" class="_btnNavi2" value="マーカー消去" onclick="subMyObj_Remove($AryLocalMarker);"/>
 		<!---------
 		// ヘルプ
 		---------->
 		<span style="float:right;margin:0 8px 0 4px;">
-			<font class="_simpleWindowCall" onclick="subSimpleWindowOnOff('_SW01','subSW01(\'_SW01A\')');" style="font-weight:900;">？</font>
+			<font class="_simpleWindowCall" onclick="subSimpleWindow_OnOff('_SW01','subSimpleWindow_HDoc01(\'_SW01A\')');" style="font-weight:900;">？</font>
 		</span>
 		<div id="_SW01" class="_simpleWindow" style="width:320px;">
 			<font class="_simpleWindowTitle">操作説明</font>
-			<font class="_simpleWindowClose" onclick="subSimpleWindowOnOff('_SW01');">×</font>
+			<font class="_simpleWindowClose" onclick="subSimpleWindow_OnOff('_SW01');">×</font>
 			<div id="_SW01A" class="_simpleWindowOutput" style="max-height:480px;"></div>
 		</div>
 		<!-----------------
 		// 追加タイル編集
 		------------------>
 		<span style="float:right;margin:0 4px;">
-			<font class="_simpleWindowCall" onclick="subSimpleWindowOnOff('_SW02');" style="font-weight:500;">追加タイル編集</font>
+			<font class="_simpleWindowCall" onclick="subSimpleWindow_OnOff('_SW02');" style="font-weight:500;">追加タイル編集</font>
 		</span>
 		<div id="_SW02" class="_simpleWindow" style="width:400px;">
 			<font class="_simpleWindowTitle">追加タイル編集／[Tab]区切り</font>
-			<font class="_simpleWindowClose" onclick="subSimpleWindowOnOff('_SW02');">×</font>
+			<font class="_simpleWindowClose" onclick="subSimpleWindow_OnOff('_SW02');">×</font>
 			<br>
 			<textarea id="_TA01" class="_editTextBox" wrap="off" style="height:180px;width:380px;" onchange="subMapSelector();"></textarea>
 			<script>
@@ -2069,11 +2041,11 @@ function subGCircleCnv(){
 		// マーカー変換
 		---------------->
 		<span style="float:right;margin:0 4px;">
-			<font class="_simpleWindowCall" onclick="subSimpleWindowOnOff('_SW03');">マーカー変換</font>
+			<font class="_simpleWindowCall" onclick="subSimpleWindow_OnOff('_SW03');">マーカー変換</font>
 		</span>
 		<div id="_SW03" class="_simpleWindow" style="width:480px;">
 			<font class="_simpleWindowTitle">マーカーをポイントに変換／[Tab]区切り／UTF-8N）</font>
-			<font class="_simpleWindowClose" onclick="subSimpleWindowOnOff('_SW03');">×</font>
+			<font class="_simpleWindowClose" onclick="subSimpleWindow_OnOff('_SW03');">×</font>
 			<div class="_simpleWindowOutput" style="background:#fafafa;min-height:300px;padding:8px;">
 				<input type="button" class="_btnNavi3" value=">>地図から読込" onclick="subMapToPoint('_TA02');"/>
 				<input type="file" id="_readFn" class="_btnNavi2" onchange="subAddReadFile(this.id,'_TA02');"/>
@@ -2083,25 +2055,25 @@ function subGCircleCnv(){
 					document.getElementById("_TA02").onkeydown = function(e){subAddTabCtrl(e, this);}
 				</script>
 				<br>
-				<input type="button" class="_btnNavi4" style="margin:3px 0 0 0;" value=">>住所から変換" onclick="subM2P_Geocoding('_TA02');">
-				<input type="button" class="_btnNavi4" style="margin:3px 0 0 0;" value="↑サンプル出力" onclick="subM2P_GeocodingSample('_TA02');">
-				<input type="button" class="_btnNavi1" value="クリップボードにコピー" onclick="subM2P_EditCopy('_TA02');"/>
+				<input type="button" class="_btnNavi4" style="margin:3px 0 0 0;" value=">>住所から変換" onclick="subA2P_Geocoding('_TA02');">
+				<input type="button" class="_btnNavi4" style="margin:3px 0 0 0;" value="↑サンプル出力" onclick="subA2P_GeocodingSample('_TA02');">
+				<input type="button" class="_btnNavi1" value="クリップボードにコピー" onclick="subA2P_EditCopy('_TA02');"/>
 				<br>
-				<input type="button" class="_btnNavi3" value="<<地図へ反映" onclick="subM2P_PointToMap('_TA02');"/>
-				<a id="_btnDL" class="_btnNavi2" href="#" download="" onclick="subM2P_EditSave('_TA02',this.id)">ファイルに保存</a>
-				<input type="button" class="_btnNavi1" value="クリア" style="margin:3px 0 0 0;" onclick="subM2P_EditClear('_TA02','_GCircleM2P');"/>
-				<select id="_GCircleM2P" style="border:1px solid #505050;" onclick="subM2P_GCircle('_GCircleM2P','_TA02')"><option value="0">範囲円なし</option><option value="50">50m</option><option value="100">100m</option><option value="250">250m</option><option value="500">500m</option><option value="1000">1km</option><option value="2000">2km</option><option value="4000">4km</option><option value="8000">8km</option><option value="20000">20km</option><option value="25000">25km</option><option value="40000">40km</option><option value="100000">100km</option><option value="500000">500km</option><option value="1000000">1000km</option><option value="2000000">2000km</option><option value="5000000">5000km</option></select>
+				<input type="button" class="_btnNavi3" value="<<地図へ反映" onclick="subA2P_PointToMap('_TA02');"/>
+				<a id="_btnDL" class="_btnNavi2" href="#" download="" onclick="subA2P_EditSave('_TA02',this.id)">ファイルに保存</a>
+				<input type="button" class="_btnNavi1" value="クリア" style="margin:3px 0 0 0;" onclick="subA2P_EditClear('_TA02','_GCircleM2P');"/>
+				<select id="_GCircleM2P" style="border:1px solid #505050;" onclick="subA2P_GCircle('_GCircleM2P','_TA02')"><option value="0">範囲円なし</option><option value="50">50m</option><option value="100">100m</option><option value="250">250m</option><option value="500">500m</option><option value="1000">1km</option><option value="2000">2km</option><option value="4000">4km</option><option value="8000">8km</option><option value="20000">20km</option><option value="25000">25km</option><option value="40000">40km</option><option value="100000">100km</option><option value="500000">500km</option><option value="1000000">1000km</option><option value="2000000">2000km</option><option value="5000000">5000km</option></select>
 			</div>
 		</div>
 		<!---------
 		// 海水面
 		---------->
 		<span style="float:right;margin:0 4px;">
-			<font id="_AAA" class="_simpleWindowCall" onclick="subSimpleWindowOnOff('_SW04');" style="font-weight:500;">海水面</font>
+			<font id="_AAA" class="_simpleWindowCall" onclick="subSimpleWindow_OnOff('_SW04');" style="font-weight:500;">海水面</font>
 		</span>
 		<div id="_SW04" class="_simpleWindow" style="right:113px;min-height:45px;width:185px;z-index:900;">
 			<font class="_simpleWindowTitle">ズーム14以下で利用可能</font>
-			<font class="_simpleWindowClose" onclick="subSimpleWindowOnOff('_SW04');">×</font>
+			<font class="_simpleWindowClose" onclick="subSimpleWindow_OnOff('_SW04');">×</font>
 			<br>
 			<input type="number" id="_Dem10ToSeaLevel" value="0" style="text-align:right;width:60px;" onclick="subDem10ToSeaLevel(this.id);" onkeyup="subDem10ToSeaLevel(this.id);"/>ｍ
 			<input type="button" class="_btnNavi1" value="ON" onclick="subDem10ToSeaLevel('_Dem10ToSeaLevel');"/>
@@ -2111,13 +2083,13 @@ function subGCircleCnv(){
 		// 距離円
 		---------->
 		<span style="float:right;margin:0 4px;">
-			<font class="_simpleWindowCall" onclick="subSimpleWindowOnOff('_SW05');" style="font-weight:500;">距離円</font>
+			<font class="_simpleWindowCall" onclick="subSimpleWindow_OnOff('_SW05');" style="font-weight:500;">距離円</font>
 		</span>
 		<div id="_SW05" class="_simpleWindow" style="right:304px;min-height:45px;width:228px;z-index:900;">
 			<font class="_simpleWindowTitle">半径を指定</font>
-			<font class="_simpleWindowClose" onclick="subSimpleWindowOnOff('_SW05');">×</font>
+			<font class="_simpleWindowClose" onclick="subSimpleWindow_OnOff('_SW05');">×</font>
 			<br>
-			<div id="_GCircle"><input type="range" id="_GCircleRange" min="0" max="2000" value="0" oninput="subGCircleSlider();"><span id="$GCircleKm">0km</span></div>
+			<div id="_GCircle"><input type="range" id="_GCircleRange" min="0" max="2000" value="0" oninput="subGCircle_Slider();"><span id="$GCircleKm">0km</span></div>
 		</div>
 	</div>
 	<div id="_divMap">
@@ -2166,10 +2138,7 @@ function subGCircleCnv(){
 		var $Map = L.map(
 			"_divMap",
 			{
-				center: [
-					document.getElementById("_NaviLat").value,
-					document.getElementById("_NaviLng").value
-				],
+				center: [document.getElementById("_NaviLat").value, document.getElementById("_NaviLng").value],
 				zoom: document.getElementById("_NaviZoom").value,
 				minZoom: 3,  // 最小ズーム
 				maxZoom: 23, // 最大ズーム
@@ -2470,7 +2439,7 @@ function subGCircleCnv(){
 			// 初回表示の処理
 			$Map.on(
 				"overlayremove",
-				function legendRemove(e){
+				function(e){
 					// 地図選択メニューから削除
 					$checkBoxSelectMap[e.name].remove($Map);
 				}
@@ -2506,28 +2475,13 @@ function subGCircleCnv(){
 		/*---------------
 		// センタリング
 		---------------*/
-		function subCenterMap(
+		function subCenterMap1(
 			$Lat,
 			$Lng
 		){
-			if(isNaN($Lat)){
-				$Lat = document.getElementById($Lat).value;
-			}
-			if(isNaN($Lng)){
-				$Lng = document.getElementById($Lng).value;
-			}
 			$Map.setView(
-				[
-					$Lat,
-					$Lng
-				],
+				[$Lat, $Lng],
 				document.getElementById("_NaviZoom").value
-			);
-		}
-		function subCenterMap2(){
-			$Map.setView(
-				$Map.getCenter(),
-				document.getElementById("_NaviZoom").value // 必ず "_NaviZoom" で呼ぶ
 			);
 		}
 		/*-----------------------------
@@ -2595,10 +2549,7 @@ function subGCircleCnv(){
 				$BaseMarker.remove($Map);
 			}
 			$BaseMarker = L.marker(
-				[
-					$Lat,
-					$Lng
-				],
+				[$Lat, $Lng],
 				{
 					icon: $BaseMarkerIcon,
 					draggable: true // ドラッグ許可
@@ -2608,21 +2559,7 @@ function subGCircleCnv(){
 			$BaseMarker.elevation = "---";
 
 			// URL／BL表示を変更
-			subChangeUrl(
-				$Lat,
-				$Lng,
-				"_NaviZoom"
-			);
-
-			// ポップアップ非表示
-			function subMarkerClosePopup(){
-				/// $BaseMarker.closePopup();
-				var i1 = 0;
-				var i2 = $AryLocalMarker.length;
-				for(; i1 < i2; i1++){
-					$AryLocalMarker[i1].closePopup();
-				}
-			}
+			subChangeUrl($Lat, $Lng, "_NaviZoom");
 
 			// ズームレベル変更 <= click
 			$BaseMarker.on(
@@ -2630,7 +2567,7 @@ function subGCircleCnv(){
 				function(e){
 					// ズームレベル補完
 					var mouseP = $Map.latLngToContainerPoint(this.getLatLng());
-					subIwmInputZoomA_open(
+					subIwmInput_ZoomA_Open(
 						"_NaviZoom",
 						(mouseP.x + 30),
 						(mouseP.y - 40)
@@ -2658,19 +2595,15 @@ function subGCircleCnv(){
 				function(e){
 					// URL／BL表示を変更
 					var a1 = this.getLatLng();
-					subChangeUrl(
-						a1.lat,
-						a1.lng,
-						"_NaviZoom"
-					);
+
+					subChangeUrl(a1.lat, a1.lng, "_NaviZoom");
+
 					// "_InputBL" を更新
-					_iwmIBL($IwmInputBL_saveId);
+					_iwmIBL($subIwmInput_BL_toSave);
 
 					// 表示を更新して、すぐに隠す
-					subMarkerPopup(
-						$BaseMarker,
-						$AryLocalMarker
-					);
+					subMarkerPopup($BaseMarker, $AryLocalMarker);
+
 					this.closePopup();
 				}
 			);
@@ -2679,17 +2612,19 @@ function subGCircleCnv(){
 				"mouseover",
 				function(e){
 					// 先読みしておく
-					subMarkerPopup1(
-						$BaseMarker._latlng.lat,
-						$BaseMarker._latlng.lng
-					);
+					subMarkerPopup1($BaseMarker._latlng.lat, $BaseMarker._latlng.lng);
 				}
 			);
 			// ポップアップ非表示 <= mouseout
 			$BaseMarker.on(
 				"mouseout",
 				function(e){
-					/// subMarkerClosePopup();
+					/// $BaseMarker.closePopup();
+					/*
+						for(var _s1 of $AryLocalMarker){
+							_s1.closePopup();
+						}
+					*/
 				}
 			);
 		}
@@ -2698,7 +2633,7 @@ function subGCircleCnv(){
 		_iwmBMN();
 
 		// ズームバー
-		subIwmInputZoom_change($Map.getZoom());
+		subIwmInput_Zoom_Change($Map.getZoom());
 
 		// ミニマップ
 		var miniMapLayer = new L.TileLayer(
@@ -2731,10 +2666,7 @@ function subGCircleCnv(){
 			// マーカー作成
 			$AryLocalMarker.push(
 				L.marker(
-					[
-						$lat,
-						$lng
-					],
+					[$lat, $lng],
 					{
 						icon: (bIconDrag ? $LocalMarkerDragOn : $LocalMarkerDragOff),
 						draggable: bIconDrag
@@ -2745,7 +2677,7 @@ function subGCircleCnv(){
 			$AryLocalMarker[$AryLocalMarker.length - 1].elevation = "---";
 
 			// [マーカー消去]ボタン表示
-			subMyObj_onOff($AryLocalMarker);
+			subMyObj_OnOff($AryLocalMarker);
 
 			// 現在(配列)のローカルマーカー
 			var obj = $AryLocalMarker[$AryLocalMarker.length - 1];
@@ -2760,10 +2692,7 @@ function subGCircleCnv(){
 
 			// 固定点地名のときだけセンタリング
 			if(!bIconDrag){
-				subCenterMap(
-					$lat,
-					$lng
-				);
+				subCenterMap1($lat, $lng);
 			}
 
 			// ズームレベル補完 <= click
@@ -2771,9 +2700,9 @@ function subGCircleCnv(){
 				"click",
 				function(e){
 					// ズームレベル補完
-					$HashLatLng = this.getLatLng();
-					var mouseP = $Map.latLngToContainerPoint($HashLatLng);
-					subIwmInputZoomA_open(
+					_iwmCM_hash = this.getLatLng();
+					var mouseP = $Map.latLngToContainerPoint(_iwmCM_hash);
+					subIwmInput_ZoomA_Open(
 						"_NaviZoom",
 						(mouseP.x + 20),
 						(mouseP.y - 25)
@@ -2795,7 +2724,7 @@ function subGCircleCnv(){
 						}
 					}
 					// [マーカー消去]ボタン非表示
-					subMyObj_onOff($AryLocalMarker);
+					subMyObj_OnOff($AryLocalMarker);
 				}
 			);
 			// ドラッグ <= dragend
@@ -2856,7 +2785,7 @@ function subGCircleCnv(){
 			"dblclick",
 			function(e){
 				// ズームレベル補完
-				subIwmInputZoomA_open(
+				subIwmInput_ZoomA_Open(
 					"_NaviZoom",
 					(e.containerPoint.x + 20),
 					(e.containerPoint.y - 25)
@@ -2867,7 +2796,7 @@ function subGCircleCnv(){
 					e.latlng.lng
 				);
 				// 距離円再描画
-				subGCircleInit();
+				subGCircle_Init();
 			}
 		);
 		$Map.on(
@@ -2890,7 +2819,7 @@ function subGCircleCnv(){
 					$Map.getZoom()
 				);
 				// ズームバー
-				subIwmInputZoom_change($Map.getZoom());
+				subIwmInput_Zoom_Change($Map.getZoom());
 			}
 		);
 		</script>
