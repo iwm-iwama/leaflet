@@ -1,4 +1,4 @@
-<!-- Ver.20200123_2304 'U-2S' -->
+<!-- Ver.20200125_1450 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -295,9 +295,9 @@ option
 {
 	background:#ff5858 !important;
 }
-#_InputBL  > ._Btn1,
-#_InputBL  > ._Btn2,
-#_InputBL  > ._Btn3
+#_InputBL > ._Btn1,
+#_InputBL > ._Btn2,
+#_InputBL > ._Btn3
 {
 	height:23px;
 	width:36px;
@@ -338,7 +338,6 @@ option
 }
 /* ↑OverLap */
 #_NaviZoom,
-#_NaviNum,
 #_NaviLat,
 #_NaviLng
 {
@@ -348,21 +347,15 @@ option
 	margin:0;
 	padding:0 3px;
 }
-#_NaviNum
-{
-	width:80px;
-}
 #_NaviLat,
 #_NaviLng
 {
 	width:100px;
 }
 #_NaviZoom:hover,
-#_NaviNum:hover,
 #_NaviLat:hover,
 #_NaviLng:hover,
 #_NaviZoom:focus,
-#_NaviNum:focus,
 #_NaviLat:focus,
 #_NaviLng:focus
 {
@@ -956,18 +949,11 @@ function _iwmIBL(
 }
 // ベースマーカー再描画
 function _iwmBMN(){
-	subBaseMarkerNew(
-		"_NaviLat",
-		"_NaviLng"
-	);
+	subBaseMarkerNew("_NaviLat", "_NaviLng");
 }
 // URL／BL表示を変更
 function _iwmCU(){
-	subChangeUrl(
-		"_NaviLat",
-		"_NaviLng",
-		"_NaviZoom"
-	);
+	subChangeUrl("_NaviLat", "_NaviLng", "_NaviZoom");
 }
 // センタリング
 var _iwmCM_hash = null;
@@ -1464,9 +1450,9 @@ function subA2P_PointToMap(
 		document.getElementById($textareaId).value = str;
 	}
 }
-/*---------------
-// ファイル保存
----------------*/
+/*-----------------
+// ファイルに保存
+-----------------*/
 function subA2P_EditSave(
 	$textareaId,
 	$hrefId
@@ -1474,18 +1460,7 @@ function subA2P_EditSave(
 	var content = document.getElementById($textareaId).value;
 	var blob = new Blob([content], {"type" : "text/plain"});
 	var fn = ($FileName ? $FileName : "マーカー変換.tsv");
-	// ファイル名：yyyymmdd_hhnnss.tsv
-	/*
-		var curDate = new Date();
-		var fn = "" + curDate.getFullYear();
-			fn += ("0" + (curDate.getMonth() + 1)).substr(-2);
-			fn += ("0" + curDate.getDate()).substr(-2);
-			fn += "_";
-			fn += ("0" + curDate.getHours()).substr(-2);
-			fn += ("0" + curDate.getMinutes()).substr(-2);
-			fn += ("0" + curDate.getSeconds()).substr(-2);
-			fn += ".tsv";
-	*/
+
 	// MSIE?
 	if(window.navigator.msSaveBlob){
 		window.navigator.msSaveBlob(blob, fn);
@@ -1720,12 +1695,8 @@ function subMarkerPopup1(
 	$lat,
 	$lng
 ){
-	subLatLngToPlaceName(
-		$lat,
-		$lng,
-		$BaseMarker,
-		null
-	);
+	subLatLngToPlaceName($lat, $lng, $BaseMarker, null);
+
 	var [deg, min, sec] = rtnGeo10toIBL($lat);
 	var latRem = deg + "度" + min + "分" + parseFloat(sec).toFixed(6) + "秒";
 
@@ -1751,12 +1722,8 @@ function subMarkerPopup2(
 	$lngTo,
 	$oMarker
 ){
-	subLatLngToPlaceName(
-		$latTo,
-		$lngTo,
-		$oMarker,
-		null
-	);
+	subLatLngToPlaceName($latTo, $lngTo, $oMarker, null);
+
 	var [deg, min, sec] = rtnGeo10toIBL($latTo);
 	var latRem = deg + "度" + min + "分" + parseFloat(sec).toFixed(6) + "秒";
 
@@ -2579,10 +2546,7 @@ function subGCircle_Scale(){
 				"contextmenu",
 				function(e){
 					this.closePopup();
-					subMarkerPopup(
-						$BaseMarker,
-						$AryLocalMarker
-					);
+					subMarkerPopup($BaseMarker, $AryLocalMarker);
 					var i1 = $AryPoint.length;
 					while(i1--){
 						$AryPoint[i1].openPopup();
@@ -2791,10 +2755,7 @@ function subGCircle_Scale(){
 					(e.containerPoint.y - 25)
 				);
 				// ベースマーカー再描画
-				subBaseMarkerNew(
-					e.latlng.lat,
-					e.latlng.lng
-				);
+				subBaseMarkerNew(e.latlng.lat, e.latlng.lng);
 				// 距離円再描画
 				subGCircle_Init();
 			}
@@ -2802,22 +2763,14 @@ function subGCircle_Scale(){
 		$Map.on(
 			"contextmenu",
 			function(e){
-				subMapOnRClick(
-					e.latlng.lat,
-					e.latlng.lng,
-					null
-				);
+				subMapOnRClick(e.latlng.lat, e.latlng.lng, null);
 			}
 		);
 		$Map.on(
 			"zoomend",
 			function(e){
 				// URL／BL表示を変更
-				subChangeUrl(
-					"_NaviLat",
-					"_NaviLng",
-					$Map.getZoom()
-				);
+				subChangeUrl("_NaviLat", "_NaviLng", $Map.getZoom());
 				// ズームバー
 				subIwmInput_Zoom_Change($Map.getZoom());
 			}
