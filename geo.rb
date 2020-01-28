@@ -6,7 +6,7 @@
 #---------------------------------------------------------------------
 # 十進法 ddd.d...
 #---------------------------------------------------------------------
-Data1 = <<'EOD' # 非展開
+Data1 = <<EOD
 35.685187	139.752274	45.416799	141.677155	皇居～稚内駅
 35.685187	139.752274	43.385277	145.816641	皇居～納沙布岬
 35.685187	139.752274	43.068637	141.350784	皇居～札幌駅
@@ -43,7 +43,7 @@ EOD
 #---------------------------------------------------------------------
 # 度分秒 dddmmss.s...
 #---------------------------------------------------------------------
-Data2 = <<'EOD' # 非展開
+Data2 = <<EOD
 354106.6732	1394508.1864	240335.0964	1234819.9944	皇居～波照間空港
 354106.6732	1394508.1864	202525.284	1360432.9844	皇居～沖ノ鳥島
 EOD
@@ -213,20 +213,20 @@ Separater = " "
 # 計算／十進法
 #---------------
 def main_data1()
-	Data1.split("\n").each do
-		|_s|
-		_s.strip!
+	Data1.each_line do
+		|ln|
+		ln.strip!
 
-		if _s.size > 0
-			_s.gsub!(/[\t\s,]+/, Separater)
-			puts _s
+		if ln.size > 0
+			ln.gsub!(/[\t\s,]+/, Separater)
+			puts ln
 
 			as1 = []
 
-			ad1 = _s.split(Separater).slice(0, 4)
+			ad1 = ln.split(Separater).slice(0, 4)
 			ad1.each do
-				|_s|
-				deg, min, sec = rtnGeo10toIBL(_s)
+				|ln|
+				deg, min, sec = rtnGeo10toIBL(ln)
 				as1 << sprintf("%d度%d分%f秒", deg, min, sec)
 			end
 			puts as1.join(Separater)
@@ -247,20 +247,20 @@ end
 # 計算／度分秒
 #---------------
 def main_data2()
-	Data2.split("\n").each do
-		|_s|
-		_s.strip!
+	Data2.each_line do
+		|ln|
+		ln.strip!
 
-		if _s.size > 0
-			_s.gsub!(/[\t\s,]+/, Separater)
-			puts _s
+		if ln.size > 0
+			ln.gsub!(/[\t\s,]+/, Separater)
+			puts ln
 
 			aLatLng = []
 			as1 = []
 
-			_s.split(Separater).slice(0, 4).each do
-				|_s|
-				aLatLng << _deg = rtnGeoIBLto10B(_s)
+			ln.split(Separater).slice(0, 4).each do
+				|ln|
+				aLatLng << _deg = rtnGeoIBLto10B(ln)
 				as1 << sprintf("%f度", _deg)
 			end
 			puts as1.join(Separater)
