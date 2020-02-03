@@ -1,4 +1,4 @@
-<!-- Ver.20200125_1450 'U-2S' -->
+<!-- Ver.20200203_1940 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -1555,6 +1555,12 @@ function rtnGeo10toIBL(
 ){
 	$angle = parseFloat($angle);
 
+	var sign = 1;
+
+	if($angle < 0){
+		sign = -1;
+		$angle = -$angle;
+	}
 	var deg = parseInt($angle, 10);
 		$angle = ($angle - deg) * 60.0;
 	var min = parseInt($angle, 10);
@@ -1566,7 +1572,8 @@ function rtnGeo10toIBL(
 		min += 1;
 		sec = 0;
 	}
-	return [parseInt(deg, 10), parseInt(min, 10), parseFloat(sec)];
+
+	return [parseInt(deg, 10) * sign, parseInt(min, 10), parseFloat(sec)];
 }
 /*-------------------------------
 // Vincenty法による２点間の距離

@@ -75,10 +75,19 @@ def rtnGeoIBLto10B(
 	ddmmss # ddmmss.s...
 )
 	ddmmss = ddmmss.to_f
+
+	sign = 1
+
+	if ddmmss < 0
+		sign = -1
+		ddmmss = -ddmmss
+	end
+
 	sec = ddmmss % 100
 	min = ((ddmmss / 100).to_i) % 100
 	deg = (ddmmss / 10000).to_i
-	return (deg + (min / 60.0) + (sec / 3600.0)).to_f
+
+	return sign * (deg + (min / 60.0) + (sec / 3600.0)).to_f
 end
 
 #-------------------
@@ -93,6 +102,13 @@ def rtnGeo10toIBL(
 )
 	angle = angle.to_f
 
+	sign = 1
+
+	if angle < 0
+		sign = -1
+		angle = -angle
+	end
+
 	deg = angle.to_i
 		angle = (angle - deg) * 60.0
 	min = angle.to_i
@@ -105,7 +121,7 @@ def rtnGeo10toIBL(
 		sec = 0
 	end
 
-	return [deg.to_i, min.to_i, sec.to_f]
+	return [(sign * deg).to_i, min.to_i, sec.to_f]
 end
 
 #-------------------------------

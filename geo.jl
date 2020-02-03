@@ -71,10 +71,18 @@ end
 function rtnGeoIBLto10B(
 	ddmmss::Float64 # ddmmss.s...
 )
+	sign = 1
+
+	if ddmmss < 0
+		sign = -1
+		ddmmss = -ddmmss
+	end
+
 	sec = ddmmss % 100
 	min = floor(ddmmss / 100) % 100
 	deg = floor(ddmmss / 10000)
-	return (deg + (min / 60.0) + (sec / 3600.0))::Float64
+
+	return sign * (deg + (min / 60.0) + (sec / 3600.0))::Float64
 end
 
 #-------------------
@@ -88,6 +96,13 @@ end
 function rtnGeo10toIBL(
 	angle::Float64 # 十進法
 )
+	sign = 1
+
+	if angle < 0
+		sign = -1
+		angle = -angle
+	end
+
 	deg = Int64(floor(angle))
 		angle = (angle - deg) * 60.0
 	min = Int64(floor(angle))
@@ -100,7 +115,7 @@ function rtnGeo10toIBL(
 		sec = 0
 	end
 
-	return (deg::Int64, min::Int64, sec::Float64)
+	return ((sign * deg)::Int64, min::Int64, sec::Float64)
 end
 
 #-------------------------------

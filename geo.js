@@ -74,10 +74,18 @@ function rtnGeoIBLto10B(
 )
 {
 	$ddmmss = parseFloat($ddmmss);
-		var sec = parseFloat($ddmmss % 100);
-		var min = parseInt(parseFloat($ddmmss / 100) % 100, 10);
-		var deg = parseInt(parseFloat($ddmmss / 10000), 10);
-	return parseFloat(deg + (min / 60.0) + (sec / 3600.0));
+
+	var sign = 1;
+
+	if($ddmmss < 0){
+		sign = -1;
+		$ddmmss = -$ddmmss;
+	}
+	var sec = parseFloat($ddmmss % 100);
+	var min = parseInt(parseFloat($ddmmss / 100) % 100, 10);
+	var deg = parseInt(parseFloat($ddmmss / 10000), 10);
+
+	return parseFloat(deg + (min / 60.0) + (sec / 3600.0)) * sign;
 }
 
 /*-------------------
@@ -93,6 +101,12 @@ function rtnGeo10toIBL(
 {
 	$angle = parseFloat($angle);
 
+	var sign = 1;
+
+	if($angle < 0){
+		sign = -1;
+		$angle = -$angle;
+	}
 	var deg = parseInt($angle, 10);
 		$angle = ($angle - deg) * 60.0;
 	var min = parseInt($angle, 10);
@@ -105,7 +119,8 @@ function rtnGeo10toIBL(
 		min += 1;
 		sec = 0;
 	}
-	return [parseInt(deg, 10), parseInt(min, 10), parseFloat(sec)];
+
+	return [parseInt(deg, 10) * sign, parseInt(min, 10), parseFloat(sec)];
 }
 
 /*-------------------------------
