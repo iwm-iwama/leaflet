@@ -150,7 +150,7 @@ function rtnGeoVincentry(
 		return [0, 0];
 	}
 
-	///const _A = 6378137.0;
+	/// const _A = 6378137.0;
 	const _B   = 6356752.314;
 	const _F   = 1 / 298.257222101;
 	const _RAD = Math.PI / 180.0

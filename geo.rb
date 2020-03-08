@@ -146,7 +146,7 @@ def rtnGeoVincentry(
 		return [0, 0]
 	end
 
-	_A   = 6378137.0
+	## _A   = 6378137.0
 	_B   = 6356752.314
 	_F   = (1 / 298.257222101)
 	_RAD = Math::PI / 180.0
