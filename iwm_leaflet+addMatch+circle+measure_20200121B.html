@@ -1,4 +1,4 @@
-<!-- iwm0200121B Ver.20200321_1256 'U-2S' -->
+<!-- iwm0200121B Ver.20200321_1302 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -2086,13 +2086,9 @@ function subGCircle_Scale(){
 			}
 		}
 		else{
-			// 初回ズーム
-			with(document){
-				getElementById("_NaviZoom").value = 5;
-			}
-
 			// 初回座標＠皇居
 			with(document){
+				getElementById("_NaviZoom").value = 5;
 				getElementById("_NaviLat").value = (35.68518697509636).toFixed(8);
 				getElementById("_NaviLng").value = (139.7522735595703).toFixed(8);
 			}
@@ -2103,19 +2099,17 @@ function subGCircle_Scale(){
 					with(document){
 						getElementById("_NaviLat").value = position.coords.latitude.toFixed(8);
 						getElementById("_NaviLng").value = position.coords.longitude.toFixed(8);
-						_iwmBMN();
-						_iwmCU();
-						_iwmCM();
-						subGCircle_Init();
 					}
+					_iwmBMN();
+					_iwmCU();
+					_iwmCM();
+					subGCircle_Init();
 				},
 				function(error){
-					with(document){
-						_iwmBMN();
-						_iwmCU();
-						_iwmCM();
-						subGCircle_Init();
-					}
+					_iwmBMN();
+					_iwmCU();
+					_iwmCM();
+					subGCircle_Init();
 				}
 			);
 		}
