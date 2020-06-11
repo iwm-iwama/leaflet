@@ -1,13 +1,12 @@
-#!ruby
-#coding:utf-8
-# > ruby geoDistMP.rb
+#!#!julia
+# > julia -O3 geoDistMP.jl
 
 #---------------------------------------------------------------------
 # [北緯]	[東経]	[その他]
 #---------------------------------------------------------------------
 # 十進法 ddd.d...
 #---------------------------------------------------------------------
-Data1 = <<EOD
+const Data1 = """
 # (サンプル)
 #	35.685187	139.752274	皇居
 #	24.449582	122.934340	日本最西端之地
@@ -415,30 +414,25 @@ Data1 = <<EOD
 45.39518	141.70627	↓
 45.40446	141.67576	↓
 45.41726	141.67677	稚内駅
-EOD
+"""
 #---------------------------------------------------------------------
 # 度分秒 dddmmss.s...
 #---------------------------------------------------------------------
-Data2 = <<EOD
+const Data2 = """
 # (サンプル)
 354106.6732	1394508.1864	皇居
 242658.4952	1225603.6240	日本最西端之地
-EOD
+"""
 #---------------------------------------------------------------------
-
-Signal.trap(:INT) do
-	exit
-end
 
 #-------------------
 # (例)
-#	printf("%f度\n", rtnGeoIBLto10B(242658.495200))
+#	using Printf
+#	@printf("%f度\n", rtnGeoIBLto10B(242658.495200))
 #
-def rtnGeoIBLto10B(
-	ddmmss # ddmmss.s...
+function rtnGeoIBLto10B(
+	ddmmss::Float64 # ddmmss.s...
 )
-	ddmmss = ddmmss.to_f
-
 	sign = 1
 
 	if ddmmss < 0
@@ -447,10 +441,10 @@ def rtnGeoIBLto10B(
 	end
 
 	sec = ddmmss % 100
-	min = ((ddmmss / 100).to_i) % 100
-	deg = (ddmmss / 10000).to_i
+	min = floor(ddmmss / 100) % 100
+	deg = floor(ddmmss / 10000)
 
-	return sign * (deg + (min / 60.0) + (sec / 3600.0)).to_f
+	return sign * (deg + (min / 60.0) + (sec / 3600.0))::Float64
 end
 
 #-------------------------------
@@ -460,25 +454,24 @@ end
 #	http://tancro.e-central.tv/grandmaster/script/vincentyJS.html
 #
 # (例)
+#	using Printf
 #	dist, angle = rtnGeoVincentry(35.685187, 139.752274, 24.449582, 122.93434)
-#	printf("%fkm %f度\n", dist, angle)
+#	@printf("%fkm %f度\n", dist, angle)
 #
-def rtnGeoVincentry(
-	lat1, # 開始～緯度
-	lng1, # 開始～経度
-	lat2, # 終了～緯度
-	lng2  # 終了～経度
+function rtnGeoVincentry(
+	lat1::Float64, # 開始～緯度
+	lng1::Float64, # 開始～経度
+	lat2::Float64, # 終了～緯度
+	lng2::Float64  # 終了～経度
 )
-	lat1, lng1, lat2, lng2 = lat1.to_f, lng1.to_f, lat2.to_f, lng2.to_f
-
 	if lat1 == lat2 && lng1 == lng2
-		return [0.0, 0.0]
+		return (0.0, 0.0)
 	end
 
 	## _A   = 6378137.0
 	_B   = 6356752.314
 	_F   = (1 / 298.257222101)
-	_RAD = Math::PI / 180.0
+	_RAD = pi / 180.0
 
 	latR1 = lat1 * _RAD
 	lngR1 = lng1 * _RAD
@@ -488,11 +481,11 @@ def rtnGeoVincentry(
 	f1 = 1 - _F
 
 	omega  = lngR2 - lngR1
-	tanU1  = f1 * Math.tan(latR1)
-	cosU1  = 1 / Math.sqrt(1 + (tanU1 * tanU1))
+	tanU1  = f1 * tan(latR1)
+	cosU1  = 1 / sqrt(1 + (tanU1 * tanU1))
 	sinU1  = tanU1 * cosU1
-	tanU2  = f1 * Math.tan(latR2)
-	cosU2  = 1 / Math.sqrt(1 + (tanU2 * tanU2))
+	tanU2  = f1 * tan(latR2)
+	cosU2  = 1 / sqrt(1 + (tanU2 * tanU2))
 	sinU2  = tanU2 * cosU2
 	lamda  = omega
 	dLamda = 0.0
@@ -511,15 +504,15 @@ def rtnGeoVincentry(
 	count = 0
 
 	while true
-		sinLamda = Math.sin(lamda)
-		cosLamda = Math.cos(lamda)
+		sinLamda = sin(lamda)
+		cosLamda = cos(lamda)
 		sin2sigma = (cosU2 * sinLamda) * (cosU2 * sinLamda) + (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda)
 		if sin2sigma < 0.0
-			return [0.0, 0.0]
+			return (0.0, 0.0)
 		end
-		sinSigma = Math.sqrt(sin2sigma)
+		sinSigma = sqrt(sin2sigma)
 		cosSigma = sinU1 * sinU2 + cosU1 * cosU2 * cosLamda
-		sigma = Math.atan2(sinSigma, cosSigma)
+		sigma = atan(sinSigma, cosSigma)
 		sinAlpha = cosU1 * cosU2 * sinLamda / sinSigma
 		cos2alpha = 1 - sinAlpha * sinAlpha
 		cos2sm = cosSigma - 2 * sinU1 * sinU2 / cos2alpha
@@ -530,7 +523,7 @@ def rtnGeoVincentry(
 		dLamda = lamda
 		lamda = omega + (1 - c) * _F * sinAlpha * (sigma + c * sinSigma * (cos2sm + c * cosSigma * (-1 + 2 * cos2sm * cos2sm)))
 
-		if (count += 1) > 10 || (lamda - dLamda).abs <= 1e-12
+		if (count += 1) > 10 || abs(lamda - dLamda) <= 1e-12
 			break
 		end
 	end
@@ -539,7 +532,7 @@ def rtnGeoVincentry(
 	a = 1 + u2 / 16384 * (4096 + u2 * (-768 + u2 * (320 - 175 * u2)))
 	b = u2 / 1024 * (256 + u2 * (-128 + u2 * (74 - 47 * u2)))
 	dSigma = b * sinSigma * (cos2sm + b / 4 * (cosSigma * (-1 + 2 * cos2sm * cos2sm) - b / 6 * cos2sm * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2sm * cos2sm)))
-	alpha12 = Math.atan2(cosU2 * sinLamda, cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * 180 / Math::PI
+	alpha12 = atan(cosU2 * sinLamda, cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * 180 / pi
 	dist = _B * a * (sigma - dSigma)
 
 	# 変換
@@ -548,84 +541,83 @@ def rtnGeoVincentry(
 	end
 	dist /= 1000.0 # m => km
 
-	return [dist.to_f, alpha12.to_f]
+	return (dist::Float64, alpha12::Float64)
 end
 
 #---------
 # main()
 #---------
-Separater = "\t"
+using Printf
+
+const Separater = "\t"
 
 #---------------
 # 計算／十進法
 #---------------
-def main_Data1()
+function main_Data1()
 	iTotalDist = 0.0
 	aOld = []
 
-	Data1.each_line do
-		|_s1|
-		_s1.strip!
+	for _s1 in split(Data1, "\n")
+		_s1 = strip(_s1)
 
-		if _s1.size > 0 && _s1[0] != "#"
-			as1 = _s1.gsub(/[\t\s,]+/, Separater).split(Separater)
+		if length(_s1) > 0 && SubString(_s1, 1, 1) != "#"
+			_s1 = replace(_s1, r"[\t\s,]+" => Separater)
+			as1 = split(_s1, Separater)
 
-			dist, angle = aOld[0] ?
-				rtnGeoVincentry(aOld[0], aOld[1], as1[0], as1[1]) :
-				[0.0, 0.0]
+			dist, angle = size(aOld)[1] > 0 ?
+				rtnGeoVincentry(parse(Float64, aOld[1]), parse(Float64, aOld[2]), parse(Float64, as1[1]), parse(Float64, as1[2])) :
+				(0.0, 0.0)
 
-			printf("%fkm%s%f度", dist, Separater, angle)
-			as1.each do
-				|_s2|
-				print Separater + _s2
+			@printf("%fkm%s%f度", dist, Separater, angle)
+			for _s2 in as1
+				print(Separater, _s2)
 			end
-			puts
+			println()
 
 			iTotalDist += dist
 			aOld = as1
 		end
 	end
 
-	printf("%fkm\n\n", iTotalDist)
+	@printf("%fkm\n\n", iTotalDist)
 end
 
 #---------------
 # 計算／度分秒
 #---------------
-def main_Data2()
+function main_Data2()
 	iTotalDist = 0.0
 	aOld = []
 
-	Data2.each_line do
-		|_s1|
-		_s1.strip!
+	for _s1 in split(Data2, "\n")
+		_s1 = strip(_s1)
 
-		if _s1.size > 0 && _s1[0] != "#"
-			as1 = _s1.gsub(/[\t\s,]+/, Separater).split(Separater)
+		if length(_s1) > 0 && SubString(_s1, 1, 1) != "#"
+			_s1 = replace(_s1, r"[\t\s,]+" => Separater)
+			as1 = split(_s1, Separater)
 			ad1 = []
 
-			as1[0..1].each do
-				|_s2|
-				ad1 << rtnGeoIBLto10B(_s2)
+			for _s2 in as1[1:2]
+				push!(ad1, rtnGeoIBLto10B(parse(Float64, _s2)))
 			end
 
-			dist, angle = aOld[0] ?
-				rtnGeoVincentry(aOld[0], aOld[1], ad1[0], ad1[1]) :
-				[0.0, 0.0]
+			dist, angle = size(aOld)[1] > 0 ?
+				rtnGeoVincentry(aOld[1], aOld[2], ad1[1], ad1[2]) :
+				(0.0, 0.0)
 
-			printf("%fkm%s%f度", dist, Separater, angle)
-			as1.each do
-				|_s2|
-				print Separater + _s2
+			@printf("%fkm%s%f度", dist, Separater, angle)
+			for _s2 in as1
+				print(Separater, _s2)
 			end
-			puts
+			println()
 
 			iTotalDist += dist
 			aOld = ad1
 		end
 	end
 
-	printf("%fkm\n\n", iTotalDist)
+	@printf("%fkm\n\n", iTotalDist)
 end
 
 main_Data1()

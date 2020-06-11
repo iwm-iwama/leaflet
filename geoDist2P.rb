@@ -215,7 +215,9 @@ def rtnGeoVincentry(
 	dist = _B * a * (sigma - dSigma)
 
 	# 変換
-	alpha12 += 360.0 if alpha12 < 0 # 360度表記
+	if alpha12 < 0
+		alpha12 += 360.0 # 360度表記
+	end
 	dist /= 1000.0 # m => km
 
 	return [dist.to_f, alpha12.to_f]

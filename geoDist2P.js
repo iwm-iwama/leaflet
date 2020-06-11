@@ -225,7 +225,7 @@ function rtnGeoVincentry(
 	// 変換
 	if(angle < 0)
 	{
-		angle += 360.0; // "度"
+		angle += 360.0; // 360度表記
 	}
 	dist /= 1000.0; // "m" => "km"
 

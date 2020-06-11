@@ -183,9 +183,7 @@ function rtnGeoVincentry(
 		end
 		sinSigma = sqrt(sin2sigma)
 		cosSigma = sinU1 * sinU2 + cosU1 * cosU2 * cosLamda
-
 		sigma = atan(sinSigma, cosSigma)
-
 		sinAlpha = cosU1 * cosU2 * sinLamda / sinSigma
 		cos2alpha = 1 - sinAlpha * sinAlpha
 		cos2sm = cosSigma - 2 * sinU1 * sinU2 / cos2alpha
