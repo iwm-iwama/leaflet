@@ -243,8 +243,7 @@ function main_Data1()
 			println(join(as1, Separater))
 
 			dist, angle = rtnGeoVincentry(parse(Float64, ad1[1]), parse(Float64, ad1[2]), parse(Float64, ad1[3]), parse(Float64, ad1[4]))
-			@printf("%fkm %f度\n", dist, angle)
-			println()
+			@printf("%fkm %f度\n\n", dist, angle)
 		end
 	end
 end
@@ -271,13 +270,10 @@ function main_Data2()
 			println(join(as1, Separater))
 
 			dist, angle = rtnGeoVincentry(aLatLng[1], aLatLng[2], aLatLng[3], aLatLng[4])
-			@printf("%fkm %f度\n", dist, angle)
-			println()
+			@printf("%fkm %f度\n\n", dist, angle)
 		end
 	end
 end
 
 main_Data1()
 main_Data2()
-
-exit()

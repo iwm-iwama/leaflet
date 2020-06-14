@@ -431,6 +431,8 @@ Signal.trap(:INT) do
 end
 
 #-------------------
+# 度分秒 => 十進法
+#-------------------
 # (例)
 #	printf("%f度\n", rtnGeoIBLto10B(242658.495200))
 #
@@ -565,7 +567,7 @@ def main_Data1()
 
 	Data1.each_line do
 		|_s1|
-		_s1.strip!
+		_s1 = _s1.strip
 
 		if _s1.size > 0 && _s1[0] != "#"
 			as1 = _s1.gsub(/[\t\s,]+/, Separater).split(Separater)
@@ -574,12 +576,12 @@ def main_Data1()
 				rtnGeoVincentry(aOld[0], aOld[1], as1[0], as1[1]) :
 				[0.0, 0.0]
 
-			printf("%fkm%s%f度", dist, Separater, angle)
+			str = sprintf("%fkm%s%f度", dist, Separater, angle)
 			as1.each do
 				|_s2|
-				print Separater + _s2
+				str << Separater + _s2
 			end
-			puts
+			puts str
 
 			iTotalDist += dist
 			aOld = as1
@@ -598,7 +600,7 @@ def main_Data2()
 
 	Data2.each_line do
 		|_s1|
-		_s1.strip!
+		_s1 = _s1.strip
 
 		if _s1.size > 0 && _s1[0] != "#"
 			as1 = _s1.gsub(/[\t\s,]+/, Separater).split(Separater)
@@ -613,12 +615,12 @@ def main_Data2()
 				rtnGeoVincentry(aOld[0], aOld[1], ad1[0], ad1[1]) :
 				[0.0, 0.0]
 
-			printf("%fkm%s%f度", dist, Separater, angle)
+			str = sprintf("%fkm%s%f度", dist, Separater, angle)
 			as1.each do
 				|_s2|
-				print Separater + _s2
+				str << Separater + _s2
 			end
-			puts
+			puts str
 
 			iTotalDist += dist
 			aOld = ad1
@@ -630,5 +632,3 @@ end
 
 main_Data1()
 main_Data2()
-
-exit()

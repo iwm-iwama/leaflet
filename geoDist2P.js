@@ -1,4 +1,3 @@
-#!node
 // > node geoDist2P.js
 
 //--------------------------------------------------------------------
@@ -49,9 +48,9 @@ const Data2 = `
 `;
 //--------------------------------------------------------------------
 
-/*-------------------
+//-------------------
 // 度分秒 => 十進法
--------------------*/
+//-------------------
 /* (例)
 	console.log(rtnGeoIBLto10A(24, 26, 58.495200).toFixed(6) + "度");
 */
@@ -88,9 +87,9 @@ function rtnGeoIBLto10B(
 	return parseFloat(deg + (min / 60.0) + (sec / 3600.0)) * sign;
 }
 
-/*-------------------
+//-------------------
 // 十進法 => 度分秒
--------------------*/
+//-------------------
 /* (例)
 	var [deg, min, sec] = rtnGeo10toIBL(24.449582);
 	console.log(deg + "度" + min + "分" + sec.toFixed(6) + "秒");
@@ -123,9 +122,9 @@ function rtnGeo10toIBL(
 	return [parseInt(deg, 10) * sign, parseInt(min, 10), parseFloat(sec)];
 }
 
-/*-------------------------------
+//-------------------------------
 // Vincenty法による２点間の距離
--------------------------------*/
+//-------------------------------
 /*【参考】
 	http://tancro.e-central.tv/grandmaster/script/vincentyJS.html
 */
@@ -263,7 +262,6 @@ function main_Data1()
 
 			var [dist, angle] = rtnGeoVincentry(ad1[0], ad1[1], ad1[2], ad1[3]);
 			console.log("%skm %s度", dist.toFixed(6), angle.toFixed(6));
-
 			console.log();
 		}
 	}
@@ -286,8 +284,7 @@ function main_Data2()
 			var aLatLng = [];
 			var as1 = [];
 
-			var ad1 = _s1.split(Separater).slice(0, 4);
-			for(var _d1 of ad1)
+			for(var _d1 of _s1.split(Separater).slice(0, 4))
 			{
 				var angle = rtnGeoIBLto10B(_d1);
 				aLatLng.push(angle);
@@ -297,7 +294,6 @@ function main_Data2()
 
 			var [dist, angle] = rtnGeoVincentry(aLatLng[0], aLatLng[1], aLatLng[2], aLatLng[3]);
 			console.log("%skm %s度", dist.toFixed(6), angle.toFixed(6));
-
 			console.log();
 		}
 	}

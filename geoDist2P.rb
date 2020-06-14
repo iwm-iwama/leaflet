@@ -234,10 +234,10 @@ Separater = " "
 def main_Data1()
 	Data1.each_line do
 		|ln|
-		ln.strip!
+		ln = ln.strip
 
 		if ln.size > 0 && ln[0] != "#"
-			ln.gsub!(/[\t\s,]+/, Separater)
+			ln = ln.gsub(/[\t\s,]+/, Separater)
 			puts ln
 
 			as1 = []
@@ -251,8 +251,7 @@ def main_Data1()
 			puts as1.join(Separater)
 
 			dist, angle = rtnGeoVincentry(ad1[0], ad1[1], ad1[2], ad1[3])
-			printf("%fkm%s%f度\n", dist, Separater, angle)
-			puts
+			printf("%fkm%s%f度\n\n", dist, Separater, angle)
 		end
 	end
 end
@@ -263,10 +262,10 @@ end
 def main_Data2()
 	Data2.each_line do
 		|ln|
-		ln.strip!
+		ln = ln.strip
 
 		if ln.size > 0 && ln[0] != "#"
-			ln.gsub!(/[\t\s,]+/, Separater)
+			ln = ln.gsub(/[\t\s,]+/, Separater)
 			puts ln
 
 			aLatLng = []
@@ -280,13 +279,10 @@ def main_Data2()
 			puts as1.join(Separater)
 
 			dist, angle = rtnGeoVincentry(aLatLng[0], aLatLng[1], aLatLng[2], aLatLng[3])
-			printf("%fkm%s%f度\n", dist, Separater, angle)
-			puts
+			printf("%fkm%s%f度\n\n", dist, Separater, angle)
 		end
 	end
 end
 
 main_Data1()
 main_Data2()
-
-exit()
