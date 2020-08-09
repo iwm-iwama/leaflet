@@ -595,7 +595,7 @@ function main_Data1()
 		}
 	}
 
-	console.log("%fkm", iTotalDist);
+	console.log("%skm", iTotalDist.toFixed(6));
 	console.log();
 }
 
@@ -638,7 +638,7 @@ function main_Data2()
 		}
 	}
 
-	console.log("%fkm", iTotalDist);
+	console.log("%skm", iTotalDist.toFixed(6));
 	console.log();
 }
 
