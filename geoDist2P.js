@@ -200,10 +200,6 @@ function rtnGeoVincentry(
 		sinAlpha = cosU1 * cosU2 * sinLamda / sinSigma;
 		cos2alpha = 1 - sinAlpha * sinAlpha;
 		cos2sm = cosSigma - 2 * sinU1 * sinU2 / cos2alpha;
-		if(isNaN(cos2sm))
-		{
-			cos2sm = 0;
-		}
 		c = _F / 16 * cos2alpha * (4 + _F * (4 - 3 * cos2alpha));
 		dLamda = lamda;
 		lamda = omega + (1 - c) * _F * sinAlpha * (sigma + c * sinSigma * (cos2sm + c * cosSigma * (-1 + 2 * cos2sm * cos2sm)));

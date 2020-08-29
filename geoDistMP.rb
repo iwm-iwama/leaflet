@@ -491,10 +491,10 @@ def rtnGeoVincentry(
 
 	omega  = lngR2 - lngR1
 	tanU1  = f1 * Math.tan(latR1)
-	cosU1  = 1 / Math.sqrt(1 + (tanU1 * tanU1))
+	cosU1  = 1 / Math.sqrt(1 + tanU1 * tanU1)
 	sinU1  = tanU1 * cosU1
 	tanU2  = f1 * Math.tan(latR2)
-	cosU2  = 1 / Math.sqrt(1 + (tanU2 * tanU2))
+	cosU2  = 1 / Math.sqrt(1 + tanU2 * tanU2)
 	sinU2  = tanU2 * cosU2
 	lamda  = omega
 	dLamda = 0.0
@@ -525,9 +525,6 @@ def rtnGeoVincentry(
 		sinAlpha = cosU1 * cosU2 * sinLamda / sinSigma
 		cos2alpha = 1 - sinAlpha * sinAlpha
 		cos2sm = cosSigma - 2 * sinU1 * sinU2 / cos2alpha
-		if cos2sm == 0
-			cos2sm = 0
-		end
 		c = _F / 16 * cos2alpha * (4 + _F * (4 - 3 * cos2alpha))
 		dLamda = lamda
 		lamda = omega + (1 - c) * _F * sinAlpha * (sigma + c * sinSigma * (cos2sm + c * cosSigma * (-1 + 2 * cos2sm * cos2sm)))
