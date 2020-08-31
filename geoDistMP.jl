@@ -531,7 +531,7 @@ function rtnGeoVincentry(
 	a = 1 + u2 / 16384 * (4096 + u2 * (-768 + u2 * (320 - 175 * u2)))
 	b = u2 / 1024 * (256 + u2 * (-128 + u2 * (74 - 47 * u2)))
 	dSigma = b * sinSigma * (cos2sm + b / 4 * (cosSigma * (-1 + 2 * cos2sm * cos2sm) - b / 6 * cos2sm * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2sm * cos2sm)))
-	angle = atan(cosU2 * sinLamda, cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * 180 / pi
+	angle = atan(cosU2 * sinLamda, cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * 57.29577951308232
 	dist = _B * a * (sigma - dSigma)
 
 	# 変換
