@@ -1,4 +1,4 @@
-<!-- iwm20200121C Ver.20200827_2246 'U-2S' -->
+<!-- iwm20200121C Ver.20200831_1520 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -1602,9 +1602,9 @@ function rtnGeoVincentry(
 	}
 
 	/// const _A = 6378137.0;
-	const _B   = 6356752.314;
-	const _F   = 1 / 298.257222101;
-	const _RAD = Math.PI / 180.0;
+	const _B   = 6356752.314140356;    // GRS80
+	const _F   = 0.003352810681182319; // 1 / 298.257222101
+	const _RAD = 0.017453292519943295; // π / 180
 
 	const latR1 = $lat1 * _RAD;
 	const lngR1 = $lng1 * _RAD;
@@ -1665,7 +1665,7 @@ function rtnGeoVincentry(
 	var a = 1 + u2 / 16384 * (4096 + u2 * (-768 + u2 * (320 - 175 * u2)));
 	var b = u2 / 1024 * (256 + u2 * (-128 + u2 * (74 - 47 * u2)));
 	var dSigma = b * sinSigma * (cos2sm + b / 4 * (cosSigma * (-1 + 2 * cos2sm * cos2sm) - b / 6 * cos2sm * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2sm * cos2sm)));
-	var angle = Math.atan2(cosU2 * sinLamda, cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * 180 / Math.PI;
+	var angle = Math.atan2(cosU2 * sinLamda, cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * 57.29577951308232;
 	var dist = _B * a * (sigma - dSigma);
 
 	// 変換
