@@ -566,7 +566,7 @@ def main_Data1()
 		|_s1|
 		_s1 = _s1.strip
 
-		if _s1.size > 0 && _s1[0] != "#"
+		if _s1.size > 0 && _s1[0, 1] != "#"
 			as1 = _s1.gsub(/[\t\s,]+/, Separater).split(Separater)
 
 			dist, angle = aOld[0] ?
@@ -599,7 +599,7 @@ def main_Data2()
 		|_s1|
 		_s1 = _s1.strip
 
-		if _s1.size > 0 && _s1[0] != "#"
+		if _s1.size > 0 && _s1[0, 1] != "#"
 			as1 = _s1.gsub(/[\t\s,]+/, Separater).split(Separater)
 			ad1 = []
 

@@ -233,7 +233,7 @@ def main_Data1()
 		|ln|
 		ln = ln.strip
 
-		if ln.size > 0 && ln[0] != "#"
+		if ln.size > 0 && ln[0, 1] != "#"
 			ln = ln.gsub(/[\t\s,]+/, Separater)
 			puts ln
 
@@ -261,7 +261,7 @@ def main_Data2()
 		|ln|
 		ln = ln.strip
 
-		if ln.size > 0 && ln[0] != "#"
+		if ln.size > 0 && ln[0, 1] != "#"
 			ln = ln.gsub(/[\t\s,]+/, Separater)
 			puts ln
 
