@@ -1,4 +1,4 @@
-<!-- iwm20200911A Ver.20200911_1331 'U-2S' -->
+<!-- iwm20200911A Ver.20201015_1350 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -1862,29 +1862,12 @@ function subDem10ToSeaLevel($id){
 			ctx.drawImage(this, 0, 0);
 			var rtnImg = ctx.getImageData(0, 0, 256, 256);
 			var rtnImgData = rtnImg.data;
-			// 透過画像を作成
 			for(var _i1 = 0, _i2 = rtnImgData.length; _i1 < _i2; _i1+=4){
 				elevation = (rtnImgData[_i1 + 0] * 65536) + (rtnImgData[_i1 + 1] * 256) + rtnImgData[_i1 + 2];
-
-				if(elevation < 8388608){
-					;
-				}
-				else if(elevation == 8388608){
-					;
-				}
-				else{
+				if(elevation > 8388608){
 					elevation = (elevation - 16777216);
 				}
-
-				if(elevation == 8388608 || elevation < SeaLevel){
-					rtnImgData[_i1 + 0] = 100;
-					rtnImgData[_i1 + 1] = 0;
-					rtnImgData[_i1 + 2] = 200;
-					rtnImgData[_i1 + 3] = 180;
-				}
-				else{
-					rtnImgData[_i1 + 3] = 0;
-				}
+				rtnImgData[_i1 + 3] = (elevation < SeaLevel ? 90 : 0);
 			}
 			ctx.putImageData(rtnImg, 0, 0);
 		}
