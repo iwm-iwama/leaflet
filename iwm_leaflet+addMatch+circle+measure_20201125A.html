@@ -1,11 +1,11 @@
-<!-- iwm20201125A Ver.20201125_1500 'U-2S' -->
+<!-- iwm20201125A Ver.20201126_0040 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
 
 <head>
 <meta charset="UTF-8"/>
-<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Script-Type" content="text/javascript"/>
 <title>地理院タイル・簡易ビュアー</title>
 
 <!-- ライブラリ開発諸氏に敬意を表す -->
@@ -192,36 +192,29 @@ option
 {
 	background:#909090 !important;
 }
+._txtNavi1,
+._txtNavi2
+{
+	color:#000;
+	font-size:12px;
+	height:16px;
+	margin:0;
+	padding:0 3px;
+	vertical-align:middle;
+}
 ._txtNavi1
 {
 	border:1px solid #606060;
-	color:#000;
-	font-size:12px;
-	height:16px;
-	margin:0 0 0 10px;
-	padding:0 3px;
-	vertical-align:middle;
-	width:60px;
+}
+._txtNavi2
+{
+	border:1px solid #fa0;
 }
 ._checkboxNavi1
 {
-	margin:0 0 0 8px;
+	margin:0;
 	padding:0;
 	vertical-align:middle;
-}
-._textareaNavi1
-{
-	border:1px solid #fa0;
-	color:#000;
-	font-size:12px;
-	height:16px;
-	ime-mode:inactive;
-	margin:0;
-	overflow:auto;
-	padding:0 2px;
-	resize:none;
-	vertical-align:middle;
-	width:80px;
 }
 /*---------------
 // 上部メニュー
@@ -1564,9 +1557,11 @@ function subA2P_GCircle(
 	}
 	else{
 		rad = parseFloat(rad);
+		document.getElementById($selectId).value = (rad / 1000) + "km";
 	}
 
-	if(rad == 0.0){
+	if(isNaN(rad) || rad == 0){
+		document.getElementById($selectId).value = "";
 		return;
 	}
 
@@ -1828,7 +1823,7 @@ function subMarkerPopup1(
 
 	subGetElevation($lat, $lng, $BaseMarker);
 
-	return (
+	return(
 		"<font color='#ff5858'>" + $BaseMarker.options.title + "</font><br/>" +
 		"<font color='#3d7cce'>北緯</font>" + latRem + "／" + $lat.toFixed(6) + "度<br/>" +
 		"<font color='#3d7cce'>東経</font>" + lngRem + "／" + $lng.toFixed(6) + "度<br/>" +
@@ -1888,7 +1883,7 @@ function subMarkerPopup2(
 
 	subGetElevation($latTo, $lngTo, $oMarker);
 
-	return (
+	return(
 		"<font color='#ff5858'>" + $oMarker.options.title + "</font><br/>" +
 		"<font color='#3d7cce'>北緯</font>" + latRem + "／" + $latTo.toFixed(6) + "度<br/>" +
 		"<font color='#3d7cce'>東経</font>" + lngRem + "／" + $lngTo.toFixed(6) + "度<br/>" +
@@ -2030,46 +2025,46 @@ function subGCircle_Scale(){
 	---------------->
 	<div id="_InputZoomA">
 		ズームレベル<br>
-		<input type="button" class="_ZA" value="5" onclick="_iwmZA('5');"><input type="button" class="_ZA" value="6" onclick="_iwmZA('6');"><input type="button" class="_ZA" value="7" onclick="_iwmZA('7');"><input type="button" class="_ZA" value="8" onclick="_iwmZA('8');"><input type="button" class="_ZA" value="9" onclick="_iwmZA('9');"><br>
-		<input type="button" class="_ZA" value="10" onclick="_iwmZA('10');"><input type="button" class="_ZA" value="11" onclick="_iwmZA('11');"><input type="button" class="_ZA" value="12" onclick="_iwmZA('12');"><input type="button" class="_ZA" value="13" onclick="_iwmZA('13');"><input type="button" class="_ZA" value="14" onclick="_iwmZA('14');"><br>
-		<input type="button" class="_ZA" value="15" onclick="_iwmZA('15');"><input type="button" class="_ZA" value="16" onclick="_iwmZA('16');"><input type="button" class="_ZA" value="17" onclick="_iwmZA('17');"><input type="button" class="_ZA" value="18" onclick="_iwmZA('18');"><input type="button" class="_ZA" value="19" onclick="_iwmZA('19');"><br>
-		<input type="button" class="_ZA" value="20" onclick="_iwmZA('20');"><input type="button" class="_ZA" value="21" onclick="_iwmZA('21');"><input type="button" class="_ZA" value="22" onclick="_iwmZA('22');"><input type="button" class="_ZA" value="23" onclick="_iwmZA('23');"><input type="button" class="_Btn3" value="＋" onclick="_iwmZA2();">
+		<input type="button" class="_ZA" value="5" onclick="_iwmZA('5');"/><input type="button" class="_ZA" value="6" onclick="_iwmZA('6');"/><input type="button" class="_ZA" value="7" onclick="_iwmZA('7');"/><input type="button" class="_ZA" value="8" onclick="_iwmZA('8');"/><input type="button" class="_ZA" value="9" onclick="_iwmZA('9');"/><br>
+		<input type="button" class="_ZA" value="10" onclick="_iwmZA('10');"/><input type="button" class="_ZA" value="11" onclick="_iwmZA('11');"/><input type="button" class="_ZA" value="12" onclick="_iwmZA('12');"/><input type="button" class="_ZA" value="13" onclick="_iwmZA('13');"/><input type="button" class="_ZA" value="14" onclick="_iwmZA('14');"/><br>
+		<input type="button" class="_ZA" value="15" onclick="_iwmZA('15');"/><input type="button" class="_ZA" value="16" onclick="_iwmZA('16');"/><input type="button" class="_ZA" value="17" onclick="_iwmZA('17');"/><input type="button" class="_ZA" value="18" onclick="_iwmZA('18');"/><input type="button" class="_ZA" value="19" onclick="_iwmZA('19');"/><br>
+		<input type="button" class="_ZA" value="20" onclick="_iwmZA('20');"/><input type="button" class="_ZA" value="21" onclick="_iwmZA('21');"/><input type="button" class="_ZA" value="22" onclick="_iwmZA('22');"/><input type="button" class="_ZA" value="23" onclick="_iwmZA('23');"/><input type="button" class="_Btn3" value="＋" onclick="_iwmZA2();"/>
 	</div>
 	<div id="_InputZoomB">
-		<input type="button" class="_ZB" value="23" onclick="_iwmZB('23');"><br>
-		<input type="button" class="_ZB" value="22" onclick="_iwmZB('22');"><br>
-		<input type="button" class="_ZB" value="21" onclick="_iwmZB('21');"><br>
-		<input type="button" class="_ZB" value="20" onclick="_iwmZB('20');"><br>
-		<input type="button" class="_ZB" value="19" onclick="_iwmZB('19');"><br>
-		<input type="button" class="_ZB" value="18" onclick="_iwmZB('18');"><br>
-		<input type="button" class="_ZB" value="17" onclick="_iwmZB('17');"><br>
-		<input type="button" class="_ZB" value="16" onclick="_iwmZB('16');"><br>
-		<input type="button" class="_ZB" value="15" onclick="_iwmZB('15');"><br>
-		<input type="button" class="_ZB" value="14" onclick="_iwmZB('14');"><br>
-		<input type="button" class="_ZB" value="13" onclick="_iwmZB('13');"><br>
-		<input type="button" class="_ZB" value="12" onclick="_iwmZB('12');"><br>
-		<input type="button" class="_ZB" value="11" onclick="_iwmZB('11');"><br>
-		<input type="button" class="_ZB" value="10" onclick="_iwmZB('10');"><br>
-		<input type="button" class="_ZB" value="9" onclick="_iwmZB('9');"><br>
-		<input type="button" class="_ZB" value="8" onclick="_iwmZB('8');"><br>
-		<input type="button" class="_ZB" value="7" onclick="_iwmZB('7');"><br>
-		<input type="button" class="_ZB" value="6" onclick="_iwmZB('6');"><br>
-		<input type="button" class="_ZB" value="5" onclick="_iwmZB('5');">
+		<input type="button" class="_ZB" value="23" onclick="_iwmZB('23');"/><br>
+		<input type="button" class="_ZB" value="22" onclick="_iwmZB('22');"/><br>
+		<input type="button" class="_ZB" value="21" onclick="_iwmZB('21');"/><br>
+		<input type="button" class="_ZB" value="20" onclick="_iwmZB('20');"/><br>
+		<input type="button" class="_ZB" value="19" onclick="_iwmZB('19');"/><br>
+		<input type="button" class="_ZB" value="18" onclick="_iwmZB('18');"/><br>
+		<input type="button" class="_ZB" value="17" onclick="_iwmZB('17');"/><br>
+		<input type="button" class="_ZB" value="16" onclick="_iwmZB('16');"/><br>
+		<input type="button" class="_ZB" value="15" onclick="_iwmZB('15');"/><br>
+		<input type="button" class="_ZB" value="14" onclick="_iwmZB('14');"/><br>
+		<input type="button" class="_ZB" value="13" onclick="_iwmZB('13');"/><br>
+		<input type="button" class="_ZB" value="12" onclick="_iwmZB('12');"/><br>
+		<input type="button" class="_ZB" value="11" onclick="_iwmZB('11');"/><br>
+		<input type="button" class="_ZB" value="10" onclick="_iwmZB('10');"/><br>
+		<input type="button" class="_ZB" value="9" onclick="_iwmZB('9');"/><br>
+		<input type="button" class="_ZB" value="8" onclick="_iwmZB('8');"/><br>
+		<input type="button" class="_ZB" value="7" onclick="_iwmZB('7');"/><br>
+		<input type="button" class="_ZB" value="6" onclick="_iwmZB('6');"/><br>
+		<input type="button" class="_ZB" value="5" onclick="_iwmZB('5');"/>
 	</div>
 	<div id="_InputBL">
-		<input type="text" id="_IBL1" onclick="subIwmInput_BL_GetId(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 0);" style="width:37px;">度<input type="text" id="_IBL2" onclick="subIwmInput_BL_GetId(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 0);" style="width:37px;">分<br>
-		<input type="text" id="_IBL3" onclick="subIwmInput_BL_GetId(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 8);" style="width:96px;">秒<br>
-		<input type="button" class="_Btn1" value="7" onclick="subIwmInput_AddText('7');"><input type="button" class="_Btn1" value="8" onclick="subIwmInput_AddText('8');"><input type="button" class="_Btn1" value="9" onclick="subIwmInput_AddText('9');"><br>
-		<input type="button" class="_Btn1" value="4" onclick="subIwmInput_AddText('4');"><input type="button" class="_Btn1" value="5" onclick="subIwmInput_AddText('5');"><input type="button" class="_Btn1" value="6" onclick="subIwmInput_AddText('6');"><br>
-		<input type="button" class="_Btn1" value="1" onclick="subIwmInput_AddText('1');"><input type="button" class="_Btn1" value="2" onclick="subIwmInput_AddText('2');"><input type="button" class="_Btn1" value="3" onclick="subIwmInput_AddText('3');"><br>
-		<input type="button" class="_Btn1" value="0" onclick="subIwmInput_AddText('0');"><input type="button" class="_Btn1" value="." onclick="subIwmInput_AddText('.');"><input type="button" class="_Btn2" value="Cls" onclick="subIwmInput_Cls();"><br>
-		<input type="button" class="_Btn2" value="BS" onclick="subIwmInput_Bs();"><input type="button" class="_Btn2" value="Del" onclick="subIwmInput_Del();"><input type="button" class="_Btn3" value="OK" onclick="_iwmBL();">
+		<input type="text" id="_IBL1" onclick="subIwmInput_BL_GetId(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 0);" style="width:37px;"/>度<input type="text" id="_IBL2" onclick="subIwmInput_BL_GetId(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 0);" style="width:37px;"/>分<br>
+		<input type="text" id="_IBL3" onclick="subIwmInput_BL_GetId(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 8);" style="width:96px;"/>秒<br>
+		<input type="button" class="_Btn1" value="7" onclick="subIwmInput_AddText('7');"/><input type="button" class="_Btn1" value="8" onclick="subIwmInput_AddText('8');"/><input type="button" class="_Btn1" value="9" onclick="subIwmInput_AddText('9');"/><br>
+		<input type="button" class="_Btn1" value="4" onclick="subIwmInput_AddText('4');"/><input type="button" class="_Btn1" value="5" onclick="subIwmInput_AddText('5');"/><input type="button" class="_Btn1" value="6" onclick="subIwmInput_AddText('6');"/><br>
+		<input type="button" class="_Btn1" value="1" onclick="subIwmInput_AddText('1');"/><input type="button" class="_Btn1" value="2" onclick="subIwmInput_AddText('2');"/><input type="button" class="_Btn1" value="3" onclick="subIwmInput_AddText('3');"/><br>
+		<input type="button" class="_Btn1" value="0" onclick="subIwmInput_AddText('0');"/><input type="button" class="_Btn1" value="." onclick="subIwmInput_AddText('.');"/><input type="button" class="_Btn2" value="Cls" onclick="subIwmInput_Cls();"/><br>
+		<input type="button" class="_Btn2" value="BS" onclick="subIwmInput_Bs();"/><input type="button" class="_Btn2" value="Del" onclick="subIwmInput_Del();"/><input type="button" class="_Btn3" value="OK" onclick="_iwmBL();"/>
 	</div>
 	<!---------------------
 	// アドレスマッチング
 	---------------------->
 	<div id="_AddMatchInput">
-		<input type="text" id="_AddMatchInput10" onchange="subAddMatch_1();" placeholder="住所検索"><font id="_AddMatchInput15" onclick="subAddMatch_1();">→</font><font id="_AddMatchInput20" onclick="subAddMatch_2();"></font><font id="_AddMatchInput30" onclick="subAddMatch_Init();">×</font>
+		<input type="text" id="_AddMatchInput10" onchange="subAddMatch_1();" placeholder="住所検索"/><font id="_AddMatchInput15" onclick="subAddMatch_1();">→</font><font id="_AddMatchInput20" onclick="subAddMatch_2();"></font><font id="_AddMatchInput30" onclick="subAddMatch_Init();">×</font>
 	</div>
 	<div id="_AddMatchOutput"></div>
 	<!-------------------
@@ -2128,18 +2123,17 @@ function subGCircle_Scale(){
 					document.getElementById("_TA02").onkeydown = function(e){subAddTabCtrl(e, this);}
 				</script>
 				<br>
-				<input type="button" class="_btnNavi4" style="margin:3px 0 0 0;" value=">>住所から変換" onclick="subA2P_Geocoding('_TA02');">
-				<input type="button" class="_btnNavi4" style="margin:3px 0 0 0;" value="↑サンプル出力" onclick="subA2P_GeocodingSample('_TA02');">
+				<input type="button" class="_btnNavi4" style="margin:3px 0 0 0;" value=">>住所から変換" onclick="subA2P_Geocoding('_TA02');"/>
+				<input type="button" class="_btnNavi4" style="margin:3px 0 0 0;" value="↑サンプル出力" onclick="subA2P_GeocodingSample('_TA02');"/>
 				<input type="button" class="_btnNavi1" value="クリップボードにコピー" onclick="subA2P_EditCopy('_TA02');"/>
 				<br>
-				<input type="button" class="_btnNavi3" value="<<地図へ反映" onclick="subA2P_PointToMap('_TA02');subA2P_DistMP('_TA02','_textareaDist',_checkboxDist.checked);"/>
+				<input type="button" class="_btnNavi3" value="<<地図へ反映" onclick="subA2P_PointToMap('_TA02');subA2P_DistMP('_TA02','_textDist',_checkboxDist.checked);"/>
 				<input type="button" class="_btnNavi3" value="クリア" style="margin:3px 0 0 0;" onclick="subA2P_EditClear('_TA02','_GCircleM2P');"/>
 				<a id="_btnDL" class="_btnNavi2" href="#" download="" onclick="subA2P_EditSave('_TA02',this.id)">ファイルに保存</a>
-				<input id="_GCircleM2P" type="text" class="_txtNavi1" list="dist" placeholder="範囲円"><datalist id="dist">
-				<option value="50m"/><option value="100m"/><option value="250m"/><option value="500m"/><option value="1km"/><option value="2km"/><option value="4km"/><option value="8km"/><option value="20km"/><option value="25km"/><option value="40km"/><option value="80km"/><option value="100km"/></select>
+				<input id="_GCircleM2P" type="text" class="_txtNavi1" list="_Dist" style="margin:0 0 0 6px;width:70px;" placeholder="範囲円"/><datalist id="_Dist">
+				<option value="50m"/><option value="100m"/><option value="250m"/><option value="500m"/><option value="1km"/><option value="2km"/><option value="4km"/><option value="5km"/><option value="8km"/><option value="10km"/><option value="20km"/><option value="25km"/><option value="40km"/><option value="50km"/><option value="80km"/><option value="100km"/></select>
 				</datalist><input type="button" class="_btnNavi5" value="→" onclick="subA2P_GCircle('_GCircleM2P','_TA02');"/>
-				<input id="_checkboxDist" type="checkbox" class="_checkboxNavi1" onclick="subA2P_DistMP('_TA02','_textareaDist',_checkboxDist.checked);"/>
-				<textarea id="_textareaDist" class="_textareaNavi1" wrap="off" placeholder="総延長表示" readonly></textarea>
+				<input id="_checkboxDist" type="checkbox" class="_checkboxNavi1" style="margin:0 0 0 6px;" onclick="subA2P_DistMP('_TA02','_textDist',_checkboxDist.checked);"/><input id="_textDist" type="text" class="_txtNavi2" style="width:80px;" placeholder="総延長表示" readonly/>
 			</div>
 		</div>
 		<!---------
@@ -2166,7 +2160,7 @@ function subGCircle_Scale(){
 			<font class="_simpleWindowTitle">半径を指定</font>
 			<font class="_simpleWindowClose" onclick="subSimpleWindow_OnOff('_SW05');">×</font>
 			<br>
-			<div id="_GCircle"><input type="range" id="_GCircleRange" min="0" max="2000" value="0" oninput="subGCircle_Slider();"><span id="$GCircleKm">0km</span></div>
+			<div id="_GCircle"><input type="range" id="_GCircleRange" min="0" max="2000" value="0" oninput="subGCircle_Slider();"/><span id="$GCircleKm">0km</span></div>
 		</div>
 	</div>
 	<div id="_divMap">
