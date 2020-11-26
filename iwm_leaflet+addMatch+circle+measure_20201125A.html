@@ -1,4 +1,4 @@
-<!-- iwm20201125A Ver.20201126_0040 'U-2S' -->
+<!-- iwm20201125A Ver.20201126_2347 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -133,8 +133,7 @@ option
 ._btnNavi1,
 ._btnNavi2,
 ._btnNavi3,
-._btnNavi4,
-._btnNavi5
+._btnNavi4
 {
 	border:0;
 	color:#fff;
@@ -146,8 +145,7 @@ option
 ._btnNavi1:hover,
 ._btnNavi2:hover,
 ._btnNavi3:hover,
-._btnNavi4:hover,
-._btnNavi5:hover
+._btnNavi4:hover
 {
 	cursor:pointer;
 }
@@ -183,15 +181,6 @@ option
 {
 	background:#955aa6 !important;
 }
-._btnNavi5
-{
-	background:#606060;
-	padding:0 4px;
-}
-._btnNavi5:hover
-{
-	background:#909090 !important;
-}
 ._txtNavi1,
 ._txtNavi2
 {
@@ -204,7 +193,7 @@ option
 }
 ._txtNavi1
 {
-	border:1px solid #606060;
+	border:1px solid #2dae6c;
 }
 ._txtNavi2
 {
@@ -1057,14 +1046,14 @@ function _iwmBL(){
 /*---------------------
 // アドレスマッチング
 ---------------------*/
-var $subAddMatch_cnt = 0;
+var $subAddMatch_Cnt = 0;
 var $AddMatchMarker = null;
 const $HashAddMatchOutputZoom = {exist: "↑", none: "↓"};
 
 // 初期化
 function subAddMatch_Init(){
 	// 初期化
-	$subAddMatch_cnt = 0;
+	$subAddMatch_Cnt = 0;
 
 	// Input
 	with(document.getElementById("_AddMatchInput10")){
@@ -1089,7 +1078,7 @@ function subAddMatch_Init(){
 		innerHTML = "";
 	}
 }
-function subAddMatch_1(){
+function subAddMatch_Main(){
 	var query = document.getElementById("_AddMatchInput10").value;
 
 	if(!query.trim().length){
@@ -1101,15 +1090,15 @@ function subAddMatch_1(){
 	var xhr = new XMLHttpRequest();
 	xhr.onload = function(){
 		var aJson = JSON.parse(xhr.responseText);
-		$subAddMatch_cnt = aJson.length;
+		$subAddMatch_Cnt = aJson.length;
 
 		// 再検索時に結果を表示させるため
 		document.getElementById("_AddMatchInput20").innerHTML = $HashAddMatchOutputZoom.none;
 
-		var flg = subAddMatch_2();
+		var flg = rtnAddMatch_Main();
 		if(flg){
 			with(document.getElementById("_AddMatchOutput")){
-				var rtn = "<div id='_AddMatchOutputH'>◆ヒット数 " + $subAddMatch_cnt + " 件</div>";
+				var rtn = "<div id='_AddMatchOutputH'>◆ヒット数 " + $subAddMatch_Cnt + " 件</div>";
 				for(var _s1 of aJson){
 					with(_s1){
 						var _s2 = "";
@@ -1139,14 +1128,14 @@ function subAddMatch_1(){
 	/// xhr.overrideMimeType("text/javascript");
 	xhr.send(null);
 }
-function subAddMatch_2(){
+function rtnAddMatch_Main(){
 	var rtn = true;
 
 	var oInput2 = document.getElementById("_AddMatchInput20");
 	var oInput3 = document.getElementById("_AddMatchInput30");
 	var oOutput = document.getElementById("_AddMatchOutput");
 
-	if($subAddMatch_cnt > 1000){
+	if($subAddMatch_Cnt > 1000){
 		oInput2.style.display = "none";
 		oInput3.style.display = "";
 		with(oOutput){
@@ -1156,7 +1145,7 @@ function subAddMatch_2(){
 		}
 		rtn = false;
 	}
-	else if($subAddMatch_cnt > 0){
+	else if($subAddMatch_Cnt > 0){
 		oInput2.style.display = "";
 		oInput3.style.display = "";
 		oOutput.style.display = "";
@@ -1266,7 +1255,7 @@ function subSimpleWindow_Init(
 		document.getElementById($aryId[i1]).style.display = "none";
 	}
 }
-function subSimpleWindow_OnOff(
+function subSimpleWindow_OpenClose(
 	$id,
 	$func
 ){
@@ -1809,7 +1798,7 @@ function subGetElevation(
 /*---------------------------------
 // ポップアップ ← ベースマーカー
 ---------------------------------*/
-function subMarkerPopup1(
+function rtnMarkerPopup1(
 	$lat,
 	$lng
 ){
@@ -1823,6 +1812,8 @@ function subMarkerPopup1(
 
 	subGetElevation($lat, $lng, $BaseMarker);
 
+	// TSVファイルの "\t" は "<br/>"
+	// 通常の改行は "<br>"
 	return(
 		"<font color='#ff5858'>" + $BaseMarker.options.title + "</font><br/>" +
 		"<font color='#3d7cce'>北緯</font>" + latRem + "／" + $lat.toFixed(6) + "度<br/>" +
@@ -1833,7 +1824,7 @@ function subMarkerPopup1(
 /*-----------------------------------
 // ポップアップ ← ローカルマーカー
 -----------------------------------*/
-function subMarkerPopup2(
+function rtnMarkerPopup2(
 	$latFrom,
 	$lngFrom,
 	$latTo,
@@ -1883,6 +1874,8 @@ function subMarkerPopup2(
 
 	subGetElevation($latTo, $lngTo, $oMarker);
 
+	// TSVファイルの "\t" は "<br/>"
+	// 通常の改行は "<br>"
 	return(
 		"<font color='#ff5858'>" + $oMarker.options.title + "</font><br/>" +
 		"<font color='#3d7cce'>北緯</font>" + latRem + "／" + $latTo.toFixed(6) + "度<br/>" +
@@ -1995,7 +1988,7 @@ function subGCircle_Init(){
 	$GCircle = L.greatCircle(
 		$BaseMarker.getLatLng(),
 		{
-			radius: subGCircle_Scale(),
+			radius: rtnGCircle_Scale(),
 			color: "#00f",
 			fill: true,
 			fillColor: "#88f",
@@ -2007,12 +2000,12 @@ function subGCircle_Init(){
 }
 // スライダー制御
 function subGCircle_Slider(){
-	var iDist = subGCircle_Scale();
+	var iDist = rtnGCircle_Scale();
 	document.getElementById("$GCircleKm").innerHTML = (iDist / 1000.0).toFixed(2) + "km";
 	$GCircle.setRadius(iDist);
 }
 // 目盛毎の単位で変換 (例)10 => 10mスケール
-function subGCircle_Scale(){
+function rtnGCircle_Scale(){
 	const scale = 10; // Meter単位
 	return parseInt(document.getElementById("_GCircleRange").value, 10) * scale;
 }
@@ -2064,7 +2057,7 @@ function subGCircle_Scale(){
 	// アドレスマッチング
 	---------------------->
 	<div id="_AddMatchInput">
-		<input type="text" id="_AddMatchInput10" onchange="subAddMatch_1();" placeholder="住所検索"/><font id="_AddMatchInput15" onclick="subAddMatch_1();">→</font><font id="_AddMatchInput20" onclick="subAddMatch_2();"></font><font id="_AddMatchInput30" onclick="subAddMatch_Init();">×</font>
+		<input type="text" id="_AddMatchInput10" onchange="subAddMatch_Main();" placeholder="住所検索"/><font id="_AddMatchInput15" onclick="subAddMatch_Main();">→</font><font id="_AddMatchInput20" onclick="rtnAddMatch_Main();"></font><font id="_AddMatchInput30" onclick="subAddMatch_Init();">×</font>
 	</div>
 	<div id="_AddMatchOutput"></div>
 	<!-------------------
@@ -2080,22 +2073,22 @@ function subGCircle_Scale(){
 		// ヘルプ
 		---------->
 		<span style="float:right;margin:0 8px 0 4px;">
-			<font class="_simpleWindowCall" onclick="subSimpleWindow_OnOff('_SW01','subSimpleWindow_HDoc01(\'_SW01A\')');" style="font-weight:900;">？</font>
+			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW01','subSimpleWindow_HDoc01(\'_SW01A\')');" style="font-weight:900;">？</font>
 		</span>
 		<div id="_SW01" class="_simpleWindow" style="width:320px;">
 			<font class="_simpleWindowTitle">操作説明</font>
-			<font class="_simpleWindowClose" onclick="subSimpleWindow_OnOff('_SW01');">×</font>
+			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW01');">×</font>
 			<div id="_SW01A" class="_simpleWindowOutput" style="max-height:480px;"></div>
 		</div>
 		<!-----------------
 		// 追加タイル編集
 		------------------>
 		<span style="float:right;margin:0 4px;">
-			<font class="_simpleWindowCall" onclick="subSimpleWindow_OnOff('_SW02');" style="font-weight:500;">追加タイル編集</font>
+			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW02');" style="font-weight:500;">追加タイル編集</font>
 		</span>
 		<div id="_SW02" class="_simpleWindow" style="width:400px;">
 			<font class="_simpleWindowTitle">追加タイル編集／[Tab]区切り</font>
-			<font class="_simpleWindowClose" onclick="subSimpleWindow_OnOff('_SW02');">×</font>
+			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW02');">×</font>
 			<br>
 			<textarea id="_TA01" class="_editTextBox" wrap="off" style="height:180px;width:380px;" onchange="subMapSelector();"></textarea>
 			<script>
@@ -2109,11 +2102,11 @@ function subGCircle_Scale(){
 		// マーカー変換
 		---------------->
 		<span style="float:right;margin:0 4px;">
-			<font class="_simpleWindowCall" onclick="subSimpleWindow_OnOff('_SW03');">マーカー変換</font>
+			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW03');">マーカー変換</font>
 		</span>
 		<div id="_SW03" class="_simpleWindow" style="width:500px;">
 			<font class="_simpleWindowTitle">マーカーをポイントに変換／[Tab]区切り／UTF-8N）</font>
-			<font class="_simpleWindowClose" onclick="subSimpleWindow_OnOff('_SW03');">×</font>
+			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW03');">×</font>
 			<div class="_simpleWindowOutput" style="background:#fafafa;min-height:280px;padding:8px;">
 				<input type="button" class="_btnNavi3" value=">>地図から読込" onclick="subMapToPoint('_TA02');"/>
 				<input type="file" accept=".tsv" id="_readFn" class="_btnNavi2" onchange="subAddReadFile(this.id,'_TA02');"/>
@@ -2132,7 +2125,7 @@ function subGCircle_Scale(){
 				<a id="_btnDL" class="_btnNavi2" href="#" download="" onclick="subA2P_EditSave('_TA02',this.id)">ファイルに保存</a>
 				<input id="_GCircleM2P" type="text" class="_txtNavi1" list="_Dist" style="margin:0 0 0 6px;width:70px;" placeholder="範囲円"/><datalist id="_Dist">
 				<option value="50m"/><option value="100m"/><option value="250m"/><option value="500m"/><option value="1km"/><option value="2km"/><option value="4km"/><option value="5km"/><option value="8km"/><option value="10km"/><option value="20km"/><option value="25km"/><option value="40km"/><option value="50km"/><option value="80km"/><option value="100km"/></select>
-				</datalist><input type="button" class="_btnNavi5" value="→" onclick="subA2P_GCircle('_GCircleM2P','_TA02');"/>
+				</datalist><input type="button" class="_btnNavi3" style="padding:0 3px;" value="→" onclick="subA2P_GCircle('_GCircleM2P','_TA02');"/>
 				<input id="_checkboxDist" type="checkbox" class="_checkboxNavi1" style="margin:0 0 0 6px;" onclick="subA2P_DistMP('_TA02','_textDist',_checkboxDist.checked);"/><input id="_textDist" type="text" class="_txtNavi2" style="width:80px;" placeholder="総延長表示" readonly/>
 			</div>
 		</div>
@@ -2140,11 +2133,11 @@ function subGCircle_Scale(){
 		// 海水面
 		---------->
 		<span style="float:right;margin:0 4px;">
-			<font id="_AAA" class="_simpleWindowCall" onclick="subSimpleWindow_OnOff('_SW04');" style="font-weight:500;">海水面</font>
+			<font id="_AAA" class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW04');" style="font-weight:500;">海水面</font>
 		</span>
 		<div id="_SW04" class="_simpleWindow" style="right:113px;min-height:45px;width:185px;z-index:900;">
 			<font class="_simpleWindowTitle">ズーム14以下で利用可能</font>
-			<font class="_simpleWindowClose" onclick="subSimpleWindow_OnOff('_SW04');">×</font>
+			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW04');">×</font>
 			<br>
 			<input type="number" id="_Dem10ToSeaLevel" value="0" style="text-align:right;width:60px;" onclick="subDem10ToSeaLevel(this.id);" onkeyup="subDem10ToSeaLevel(this.id);"/>ｍ
 			<input type="button" class="_btnNavi1" value="ON" onclick="subDem10ToSeaLevel('_Dem10ToSeaLevel');"/>
@@ -2154,11 +2147,11 @@ function subGCircle_Scale(){
 		// 距離円
 		---------->
 		<span style="float:right;margin:0 4px;">
-			<font class="_simpleWindowCall" onclick="subSimpleWindow_OnOff('_SW05');" style="font-weight:500;">距離円</font>
+			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW05');" style="font-weight:500;">距離円</font>
 		</span>
 		<div id="_SW05" class="_simpleWindow" style="right:304px;min-height:45px;width:228px;z-index:900;">
 			<font class="_simpleWindowTitle">半径を指定</font>
-			<font class="_simpleWindowClose" onclick="subSimpleWindow_OnOff('_SW05');">×</font>
+			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW05');">×</font>
 			<br>
 			<div id="_GCircle"><input type="range" id="_GCircleRange" min="0" max="2000" value="0" oninput="subGCircle_Slider();"/><span id="$GCircleKm">0km</span></div>
 		</div>
@@ -2389,27 +2382,6 @@ function subGCircle_Scale(){
 				}
 			);
 
-			/*-------------------------
-			// ベクトルタイル提供実験
-			-------------------------*/
-/*
-			// 0.7x 対応（1.x 未対応）
-			var xhr = new XMLHttpRequest();
-			xhr.open(
-				"GET",
-				"https://cyberjapandata.gsi.go.jp/xyz/experimental_fgd/style.js",
-				false
-			);
-			/// xhr.overrideMimeType("text/javascript");
-			xhr.send(null);
-			var stylejs = eval( "(" + xhr.responseText + ")" );
-			var $FgdLayer = new L.TileLayer.GeoJSON(
-				"https://cyberjapandata.gsi.go.jp/xyz/experimental_fgd/{z}/{x}/{y}.geojson",
-				stylejs.options,
-				stylejs.geojsonOptions
-			);
-*/
-
 			/*------------------------
 			// 標準地図等を色調変換
 			------------------------*/
@@ -2592,7 +2564,7 @@ function subGCircle_Scale(){
 			);
 
 			$BaseMarker.bindPopup(
-				subMarkerPopup1(
+				rtnMarkerPopup1(
 					$BaseMarker._latlng.lat,
 					$BaseMarker._latlng.lng
 				),
@@ -2606,7 +2578,7 @@ function subGCircle_Scale(){
 			for(var _s1 of $AryLocalMarker){
 				_s1.closePopup();
 				_s1.bindPopup(
-					subMarkerPopup2(
+					rtnMarkerPopup2(
 						$BaseMarker._latlng.lat,
 						$BaseMarker._latlng.lng,
 						_s1._latlng.lat,
@@ -2699,7 +2671,7 @@ function subGCircle_Scale(){
 				"mouseover",
 				function(e){
 					// 先読みしておく
-					subMarkerPopup1($BaseMarker._latlng.lat, $BaseMarker._latlng.lng);
+					rtnMarkerPopup1($BaseMarker._latlng.lat, $BaseMarker._latlng.lng);
 				}
 			);
 			// ポップアップ非表示 <= mouseout
@@ -2819,7 +2791,7 @@ function subGCircle_Scale(){
 				"dragend",
 				function(e){
 					// 先読みしておく
-					subMarkerPopup2(
+					rtnMarkerPopup2(
 						$BaseMarker._latlng.lat,
 						$BaseMarker._latlng.lng,
 						this._latlng.lat,
@@ -2833,7 +2805,7 @@ function subGCircle_Scale(){
 				"mouseover",
 				function(e){
 					// 先読みしておく
-					subMarkerPopup2(
+					rtnMarkerPopup2(
 						$BaseMarker._latlng.lat,
 						$BaseMarker._latlng.lng,
 						this._latlng.lat,
@@ -2848,7 +2820,7 @@ function subGCircle_Scale(){
 				function(e){
 					this.closePopup();
 					this.bindPopup(
-						subMarkerPopup2(
+						rtnMarkerPopup2(
 							$BaseMarker._latlng.lat,
 							$BaseMarker._latlng.lng,
 							this._latlng.lat,
