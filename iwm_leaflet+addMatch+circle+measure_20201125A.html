@@ -1,4 +1,4 @@
-<!-- iwm20201125A Ver.20201126_2347 'U-2S' -->
+<!-- iwm20201125A Ver.20201127_2200 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -141,6 +141,7 @@ option
 	margin:0;
 	padding:0 8px;
 	text-decoration:none;
+	vertical-align:middle;
 }
 ._btnNavi1:hover,
 ._btnNavi2:hover,
@@ -214,11 +215,11 @@ option
 	border:0;
 	border-radius:8px 8px 0 0;
 	color:#fff;
-	font-size:14px;
+	font-size:13px;
 	line-height:18px;
 	left:0;
 	margin:0;
-	padding:2px 4px 2px 10px;
+	padding:3px 4px 1px 10px;
 	position:absolute;
 	top:0;
 	/* 動的に変更 */
@@ -370,6 +371,7 @@ option
 	ime-mode:inactive;
 	margin:0;
 	padding:0 3px;
+	vertical-align:middle;
 }
 #_NaviLat,
 #_NaviLng
@@ -2064,8 +2066,8 @@ function rtnGCircle_Scale(){
 	// 地理院地図の設定
 	-------------------->
 	<div id="_divNaviCommander">
-		北緯：<input type="text" id="_NaviLat" onclick="subIwmInput_BL_Open(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 8);" placeholder="緯度入力"/>
-		東経：<input type="text" id="_NaviLng" onclick="subIwmInput_BL_Open(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 8);" placeholder="経度入力"/>
+		北緯&nbsp;<input type="text" id="_NaviLat" onclick="subIwmInput_BL_Open(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 8);" placeholder="緯度入力"/>
+		&nbsp;東経&nbsp;<input type="text" id="_NaviLng" onclick="subIwmInput_BL_Open(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 8);" placeholder="経度入力"/>
 		<!-- ズーム --><input type="hidden" id="_NaviZoom"/>
 		<input type="button" class="_btnNavi1" value="＋" onclick="_iwmZA2();"/>
 		<input type="button" id="_btnMarker" class="_btnNavi2" value="マーカー消去" onclick="subMyObj_Remove($AryLocalMarker);"/>
@@ -2094,8 +2096,8 @@ function rtnGCircle_Scale(){
 			<script>
 				document.getElementById("_TA01").onkeydown = function(e){subAddTabCtrl(e, this);}
 			</script>
-			<div style="margin:10px 0;">
-				<a class="_btnNavi3" href="http://maps.gsi.go.jp/development/ichiran.html" target="_blank" style="font-size:14px;">地理院タイル一覧⇒</a>
+			<div style="margin:0 0 8px 0;">
+				<a class="_btnNavi3" href="http://maps.gsi.go.jp/development/ichiran.html" target="_blank" style="font-size:13px;">地理院タイル一覧⇒</a>
 			</div>
 		</div>
 		<!---------------
@@ -2104,29 +2106,32 @@ function rtnGCircle_Scale(){
 		<span style="float:right;margin:0 4px;">
 			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW03');">マーカー変換</font>
 		</span>
-		<div id="_SW03" class="_simpleWindow" style="width:500px;">
+		<div id="_SW03" class="_simpleWindow" style="width:490px;">
 			<font class="_simpleWindowTitle">マーカーをポイントに変換／[Tab]区切り／UTF-8N）</font>
 			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW03');">×</font>
-			<div class="_simpleWindowOutput" style="background:#fafafa;min-height:280px;padding:8px;">
-				<input type="button" class="_btnNavi3" value=">>地図から読込" onclick="subMapToPoint('_TA02');"/>
+			<div class="_simpleWindowOutput" style="background:#fafafa;padding:8px;">
+				<input type="button" class="_btnNavi3" value="→地図から読込" onclick="subMapToPoint('_TA02');"/>
 				<input type="file" accept=".tsv" id="_readFn" class="_btnNavi2" onchange="subAddReadFile(this.id,'_TA02');"/>
 				<br>
-				<textarea id="_TA02" class="_editTextBox" wrap="off" style="height:200px;width:465px;"></textarea>
+				<textarea id="_TA02" class="_editTextBox" wrap="off" style="height:200px;width:457px;"></textarea>
 				<script>
 					document.getElementById("_TA02").onkeydown = function(e){subAddTabCtrl(e, this);}
 				</script>
-				<br>
-				<input type="button" class="_btnNavi4" style="margin:3px 0 0 0;" value=">>住所から変換" onclick="subA2P_Geocoding('_TA02');"/>
-				<input type="button" class="_btnNavi4" style="margin:3px 0 0 0;" value="↑サンプル出力" onclick="subA2P_GeocodingSample('_TA02');"/>
-				<input type="button" class="_btnNavi1" value="クリップボードにコピー" onclick="subA2P_EditCopy('_TA02');"/>
-				<br>
-				<input type="button" class="_btnNavi3" value="<<地図へ反映" onclick="subA2P_PointToMap('_TA02');subA2P_DistMP('_TA02','_textDist',_checkboxDist.checked);"/>
-				<input type="button" class="_btnNavi3" value="クリア" style="margin:3px 0 0 0;" onclick="subA2P_EditClear('_TA02','_GCircleM2P');"/>
-				<a id="_btnDL" class="_btnNavi2" href="#" download="" onclick="subA2P_EditSave('_TA02',this.id)">ファイルに保存</a>
-				<input id="_GCircleM2P" type="text" class="_txtNavi1" list="_Dist" style="margin:0 0 0 6px;width:70px;" placeholder="範囲円"/><datalist id="_Dist">
-				<option value="50m"/><option value="100m"/><option value="250m"/><option value="500m"/><option value="1km"/><option value="2km"/><option value="4km"/><option value="5km"/><option value="8km"/><option value="10km"/><option value="20km"/><option value="25km"/><option value="40km"/><option value="50km"/><option value="80km"/><option value="100km"/></select>
-				</datalist><input type="button" class="_btnNavi3" style="padding:0 3px;" value="→" onclick="subA2P_GCircle('_GCircleM2P','_TA02');"/>
-				<input id="_checkboxDist" type="checkbox" class="_checkboxNavi1" style="margin:0 0 0 6px;" onclick="subA2P_DistMP('_TA02','_textDist',_checkboxDist.checked);"/><input id="_textDist" type="text" class="_txtNavi2" style="width:80px;" placeholder="総延長表示" readonly/>
+				<div style="margin:4px 0 0 0;">
+					<input type="button" class="_btnNavi4" value="→住所から変換" onclick="subA2P_Geocoding('_TA02');"/>
+					<input type="button" class="_btnNavi4" value="↑サンプル出力" onclick="subA2P_GeocodingSample('_TA02');"/>
+					<input type="button" class="_btnNavi1" value="クリップボードにコピー" onclick="subA2P_EditCopy('_TA02');"/>
+				</div>
+				<div style="margin:4px 0 0 0;">
+					<input type="button" class="_btnNavi3" value="←地図へ反映" onclick="subA2P_PointToMap('_TA02');subA2P_DistMP('_TA02','_textDist',_checkboxDist.checked);"/>
+					<input type="button" class="_btnNavi3" value="クリア" onclick="subA2P_EditClear('_TA02','_GCircleM2P');"/>
+					<a id="_btnDL" class="_btnNavi2" href="#" download="" onclick="subA2P_EditSave('_TA02',this.id)">ファイルに保存</a>
+					<input type="button" class="_btnNavi3" style="margin:0 0 0 10px;padding:0 3px;" value="←" onclick="subA2P_GCircle('_GCircleM2P','_TA02');"/><input type="text" id="_GCircleM2P" class="_txtNavi1" list="_Dist" style="width:70px;" placeholder="範囲円"/>
+					<datalist id="_Dist">
+						<option value="50m"/><option value="100m"/><option value="250m"/><option value="500m"/><option value="1km"/><option value="2km"/><option value="4km"/><option value="5km"/><option value="8km"/><option value="10km"/><option value="20km"/><option value="25km"/><option value="40km"/><option value="50km"/><option value="80km"/><option value="100km"/></select>
+					</datalist>
+					<input type="checkbox" id="_checkboxDist" class="_checkboxNavi1" style="margin:0 0 0 4px;" onclick="subA2P_DistMP('_TA02','_textDist',_checkboxDist.checked);"/><input type="text" id="_textDist" class="_txtNavi2" style="width:80px;" placeholder="総延長表示" readonly/>
+				</div>
 			</div>
 		</div>
 		<!---------
@@ -2135,13 +2140,14 @@ function rtnGCircle_Scale(){
 		<span style="float:right;margin:0 4px;">
 			<font id="_AAA" class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW04');" style="font-weight:500;">海水面</font>
 		</span>
-		<div id="_SW04" class="_simpleWindow" style="right:113px;min-height:45px;width:185px;z-index:900;">
+		<div id="_SW04" class="_simpleWindow" style="min-width:175px;right:123px;z-index:900;">
 			<font class="_simpleWindowTitle">ズーム14以下で利用可能</font>
 			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW04');">×</font>
-			<br>
-			<input type="number" id="_Dem10ToSeaLevel" value="0" style="text-align:right;width:60px;" onclick="subDem10ToSeaLevel(this.id);" onkeyup="subDem10ToSeaLevel(this.id);"/>ｍ
-			<input type="button" class="_btnNavi1" value="ON" onclick="subDem10ToSeaLevel('_Dem10ToSeaLevel');"/>
-			<input type="button" class="_btnNavi2" value="OFF" onclick="$Dem10ToSeaLevel.remove($Map);"/>
+			<div style="margin:6px 0;">
+				<input type="number" id="_Dem10ToSeaLevel" value="0" style="text-align:right;width:60px;" onclick="subDem10ToSeaLevel(this.id);" onkeyup="subDem10ToSeaLevel(this.id);"/>ｍ
+				<input type="button" class="_btnNavi1" value="ON" onclick="subDem10ToSeaLevel('_Dem10ToSeaLevel');"/>
+				<input type="button" class="_btnNavi2" value="OFF" onclick="$Dem10ToSeaLevel.remove($Map);"/>
+			</div>
 		</div>
 		<!---------
 		// 距離円
@@ -2149,7 +2155,7 @@ function rtnGCircle_Scale(){
 		<span style="float:right;margin:0 4px;">
 			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW05');" style="font-weight:500;">距離円</font>
 		</span>
-		<div id="_SW05" class="_simpleWindow" style="right:304px;min-height:45px;width:228px;z-index:900;">
+		<div id="_SW05" class="_simpleWindow" style="height:45px;min-width:228px;right:304px;z-index:900;">
 			<font class="_simpleWindowTitle">半径を指定</font>
 			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW05');">×</font>
 			<br>
