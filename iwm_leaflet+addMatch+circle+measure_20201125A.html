@@ -1,4 +1,4 @@
-<!-- iwm20201125A Ver.20201127_2200 'U-2S' -->
+<!-- iwm20201125A Ver.20201128_1351 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -108,6 +108,13 @@ body
 	margin:0;
 	padding:0;
 }
+option
+{
+	background:#fff;
+	font-size:14px;
+	margin:0 0 0 4px;
+	padding:4px;
+}
 select
 {
 	background:#fff;
@@ -122,13 +129,6 @@ select
 select:hover
 {
 	background:#ff5 !important;
-}
-option
-{
-	background:#fff;
-	font-size:14px;
-	margin:0 0 0 4px;
-	padding:4px;
 }
 ._btnNavi1,
 ._btnNavi2,
@@ -219,20 +219,31 @@ option
 	line-height:18px;
 	left:0;
 	margin:0;
-	padding:3px 4px 1px 10px;
+	padding:2px 4px 2px 10px;
 	position:absolute;
 	top:0;
 	/* 動的に変更 */
 	width:0;
+}
+#_divNaviCommander input[type="text"]
+{
+	border:1px solid #808080;
+	color:#000;
+	font-size:12px;
+	height:16px;
+	line-height: 18px;
+	margin:0;
+	padding:0 3px;
+	width:90px;
 }
 #_divMap
 {
 	cursor:crosshair;
 	left:0;
 	position:absolute;
-	top:24px;
 	/* 動的に変更 */
 	height:0;
+	top:0;
 	width:0;
 }
 #_InputBL,
@@ -255,8 +266,8 @@ option
 #_InputZoomB
 {
 	/* 以下、必要に応じて修正 */
-	left:12px;
-	top:37px;
+	left:10px;
+	top:34px;
 }
 /* ↓OverLap */
 #_InputBL
@@ -400,8 +411,8 @@ option
 	position:absolute;
 	z-index:600;
 	/* 以下、必要に応じて修正 */
-	left:52px;
-	top:37px;
+	left:45px;
+	top:34px;
 }
 #_AddMatchInput10
 {
@@ -666,6 +677,9 @@ a.polyline-measure-clearControl:active {
 /*-----------------------
 // フレームサイズを調整
 -----------------------*/
+var $NaviCommanderPaddingLR = 14;
+var $MapTop = 24;
+
 function subInitDisp(){
 	var mapH = window.innerHeight;
 	var mapW = window.innerWidth;
@@ -680,15 +694,17 @@ function subInitDisp(){
 	}
 
 	// _divNaviCommander
-	document.getElementById("_divNaviCommander").style.width = (mapW - 14) + "px";
+	with(document.getElementById("_divNaviCommander").style){
+		width = (mapW - $NaviCommanderPaddingLR) + "px";
+	}
 
 	// _divMap
 	with(document.getElementById("_divMap").style){
-		height = (mapH - 24) + "px";
+		height = (mapH - $MapTop) + "px";
+		top = $MapTop + "px";
 		width  = mapW + "px";
 	}
 }
-
 /*--------------------
 // URL／BL表示を変更
 --------------------*/
@@ -714,7 +730,6 @@ function subChangeUrl(
 		("#" + $Zoom + "/" + $Lat + "/" + $Lng)
 	);
 }
-
 /*------------------------------------
 // (例) (255, 255, 255) => "#ffffff"
 ------------------------------------*/
@@ -738,7 +753,6 @@ function rtnRgbTo16(
 	return rtn;
 }
 */
-
 /*---------------
 // 数値入力補完
 ---------------*/
