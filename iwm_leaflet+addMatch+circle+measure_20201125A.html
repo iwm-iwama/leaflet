@@ -1,4 +1,4 @@
-<!-- iwm20201125A Ver.20201128_1351 'U-2S' -->
+<!-- iwm20201125A Ver.20201128_2323 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -231,7 +231,7 @@ select:hover
 	color:#000;
 	font-size:12px;
 	height:16px;
-	line-height: 18px;
+	line-height:18px;
 	margin:0;
 	padding:0 3px;
 	width:90px;
@@ -256,7 +256,7 @@ select:hover
 	margin:0;
 	padding:2px;
 	position:absolute;
-	z-index:2000;
+	z-index:1500;
 }
 #_InputBL,
 #_InputZoomA
@@ -409,7 +409,7 @@ select:hover
 	margin:0;
 	padding:0;
 	position:absolute;
-	z-index:600;
+	z-index:1000;
 	/* 以下、必要に応じて修正 */
 	left:45px;
 	top:34px;
@@ -468,7 +468,7 @@ select:hover
 	overflow:auto;
 	position:absolute;
 	top:-1000px;/* フォーマット時に隠すため */
-	z-index:600;
+	z-index:1000;
 	/* 以下、必要に応じて修正 */
 	max-height:480px;
 	padding:6px;
@@ -900,13 +900,15 @@ function subIwmInput_Open(
 	var obj = document.getElementById($outputId);
 	var rect = obj.getBoundingClientRect();
 
-	var posX = ($posX == undefined || $posX == null ? rect.left + window.pageXOffset : $posX);
-	var posY = ($posY == undefined || $posY == null ? rect.top + window.pageYOffset + obj.clientHeight : $posY);
+	var _posX = ($posX == null || $posX == undefined ? rect.left + window.pageXOffset : $posX);
+	var _posY = ($posY == null || $posY == undefined ? rect.top + window.pageYOffset + obj.clientHeight : $posY);
 
+	// with()において、
+	// 「WebKitではプロパティ名と変数名を自動判別しない → プロパティ名優先 → エラーと見なさない」ので注意!!
 	with(document.getElementById($inputId).style){
 		display = "";
-		top  = posY + "px";
-		left = posX + "px";
+		top  = _posY + "px";
+		left = _posX + "px";
 	}
 
 	// 設定ミリ秒後に自動終了
@@ -1064,7 +1066,7 @@ function _iwmBL(){
 ---------------------*/
 var $subAddMatch_Cnt = 0;
 var $AddMatchMarker = null;
-const $HashAddMatchOutputZoom = {exist: "↑", none: "↓"};
+const $HashAddMatchOutputZoom = {exist:"↑", none:"↓"};
 
 // 初期化
 function subAddMatch_Init(){
@@ -1197,19 +1199,19 @@ function subAddMatch_Spot(
 		L.circleMarker(
 			$aLatLng,
 			{
-				radius: 8,
-				color: "#ff5",
-				weight: 8,
-				fill: true,
-				fillColor: "#f00",
-				fillOpacity: 0.8,
-				title: $title
+				radius:8,
+				color:"#ff5",
+				weight:8,
+				fill:true,
+				fillColor:"#f00",
+				fillOpacity:0.8,
+				title:$title
 			}
 		).addTo($Map).bindPopup(
 			$title,
 			{
-				autoPan: false,
-				closeButton: false
+				autoPan:false,
+				closeButton:false
 			}
 		).openPopup()
 	);
@@ -1463,13 +1465,13 @@ function subA2P_PointToMap(
 					L.circleMarker(
 						[_a1[0], _a1[1]],
 						{
-							radius: 6,
-							color: "#000",
-							weight: 2,
-							fill: true,
-							fillColor: "#f00",
-							fillOpacity: 0.8,
-							title: _a1[2]
+							radius:6,
+							color:"#000",
+							weight:2,
+							fill:true,
+							fillColor:"#f00",
+							fillOpacity:0.8,
+							title:_a1[2]
 						}
 					).addTo($Map)
 				);
@@ -1477,8 +1479,8 @@ function subA2P_PointToMap(
 				var obj2 = obj1.bindPopup(
 					_s2,
 					{
-						autoPan: false,
-						closeButton: true
+						autoPan:false,
+						closeButton:true
 					}
 				).openPopup();
 
@@ -1503,7 +1505,7 @@ function subA2P_EditSave(
 	$hrefId
 ){
 	var content = document.getElementById($textareaId).value;
-	var blob = new Blob([content], {"type" : "text/plain"});
+	var blob = new Blob([content], {"type":"text/plain"});
 	var fn = ($FileName ? $FileName : "マーカー変換.tsv");
 
 	// MSIE?
@@ -1580,11 +1582,11 @@ function subA2P_GCircle(
 			$AryM2P_Circle[i1] = L.greatCircle(
 				[_a1[0], _a1[1]],
 				{
-					radius: rad,
-					color: "#f00",
-					fill: true,
-					fillColor: "#f88",
-					fillOpacity: 0.1
+					radius:rad,
+					color:"#f00",
+					fill:true,
+					fillColor:"#f88",
+					fillOpacity:0.1
 				}
 			);
 			$AryM2P_Circle[i1].addTo($Map);
@@ -1629,9 +1631,9 @@ function subA2P_DistMP(
 	$ObjPointLinkedLine = L.polyline(
 		aLatLng,
 		{
-			"color": "#000",
-			"weight": 3,
-			"opacity": 0.6
+			"color":"#000",
+			"weight":3,
+			"opacity":0.6
 		}
 	).addTo($Map);
 
@@ -2004,11 +2006,11 @@ function subGCircle_Init(){
 	$GCircle = L.greatCircle(
 		$BaseMarker.getLatLng(),
 		{
-			radius: rtnGCircle_Scale(),
-			color: "#00f",
-			fill: true,
-			fillColor: "#88f",
-			fillOpacity: 0.1
+			radius:rtnGCircle_Scale(),
+			color:"#00f",
+			fill:true,
+			fillColor:"#88f",
+			fillOpacity:0.1
 		}
 	);
 	$GCircle.addTo($Map);
@@ -2091,7 +2093,7 @@ function rtnGCircle_Scale(){
 		<span style="float:right;margin:0 8px 0 4px;">
 			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW01','subSimpleWindow_HDoc01(\'_SW01A\')');" style="font-weight:900;">？</font>
 		</span>
-		<div id="_SW01" class="_simpleWindow" style="width:320px;">
+		<div id="_SW01" class="_simpleWindow" style="width:320px;z-index:2000;">
 			<font class="_simpleWindowTitle">操作説明</font>
 			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW01');">×</font>
 			<div id="_SW01A" class="_simpleWindowOutput" style="max-height:480px;"></div>
@@ -2102,7 +2104,7 @@ function rtnGCircle_Scale(){
 		<span style="float:right;margin:0 4px;">
 			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW02');" style="font-weight:500;">追加タイル編集</font>
 		</span>
-		<div id="_SW02" class="_simpleWindow" style="width:400px;">
+		<div id="_SW02" class="_simpleWindow" style="width:400px;z-index:1990;">
 			<font class="_simpleWindowTitle">追加タイル編集／[Tab]区切り</font>
 			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW02');">×</font>
 			<br>
@@ -2120,7 +2122,7 @@ function rtnGCircle_Scale(){
 		<span style="float:right;margin:0 4px;">
 			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW03');">マーカー変換</font>
 		</span>
-		<div id="_SW03" class="_simpleWindow" style="width:490px;">
+		<div id="_SW03" class="_simpleWindow" style="width:490px;z-index:1980;">
 			<font class="_simpleWindowTitle">マーカーをポイントに変換／[Tab]区切り／UTF-8N）</font>
 			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW03');">×</font>
 			<div class="_simpleWindowOutput" style="background:#fafafa;padding:8px;">
@@ -2154,7 +2156,7 @@ function rtnGCircle_Scale(){
 		<span style="float:right;margin:0 4px;">
 			<font id="_AAA" class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW04');" style="font-weight:500;">海水面</font>
 		</span>
-		<div id="_SW04" class="_simpleWindow" style="min-width:175px;right:123px;z-index:900;">
+		<div id="_SW04" class="_simpleWindow" style="min-width:175px;right:123px;z-index:1970;">
 			<font class="_simpleWindowTitle">ズーム14以下で利用可能</font>
 			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW04');">×</font>
 			<div style="margin:6px 0;">
@@ -2169,7 +2171,7 @@ function rtnGCircle_Scale(){
 		<span style="float:right;margin:0 4px;">
 			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW05');" style="font-weight:500;">距離円</font>
 		</span>
-		<div id="_SW05" class="_simpleWindow" style="height:45px;min-width:228px;right:304px;z-index:900;">
+		<div id="_SW05" class="_simpleWindow" style="height:45px;min-width:228px;right:304px;z-index:1960;">
 			<font class="_simpleWindowTitle">半径を指定</font>
 			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW05');">×</font>
 			<br>
@@ -2224,7 +2226,7 @@ function rtnGCircle_Scale(){
 		// 【おまじない】複数のポップアップを許可（1.x対応）
 		L.Map = L.Map.include(
 			{
-				openPopup: function(popup, latlng, options){
+				openPopup:function(popup, latlng, options){
 					if(latlng){
 						popup.setLatLng(latlng);
 					}
@@ -2241,12 +2243,12 @@ function rtnGCircle_Scale(){
 		var $Map = L.map(
 			"_divMap",
 			{
-				center: [document.getElementById("_NaviLat").value, document.getElementById("_NaviLng").value],
-				zoom: document.getElementById("_NaviZoom").value,
-				minZoom: 3,  // 最小ズーム
-				maxZoom: 23, // 最大ズーム
-				zoomControl: false, // Control.Zoom 非表示
-				doubleClickZoom: false // DblClick制御
+				center:[document.getElementById("_NaviLat").value, document.getElementById("_NaviLng").value],
+				zoom:document.getElementById("_NaviZoom").value,
+				minZoom:3,  // 最小ズーム
+				maxZoom:23, // 最大ズーム
+				zoomControl:false, // Control.Zoom 非表示
+				doubleClickZoom:false // DblClick制御
 			}
 		);
 
@@ -2254,21 +2256,21 @@ function rtnGCircle_Scale(){
 		// スケール表示
 		---------------*/
 		L.control.scale({
-			metric: true,
-			imperial: false,
-			position: "bottomleft"
+			metric:true,
+			imperial:false,
+			position:"bottomleft"
 		}).addTo($Map);
 
 		/*-----------
 		// 距離測定
 		-----------*/
 		L.control.polylineMeasure({
-			position: "bottomleft",
-			unit: "metres",
-			showBearings: false,
-			clearMeasurementsOnStop: false,
-			showClearControl: true,
-			showUnitControl: false
+			position:"bottomleft",
+			unit:"metres",
+			showBearings:false,
+			clearMeasurementsOnStop:false,
+			showClearControl:true,
+			showUnitControl:false
 		}).addTo($Map);
 
 		/*--------------------------------------------------------------------------------------
@@ -2294,10 +2296,10 @@ function rtnGCircle_Scale(){
 			$radioButtonSelectMap[_a1[0]] = L.tileLayer(
 				_a1[1],
 				{
-					attribution: _a1[4],
-					opacity: _a1[2],
-					maxNativeZoom: _a1[3],
-					maxZoom: 23
+					attribution:_a1[4],
+					opacity:_a1[2],
+					maxNativeZoom:_a1[3],
+					maxZoom:23
 				}
 			);
 		}
@@ -2367,10 +2369,10 @@ function rtnGCircle_Scale(){
 				$checkBoxSelectMap[_a1[0]] = L.tileLayer(
 					_a1[1],
 					{
-						attribution: _a1[4],
-						opacity: _a1[2],
-						maxNativeZoom: _a1[3],
-						maxZoom: 23
+						attribution:_a1[4],
+						opacity:_a1[2],
+						maxNativeZoom:_a1[3],
+						maxZoom:23
 					}
 				);
 			}
@@ -2380,23 +2382,23 @@ function rtnGCircle_Scale(){
 			-----------------*/
 			$checkBoxSelectMap["経緯度グリッド"] = L.latlngGraticule(
 				{
-					color: "#003",
-					font: "14px sans-serif",
-					latLineCurved: 0,
-					lngLineCurved: 0,
-					opacity: 1.0,
-					showLabel: true,
-					weight: 0.6,
-					zoomInterval: [
+					color:"#003",
+					font:"16px sans-serif",
+					latLineCurved:0,
+					lngLineCurved:0,
+					opacity:1.0,
+					showLabel:true,
+					weight:0.6,
+					zoomInterval:[
 						{
-							start: 0,
-							end: 5,
-							interval: 5
+							start:0,
+							end:5,
+							interval:5
 						},
 						{
-							start: 6,
-							end: 23,
-							interval: 1
+							start:6,
+							end:23,
+							interval:1
 						}
 					]
 				}
@@ -2513,7 +2515,7 @@ function rtnGCircle_Scale(){
 				$radioButtonSelectMap,
 				$checkBoxSelectMap,
 				{
-					position: "topright"
+					position:"topright"
 				}
 			);
 			$LMapSelector.addTo($Map);
@@ -2532,26 +2534,26 @@ function rtnGCircle_Scale(){
 		// 座標マーカー
 		var $BaseMarkerIcon = L.AwesomeMarkers.icon(
 			{
-				icon: "home",
-				prefix: "fa",
-				markerColor: "darkblue",
-				spin: false
+				icon:"home",
+				prefix:"fa",
+				markerColor:"darkblue",
+				spin:false
 			}
 		);
 		var $LocalMarkerDragOn = L.AwesomeMarkers.icon(
 			{
-				icon: "flag",
-				prefix: "fa",
-				markerColor: "darkred",
-				spin: false
+				icon:"flag",
+				prefix:"fa",
+				markerColor:"darkred",
+				spin:false
 			}
 		);
 		var $LocalMarkerDragOff = L.AwesomeMarkers.icon(
 			{
-				icon: "thumb-tack",
-				prefix: "fa",
-				markerColor: "orange",
-				spin: false
+				icon:"thumb-tack",
+				prefix:"fa",
+				markerColor:"orange",
+				spin:false
 			}
 		);
 		/*---------------
@@ -2589,7 +2591,7 @@ function rtnGCircle_Scale(){
 					$BaseMarker._latlng.lng
 				),
 				{
-					autoPan: false // ポップアップ時、表示調整しない
+					autoPan:false // ポップアップ時、表示調整しない
 				}
 			);
 			$BaseMarker.openPopup();
@@ -2606,7 +2608,7 @@ function rtnGCircle_Scale(){
 						_s1
 					),
 					{
-						autoPan: false // ポップアップ時、表示調整しない
+						autoPan:false // ポップアップ時、表示調整しない
 					}
 				);
 				_s1.openPopup();
@@ -2633,8 +2635,8 @@ function rtnGCircle_Scale(){
 			$BaseMarker = L.marker(
 				[$Lat, $Lng],
 				{
-					icon: $BaseMarkerIcon,
-					draggable: true // ドラッグ許可
+					icon:$BaseMarkerIcon,
+					draggable:true // ドラッグ許可
 				}
 			).addTo($Map);
 
@@ -2718,14 +2720,14 @@ function rtnGCircle_Scale(){
 		var miniMapLayer = new L.TileLayer(
 			"https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png",
 			{
-				minZoom: 3,
-				maxZoom: 18
+				minZoom:3,
+				maxZoom:18
 			}
 		);
 		new L.Control.MiniMap(
 			miniMapLayer,
 			{
-				toggleDisplay: true
+				toggleDisplay:true
 			}
 		).addTo($Map);
 
@@ -2747,8 +2749,8 @@ function rtnGCircle_Scale(){
 				L.marker(
 					[$lat, $lng],
 					{
-						icon: (bIconDrag ? $LocalMarkerDragOn : $LocalMarkerDragOff),
-						draggable: bIconDrag
+						icon:(bIconDrag ? $LocalMarkerDragOn : $LocalMarkerDragOff),
+						draggable:bIconDrag
 					}
 				).addTo($Map)
 			);
@@ -2848,7 +2850,7 @@ function rtnGCircle_Scale(){
 							this
 						),
 						{
-							autoPan: false // ポップアップ時、表示調整しない
+							autoPan:false // ポップアップ時、表示調整しない
 						}
 					);
 					this.openPopup();
