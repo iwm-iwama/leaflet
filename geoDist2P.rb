@@ -2,6 +2,10 @@
 #coding:utf-8
 # > ruby geoDist2P.rb
 
+Signal.trap(:INT) do
+	exit
+end
+
 #---------------------------------------------------------------------
 # [北緯1]	[東経1]	[北緯2]	[東経2]	[その他]
 #---------------------------------------------------------------------
@@ -49,10 +53,6 @@ Data2 = <<EOD
 #	354106.6732	1394508.1864	202525.284	1360432.9844	皇居～沖ノ鳥島
 EOD
 #---------------------------------------------------------------------
-
-Signal.trap(:INT) do
-	exit
-end
 
 #-------------------
 # 度分秒 => 十進法
@@ -220,10 +220,10 @@ def rtnGeoVincentry(
 	return [dist.to_f, angle.to_f]
 end
 
-#---------
-# main()
-#---------
-Separater = " "
+#-------
+# Main
+#-------
+Separater = "\t"
 
 #---------------
 # 計算／十進法
@@ -234,7 +234,6 @@ def main_Data1()
 		ln = ln.strip
 
 		if ln.size > 0 && ln[0, 1] != "#"
-			ln = ln.gsub(/[\t\s,]+/, Separater)
 			puts ln
 
 			as1 = []
@@ -262,7 +261,6 @@ def main_Data2()
 		ln = ln.strip
 
 		if ln.size > 0 && ln[0, 1] != "#"
-			ln = ln.gsub(/[\t\s,]+/, Separater)
 			puts ln
 
 			aLatLng = []
@@ -281,5 +279,8 @@ def main_Data2()
 	end
 end
 
+#-------
+# Exec
+#-------
 main_Data1()
 main_Data2()

@@ -1,4 +1,4 @@
-<!-- iwm20201125A Ver.20201128_2323 'U-2S' -->
+<!-- iwm20201125B Ver.20201203_1446 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -1253,7 +1253,7 @@ function subLatLngToPlaceName(
 		else{
 			// 固定点地名 ⇒ 初回に付与してあればパス
 			if(!$oMarker.options.title){
-				$oMarker.options.title = $placeName + "<br>＠" + title;
+				$oMarker.options.title = $placeName + "</font><br><font color = \"#555\">＠" + title + "</font>";
 			}
 		}
 	};
@@ -1310,11 +1310,11 @@ function subMapToPoint(
 		var _s1 = _o1._popup._content;
 
 		if(_s1.match(/\.\d{4}度$/)){
-			_s1 = _s1.substring(0, _s1.lastIndexOf("<br/>"));
+			_s1 = _s1.substring(0, _s1.lastIndexOf("<br>"));
 		}
 
-		// TSVファイルの "\t" は "<br/>"
-		// 通常の改行は "<br>"
+		// Popup "<br/>" <=> TSV "\t"
+		// HTML上の改行表記は "<br>"
 		_s1 = _s1.replace(/<br\/>/g, "\t");
 
 		str += _o1._latlng.lat.toFixed(8) + "\t" + _o1._latlng.lng.toFixed(8) + "\t" + _s1 + "\n";
@@ -1363,22 +1363,27 @@ function subA2P_Geocoding(
 		var _a1 = _s1.split("\t");
 		var query = _a1[0];
 		if(query){
-			/// console.log(query);
 			if(query.match(/^\d+\.*\d*/) || query.substr(0, 2) == "//"){
 				str += _s1;
 			}
 			else{
 				var url = _Url + query;
-
 				xhr.open("GET", url, false);
 				/// xhr.overrideMimeType("text/javascript");
 				xhr.send(null);
-
 				var aJson = JSON.parse(xhr.responseText);
 
 				if(aJson.length == 1){
 					var [lng, lat] = aJson[0].geometry.coordinates;
-					str += lat.toFixed(8) + "\t" + lng.toFixed(8) + "\t" + _s1;
+					var _a2 = [];
+
+					_a2 = rtnGeo10toIBL(lat);
+					var _lat = "<font color=\"#3d7cce\">北緯</font>" + _a2[0] + "度" + _a2[1] + "分" + _a2[2].toFixed(6) + "秒／" + lat.toFixed(6) + "度";
+
+					_a2 = rtnGeo10toIBL(lng);
+					var _lng = "<font color=\"#3d7cce\">東経</font>" + _a2[0] + "度" + _a2[1] + "分" + _a2[2].toFixed(6) + "秒／" + lng.toFixed(6) + "度</font>";
+
+					str += lat.toFixed(8) + "\t" + lng.toFixed(8) + "\t" + "<font color=\"#ff5858\">" + _a1[1] + "</font><br>＠<font color = \"#555\">" + _a1[0] + "</font>" + "\t" + _lat + "\t" + _lng + "\t" + _a1.slice(2).join("\t");
 				}
 				else{
 					str += "// Err " + (aJson.length == 0 ? "該当なし" : "複数該当あり") + " => " + _s1;
@@ -1396,7 +1401,7 @@ function subA2P_Geocoding(
 	with(document.getElementById($textareaId).style){
 		if(errCnt){
 			color = "#fff";
-			backgroundColor = "#f00";
+			backgroundColor = "#855896";
 		}
 		else{
 			color = "#000";
@@ -1442,8 +1447,8 @@ function subA2P_PointToMap(
 	for(var _s1 of document.getElementById($textareaId).value.trimEnd().split("\n")){
 		_s1 = _s1.trim();
 
-		// TSVファイルの "\t" は "<br/>"
-		// 通常の改行は "<br>"
+		// Popup "<br/>" <=> TSV "\t"
+		// HTML上の改行表記は "<br>"
 		_s1 = _s1.replace(/\\t/g, "\t");
 		_s1 = _s1.replace(/\\n/g, "<br>");
 
@@ -1454,11 +1459,11 @@ function subA2P_PointToMap(
 				if(_a1.length >= 3){
 					_s2 = _a1[2];
 					for(var _i1 = 3, _i2 = _a1.length; _i1 < _i2; _i1++){
-						_s2 += "<br/>" + _a1[_i1];
+						_s2 += "<br>" + _a1[_i1];
 					}
 				}
 				else{
-					_s2 = "<br/>";
+					_s2 = "<br>";
 				}
 
 				var obj1 = (
@@ -1616,13 +1621,23 @@ function subA2P_DistMP(
 		return;
 	}
 
+	var rgxDecimal = /^[\+\-]{0,1}[0-9]+\.{0,1}[0-9]*$/;
+	var iErrCnt = 0;
+	var iLine = 0;
 	var aLatLng = [];
 
 	for(var _s1 of document.getElementById($textareaInputId).value.trimEnd().split("\n")){
+		++iLine;
 		if(_s1.substr(0, 2) != "//"){
 			var _a1 = _s1.split("\t");
 			if(_a1.length >= 2){
-				aLatLng.push([_a1[0], _a1[1]]);
+				if(!_a1[0].match(rgxDecimal) || !_a1[1].match(rgxDecimal)){
+					console.log("Err(L%s) %s %s", iLine, _a1[0], _a1[1]);
+					++iErrCnt;
+				}
+				else{
+					aLatLng.push([_a1[0], _a1[1]]);
+				}
 			}
 		}
 	}
@@ -1648,9 +1663,7 @@ function subA2P_DistMP(
 		aOld = _a1;
 	}
 
-	aLatLng = null;
-
-	document.getElementById($textareaOutputId).value = iTotalDist.toFixed(3) + "km";
+	document.getElementById($textareaOutputId).value = (iErrCnt > 0 ? "Err=" + iErrCnt : iTotalDist.toFixed(3) + "km");
 }
 /*-------------------
 // 度分秒 => 十進法
@@ -1830,12 +1843,12 @@ function rtnMarkerPopup1(
 
 	subGetElevation($lat, $lng, $BaseMarker);
 
-	// TSVファイルの "\t" は "<br/>"
-	// 通常の改行は "<br>"
+	// Popup "<br/>" <=> TSV "\t"
+	// HTML上の改行表記は "<br>"
 	return(
-		"<font color='#ff5858'>" + $BaseMarker.options.title + "</font><br/>" +
-		"<font color='#3d7cce'>北緯</font>" + latRem + "／" + $lat.toFixed(6) + "度<br/>" +
-		"<font color='#3d7cce'>東経</font>" + lngRem + "／" + $lng.toFixed(6) + "度<br/>" +
+		"<font color='#ff5858'>" + $BaseMarker.options.title + "</font><br>" +
+		"<font color='#3d7cce'>北緯</font>" + latRem + "／" + $lat.toFixed(6) + "度<br>" +
+		"<font color='#3d7cce'>東経</font>" + lngRem + "／" + $lng.toFixed(6) + "度<br>" +
 		"<font color='#3d7cce'>標高</font>" + $BaseMarker.elevation
 	);
 }
@@ -1892,13 +1905,13 @@ function rtnMarkerPopup2(
 
 	subGetElevation($latTo, $lngTo, $oMarker);
 
-	// TSVファイルの "\t" は "<br/>"
-	// 通常の改行は "<br>"
+	// Popup "<br/>" <=> TSV "\t"
+	// HTML上の改行表記は "<br>"
 	return(
-		"<font color='#ff5858'>" + $oMarker.options.title + "</font><br/>" +
-		"<font color='#3d7cce'>北緯</font>" + latRem + "／" + $latTo.toFixed(6) + "度<br/>" +
-		"<font color='#3d7cce'>東経</font>" + lngRem + "／" + $lngTo.toFixed(6) + "度<br/>" +
-		"<font color='#3d7cce'>標高</font>" + $oMarker.elevation + "<br/>" +
+		"<font color='#ff5858'>" + $oMarker.options.title + "</font><br>" +
+		"<font color='#3d7cce'>北緯</font>" + latRem + "／" + $latTo.toFixed(6) + "度<br>" +
+		"<font color='#3d7cce'>東経</font>" + lngRem + "／" + $lngTo.toFixed(6) + "度<br>" +
+		"<font color='#3d7cce'>標高</font>" + $oMarker.elevation + "<br>" +
 		"<font color='#3d7cce'>距離</font>" + distRem + "／" + angleRem
 	);
 }
@@ -2105,7 +2118,7 @@ function rtnGCircle_Scale(){
 			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW02');" style="font-weight:500;">追加タイル編集</font>
 		</span>
 		<div id="_SW02" class="_simpleWindow" style="width:400px;z-index:1990;">
-			<font class="_simpleWindowTitle">追加タイル編集／[Tab]区切り</font>
+			<font class="_simpleWindowTitle">追加タイル編集</font>
 			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW02');">×</font>
 			<br>
 			<textarea id="_TA01" class="_editTextBox" wrap="off" style="height:180px;width:380px;" onchange="subMapSelector();"></textarea>
@@ -2123,13 +2136,13 @@ function rtnGCircle_Scale(){
 			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW03');">マーカー変換</font>
 		</span>
 		<div id="_SW03" class="_simpleWindow" style="width:490px;z-index:1980;">
-			<font class="_simpleWindowTitle">マーカーをポイントに変換／[Tab]区切り／UTF-8N）</font>
+			<font class="_simpleWindowTitle">マーカーをポイントに変換</font>
 			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW03');">×</font>
 			<div class="_simpleWindowOutput" style="background:#fafafa;padding:8px;">
 				<input type="button" class="_btnNavi3" value="→地図から読込" onclick="subMapToPoint('_TA02');"/>
-				<input type="file" accept=".tsv" id="_readFn" class="_btnNavi2" onchange="subAddReadFile(this.id,'_TA02');"/>
+				<input type="file" id="_readFn" class="_btnNavi2" accept=".tsv" multiple style="font-size:12px;margin:0 0 0 5px;padding:0 1px;width:360px;" onchange="subAddReadFile(this.id,'_TA02');"/>
 				<br>
-				<textarea id="_TA02" class="_editTextBox" wrap="off" style="height:200px;width:457px;"></textarea>
+				<textarea id="_TA02" class="_editTextBox" wrap="off" style="height:200px;width:457px;" placeholder="[Tab]区切り／UTF-8N&#13;&quot;//&quot; で始まる行はコメント行&#13;// 例&#13;35.68365900&#9;139.75408900&#9;皇居"></textarea>
 				<script>
 					document.getElementById("_TA02").onkeydown = function(e){subAddTabCtrl(e, this);}
 				</script>
@@ -2316,7 +2329,7 @@ function rtnGCircle_Scale(){
 			var obj = document.getElementById("_TA01");
 
 			if(obj.value.length == 0){
-				obj.value = "// タイル種\t拡張子\t透過率(0.n-1.0)\t最大ズーム\n// [Tab]区切り\nseamlessphoto\tjpg\t1.0\t18\nslopezone1map\tpng\t0.8\t15\n";
+				obj.value = "// [Tab]区切り\n// タイル種\t拡張子\t透過率(0.n-1.0)\t最大ズーム\nseamlessphoto\tjpg\t1.0\t18\nslopezone1map\tpng\t0.8\t15\n";
 			}
 
 			var ary = [];
@@ -2768,7 +2781,7 @@ function rtnGCircle_Scale(){
 				$lat,
 				$lng,
 				obj,
-				(bIconDrag ? null : ("★" + $placeName))
+				(bIconDrag ? null : $placeName)
 			);
 
 			// 固定点地名のときだけセンタリング

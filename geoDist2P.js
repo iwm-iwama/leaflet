@@ -227,10 +227,10 @@ function rtnGeoVincentry(
 	return [parseFloat(dist), parseFloat(angle)];
 }
 
-//---------
-// main()
-//---------
-const Separater = " "
+//-------
+// Main
+//-------
+const Separater = "\t"
 
 //---------------
 // 計算／十進法
@@ -243,7 +243,6 @@ function main_Data1()
 
 		if(_s1.length > 0 && _s1.substr(0, 2) != "//")
 		{
-			_s1 = _s1.replace(/[\t\s,]+/g, Separater);
 			console.log(_s1);
 
 			var as1 = [];
@@ -257,7 +256,7 @@ function main_Data1()
 			console.log(as1.join(Separater));
 
 			var [dist, angle] = rtnGeoVincentry(ad1[0], ad1[1], ad1[2], ad1[3]);
-			console.log("%skm %s度", dist.toFixed(6), angle.toFixed(6));
+			console.log("%skm%s%s度", dist.toFixed(6), Separater, angle.toFixed(6));
 			console.log();
 		}
 	}
@@ -274,7 +273,6 @@ function main_Data2()
 
 		if(_s1.length > 0 && _s1.substr(0, 2) != "//")
 		{
-			_s1 = _s1.replace(/[\t\s,]+/g, Separater);
 			console.log(_s1);
 
 			var aLatLng = [];
@@ -289,11 +287,14 @@ function main_Data2()
 			console.log(as1.join(Separater));
 
 			var [dist, angle] = rtnGeoVincentry(aLatLng[0], aLatLng[1], aLatLng[2], aLatLng[3]);
-			console.log("%skm %s度", dist.toFixed(6), angle.toFixed(6));
+			console.log("%skm%s%s度", dist.toFixed(6), Separater, angle.toFixed(6));
 			console.log();
 		}
 	}
 }
 
+//-------
+// Exec
+//-------
 main_Data1();
 main_Data2();

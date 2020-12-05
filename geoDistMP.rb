@@ -2,6 +2,10 @@
 #coding:utf-8
 # > ruby geoDistMP.rb
 
+Signal.trap(:INT) do
+	exit
+end
+
 #---------------------------------------------------------------------
 # [北緯]	[東経]	[その他]
 #---------------------------------------------------------------------
@@ -426,10 +430,6 @@ Data2 = <<EOD
 EOD
 #---------------------------------------------------------------------
 
-Signal.trap(:INT) do
-	exit
-end
-
 #-------------------
 # 度分秒 => 十進法
 #-------------------
@@ -550,9 +550,9 @@ def rtnGeoVincentry(
 	return [dist.to_f, angle.to_f]
 end
 
-#---------
-# main()
-#---------
+#-------
+# Main
+#-------
 Separater = "\t"
 
 #---------------
@@ -567,7 +567,7 @@ def main_Data1()
 		_s1 = _s1.strip
 
 		if _s1.size > 0 && _s1[0, 1] != "#"
-			as1 = _s1.gsub(/[\t\s,]+/, Separater).split(Separater)
+			as1 = _s1.split(Separater)
 
 			dist, angle = aOld[0] ?
 				rtnGeoVincentry(aOld[0], aOld[1], as1[0], as1[1]) :
@@ -600,7 +600,7 @@ def main_Data2()
 		_s1 = _s1.strip
 
 		if _s1.size > 0 && _s1[0, 1] != "#"
-			as1 = _s1.gsub(/[\t\s,]+/, Separater).split(Separater)
+			as1 = _s1.split(Separater)
 			ad1 = []
 
 			as1[0..1].each do
@@ -627,5 +627,8 @@ def main_Data2()
 	printf("%fkm\n\n", iTotalDist)
 end
 
+#-------
+# Exec
+#-------
 main_Data1()
 main_Data2()

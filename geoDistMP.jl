@@ -543,9 +543,9 @@ function rtnGeoVincentry(
 	return (dist::Float64, angle::Float64)
 end
 
-#---------
-# main()
-#---------
+#-------
+# Main
+#-------
 using Printf
 
 const Separater = "\t"
@@ -561,7 +561,6 @@ function main_Data1()
 		_s1 = strip(_s1)
 
 		if length(_s1) > 0 && SubString(_s1, 1, 1) != "#"
-			_s1 = replace(_s1, r"[\t\s,]+" => Separater)
 			as1 = split(_s1, Separater)
 
 			dist, angle = size(aOld)[1] > 0 ?
@@ -593,7 +592,6 @@ function main_Data2()
 		_s1 = strip(_s1)
 
 		if length(_s1) > 0 && SubString(_s1, 1, 1) != "#"
-			_s1 = replace(_s1, r"[\t\s,]+" => Separater)
 			as1 = split(_s1, Separater)
 			ad1 = []
 
@@ -619,5 +617,8 @@ function main_Data2()
 	@printf("%fkm\n\n", iTotalDist)
 end
 
+#-------
+# Exec
+#-------
 main_Data1()
 main_Data2()

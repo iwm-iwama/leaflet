@@ -554,9 +554,9 @@ function rtnGeoVincentry(
 	return [parseFloat(dist), parseFloat(angle)];
 }
 
-//---------
-// main()
-//---------
+//-------
+// Main
+//-------
 const Separater = "\t"
 
 //---------------
@@ -573,7 +573,7 @@ function main_Data1()
 
 		if(_s1.length > 0 && _s1.substr(0, 2) != "//")
 		{
-			var as1 = _s1.replace(/[\t\s,]+/g, Separater).split(Separater);
+			var as1 = _s1.split(Separater);
 
 			var [dist, angle] = aOld[0] ?
 				rtnGeoVincentry(aOld[0], aOld[1], as1[0], as1[1]) :
@@ -610,7 +610,7 @@ function main_Data2()
 
 		if(_s1.length > 0 && _s1.substr(0, 2) != "//")
 		{
-			var as1 = _s1.replace(/[\t\s,]+/g, Separater).split(Separater);
+			var as1 = _s1.split(Separater);
 			var ad1 = []
 
 			for(var _s2 of as1.slice(0, 2))
@@ -638,5 +638,8 @@ function main_Data2()
 	console.log();
 }
 
+//-------
+// Exec
+//-------
 main_Data1();
 main_Data2();

@@ -212,12 +212,12 @@ function rtnGeoVincentry(
 	return (dist::Float64, angle::Float64)
 end
 
-#---------
-# main()
-#---------
+#-------
+# Main
+#-------
 using Printf
 
-const Separater = " "
+const Separater = "\t"
 
 #---------------
 # 計算／十進法
@@ -227,7 +227,6 @@ function main_Data1()
 		_s1 = strip(_s1)
 
 		if length(_s1) > 0 && SubString(_s1, 1, 1) != "#"
-			_s1 = replace(_s1, r"[\t\s,]+" => Separater)
 			println(_s1)
 
 			as1 = []
@@ -240,7 +239,7 @@ function main_Data1()
 			println(join(as1, Separater))
 
 			dist, angle = rtnGeoVincentry(parse(Float64, ad1[1]), parse(Float64, ad1[2]), parse(Float64, ad1[3]), parse(Float64, ad1[4]))
-			@printf("%fkm %f度\n\n", dist, angle)
+			@printf("%fkm%s%f度\n\n", dist, Separater, angle)
 		end
 	end
 end
@@ -253,7 +252,6 @@ function main_Data2()
 		_s1 = strip(_s1)
 
 		if length(_s1) > 0 && SubString(_s1, 1, 1) != "#"
-			_s1 = replace(_s1, r"[\t\s,]+" => Separater)
 			println(_s1)
 
 			aLatLng = []
@@ -267,10 +265,13 @@ function main_Data2()
 			println(join(as1, Separater))
 
 			dist, angle = rtnGeoVincentry(aLatLng[1], aLatLng[2], aLatLng[3], aLatLng[4])
-			@printf("%fkm %f度\n\n", dist, angle)
+			@printf("%fkm%s%f度\n\n", dist, Separater, angle)
 		end
 	end
 end
 
+#-------
+# Exec
+#-------
 main_Data1()
 main_Data2()
