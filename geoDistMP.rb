@@ -12,13 +12,13 @@ end
 # 十進法 ddd.d...
 #---------------------------------------------------------------------
 Data1 = <<EOD
-# (サンプル)
-#	35.685187	139.752274	皇居
-#	24.449582	122.934340	日本最西端之地
+// (サンプル)
+//	35.685187	139.752274	皇居
+//	24.449582	122.934340	日本最西端之地
 
-# (参考)
-#	https://www.330k.info/essay/precision-of-mathematica-geodistance-and-geographical-distance-formula/
-#	https://www.330k.info/essay/precision-of-mathematica-geodistance-and-geographical-distance-formula/makurazaki_wakkanai_reduced.gpx
+// (参考)
+//	https://www.330k.info/essay/precision-of-mathematica-geodistance-and-geographical-distance-formula/
+//	https://www.330k.info/essay/precision-of-mathematica-geodistance-and-geographical-distance-formula/makurazaki_wakkanai_reduced.gpx
 31.27216	130.29956	枕崎駅
 31.33976	130.27063	↓
 31.38294	130.31228	↓
@@ -424,7 +424,7 @@ EOD
 # 度分秒 dddmmss.s...
 #---------------------------------------------------------------------
 Data2 = <<EOD
-# (サンプル)
+// (サンプル)
 354106.6732	1394508.1864	皇居
 242658.4952	1225603.6240	日本最西端之地
 EOD
@@ -566,7 +566,7 @@ def main_Data1()
 		|_s1|
 		_s1 = _s1.strip
 
-		if _s1.size > 0 && _s1[0, 1] != "#"
+		if _s1.size > 0 && _s1[0, 2] != "//"
 			as1 = _s1.split(Separater)
 
 			dist, angle = aOld[0] ?
@@ -599,7 +599,7 @@ def main_Data2()
 		|_s1|
 		_s1 = _s1.strip
 
-		if _s1.size > 0 && _s1[0, 1] != "#"
+		if _s1.size > 0 && _s1[0, 2] != "//"
 			as1 = _s1.split(Separater)
 			ad1 = []
 

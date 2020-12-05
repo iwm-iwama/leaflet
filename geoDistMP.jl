@@ -7,13 +7,13 @@
 # 十進法 ddd.d...
 #---------------------------------------------------------------------
 const Data1 = """
-# (サンプル)
-#	35.685187	139.752274	皇居
-#	24.449582	122.934340	日本最西端之地
+// (サンプル)
+//	35.685187	139.752274	皇居
+//	24.449582	122.934340	日本最西端之地
 
-# (参考)
-#	https://www.330k.info/essay/precision-of-mathematica-geodistance-and-geographical-distance-formula/
-#	https://www.330k.info/essay/precision-of-mathematica-geodistance-and-geographical-distance-formula/makurazaki_wakkanai_reduced.gpx
+// (参考)
+//	https://www.330k.info/essay/precision-of-mathematica-geodistance-and-geographical-distance-formula/
+//	https://www.330k.info/essay/precision-of-mathematica-geodistance-and-geographical-distance-formula/makurazaki_wakkanai_reduced.gpx
 31.27216	130.29956	枕崎駅
 31.33976	130.27063	↓
 31.38294	130.31228	↓
@@ -419,7 +419,7 @@ const Data1 = """
 # 度分秒 dddmmss.s...
 #---------------------------------------------------------------------
 const Data2 = """
-# (サンプル)
+// (サンプル)
 354106.6732	1394508.1864	皇居
 242658.4952	1225603.6240	日本最西端之地
 """
@@ -560,7 +560,7 @@ function main_Data1()
 	for _s1 in split(Data1, "\n")
 		_s1 = strip(_s1)
 
-		if length(_s1) > 0 && SubString(_s1, 1, 1) != "#"
+		if length(_s1) > 0 && SubString(_s1, 1, 2) != "//"
 			as1 = split(_s1, Separater)
 
 			dist, angle = size(aOld)[1] > 0 ?
@@ -591,7 +591,7 @@ function main_Data2()
 	for _s1 in split(Data2, "\n")
 		_s1 = strip(_s1)
 
-		if length(_s1) > 0 && SubString(_s1, 1, 1) != "#"
+		if length(_s1) > 0 && SubString(_s1, 1, 2) != "//"
 			as1 = split(_s1, Separater)
 			ad1 = []
 
