@@ -25,34 +25,9 @@ if $iFn == nil || ! File.exist?($iFn)
 	puts "   24.449582	122.934340	日本最西端之地"
 	puts "\e[0;39m"
 	exit
-end
-
-# 読込データをUTF-8に統一
-Data1 = NKF.nkf("-w", File.open($iFn, "rt").read())
-
-#-------------------
-# 度分秒 => 十進法
-#-------------------
-# (例)
-#	printf("%f度\n", rtnGeoIBLto10B(242658.495200))
-#
-def rtnGeoIBLto10B(
-	ddmmss # ddmmss.s...
-)
-	ddmmss = ddmmss.to_f
-
-	sign = 1
-
-	if ddmmss < 0
-		sign = -1
-		ddmmss = -ddmmss
-	end
-
-	sec = ddmmss % 100
-	min = ((ddmmss / 100).to_i) % 100
-	deg = (ddmmss / 10000).to_i
-
-	return sign * (deg + (min / 60.0) + (sec / 3600.0)).to_f
+else
+	# 読込データをUTF-8に統一
+	Data1 = NKF.nkf("-w", File.open($iFn, "rt").read())
 end
 
 #-------------------------------
