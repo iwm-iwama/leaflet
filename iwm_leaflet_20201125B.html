@@ -1,4 +1,4 @@
-<!-- iwm20201125B Ver.20201208_1238 'U-2S' -->
+<!-- iwm20201125B Ver.20201212_2308 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -107,6 +107,11 @@ body
 	background:#f6f6f7;
 	margin:0;
 	padding:0;
+}
+input[type="file"]
+{
+	margin:0;
+	padding:0 1px;
 }
 option
 {
@@ -1329,7 +1334,8 @@ var $FileName = "";
 
 function subAddReadFile(
 	$fileId,
-	$textareaId
+	$textareaId,
+	$mode // 0:上書き／1:追記
 ){
 	// ボタンにイベントを設定
 	var fileList = document.getElementById($fileId).files;
@@ -1339,8 +1345,16 @@ function subAddReadFile(
 
 	var reader = new FileReader();
 	reader.onload = function(evt){
-		// 追加保存
-		document.getElementById($textareaId).value += evt.target.result;
+		switch($mode){
+			// 追記
+			case(1):
+				document.getElementById($textareaId).value += evt.target.result;
+			break;
+			// 上書き
+			default:
+				document.getElementById($textareaId).value = evt.target.result;
+			break;
+		}
 	}
 	// テキスト書込
 	reader.readAsText(fileList[0]);
@@ -2144,13 +2158,15 @@ function rtnGCircle_Scale(){
 		// 追加タイル編集
 		------------------>
 		<span style="float:right;margin:0 4px;">
-			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW02');" style="font-weight:500;">追加タイル編集</font>
+			<font class="_simpleWindowCall" onclick="subMapSelector();subSimpleWindow_OpenClose('_SW02');" style="font-weight:500;">追加タイル編集</font>
 		</span>
 		<div id="_SW02" class="_simpleWindow" style="width:400px;z-index:1990;">
 			<font class="_simpleWindowTitle">追加タイル編集</font>
-			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW02');">×</font>
+			<font class="_simpleWindowClose" onclick="subMapSelector();subSimpleWindow_OpenClose('_SW02');">×</font>
 			<br>
-			<textarea id="_TA01" class="_editTextBox" wrap="off" style="height:180px;width:380px;" onchange="subMapSelector();"></textarea>
+			<input type="file" id="_readMapFile" class="_btnNavi2" accept=".tsv" multiple style="font-size:12px;margin:0;width:395px;" onchange="subAddReadFile(this.id,'_TA01',0);"/>
+			<br>
+			<textarea id="_TA01" class="_editTextBox" wrap="off" style="height:180px;width:380px;"></textarea>
 			<script>
 				document.getElementById("_TA01").onkeydown = function(e){subAddTabCtrl(e, this);}
 			</script>
@@ -2169,7 +2185,7 @@ function rtnGCircle_Scale(){
 			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW03');">×</font>
 			<div class="_simpleWindowOutput" style="background:#fafafa;padding:8px;">
 				<input type="button" class="_btnNavi3" value="→地図から読込" onclick="subMapToPoint('_TA02');"/>
-				<input type="file" id="_readFn" class="_btnNavi2" accept=".tsv" multiple style="font-size:12px;margin:0 0 0 5px;padding:0 1px;width:360px;" onchange="subAddReadFile(this.id,'_TA02');"/>
+				<input type="file" id="_readPointFile" class="_btnNavi2" accept=".tsv" multiple style="font-size:12px;margin:0 0 0 5px;width:360px;" onchange="subAddReadFile(this.id,'_TA02',1);"/>
 				<br>
 				<textarea id="_TA02" class="_editTextBox" wrap="off" style="height:200px;width:457px;" placeholder="[Tab]区切り／UTF-8N&#13;&quot;//&quot; で始まる行はコメント行&#13;// 例 ※&quot;icon@画像ファイル&quot; はオプション&#13;35.68365900&#9;139.75408900&#9;皇居&#9;icon@画像ファイル"></textarea>
 				<script>
