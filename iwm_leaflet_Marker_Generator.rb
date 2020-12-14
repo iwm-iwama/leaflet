@@ -26,9 +26,6 @@ if $iFn == nil || ! File.exist?($iFn)
 	puts "   35.685187	139.752274	<font color=\"#ff5858\">皇居</font>	<font color=\"#3d7cce\">北緯</font>35度41分6.673200秒／35.685187度	<font color=\"#3d7cce\">東経</font>139度45分8.186400秒／139.752274度"
 	puts "\e[0;39m"
 	exit
-else
-	# 読込データをUTF-8に統一
-	Data1 = NKF.nkf("-w", File.open($iFn, "rt").read())
 end
 
 #-------------------
@@ -75,7 +72,8 @@ def main_Data1()
 	aTag = []
 	iLine = 0
 
-	Data1.each_line do
+	# 読込データをUTF-8に統一
+	NKF.nkf("-w", File.open($iFn, "rt").read()).each_line do
 		|_s1|
 		_s1 = _s1.strip
 

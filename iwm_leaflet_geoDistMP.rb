@@ -25,9 +25,6 @@ if $iFn == nil || ! File.exist?($iFn)
 	puts "   24.449582	122.934340	日本最西端之地"
 	puts "\e[0;39m"
 	exit
-else
-	# 読込データをUTF-8に統一
-	Data1 = NKF.nkf("-w", File.open($iFn, "rt").read())
 end
 
 #-------------------------------
@@ -138,7 +135,8 @@ def main_Data1()
 	iTotalDist = 0.0
 	aOld = []
 
-	Data1.each_line do
+	# 読込データをUTF-8に統一
+	NKF.nkf("-w", File.open($iFn, "rt").read()).each_line do
 		|_s1|
 		_a1 = _s1.strip.split(/#{Splitter}/)
 
