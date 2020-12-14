@@ -6,8 +6,6 @@ Signal.trap(:INT) do
 	exit
 end
 
-require "nkf"
-
 $iFn = ARGV[0]
 
 if $iFn == nil || ! File.exist?($iFn)
@@ -125,6 +123,8 @@ end
 #-------
 # Main
 #-------
+require "nkf"
+
 Splitter = "[,\t]"
 Separater = "\t"
 
