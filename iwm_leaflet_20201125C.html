@@ -1,4 +1,4 @@
-<!-- iwm20201125B Ver.20201214_2225 'U-2S' -->
+<!-- iwm20201125C Ver.20201226_1333 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -29,9 +29,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.min.js"></script>
 
 <!--------------------------------------------------------------------
-// font-awesome
+// fork-awesome
 --------------------------------------------------------------------->
-<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.1.7/css/fork-awesome.min.css" integrity="sha256-gsmEoJAws/Kd3CjuOQzLie5Q3yshhvmo7YNtBG7aaEY=" crossorigin="anonymous"/>
 
 <!--------------------------------------------------------------------
 // Leaflet.PolylineMeasure
@@ -80,7 +80,7 @@
 .leaflet-popup-close-button
 {
 	color:#333 !important;
-	font:11px Sans-serif;
+	font-size:11px;
 	line-height:14px;
 	margin:0;
 	padding:2px 5px;
@@ -111,29 +111,7 @@ body
 input[type="file"]
 {
 	margin:0;
-	padding:0 1px;
-}
-option
-{
-	background:#fff;
-	font-size:14px;
-	margin:0 0 0 4px;
-	padding:4px;
-}
-select
-{
-	background:#fff;
-	border:0;
-	cursor:pointer;
-	font-size:11px;
-	height:19px;
-	margin:0 0 0 8px;
 	padding:0;
-	width:80px;
-}
-select:hover
-{
-	background:#ff5 !important;
 }
 ._btnNavi1,
 ._btnNavi2,
@@ -143,6 +121,7 @@ select:hover
 	border:0;
 	color:#fff;
 	font-size:12px;
+	line-height:18px;/* WebKitの余白に対応するため以下18pxで統一 */
 	margin:0;
 	padding:0 8px;
 	text-decoration:none;
@@ -161,7 +140,7 @@ select:hover
 }
 ._btnNavi1:hover
 {
-	background:#6dacff !important;
+	background:#6dacff;
 }
 ._btnNavi2
 {
@@ -169,7 +148,7 @@ select:hover
 }
 ._btnNavi2:hover
 {
-	background:#ed4e68 !important;
+	background:#ed4e68;
 }
 ._btnNavi3
 {
@@ -177,7 +156,7 @@ select:hover
 }
 ._btnNavi3:hover
 {
-	background:#3dce7c !important;
+	background:#3dce7c;
 }
 ._btnNavi4
 {
@@ -185,7 +164,7 @@ select:hover
 }
 ._btnNavi4:hover
 {
-	background:#955aa6 !important;
+	background:#955aa6;
 }
 ._txtNavi1,
 ._txtNavi2
@@ -221,7 +200,6 @@ select:hover
 	border-radius:8px 8px 0 0;
 	color:#fff;
 	font-size:13px;
-	line-height:18px;
 	left:0;
 	margin:0;
 	padding:2px 4px 2px 10px;
@@ -229,17 +207,6 @@ select:hover
 	top:0;
 	/* 動的に変更 */
 	width:0;
-}
-#_divNaviCommander input[type="text"]
-{
-	border:1px solid #808080;
-	color:#000;
-	font-size:12px;
-	height:16px;
-	line-height:18px;
-	margin:0;
-	padding:0 3px;
-	width:90px;
 }
 #_divMap
 {
@@ -277,7 +244,6 @@ select:hover
 /* ↓OverLap */
 #_InputBL
 {
-	text-align:left;
 	width:120px;
 }
 #_InputZoomA
@@ -293,37 +259,33 @@ select:hover
 	text-align:center;
 }
 /* ↑OverLap */
+._ZA,
+._ZB,
 ._Btn1,
 ._Btn2,
-._Btn3,
-._ZA,
-._ZB
+._Btn3
 {
 	border:0;
 	color:#fff;
 	cursor:pointer;
 	font-size:12px;
-	line-height:0;
 	margin:2px;
 	padding:0;
 }
 /* ↓OverLap */
-._Btn1,
 ._ZA,
-._ZB
+._ZB,
+._Btn1
 {
 	background-color:rgba(0, 0, 0, 0.6);
-}
-._Btn1:hover,
-._ZA:hover,
-._ZB:hover
-{
-	background:#3c7bff !important;
 }
 ._Btn2
 {
 	background-color:rgba(12, 75, 157, 0.8);
 }
+._ZA:hover,
+._ZB:hover,
+._Btn1:hover,
 ._Btn2:hover
 {
 	background:#3c7bff !important;
@@ -362,11 +324,11 @@ select:hover
 	border:1px solid #000;
 	color:#000;
 	cursor:text;
-	height:16px;
+	height:18px;
 	ime-mode:inactive;
+	line-height:18px;
 	margin:1px 2px;
 	padding:0 2px;
-	text-align:left;
 }
 #_IBL1:hover,
 #_IBL2:hover,
@@ -375,7 +337,7 @@ select:hover
 #_IBL2:focus,
 #_IBL3:focus
 {
-	background:#ff5 !important;
+	background:#ff5;
 }
 /* ↑OverLap */
 #_NaviZoom,
@@ -384,31 +346,35 @@ select:hover
 {
 	border:0;
 	font-size:12px;
+	height:18px;
 	ime-mode:inactive;
+	line-height:18px;
 	margin:0;
-	padding:0 3px;
+	padding:0 2px;
 	vertical-align:middle;
+}
+#_NaviZoom
+{
+	width:0;
 }
 #_NaviLat,
 #_NaviLng
 {
-	width:100px;
+	width:90px;
 }
-#_NaviZoom:hover,
 #_NaviLat:hover,
 #_NaviLng:hover,
-#_NaviZoom:focus,
 #_NaviLat:focus,
 #_NaviLng:focus
 {
-	background:#ff5 !important;
+	background:#ff5;
 }
 /*---------------------
 // アドレスマッチング
 ---------------------*/
 #_AddMatchInput
 {
-	background:orange;
+	background:#fb9d3e;
 	border:0;
 	line-height:14px;
 	margin:0;
@@ -422,7 +388,7 @@ select:hover
 #_AddMatchInput10
 {
 	background:#fff;
-	border:1px solid orange;
+	border:1px solid #fb9d3e;
 	color:#000;
 	cursor:text;
 	font-size:14px;
@@ -430,30 +396,32 @@ select:hover
 	ime-mode:inactive;
 	margin:0;
 	padding:0 3px;
+	vertical-align:middle;
 	width:100px;
 }
-#_AddMatchInput10:hover
+#_AddMatchInput10:hover,
+#_AddMatchInput10:focus
 {
-	background:#ff5 !important;
+	background:#ff5;
 }
 #_AddMatchInput15,
 #_AddMatchInput20
 {
 	border:0;
 	color:#fff;
-	font-size:14px;
-	font-weight:500;
+	font-size:15px;
 	margin:0;
 	padding:0 3px;
+	vertical-align:middle;
 }
 #_AddMatchInput30
 {
 	border:0;
 	color:#fff;
-	font-size:16px;
-	font-weight:900;
+	font-size:15px;
 	margin:0;
 	padding:0 3px;
+	vertical-align:middle;
 }
 #_AddMatchInput15:hover,
 #_AddMatchInput20:hover,
@@ -465,7 +433,7 @@ select:hover
 #_AddMatchOutput
 {
 	background-color:rgba(255, 255, 255, 0.2);
-	border:1px solid orange;
+	border:1px solid #fb9d3e;
 	color:#000;
 	font-size:13px;
 	left:0;
@@ -481,7 +449,7 @@ select:hover
 }
 #_AddMatchOutput:hover
 {
-	background:#fff !important;
+	background:#fff;
 }
 #_AddMatchOutputH
 {
@@ -503,7 +471,7 @@ select:hover
 }
 #_AddMatchOutput1:hover
 {
-	background:#ff5 !important;
+	background:#ff5;
 }
 ._AddMatchRem
 {
@@ -532,8 +500,7 @@ select:hover
 {
 	border:solid 1px #fff;
 	color:#fff;
-	font-size:13px;
-	font-weight:500;
+	font-size:12px;
 	float:right;
 	margin:0;
 	padding:0 4px;
@@ -583,11 +550,10 @@ select:hover
 	background:#fff;
 	border:0;
 	color:#000;
-	font-size:13px;
-	line-height:14px;
+	font-size:12px;
 	margin:1px;
 	overflow:auto;
-	padding:16px 0;
+	padding:0;
 	text-align:left;
 }
 /*---------------
@@ -597,17 +563,17 @@ select:hover
 {
 	border:2px solid #fa0;
 	color:#000;
-	font-size:13px;
+	font-size:12px;
 	ime-mode:inactive;
 	margin:0;
 	overflow:auto;
 	padding:2px 6px;
 	resize:none;
 }
-._editTextBox:focus,
-._editTextBox:hover
+._editTextBox:hover,
+._editTextBox:focus
 {
-	background:#ffa;
+	background:#ffc;
 }
 /*-----------
 // 距離測定
@@ -619,20 +585,22 @@ select:hover
 a.polyline-measure-controlOnBgColor,
 a.polyline-measure-controlOnBgColor:hover
 {
-	background-color:#5f5;
+	background-color:rgba(0, 0, 0, 0.7);
+	color:#f00;
 }
 .polyline-measure-unicode-icon
 {
-	font-size:19px;
+	font-size:20px;
 	font-weight:bold;
 }
-a.polyline-measure-clearControl:active {
+a.polyline-measure-clearControl:active
+{
 	background-color:#f00;
 }
 .polyline-measure-tooltip
 {
 	background-color:rgba(0, 0, 0, 0.7);
-	border-radius:3px;
+	border-radius:4px;
 	box-shadow:none;
 	font-style:normal;
 	height:auto !important;
@@ -649,25 +617,27 @@ a.polyline-measure-clearControl:active {
 .polyline-measure-tooltip-difference
 {
 	color:#f00;
-	font:11px sans-serif;
+	font-size:11px;
 	font-style:normal;
-	font-weight:bold;
+	font-weight:normal;
 	line-height:12px;
 }
 .polyline-measure-tooltip-total
 {
 	color:#fff;
-	font:13px sans-serif;
+	font-size:12px;
 	font-style:normal;
 	font-weight:normal;
 	line-height:12px;
 }
 .polyline-measure-popupTooltip
 {
-	color:#f00;
-	font:12px sans-serif;
-	font-weight:bold;
-	line-height:14px;
+	background:#000;
+	color:#fff;
+	font-size:12px;
+	font-style:normal;
+	font-weight:normal;
+	line-height:16px;
 	margin:0;
 	padding:4px;
 }
@@ -706,7 +676,7 @@ function subInitDisp(){
 	// _divMap
 	with(document.getElementById("_divMap").style){
 		height = (mapH - $MapTop) + "px";
-		top = $MapTop + "px";
+		top    = $MapTop + "px";
 		width  = mapW + "px";
 	}
 }
@@ -912,8 +882,8 @@ function subIwmInput_Open(
 	// 「WebKitではプロパティ名と変数名を自動判別しない → プロパティ名優先 → エラーと見なさない」ので注意!!
 	with(document.getElementById($inputId).style){
 		display = "";
-		top  = _posY + "px";
-		left = _posX + "px";
+		left    = _posX + "px";
+		top     = _posY + "px";
 	}
 
 	// 設定ミリ秒後に自動終了
@@ -1071,7 +1041,7 @@ function _iwmBL(){
 ---------------------*/
 var $subAddMatch_Cnt = 0;
 var $AddMatchMarker = null;
-const $HashAddMatchOutputZoom = {exist:"↑", none:"↓"};
+const $HashAddMatchOutputZoom = {exist:"<i class=\"fa fa-arrow-circle-up\"></i>", none:"<i class=\"fa fa-arrow-circle-down\"></i>"};
 
 // 初期化
 function subAddMatch_Init(){
@@ -1163,8 +1133,8 @@ function rtnAddMatch_Main(){
 		oInput3.style.display = "";
 		with(oOutput){
 			style.display = "";
-			style.height = "auto";
-			innerHTML = "★ヒット数が1000件超あります!!<br>　条件を増やしてみてください。";
+			style.height  = "auto";
+			innerHTML     = "★ヒット数が1000件超あります!!<br>　条件を増やしてみてください。";
 		}
 		rtn = false;
 	}
@@ -1188,8 +1158,8 @@ function rtnAddMatch_Main(){
 		oInput3.style.display = "";
 		with(oOutput){
 			style.display = "";
-			style.height = "auto";
-			innerHTML = "★ヒット数が0件です。<br>　条件を変えてみてください。";
+			style.height  = "auto";
+			innerHTML     = "★ヒット数が0件です。<br>　条件を変えてみてください。";
 		}
 		rtn = false;
 	}
@@ -1206,11 +1176,11 @@ function subAddMatch_Spot(
 			{
 				radius:8,
 				color:"#ff5",
-				weight:8,
 				fill:true,
 				fillColor:"#f00",
 				fillOpacity:0.8,
-				title:$title
+				title:$title,
+				weight:8
 			}
 		).addTo($Map).bindPopup(
 			$title,
@@ -1456,7 +1426,8 @@ function subA2P_PointToMap(
 		$AryPoint.splice(i1, 1);
 	}
 
-	$Map.createPane("_pane550").style.zIndex = 550;
+	$Map.createPane("_pane230").style.zIndex = 230;
+	$Map.createPane("_pane250").style.zIndex = 250;
 	var str = "";
 
 	for(var _s1 of document.getElementById($textareaId).value.trimEnd().split("\n")){
@@ -1505,7 +1476,7 @@ function subA2P_PointToMap(
 							[_a1[0], _a1[1]],
 							{
 								icon:objIcon,
-								pane:"_pane550"
+								pane:"_pane250"
 							}
 						)
 					:
@@ -1516,7 +1487,7 @@ function subA2P_PointToMap(
 								fill:true,
 								fillColor:"#f00",
 								fillOpacity:0.8,
-								pane:"_pane550",
+								pane:"_pane230",
 								radius:6,
 								title:_a1[2],
 								weight:2
@@ -1527,10 +1498,20 @@ function subA2P_PointToMap(
 				var obj2 = obj1.bindPopup(
 					_s2,
 					{
+						autoClose:true,
 						autoPan:false,
-						closeButton:true
+						closeButton:true,
+						closeOnClick:true,
 					}
 				).openPopup();
+
+				obj2.on(
+					"mouseover",
+					function(e){
+						this.openPopup();
+						/// console.log(e);
+					}
+				);
 
 				$AryPoint.push(obj2);
 			}
@@ -1553,7 +1534,7 @@ function subA2P_EditSave(
 	$hrefId
 ){
 	var content = document.getElementById($textareaId).value;
-	var blob = new Blob([content], {"type":"text/plain"});
+	var blob = new Blob([content], {type:"text/plain"});
 	var fn = ($FileName ? $FileName : "マーカー変換.tsv");
 
 	// MSIE?
@@ -1620,6 +1601,7 @@ function subA2P_GCircle(
 		return;
 	}
 
+	$Map.createPane("_pane210").style.zIndex = 210;
 	var i1 = 0;
 
 	for(var _s1 of document.getElementById($textareaId).value.trimEnd().split("\n")){
@@ -1633,8 +1615,9 @@ function subA2P_GCircle(
 					radius:rad,
 					color:"#f00",
 					fill:true,
-					fillColor:"#f88",
-					fillOpacity:0.1
+					fillColor:"#faa",
+					fillOpacity:0.1,
+					pane:"_pane210"
 				}
 			);
 			$AryM2P_Circle[i1].addTo($Map);
@@ -1685,13 +1668,16 @@ function subA2P_DistMP(
 		}
 	}
 
+	$Map.createPane("_pane240").style.zIndex = 240;
+
 	// 線描画
 	$ObjPointLinkedLine = L.polyline(
 		aLatLng,
 		{
-			"color":"#000",
-			"weight":3,
-			"opacity":0.6
+			color:"#333",
+			opacity:0.6,
+			pane:"_pane240",
+			weight:3
 		}
 	).addTo($Map);
 
@@ -1998,8 +1984,8 @@ function subAddTabCtrl(
 	$e.preventDefault();
 
 	var cursorPosition = $obj.selectionStart;
-	var cursorLeft  = $obj.value.substr(0, cursorPosition);
-	var cursorRight = $obj.value.substr(cursorPosition, $obj.value.length);
+	var cursorLeft     = $obj.value.substr(0, cursorPosition);
+	var cursorRight    = $obj.value.substr(cursorPosition, $obj.value.length);
 
 	$obj.value = cursorLeft + "\t" + cursorRight;
 	$obj.selectionEnd = cursorPosition + 1;
@@ -2059,14 +2045,17 @@ function subGCircle_Init(){
 		$GCircle.remove();
 	}
 
+	$Map.createPane("_pane220").style.zIndex = 220;
+
 	$GCircle = L.greatCircle(
 		$BaseMarker.getLatLng(),
 		{
 			radius:rtnGCircle_Scale(),
 			color:"#00f",
 			fill:true,
-			fillColor:"#88f",
-			fillOpacity:0.1
+			fillColor:"#aaf",
+			fillOpacity:0.1,
+			pane:"_pane220"
 		}
 	);
 	$GCircle.addTo($Map);
@@ -2095,7 +2084,7 @@ function rtnGCircle_Scale(){
 		<input type="button" class="_ZA" value="5" onclick="_iwmZA('5');"/><input type="button" class="_ZA" value="6" onclick="_iwmZA('6');"/><input type="button" class="_ZA" value="7" onclick="_iwmZA('7');"/><input type="button" class="_ZA" value="8" onclick="_iwmZA('8');"/><input type="button" class="_ZA" value="9" onclick="_iwmZA('9');"/><br>
 		<input type="button" class="_ZA" value="10" onclick="_iwmZA('10');"/><input type="button" class="_ZA" value="11" onclick="_iwmZA('11');"/><input type="button" class="_ZA" value="12" onclick="_iwmZA('12');"/><input type="button" class="_ZA" value="13" onclick="_iwmZA('13');"/><input type="button" class="_ZA" value="14" onclick="_iwmZA('14');"/><br>
 		<input type="button" class="_ZA" value="15" onclick="_iwmZA('15');"/><input type="button" class="_ZA" value="16" onclick="_iwmZA('16');"/><input type="button" class="_ZA" value="17" onclick="_iwmZA('17');"/><input type="button" class="_ZA" value="18" onclick="_iwmZA('18');"/><input type="button" class="_ZA" value="19" onclick="_iwmZA('19');"/><br>
-		<input type="button" class="_ZA" value="20" onclick="_iwmZA('20');"/><input type="button" class="_ZA" value="21" onclick="_iwmZA('21');"/><input type="button" class="_ZA" value="22" onclick="_iwmZA('22');"/><input type="button" class="_ZA" value="23" onclick="_iwmZA('23');"/><input type="button" class="_Btn3" value="＋" onclick="_iwmZA2();"/>
+		<input type="button" class="_ZA" value="20" onclick="_iwmZA('20');"/><input type="button" class="_ZA" value="21" onclick="_iwmZA('21');"/><input type="button" class="_ZA" value="22" onclick="_iwmZA('22');"/><input type="button" class="_ZA" value="23" onclick="_iwmZA('23');"/><div class="_btnNavi2" style="display:inline-block;_display:inline;font-size:14px;height:26px;line-height:26px;margin:2px;padding:0;vertical-align:top;width:26px;" onclick="_iwmZA2();"><i class="fa fa-map-marker"></i></div>
 	</div>
 	<div id="_InputZoomB">
 		<input type="button" class="_ZB" value="23" onclick="_iwmZB('23');"/><br>
@@ -2131,7 +2120,7 @@ function rtnGCircle_Scale(){
 	// アドレスマッチング
 	---------------------->
 	<div id="_AddMatchInput">
-		<input type="text" id="_AddMatchInput10" onchange="subAddMatch_Main();" placeholder="住所検索"/><font id="_AddMatchInput15" onclick="subAddMatch_Main();">→</font><font id="_AddMatchInput20" onclick="rtnAddMatch_Main();"></font><font id="_AddMatchInput30" onclick="subAddMatch_Init();">×</font>
+		<input type="text" id="_AddMatchInput10" onchange="subAddMatch_Main();" placeholder="住所検索"/><font id="_AddMatchInput15" onclick="subAddMatch_Main();"><i class="fa fa-search"></i></font><font id="_AddMatchInput20" onclick="rtnAddMatch_Main();"></font><font id="_AddMatchInput30" onclick="subAddMatch_Init();"><i class="fa fa-times-circle"></i></font>
 	</div>
 	<div id="_AddMatchOutput"></div>
 	<!-------------------
@@ -2139,9 +2128,9 @@ function rtnGCircle_Scale(){
 	-------------------->
 	<div id="_divNaviCommander">
 		北緯&nbsp;<input type="text" id="_NaviLat" onclick="subIwmInput_BL_Open(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 8);" placeholder="緯度入力"/>
-		&nbsp;東経&nbsp;<input type="text" id="_NaviLng" onclick="subIwmInput_BL_Open(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 8);" placeholder="経度入力"/>
+		東経&nbsp;<input type="text" id="_NaviLng" onclick="subIwmInput_BL_Open(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 8);" placeholder="経度入力"/>
 		<!-- ズーム --><input type="hidden" id="_NaviZoom"/>
-		<input type="button" class="_btnNavi1" value="＋" onclick="_iwmZA2();"/>
+		<div class="_btnNavi1" style="display:inline-block;_display:inline;font-size:14px;line-height:16px;" onclick="_iwmZA2();"><i class="fa fa-map-marker"></i></div>
 		<input type="button" id="_btnMarker" class="_btnNavi2" value="マーカー消去" onclick="subMyObj_Remove($AryLocalMarker);"/>
 		<!---------
 		// ヘルプ
@@ -2149,29 +2138,28 @@ function rtnGCircle_Scale(){
 		<span style="float:right;margin:0 8px 0 4px;">
 			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW01','subSimpleWindow_HDoc01(\'_SW01A\')');" style="font-weight:900;">？</font>
 		</span>
-		<div id="_SW01" class="_simpleWindow" style="width:320px;z-index:2000;">
+		<div id="_SW01" class="_simpleWindow" style="width:320px;z-index:1960;">
 			<font class="_simpleWindowTitle">操作説明</font>
 			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW01');">×</font>
-			<div id="_SW01A" class="_simpleWindowOutput" style="max-height:480px;"></div>
+			<div id="_SW01A" class="_simpleWindowOutput" style="max-height:500px;padding:0 0 12px 0;"></div>
 		</div>
 		<!-----------------
 		// 追加タイル編集
 		------------------>
 		<span style="float:right;margin:0 4px;">
-			<font class="_simpleWindowCall" onclick="subMapSelector();subSimpleWindow_OpenClose('_SW02');" style="font-weight:500;">追加タイル編集</font>
+			<font class="_simpleWindowCall" onclick="subMapSelector();subSimpleWindow_OpenClose('_SW02');">追加タイル編集</font>
 		</span>
-		<div id="_SW02" class="_simpleWindow" style="width:400px;z-index:1990;">
+		<div id="_SW02" class="_simpleWindow" style="width:400px;z-index:1970;">
 			<font class="_simpleWindowTitle">追加タイル編集</font>
 			<font class="_simpleWindowClose" onclick="subMapSelector();subSimpleWindow_OpenClose('_SW02');">×</font>
+			<input type="file" id="_readMapFile" class="_btnNavi2" accept=".tsv" multiple style="font-size:12px;margin:0;width:398px;" onchange="subAddReadFile(this.id,'_TA01',0);"/>
 			<br>
-			<input type="file" id="_readMapFile" class="_btnNavi2" accept=".tsv" multiple style="font-size:12px;margin:0;width:395px;" onchange="subAddReadFile(this.id,'_TA01',0);"/>
-			<br>
-			<textarea id="_TA01" class="_editTextBox" wrap="off" style="height:180px;width:380px;"></textarea>
+			<textarea id="_TA01" class="_editTextBox" wrap="off" style="height:180px;width:381px;"></textarea>
 			<script>
 				document.getElementById("_TA01").onkeydown = function(e){subAddTabCtrl(e, this);}
 			</script>
-			<div style="margin:0 0 8px 0;">
-				<a class="_btnNavi3" href="http://maps.gsi.go.jp/development/ichiran.html" target="_blank" style="font-size:13px;">地理院タイル一覧⇒</a>
+			<div style="margin:2px 0 8px 0;text-align:center;">
+				<a class="_btnNavi3" href="http://maps.gsi.go.jp/development/ichiran.html" target="_blank" style="font-size:12px;padding:2px 8px;">地理院タイル一覧⇒</a>
 			</div>
 		</div>
 		<!---------------
@@ -2183,10 +2171,9 @@ function rtnGCircle_Scale(){
 		<div id="_SW03" class="_simpleWindow" style="width:490px;z-index:1980;">
 			<font class="_simpleWindowTitle">マーカーをポイントに変換</font>
 			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW03');">×</font>
-			<div class="_simpleWindowOutput" style="background:#fafafa;padding:8px;">
+			<div class="_simpleWindowOutput" style="background:#fafafa;padding:0 8px 8px 8px;">
 				<input type="button" class="_btnNavi3" value="→地図から読込" onclick="subMapToPoint('_TA02');"/>
-				<input type="file" id="_readPointFile" class="_btnNavi2" accept=".tsv" multiple style="font-size:12px;margin:0 0 0 5px;width:360px;" onchange="subAddReadFile(this.id,'_TA02',1);"/>
-				<br>
+				<input type="file" id="_readPointFile" class="_btnNavi2" accept=".tsv" multiple style="font-size:12px;margin:0 0 0 5px;width:362px;" onchange="subAddReadFile(this.id,'_TA02',1);"/>
 				<textarea id="_TA02" class="_editTextBox" wrap="off" style="height:200px;width:457px;" placeholder="[Tab]区切り／UTF-8N&#13;&quot;//&quot; で始まる行はコメント行&#13;// 例 ※&quot;icon@画像ファイル&quot; はオプション&#13;35.68365900&#9;139.75408900&#9;皇居&#9;icon@画像ファイル"></textarea>
 				<script>
 					document.getElementById("_TA02").onkeydown = function(e){subAddTabCtrl(e, this);}
@@ -2199,10 +2186,10 @@ function rtnGCircle_Scale(){
 				<div style="margin:4px 0 0 0;">
 					<input type="button" class="_btnNavi3" value="←地図へ反映" onclick="subA2P_PointToMap('_TA02');subA2P_DistMP('_TA02','_textDist',_checkboxDist.checked);"/>
 					<input type="button" class="_btnNavi3" value="クリア" onclick="subA2P_EditClear('_TA02','_GCircleM2P');"/>
-					<a id="_btnDL" class="_btnNavi2" href="#" download="" onclick="subA2P_EditSave('_TA02',this.id)">ファイルに保存</a>
-					<input type="button" class="_btnNavi3" style="margin:0 0 0 10px;padding:0 3px;" value="←" onclick="subA2P_GCircle('_GCircleM2P','_TA02');"/><input type="text" id="_GCircleM2P" class="_txtNavi1" list="_Dist" style="width:70px;" placeholder="範囲円"/>
+					<a href="#" id="_btnDL" download="" onclick="subA2P_EditSave('_TA02',this.id)"><div class="_btnNavi2" style="display:inline-block;_display:inline;height:18px;line-height:18px;margin:0 0 0 2px;padding:0 8px;">ファイルに保存</div></a>
+					<input type="button" class="_btnNavi3" style="margin:0 0 0 8px;padding:0 3px;" value="←" onclick="subA2P_GCircle('_GCircleM2P','_TA02');"/><input type="text" id="_GCircleM2P" class="_txtNavi1" list="_Dist" style="width:70px;" placeholder="範囲円"/>
 					<datalist id="_Dist">
-						<option value="50m"/><option value="100m"/><option value="250m"/><option value="500m"/><option value="1km"/><option value="2km"/><option value="4km"/><option value="5km"/><option value="8km"/><option value="10km"/><option value="20km"/><option value="25km"/><option value="40km"/><option value="50km"/><option value="80km"/><option value="100km"/></select>
+						<option value="50m"/><option value="100m"/><option value="250m"/><option value="500m"/><option value="1km"/><option value="2km"/><option value="4km"/><option value="5km"/><option value="8km"/><option value="10km"/><option value="20km"/><option value="25km"/><option value="40km"/><option value="50km"/><option value="80km"/><option value="100km"/>
 					</datalist>
 					<input type="checkbox" id="_checkboxDist" class="_checkboxNavi1" style="margin:0 0 0 4px;" onclick="subA2P_DistMP('_TA02','_textDist',_checkboxDist.checked);"/><input type="text" id="_textDist" class="_txtNavi2" style="width:80px;" placeholder="総延長表示" readonly/>
 				</div>
@@ -2212,9 +2199,9 @@ function rtnGCircle_Scale(){
 		// 海水面
 		---------->
 		<span style="float:right;margin:0 4px;">
-			<font id="_AAA" class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW04');" style="font-weight:500;">海水面</font>
+			<font id="_AAA" class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW04');">海水面</font>
 		</span>
-		<div id="_SW04" class="_simpleWindow" style="min-width:175px;right:123px;z-index:1970;">
+		<div id="_SW04" class="_simpleWindow" style="min-width:175px;right:106px;z-index:1990;">
 			<font class="_simpleWindowTitle">ズーム14以下で利用可能</font>
 			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW04');">×</font>
 			<div style="margin:6px 0;">
@@ -2227,9 +2214,9 @@ function rtnGCircle_Scale(){
 		// 距離円
 		---------->
 		<span style="float:right;margin:0 4px;">
-			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW05');" style="font-weight:500;">距離円</font>
+			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW05');">距離円</font>
 		</span>
-		<div id="_SW05" class="_simpleWindow" style="height:45px;min-width:228px;right:304px;z-index:1960;">
+		<div id="_SW05" class="_simpleWindow" style="height:45px;min-width:228px;right:287px;z-index:2000;">
 			<font class="_simpleWindowTitle">半径を指定</font>
 			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW05');">×</font>
 			<br>
@@ -2256,8 +2243,8 @@ function rtnGCircle_Scale(){
 			// 初回座標＠皇居
 			with(document){
 				getElementById("_NaviZoom").value = 5;
-				getElementById("_NaviLat").value = (35.68518697509636).toFixed(8);
-				getElementById("_NaviLng").value = (139.7522735595703).toFixed(8);
+				getElementById("_NaviLat").value  = (35.68518697509636).toFixed(8);
+				getElementById("_NaviLng").value  = (139.7522735595703).toFixed(8);
 			}
 
 			// 現在座標取得
@@ -2961,24 +2948,25 @@ function rtnGCircle_Scale(){
 ---------------------->
 <textarea id="_HDoc01" style="display:none;">
 <style>
-._fs1{color:#f00;}
-._fs2{color:#00f;}
+._div_head{background:#ffc;color:#000;margin:8px 4px 4px 4px;padding:0 8px;font-weight:600;}
 ._ol, ._ul{margin:0;padding:0;}
-._li1, ._li2{padding:1px;}
-._li1{margin:0 0 0 32px;}
-._li2{margin:0 0 0 0;}
-._ol ._li1{padding:6px 0 0 0;}
+._li1, ._li2{padding:0 0 2px 0;}
+._li1{margin:0 0 0 24px;}
+._li2{margin:0 0 0 8px;}
+._font_size22px{font-size:22px;}
+._font_color1{color:#3d7cce;}
+._font_color2{color:#bd1e38;}
+._font_color3{color:#fb9d3e;}
 </style>
-<span class="_fs1">【地図上でのマウス操作】</span>
+<div class="_div_head">地図上でのマウス操作</div>
  <ul class="_ul">
-  <li class="_li1">ダブルクリック：青マーカー移動</li>
-  <li class="_li1">左クリック：全ポップアップ非表示</li>
-  <li class="_li1">右クリック：赤マーカー追加</li>
+  <li class="_li1">ダブルクリック：<font class="_font_color1">青マーカー<i class="fa fa-map-marker _font_size22px"></i></font>&nbsp;移動</li>
+  <li class="_li1">左クリック：全ポップアップ<font class="_font_size22px"><i class="fa fa-commenting-o _font_color1"></i><i class="fa fa-commenting-o _font_color2"></i><i class="fa fa-commenting-o _font_color3"></i></font>&nbsp;非表示</li>
+  <li class="_li1">右クリック：<font class="_font_color2">赤マーカー<i class="fa fa-map-marker _font_size22px"></i></font>&nbsp;追加</li>
  </ul>
-<br>
-<span class="_fs2">【マーカー上でのマウス操作】</span>
+<div class="_div_head">マーカー上でのマウス操作</div>
  <ol class="_ol">
-  <li class="_li1">青マーカー
+  <li class="_li1"><font class="_font_color1">青マーカー<i class="fa fa-map-marker _font_size22px"></i></font>
    <ul class="_ul">
     <li class="_li2">左クリック：ズームレベル</li>
     <li class="_li2">右クリック：全ポップアップ</li>
@@ -2986,7 +2974,7 @@ function rtnGCircle_Scale(){
     <li class="_li2">マウスオーバー：何もしない</li>
    </ul>
   </li>
-  <li class="_li1">赤マーカー
+  <li class="_li1"><font class="_font_color2">赤マーカー<i class="fa fa-map-marker _font_size22px"></i></font>
    <ul class="_ul">
     <li class="_li2">左クリック：ズームレベル</li>
     <li class="_li2">右クリック：消去</li>
@@ -2994,7 +2982,7 @@ function rtnGCircle_Scale(){
     <li class="_li2">マウスオーバー：ポップアップ</li>
    </ul>
   </li>
-  <li class="_li1">オレンジマーカー
+  <li class="_li1"><font class="_font_color3">オレンジマーカー<i class="fa fa-map-marker _font_size22px"></i></font>
    <ul class="_ul">
     <li class="_li2">左クリック：ズームレベル</li>
     <li class="_li2">右クリック：消去</li>
