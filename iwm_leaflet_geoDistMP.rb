@@ -128,15 +128,18 @@ require "nkf"
 Splitter = "[,\t]"
 Separater = "\t"
 
+# 読込データをUTF-8に統一
+Data1 = NKF.nkf("-w", File.open($iFn, "rt").read())
+
 #---------------
 # 計算／十進法
 #---------------
-def main_Data1()
+def main_Data(sData)
 	iTotalDist = 0.0
 	aOld = []
 
-	# 読込データをUTF-8に統一
-	NKF.nkf("-w", File.open($iFn, "rt").read()).each_line do
+	# 距離計算
+	sData.each_line do
 		|_s1|
 		_a1 = _s1.strip.split(/#{Splitter}/)
 
@@ -174,11 +177,11 @@ def rtnIsDecimal(*aStr)
 	return true
 end
 
-def subDataChecker(data)
+def main_DataChecker(sData)
 	iLine = 0
 	sErr = ""
 
-	data.each_line do
+	sData.each_line do
 		|_s1|
 		_s1 = _s1.strip
 
@@ -203,5 +206,5 @@ end
 #-------
 # Exec
 #-------
-main_Data1()
-subDataChecker(Data1)
+main_Data(Data1)
+main_DataChecker(Data1)
