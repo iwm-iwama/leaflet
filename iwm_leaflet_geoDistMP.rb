@@ -123,7 +123,7 @@ end
 #-------
 # Main
 #-------
-require "nkf"
+require 'nkf'
 
 Splitter = "[,\t]"
 Separater = "\t"
@@ -191,7 +191,7 @@ def main_DataChecker(sData)
 			_a1 = _s1.split(/#{Splitter}/)
 
 			if ! rtnIsDecimal(_a1[0], _a1[1])
-				sErr << "\e[1;37mL#{iLine.to_s}\t#{_a1[0]}\t#{_a1[1]}\n"
+				sErr << "\e[1;37mL#{iLine.to_s}\t#{_s1}\n"
 				sErr << "\e[1;34m\t>> コメント行にするときは行先頭に\"//\"を付与\n"
 			end
 		end

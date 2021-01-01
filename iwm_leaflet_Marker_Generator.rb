@@ -63,12 +63,12 @@ end
 #-------
 # Main
 #-------
-require "nkf"
+require 'nkf'
 
 Splitter = "[,\t]"
 Separater = "\t"
 
-def main_Data1()
+def main_Data()
 	aTag = []
 	iLine = 0
 	sErr = ""
@@ -78,17 +78,17 @@ def main_Data1()
 		|_s1|
 		_s1 = _s1.strip
 
-		iLine += 1
-
 		str = ""
 
 		if _s1.size > 0 && _s1[0, 2] != "//"
 			# 入力フォーマット CSV, TSV に対応
 			_a1 = _s1.split(/#{Splitter}/)
 
+			iLine += 1
+
 			# １行目はラベル
 			if iLine == 1
-				if _s1 =~ /^\d/
+				if _s1 =~ /^[+-]*\d/
 					sErr << "\e[1;37mL#{iLine.to_s}\t#{_s1}\n"
 					sErr << "\e[1;34m\t>> ラベル名の先頭に数字は使えない ×「0ラベル名」 ○「ラベル名0」\n"
 				else
@@ -135,4 +135,4 @@ end
 #-------
 # Exec
 #-------
-main_Data1()
+main_Data()
