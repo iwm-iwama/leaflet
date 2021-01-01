@@ -161,7 +161,7 @@ def main_Data(sData)
 		end
 	end
 
-	printf("%fkm\n\n", iTotalDist)
+	printf("%fkm\n", iTotalDist)
 end
 
 #---------------------
@@ -191,15 +191,14 @@ def main_DataChecker(sData)
 			_a1 = _s1.split(/#{Splitter}/)
 
 			if ! rtnIsDecimal(_a1[0], _a1[1])
-				sErr << sprintf("L%d\t%s\t%s\n", iLine, _a1[0], _a1[1])
+				sErr << "\e[1;37mL#{iLine.to_s}\t#{_a1[0]}\t#{_a1[1]}\n"
+				sErr << "\e[1;34m\t>> コメント行にするときは行先頭に\"//\"を付与\n"
 			end
 		end
 	end
 
 	if sErr.size > 0
-		puts ">> Error data?"
-		puts sErr
-		puts
+		$stderr.printf("\n\e[1;31m>> Error data?\n%s\n\e[1;39m", sErr)
 	end
 end
 

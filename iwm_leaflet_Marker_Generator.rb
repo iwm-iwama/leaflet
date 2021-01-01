@@ -71,11 +71,14 @@ Separater = "\t"
 def main_Data1()
 	aTag = []
 	iLine = 0
+	sErr = ""
 
 	# 読込データをUTF-8に統一
 	NKF.nkf("-w", File.open($iFn, "rt").read()).each_line do
 		|_s1|
 		_s1 = _s1.strip
+
+		iLine += 1
 
 		str = ""
 
@@ -84,8 +87,13 @@ def main_Data1()
 			_a1 = _s1.split(/#{Splitter}/)
 
 			# １行目はラベル
-			if iLine == 0
-				aTag = _a1
+			if iLine == 1
+				if _s1 =~ /^\d/
+					sErr << "\e[1;37mL#{iLine.to_s}\t#{_s1}\n"
+					sErr << "\e[1;34m\t>> ラベル名の先頭に数字は使えない ×「0ラベル名」 ○「ラベル名0」\n"
+				else
+					aTag = _a1
+				end
 			# ２行目以降はデータ
 			else
 				# [0]北緯, [1]東経 を付与
@@ -97,7 +105,7 @@ def main_Data1()
 				# [2] 以外のタグを生成
 				_a1.each_with_index do
 					|_s2, _idx|
-					
+
 					if _idx != 2
 						str << Separater
 
@@ -116,9 +124,11 @@ def main_Data1()
 
 				puts str
 			end
-
-			iLine += 1
 		end
+	end
+
+	if sErr.size > 0
+		$stderr.printf("\n\e[1;31m>> Error data?\n%s\n\e[1;39m", sErr)
 	end
 end
 
