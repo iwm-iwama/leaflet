@@ -1,4 +1,4 @@
-<!-- iwm20201125C Ver.20201226_1333 'U-2S' -->
+<!-- iwm20201125C Ver.20210102_1441 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -988,6 +988,10 @@ function _iwmCM(){
 		);
 	}
 }
+function _iwmCM2(){
+	var pos = $Map.getCenter();
+	subCenterMap1(pos.lat, pos.lng);
+}
 function _iwmZA(
 	$str
 ){
@@ -1016,7 +1020,7 @@ function _iwmZB(
 	// URL／BL表示を変更
 	_iwmCU();
 	// センタリング
-	_iwmCM();
+	_iwmCM2();
 	// 距離円再描画
 	subGCircle_Init();
 }
