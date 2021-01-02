@@ -1,4 +1,4 @@
-<!-- iwm20201125C Ver.20210102_1441 'U-2S' -->
+<!-- iwm20201125C Ver.20210102_2230 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -978,19 +978,24 @@ function _iwmCU(){
 var _iwmCM_hash = null;
 function _iwmCM(){
 	if(_iwmCM_hash){
-		subCenterMap1(_iwmCM_hash.lat, _iwmCM_hash.lng);
+		$Map.setView(
+			[
+				_iwmCM_hash.lat,
+				_iwmCM_hash.lng
+			],
+			document.getElementById("_NaviZoom").value
+		);
 		_iwmCM_hash = null;
 	}
 	else{
-		subCenterMap1(
-			document.getElementById("_NaviLat").value,
-			document.getElementById("_NaviLng").value,
+		$Map.setView(
+			[
+				document.getElementById("_NaviLat").value,
+				document.getElementById("_NaviLng").value
+			],
+			document.getElementById("_NaviZoom").value
 		);
 	}
-}
-function _iwmCM2(){
-	var pos = $Map.getCenter();
-	subCenterMap1(pos.lat, pos.lng);
 }
 function _iwmZA(
 	$str
@@ -1020,7 +1025,10 @@ function _iwmZB(
 	// URL／BL表示を変更
 	_iwmCU();
 	// センタリング
-	_iwmCM2();
+	$Map.setView(
+		$Map.getCenter(),
+		document.getElementById("_NaviZoom").value
+	);
 	// 距離円再描画
 	subGCircle_Init();
 }
@@ -2605,18 +2613,6 @@ function rtnGCircle_Scale(){
 				spin:false
 			}
 		);
-		/*---------------
-		// センタリング
-		---------------*/
-		function subCenterMap1(
-			$Lat,
-			$Lng
-		){
-			$Map.setView(
-				[$Lat, $Lng],
-				document.getElementById("_NaviZoom").value
-			);
-		}
 		/*-----------------------------
 		// マーカーのポップアップ更新
 		-----------------------------*/
@@ -2822,7 +2818,10 @@ function rtnGCircle_Scale(){
 
 			// 固定点地名のときだけセンタリング
 			if(!bIconDrag){
-				subCenterMap1($lat, $lng);
+				$Map.setView(
+					[$lat, $lng],
+					document.getElementById("_NaviZoom").value
+				);
 			}
 
 			// ズームレベル補完 <= click
