@@ -10,18 +10,18 @@ $iFn = ARGV[0]
 
 if $iFn == nil || ! File.exist?($iFn)
 	puts
-	puts "\e[1;35miwm_leaflet.html が出力したTSVファイルから総延長／区間距離を計算"
+	puts "\e[0;97;104m iwm_leaflet.html が出力したTSVファイルから総延長／区間距離を計算 \e[0;99m"
 	puts
-	puts "\e[1;37;41m > ruby #{File.basename($0)} [入力ファイル] \e[0;39m"
+	puts "\e[0;97;101m ruby #{File.basename($0)} [File] \e[0;99m"
 	puts
-	puts "\e[1;35m (例)\e[1;37m ruby #{File.basename($0)} ./マーカー変換.tsv"
+	puts "\e[0;95m(例)\e[0;97m ruby #{File.basename($0)} ./マーカー変換.tsv"
 	puts
-	puts "\e[1;36m ※十進法 ddd.d..."
-	puts "\e[1;33m (入力)\e[1;37m"
-	puts "   // 北緯	東経	場所"
-	puts "   35.685187	139.752274	皇居"
-	puts "   24.449582	122.934340	日本最西端之地"
-	puts "\e[0;39m"
+	puts "\e[0;96m※十進法 ddd.d..."
+	puts "\e[0;93m(入力)\e[0;97m"
+	puts "  // 北緯	東経	場所"
+	puts "  35.685187	139.752274	皇居"
+	puts "  24.449582	122.934340	日本最西端之地"
+	puts "\e[0;99m"
 	exit
 end
 
@@ -191,14 +191,14 @@ def main_DataChecker(sData)
 			_a1 = _s1.split(/#{Splitter}/)
 
 			if ! rtnIsDecimal(_a1[0], _a1[1])
-				sErr << "\e[1;37mL#{iLine.to_s}\t#{_s1}\n"
-				sErr << "\e[1;34m\t>> コメント行にするときは行先頭に\"//\"を付与\n"
+				sErr << "\e[0;97mL#{iLine.to_s}\t#{_s1}\n"
+				sErr << "\e[0;94m\t>> コメント行にするときは行先頭に\"//\"を付与\n"
 			end
 		end
 	end
 
 	if sErr.size > 0
-		$stderr.printf("\n\e[1;31m>> Error data?\n%s\n\e[1;39m", sErr)
+		$stderr.printf("\n\e[0;91m>> Error data?\n%s\n\e[0;99m", sErr)
 	end
 end
 

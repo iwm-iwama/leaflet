@@ -10,19 +10,20 @@ $iFn = ARGV[0]
 
 if $iFn == nil || ! File.exist?($iFn)
 	puts
-	puts "\e[1;35m先頭行がラベル（北緯,東経,...）のCSV／TSVファイルから\niwm_leaflet.html のマーカーを生成"
+	puts "\e[0;97;104m 先頭行がラベル（北緯,東経,...）のCSV／TSVファイルから \e[0;99m"
+	puts "\e[0;97;104m iwm_leaflet.html のマーカーを生成                     \e[0;99m"
 	puts
-	puts "\e[1;37;41m > ruby #{File.basename($0)} [入力ファイル] \e[0;39m"
+	puts "\e[0;97;101m ruby #{File.basename($0)} [File] \e[0;99m"
 	puts
-	puts "\e[1;35m (例)\e[1;37m ruby #{File.basename($0)} ./基本基準点.csv"
+	puts "\e[0;95m(例)\e[0;97m ruby #{File.basename($0)} ./基本基準点.csv"
 	puts
-	puts "\e[1;36m ※十進法 ddd.d..."
-	puts "\e[1;33m (入力)\e[1;37m"
-	puts "   北緯,東経,場所"
-	puts "   35.685187,139.752274,皇居"
-	puts "\e[1;33m (出力)\e[1;37m"
-	puts "   35.685187	139.752274	<font color=\"#ff5858\">皇居</font>	<font color=\"#3d7cce\">北緯</font>35度41分6.673200秒／35.685187度	<font color=\"#3d7cce\">東経</font>139度45分8.186400秒／139.752274度"
-	puts "\e[0;39m"
+	puts "\e[0;96m※十進法 ddd.d..."
+	puts "\e[0;93m(入力)\e[0;97m"
+	puts "  北緯,東経,場所"
+	puts "  35.685187,139.752274,皇居"
+	puts "\e[0;93m(出力)\e[0;97m"
+	puts "  35.685187	139.752274	<font color=\"#ff5858\">皇居</font>	<font color=\"#3d7cce\">北緯</font>35度41分6.673200秒／35.685187度	<font color=\"#3d7cce\">東経</font>139度45分8.186400秒／139.752274度"
+	puts "\e[0;99m"
 	exit
 end
 
@@ -89,8 +90,8 @@ def main_Data()
 			# １行目はラベル
 			if iLine == 1
 				if _s1 =~ /^[+-]*\d/
-					sErr << "\e[1;37mL#{iLine.to_s}\t#{_s1}\n"
-					sErr << "\e[1;34m\t>> ラベル名の先頭に数字は使えない ×「0ラベル名」 ○「ラベル名0」\n"
+					sErr << "\e[0;93mL#{iLine.to_s}\t\e[0;97m#{_s1}\n"
+					sErr << "\e[0;95m\t>> ラベル名の先頭に数字は使えない ×'0ラベル名' ○'ラベル名0'\n"
 				else
 					aTag = _a1
 				end
@@ -128,7 +129,7 @@ def main_Data()
 	end
 
 	if sErr.size > 0
-		$stderr.printf("\n\e[1;31m>> Error data?\n%s\n\e[1;39m", sErr)
+		$stderr.printf("\n\e[0;91m>> Error data?\n%s\n\e[0;99m", sErr)
 	end
 end
 
