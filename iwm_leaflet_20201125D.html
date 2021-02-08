@@ -1,4 +1,4 @@
-<!-- iwm20201125C Ver.20210102_2230 'U-2S' -->
+<!-- iwm20201125D Ver.20210207 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -575,9 +575,9 @@ input[type="file"]
 {
 	background:#ffc;
 }
-/*-----------
-// 距離測定
------------*/
+/*--------------------------
+// Leaflet.PolylineMeasure
+--------------------------*/
 .leaflet-control
 {
 	cursor:pointer;
@@ -617,15 +617,15 @@ a.polyline-measure-clearControl:active
 .polyline-measure-tooltip-difference
 {
 	color:#f00;
-	font-size:11px;
+	font-size:9px;
 	font-style:normal;
 	font-weight:normal;
-	line-height:12px;
+	line-height:9px;
 }
 .polyline-measure-tooltip-total
 {
 	color:#fff;
-	font-size:12px;
+	font-size:11px;
 	font-style:normal;
 	font-weight:normal;
 	line-height:12px;
@@ -1513,7 +1513,7 @@ function subA2P_PointToMap(
 						autoClose:true,
 						autoPan:false,
 						closeButton:true,
-						closeOnClick:true,
+						closeOnClick:true
 					}
 				).openPopup();
 
@@ -2208,12 +2208,24 @@ function rtnGCircle_Scale(){
 			</div>
 		</div>
 		<!---------
+		// 距離円
+		---------->
+		<span style="float:right;margin:0 4px;">
+			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW05');">距離円</font>
+		</span>
+		<div id="_SW05" class="_simpleWindow" style="height:45px;min-width:228px;right:53px;z-index:1990;">
+			<font class="_simpleWindowTitle">半径を指定</font>
+			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW05');">×</font>
+			<br>
+			<div id="_GCircle"><input type="range" id="_GCircleRange" min="0" max="2000" value="0" oninput="subGCircle_Slider();"/><span id="$GCircleKm">0km</span></div>
+		</div>
+		<!---------
 		// 海水面
 		---------->
 		<span style="float:right;margin:0 4px;">
 			<font id="_AAA" class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW04');">海水面</font>
 		</span>
-		<div id="_SW04" class="_simpleWindow" style="min-width:175px;right:106px;z-index:1990;">
+		<div id="_SW04" class="_simpleWindow" style="min-width:175px;right:287px;z-index:2000;">
 			<font class="_simpleWindowTitle">ズーム14以下で利用可能</font>
 			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW04');">×</font>
 			<div style="margin:6px 0;">
@@ -2221,18 +2233,6 @@ function rtnGCircle_Scale(){
 				<input type="button" class="_btnNavi1" value="ON" onclick="subDem10ToSeaLevel('_Dem10ToSeaLevel');"/>
 				<input type="button" class="_btnNavi2" value="OFF" onclick="$Dem10ToSeaLevel.remove($Map);"/>
 			</div>
-		</div>
-		<!---------
-		// 距離円
-		---------->
-		<span style="float:right;margin:0 4px;">
-			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW05');">距離円</font>
-		</span>
-		<div id="_SW05" class="_simpleWindow" style="height:45px;min-width:228px;right:287px;z-index:2000;">
-			<font class="_simpleWindowTitle">半径を指定</font>
-			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW05');">×</font>
-			<br>
-			<div id="_GCircle"><input type="range" id="_GCircleRange" min="0" max="2000" value="0" oninput="subGCircle_Slider();"/><span id="$GCircleKm">0km</span></div>
 		</div>
 	</div>
 	<div id="_divMap">
@@ -2312,23 +2312,27 @@ function rtnGCircle_Scale(){
 		/*---------------
 		// スケール表示
 		---------------*/
-		L.control.scale({
-			metric:true,
-			imperial:false,
-			position:"bottomleft"
-		}).addTo($Map);
+		L.control.scale(
+			{
+				metric:true,
+				imperial:false,
+				position:"bottomleft"
+			}
+		).addTo($Map);
 
 		/*-----------
 		// 距離測定
 		-----------*/
-		L.control.polylineMeasure({
-			position:"bottomleft",
-			unit:"metres",
-			showBearings:false,
-			clearMeasurementsOnStop:false,
-			showClearControl:true,
-			showUnitControl:false
-		}).addTo($Map);
+		L.control.polylineMeasure(
+			{
+				position:"bottomleft",
+				unit:"metres",
+				showBearings:false,
+				clearMeasurementsOnStop:false,
+				showClearControl:true,
+				showUnitControl:false
+			}
+		).addTo($Map);
 
 		/*--------------------------------------------------------------------------------------
 		// メニュー等で使用
@@ -2373,7 +2377,7 @@ function rtnGCircle_Scale(){
 			var obj = document.getElementById("_TA01");
 
 			if(obj.value.length == 0){
-				obj.value = "// [Tab]区切り\n// タイル種\t拡張子\t透過率(0.n-1.0)\t最大ズーム\nseamlessphoto\tjpg\t1.0\t18\nslopezone1map\tpng\t0.8\t15\n";
+				obj.value = "// [Tab]区切り\n// タイル種\t拡張子\t透過率(0.n-1.0)\t最大ズーム\nseamlessphoto\tjpg\t0.7\t18\nslopezone1map\tpng\t1.0\t15\n";
 			}
 
 			var ary = [];
@@ -2419,7 +2423,8 @@ function rtnGCircle_Scale(){
 					ary.push([_a1[0], $URL + _a1[0] + "/{z}/{x}/{y}." + _a1[1], _a1[2], _a1[3], ""]);
 				}
 			}
-			ary.push(["シームレス地質図", "https://gbank.gsj.jp/seamless/v2/api/1.2/tiles/{z}/{y}/{x}.png", 0.5, 13, "20万分の1日本シームレス地質図V2@<a href='https://gbank.gsj.jp/seamless/v2.html' target='_blank'>産総研地質調査総合センターウェブサイト</a>"]);
+			ary.push(["シームレス地質図／20%", "https://gbank.gsj.jp/seamless/v2/api/1.2/tiles/{z}/{y}/{x}.png", 0.2, 13, "20万分の1日本シームレス地質図V2@<a href='https://gbank.gsj.jp/seamless/v2.html' target='_blank'>産総研地質調査総合センターウェブサイト</a>"]);
+			ary.push(["シームレス地質図／60%", "https://gbank.gsj.jp/seamless/v2/api/1.2/tiles/{z}/{y}/{x}.png", 0.6, 13, "20万分の1日本シームレス地質図V2@<a href='https://gbank.gsj.jp/seamless/v2.html' target='_blank'>産総研地質調査総合センターウェブサイト</a>"]);
 			ary.push(["UTMグリッド", "http://{s}.tile.stamen.com/utm/{z}/{x}/{y}.png", 1.0, 23, "Map tiles by <a href='http://stamen.com' target='_blank'>Stamen Design</a>, under <a href='http://creativecommons.org/licenses/by/3.0' target='_blank'>CC BY 3.0</a>."]);
 
 			for(var _a1 of ary){
