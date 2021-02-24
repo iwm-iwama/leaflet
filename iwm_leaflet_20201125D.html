@@ -1,4 +1,4 @@
-<!-- iwm20201125D Ver.20210207 'U-2S' -->
+<!-- iwm20201125D Ver.20210219 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -478,9 +478,9 @@ input[type="file"]
 	color:#f00;
 	font-size:11px;
 }
-/*---------
-// 距離円
----------*/
+/*----------------------
+// Leaflet.greatCircle
+----------------------*/
 #_GCircle
 {
 	background-color:rgba(0, 0, 0, 0.3);
@@ -490,7 +490,7 @@ input[type="file"]
 	padding:0 0 0 8px;
 	position:absolute;
 	text-align:left;
-	width:220px;
+	width:200px;
 	z-index:500;
 }
 /*----------------
@@ -602,11 +602,15 @@ a.polyline-measure-clearControl:active
 	background-color:rgba(0, 0, 0, 0.7);
 	border-radius:4px;
 	box-shadow:none;
+	color:#fff;
+	font-size:11px;
 	font-style:normal;
+	font-weight:normal;
 	height:auto !important;
+	line-height:10px;
 	margin:0;
 	padding:1px 4px 2px 4px;
-	text-align:right;
+	text-align:left;
 	white-space:nowrap;
 	width:auto !important;
 }
@@ -2046,9 +2050,9 @@ function subDem10ToSeaLevel($id){
 	}
 	$Dem10ToSeaLevel.addTo($Map);
 }
-/*---------
-// 距離円
----------*/
+/*----------------------
+// Leaflet.greatCircle
+----------------------*/
 var $GCircle = null;
 
 // 初期化
@@ -2207,17 +2211,17 @@ function rtnGCircle_Scale(){
 				</div>
 			</div>
 		</div>
-		<!---------
-		// 距離円
-		---------->
+		<!----------------------
+		// Leaflet.greatCircle
+		----------------------->
 		<span style="float:right;margin:0 4px;">
 			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW05');">距離円</font>
 		</span>
-		<div id="_SW05" class="_simpleWindow" style="height:45px;min-width:228px;right:53px;z-index:1990;">
-			<font class="_simpleWindowTitle">半径を指定</font>
+		<div id="_SW05" class="_simpleWindow" style="height:45px;width:268px;right:233px;z-index:1990;">
+			<font class="_simpleWindowTitle">半径&nbsp;</font><span id="$GCircleKm">0km</span>
 			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW05');">×</font>
 			<br>
-			<div id="_GCircle"><input type="range" id="_GCircleRange" min="0" max="2000" value="0" oninput="subGCircle_Slider();"/><span id="$GCircleKm">0km</span></div>
+			<div id="_GCircle" style="width:260px;"><input type="range" id="_GCircleRange" style="width:250px;" min="0" max="15000" value="0" oninput="subGCircle_Slider();"/></div>
 		</div>
 		<!---------
 		// 海水面
@@ -2320,14 +2324,14 @@ function rtnGCircle_Scale(){
 			}
 		).addTo($Map);
 
-		/*-----------
-		// 距離測定
-		-----------*/
+		/*--------------------------
+		// Leaflet.PolylineMeasure
+		--------------------------*/
 		L.control.polylineMeasure(
 			{
 				position:"bottomleft",
 				unit:"metres",
-				showBearings:false,
+				showBearings:true,
 				clearMeasurementsOnStop:false,
 				showClearControl:true,
 				showUnitControl:false
