@@ -716,29 +716,6 @@ function subChangeUrl(
 		("#" + $Zoom + "/" + $Lat + "/" + $Lng)
 	);
 }
-/*------------------------------------
-// (例) (255, 255, 255) => "#ffffff"
-------------------------------------*/
-/*
-function rtnRgbTo16(
-	$r,
-	$g,
-	$b
-){
-	var rtn = "#";
-	for(var _i1 = 0; _i1 < 3; _i1++){
-		var _i2 = parseInt(arguments[_i1], 10);
-		if(_i2 < 0){
-			_i2 = 0;
-		}
-		else if(_i2 > 255){
-			_i2 = 255;
-		}
-		rtn += ("0" + _i2.toString(16)).slice(-2);
-	}
-	return rtn;
-}
-*/
 /*---------------
 // 数値入力補完
 ---------------*/
@@ -1596,9 +1573,9 @@ function subA2P_EditClear(
 		$AryPoint.splice(i1, 1);
 	}
 }
-/*---------------
-// 範囲円を描画
----------------*/
+/*----------------------
+// Leaflet.greatCircle
+----------------------*/
 $AryM2P_Circle = [];
 
 function subA2P_GCircle(
