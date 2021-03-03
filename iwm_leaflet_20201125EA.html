@@ -1261,7 +1261,9 @@ function subLatLngToPlaceName(
 /*----------------
 // Simple Window
 ----------------*/
-// 初期化
+var $AryNaviCommanderId = ['_NC04','_NC03','_NC02','_NC01'];
+var $ArySimpleWindowId = ['_SW04','_SW03','_SW02','_SW01'];
+
 function subSimpleWindow_Init(
 	$aryId
 ){
@@ -1272,26 +1274,23 @@ function subSimpleWindow_Init(
 }
 function subSimpleWindow_OpenClose(
 	$id,
-	$func
+	$btnId
 ){
-	// Open／Close
-	var obj = document.getElementById($id);
-	if(!obj.style.display.length){
-		obj.style.display = "none";
+	var s1 = document.getElementById($id).style.display;
+
+	for(var _s1 of $AryNaviCommanderId){
+		document.getElementById(_s1).style.background = "";
 	}
-	else{
-		obj.style.display = "";
-		eval($func);
+
+	for(var _s1 of $ArySimpleWindowId){
+		document.getElementById(_s1).style.display = "none";
+	}
+
+	if(s1.length){
+		document.getElementById($id).style.display = "";
+		document.getElementById($btnId).style.background = "#3c639b";
 	}
 }
-function subSimpleWindow_HDoc01(
-	$id
-){
-	document.getElementById($id).innerHTML = document.getElementById("_HDoc01").value;
-}
-/*---------------
-// Edit Textbox
----------------*/
 /*---------------
 // 地図から読込
 ---------------*/
@@ -2072,7 +2071,7 @@ function rtnGCircle_Scale(){
 </script>
 </head>
 
-<body onload="subInitDisp();subIwmInput_Init();subMyObj_Init();subAddMatch_Init();subGCircle_Init();subSimpleWindow_Init(['_SW04','_SW03','_SW02','_SW01']);" onresize="subInitDisp();">
+<body onload="subInitDisp();subIwmInput_Init();subMyObj_Init();subAddMatch_Init();subGCircle_Init();subSimpleWindow_Init($ArySimpleWindowId);" onresize="subInitDisp();">
 	<!---------------
 	// 数値入力補完
 	---------------->
@@ -2120,9 +2119,9 @@ function rtnGCircle_Scale(){
 		<input type="text" id="_AddMatchInput10" onchange="subAddMatch_Main();" placeholder="住所検索"/><font id="_AddMatchInput15" onclick="subAddMatch_Main();"><i class="fa fa-search"></i></font><font id="_AddMatchInput20" onclick="rtnAddMatch_Main();"></font><font id="_AddMatchInput30" onclick="subAddMatch_Init();"><i class="fa fa-times-circle"></i></font>
 	</div>
 	<div id="_AddMatchOutput"></div>
-	<!-------------------
-	// 地理院地図の設定
-	-------------------->
+	<!-----------
+	// 拡張機能
+	------------>
 	<div id="_divNaviCommander">
 		北緯&nbsp;<input type="text" id="_NaviLat" onclick="subIwmInput_BL_Open(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 8);" placeholder="緯度入力"/>
 		東経&nbsp;<input type="text" id="_NaviLng" onclick="subIwmInput_BL_Open(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 8);" placeholder="経度入力"/>
@@ -2132,23 +2131,23 @@ function rtnGCircle_Scale(){
 		<!---------
 		// ヘルプ
 		---------->
-		<span style="float:right;margin:0 8px 0 4px;">
-			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW01','subSimpleWindow_HDoc01(\'_SW01A\')');" style="font-weight:900;">？</font>
+		<span id="_NC01" style="float:right;margin:0 8px 0 4px;">
+			<font class="_simpleWindowCall" style="font-weight:900;" onclick="subSimpleWindow_OpenClose('_SW01','_NC01');">？</font>
 		</span>
-		<div id="_SW01" class="_simpleWindow" style="width:320px;z-index:1960;">
+		<div id="_SW01" class="_simpleWindow" style="width:320px;">
 			<font class="_simpleWindowTitle">操作説明</font>
-			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW01');">×</font>
-			<div id="_SW01A" class="_simpleWindowOutput" style="max-height:500px;padding:0 0 12px 0;"></div>
+			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW01','_NC01');">×</font>
+			<div id="_SW01Doc" class="_simpleWindowOutput" style="max-height:500px;padding:0 0 12px 0;"></div>
 		</div>
 		<!-----------------
 		// 追加タイル編集
 		------------------>
-		<span style="float:right;margin:0 4px;">
-			<font class="_simpleWindowCall" onclick="subMapSelector();subSimpleWindow_OpenClose('_SW02');">追加タイル編集</font>
+		<span id="_NC02" style="float:right;margin:0 4px;">
+			<font class="_simpleWindowCall" onclick="subMapSelector();subSimpleWindow_OpenClose('_SW02','_NC02');">追加タイル編集</font>
 		</span>
-		<div id="_SW02" class="_simpleWindow" style="width:470px;z-index:1970;">
+		<div id="_SW02" class="_simpleWindow" style="width:470px;">
 			<font class="_simpleWindowTitle">追加タイル編集</font>
-			<font class="_simpleWindowClose" onclick="subMapSelector();subSimpleWindow_OpenClose('_SW02');">×</font>
+			<font class="_simpleWindowClose" onclick="subMapSelector();subSimpleWindow_OpenClose('_SW02','_NC02');">×</font>
 			<input type="file" id="_readMapFile" class="_btnNavi2" accept=".tsv" multiple style="font-size:12px;margin:0;width:470px;" onchange="subAddReadFile(this.id,'_TA01',0);"/>
 			<br>
 			<textarea id="_TA01" class="_editTextBox" wrap="off" style="height:180px;width:454px;"></textarea>
@@ -2162,12 +2161,12 @@ function rtnGCircle_Scale(){
 		<!---------------
 		// マーカー変換
 		---------------->
-		<span style="float:right;margin:0 4px;">
-			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW03');">マーカー変換</font>
+		<span id="_NC03" style="float:right;margin:0 4px;">
+			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW03','_NC03');">マーカー変換</font>
 		</span>
-		<div id="_SW03" class="_simpleWindow" style="width:530px;z-index:1980;">
+		<div id="_SW03" class="_simpleWindow" style="width:530px;">
 			<font class="_simpleWindowTitle">マーカーをポイントに変換</font>
-			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW03');">×</font>
+			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW03','_NC03');">×</font>
 			<div class="_simpleWindowOutput" style="background:#fafafa;padding:0 8px 8px 8px;">
 				<input type="button" class="_btnNavi3" value="→地図から読込" onclick="subMapToPoint('_TA02');"/>
 				<input type="file" id="_readPointFile" class="_btnNavi2" accept=".tsv" multiple style="font-size:12px;margin:0 0 0 4px;width:403px;" onchange="subAddReadFile(this.id,'_TA02',1);"/>
@@ -2197,12 +2196,12 @@ function rtnGCircle_Scale(){
 		<!----------------------
 		// Leaflet.greatCircle
 		----------------------->
-		<span style="float:right;margin:0 4px;">
-			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW04');">距離円</font>
+		<span id="_NC04" style="float:right;margin:0 4px;">
+			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW04','_NC04');">距離円</font>
 		</span>
-		<div id="_SW04" class="_simpleWindow" style="height:45px;width:268px;right:233px;z-index:1990;">
+		<div id="_SW04" class="_simpleWindow" style="height:45px;width:268px;right:233px;">
 			<font class="_simpleWindowTitle">半径&nbsp;</font><span id="$GCircleKm">0km</span>
-			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW04');">×</font>
+			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW04','_NC04');">×</font>
 			<br>
 			<div id="_GCircle" style="width:260px;"><input type="range" id="_GCircleRange" style="width:250px;" min="0" max="15000" value="0" oninput="subGCircle_Slider();"/></div>
 		</div>
@@ -2938,3 +2937,7 @@ function rtnGCircle_Scale(){
  </ol>
 </li>
 </textarea>
+<script>
+	// 代入
+	document.getElementById("_SW01Doc").innerHTML = document.getElementById("_HDoc01").value;
+</script>
