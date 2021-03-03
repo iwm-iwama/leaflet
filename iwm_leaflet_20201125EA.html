@@ -1,4 +1,4 @@
-<!-- iwm20210303A Ver.20210303 'U-2S' -->
+<!-- iwm20201125EA Ver.20210303 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -55,13 +55,6 @@
 // https://github.com/turban/Leaflet.Graticule
 --------------------------------------------------------------------->
 <script type="text/javascript" src="https://leaflet.github.io/Leaflet.Graticule/Leaflet.Graticule.js"></script>
-
-<!--------------------------------------------------------------------
-// Leaflet.Heightgraph
-// https://github.com/GIScience/Leaflet.Heightgraph
---------------------------------------------------------------------->
-<link rel="stylesheet" href="https://giscience.github.io/Leaflet.Heightgraph/dist/L.Control.Heightgraph.min.css"/>
-<script type="text/javascript" src="https://giscience.github.io/Leaflet.Heightgraph/dist/L.Control.Heightgraph.min.js"></script>
 
 <!--------------------------------------------------------------------
 // CSS
@@ -130,8 +123,7 @@ input[type="file"]
 ._btnNavi1,
 ._btnNavi2,
 ._btnNavi3,
-._btnNavi4,
-._btnNavi5
+._btnNavi4
 {
 	border:0;
 	color:#fff;
@@ -145,8 +137,7 @@ input[type="file"]
 ._btnNavi1:hover,
 ._btnNavi2:hover,
 ._btnNavi3:hover,
-._btnNavi4:hover,
-._btnNavi5:hover
+._btnNavi4:hover
 {
 	cursor:pointer;
 }
@@ -180,15 +171,7 @@ input[type="file"]
 }
 ._btnNavi4:hover
 {
-	background:#a578a6;
-}
-._btnNavi5
-{
-	background:#ffa500;
-}
-._btnNavi5:hover
-{
-	background:#ffc520;
+	background:#955aa6;
 }
 ._txtNavi1,
 ._txtNavi2
@@ -2048,75 +2031,6 @@ function subAddTabCtrl(
 	$obj.value = cursorLeft + "\t" + cursorRight;
 	$obj.selectionEnd = cursorPosition + 1;
 }
-/*---------
-// 海水面
----------*/
-var $Dem10ToSeaLevel = new L.GridLayer();
-
-function subDem10ToSeaLevel2(
-	$id1,
-	$id2
-){
-	try{
-		$Dem10ToSeaLevel.remove($Map);
-
-		if(document.getElementById($id1).value < 0){
-			document.getElementById($id1).value = 0;
-		}
-
-		if(document.getElementById($id2).value < 0){
-			document.getElementById($id2).value = 0;
-		}
-	}
-	catch(e){
-		return;
-	}
-
-	var SeaLevel1 = parseFloat(document.getElementById($id1).value);
-	var SeaLevel2 = parseFloat(document.getElementById($id2).value);
-
-	if(SeaLevel1 > SeaLevel2){
-		var tmp = SeaLevel1;
-		SeaLevel1 = SeaLevel2;
-		SeaLevel2 = tmp;
-		tmp = null;
-
-		document.getElementById($id1).value = SeaLevel1;
-		document.getElementById($id2).value = SeaLevel2;
-	}
-
-	// 元データの切り上げ対策
-	++SeaLevel2;
-
-	// m => cm
-	SeaLevel1 *= 100;
-	SeaLevel2 *= 100;
-
-	$Dem10ToSeaLevel.createTile = function(coords){
-		var tile = L.DomUtil.create("canvas", "leaflet-tile");
-			tile.width = tile.height = 256;
-		var ctx = tile.getContext("2d");
-		var img = new Image();
-			img.crossOrigin = "anonymous";
-			// leafletが使うタイルと別のサーバ（https／http）にアクセスし、Access-Control-Allow-Originを回避
-			img.src = "https://cyberjapandata.gsi.go.jp/xyz/dem_png/" + coords.z + "/" + coords.x + "/" + coords.y + ".png";
-		img.onload = function(){
-			ctx.drawImage(this, 0, 0);
-			var rtnImg = ctx.getImageData(0, 0, 256, 256);
-			var rtnImgData = rtnImg.data;
-			for(var _i1 = 0, _i2 = rtnImgData.length; _i1 < _i2; _i1+=4){
-				elevation = (rtnImgData[_i1 + 0] * 65536) + (rtnImgData[_i1 + 1] * 256) + rtnImgData[_i1 + 2];
-				if(elevation > 8388608){
-					elevation = (elevation - 16777216);
-				}
-				rtnImgData[_i1 + 3] = (elevation >= SeaLevel1 && elevation <= SeaLevel2 ? 90 : 0);
-			}
-			ctx.putImageData(rtnImg, 0, 0);
-		}
-		return tile;
-	}
-	$Dem10ToSeaLevel.addTo($Map);
-}
 /*----------------------
 // Leaflet.greatCircle
 ----------------------*/
@@ -2155,203 +2069,10 @@ function rtnGCircle_Scale(){
 	const scale = 10; // Meter単位
 	return parseInt(document.getElementById("_GCircleRange").value, 10) * scale;
 }
-/*----------------------
-// Leaflet.Heightgraph
-----------------------*/
-var $HeightGraph_SectionDegree = 0.0;
-var $HeightGraph_OnOff = false;
-var $HeightGraph_Layer = null;
-
-const $HeightGraph_Init = L.control.heightgraph(
-	{
-		mappings:{
-			suitability:function(data){
-				return {
-					text:"±" + ($HeightGraph_SectionDegree * 1.414).toFixed(4) + "°",
-					color:"purple"
-				};
-			},
-		},
-		graphStyle:{
-			opacity:0.8,
-			'fill-opacity':0.2,
-			'stroke-width':'2px'
-		},
-		expandCallback(expand){},
-		expandControls:false,
-		highlightStyle:{
-			color:"purple"
-		},
-		position:"bottomleft",
-		translation:{
-			distance:"距離",
-			elevation:"標高",
-			segment_length:"総距離",
-			type:"精度",
-			legend:" "
-		},
-		width:700,
-		height:150
-	}
-);
-const $HeightGraph_Data = [
-	{
-		"type":"FeatureCollection",
-		"features":[
-			{
-				"type":"Feature",
-				"geometry":{
-					"type":"LineString",
-					"coordinates":[
-						// Lng, Lat, M
-						// (例)
-						[140.4, 38.5, 100.0],[140.6, 38.3, 500.0],[140.7, 38.3, 500.0],[140.9, 38.4, 200.0]
-					]
-				},
-				"properties":{}
-			}
-		],
-		"properties":{
-			"Creator":"OpenRouteService.org",
-			"records":1,
-			"summary":"suitability",
-			"label":" "
-		}
-	}
-];
-function rtnHeightGraphElevation(
-	$lat,
-	$lng
-){
-	const _URL = "https://cyberjapandata2.gsi.go.jp/general/dem/scripts/getelevation.php?lat=" + $lat + "&lon=" + $lng + "&outtype=JSON";
-	var xhr = new XMLHttpRequest();
-		xhr.open("GET", _URL, false);
-		xhr.send(null);
-	var rtn = [];
-	if (xhr.status == 200){
-		var i1 = JSON.parse(xhr.responseText).elevation;
-		if(i1 == "-----"){
-			i1 = 0;
-		}
-		// (入力)[Lat, Lng] => (出力)[Lng, Lat] になることに注意
-		rtn = [$lng, $lat, i1];
-	}
-	return rtn;
-}
-function subHeightGraphMakeData(){
-	var iTotalDist = 0.0;
-	var aLatLng = [];
-	var iErrCnt = 0;
-
-	[iTotalDist, aLatLng, iErrCnt] = rtnA2P_DistMP("_TA02");
-
-	// 精度調整
-	if(iTotalDist > 2000.0){
-		$HeightGraph_SectionDegree = 0.05;
-	}
-	else if(iTotalDist > 1000.0){
-		$HeightGraph_SectionDegree = 0.01;
-	}
-	else if(iTotalDist > 500.0){
-		$HeightGraph_SectionDegree = 0.005;
-	}
-	else{
-		$HeightGraph_SectionDegree = 0.0025;
-	}
-
-	var a1 = [];
-	var dx0 = null;
-	var dy0 = null;
-	var dx1 = null;
-	var dy1 = null;
-	var _tan = 0.0;
-
-	for(var _s1 of document.getElementById("_TA02").value.split("\n")){
-		if(_s1.length > 0){
-			var _a1 = _s1.split(/\t|,/);
-				_a1[0] = parseFloat(_a1[0]);
-				_a1[1] = parseFloat(_a1[1]);
-
-			if(dx0){
-				dx1 = _a1[0];
-				dy1 = _a1[1];
-				_tan = (dx1 - dx0) / (dy1 - dy0);
-
-				if(dy0 < dy1){
-					for(var _d1 = dy0; _d1 < dy1; _d1+=$HeightGraph_SectionDegree){
-						a1.push([dx0 + ((_d1 - dy0) * _tan), _d1]);
-					}
-				}
-				else{
-					for(var _d1 = dy0; _d1 > dy1; _d1-=$HeightGraph_SectionDegree){
-						a1.push([dx0 + ((_d1 - dy0) * _tan), _d1]);
-					}
-				}
-				dx0 = dx1;
-				dy0 = dy1;
-			}
-			else{
-				dx0 = _a1[0];
-				dy0 = _a1[1];
-			}
-		}
-	}
-	a1.push([dx1, dy1]);
-
-	var a2 = [];
-	var cnt = 0;
-	var allCnt = a1.length;
-
-	for(var _a1 of a1){
-		++cnt;
-		document.getElementById("_HgText").innerHTML = parseInt(100 * cnt / allCnt, 10) + "%";
-		a2.push(rtnHeightGraphElevation(_a1[0], _a1[1]));
-	}
-	document.getElementById("_HgText").innerHTML = "";
-
-	// 再計算値を代入
-	$HeightGraph_Data[0]["features"][0]["geometry"]["coordinates"] = a2;
-
-	a1 = a2 = null;
-}
-function subHeightGraphOpen(
-	flg = true
-){
-	if(flg){
-		$HeightGraph_OnOff = true;
-
-		// グラフ描画
-		subHeightGraphMakeData();
-		$HeightGraph_Init.addTo($Map);
-		$HeightGraph_Init.addData($HeightGraph_Data);
-		/// $HeightGraph_Init.resize({width:700, height:150});
-
-		// 線描画
-		$HeightGraph_Layer = new L.LayerGroup();
-		$HeightGraph_Layer.addTo($Map);
-		L.geoJson($HeightGraph_Data).on(
-			{
-				'mousemove':event => {$HeightGraph_Init.mapMousemoveHandler(event, {showMapMarker:true});},
-				'mouseout':event => {$HeightGraph_Init.mapMouseoutHandler(2000);}
-			}
-		).addTo($HeightGraph_Layer);
-
-		// 再表示
-		$PolylineMeasure.remove($Map);
-		$PolylineMeasure.addTo($Map);
-	}
-	else{
-		$HeightGraph_OnOff = false;
-
-		$HeightGraph_Init.remove($Map);
-		$HeightGraph_Layer.remove($Map);
-		$HeightGraph_Layer = null;
-	}
-}
 </script>
 </head>
 
-<body onload="subInitDisp();subIwmInput_Init();subMyObj_Init();subAddMatch_Init();subGCircle_Init();subSimpleWindow_Init(['_SW05','_SW04','_SW03','_SW02','_SW01']);" onresize="subInitDisp();">
+<body onload="subInitDisp();subIwmInput_Init();subMyObj_Init();subAddMatch_Init();subGCircle_Init();subSimpleWindow_Init(['_SW04','_SW03','_SW02','_SW01']);" onresize="subInitDisp();">
 	<!---------------
 	// 数値入力補完
 	---------------->
@@ -2465,15 +2186,11 @@ function subHeightGraphOpen(
 					<input type="button" class="_btnNavi3" value="←地図へ反映" onclick="subA2P_PointToMap('_TA02');subA2P_DistMP('_TA02','_textDist',_checkboxDist.checked);"/>
 					<input type="button" class="_btnNavi3" value="←クリア" onclick="subA2P_EditClear('_TA02','_GCircleM2P');"/>
 					<a href="#" id="_btnDL" download="" onclick="subA2P_EditSave('_TA02',this.id)"><div class="_btnNavi2" style="display:inline-block;_display:inline;height:18px;line-height:18px;margin:0 0 0 4px;padding:0 8px;">ファイルに保存</div></a>
-				</div>
-				<div style="margin:4px 0 0 0;line-height:12px;">
-					<input type="button" class="_btnNavi3" style="margin:0;padding:0 3px;" value="←" onclick="subA2P_GCircle('_GCircleM2P','_TA02');"/><input type="text" id="_GCircleM2P" class="_txtNavi1" list="_Dist" style="width:70px;" placeholder="範囲円"/>
+					<input type="button" class="_btnNavi3" style="margin:0 0 0 8px;padding:0 3px;" value="←" onclick="subA2P_GCircle('_GCircleM2P','_TA02');"/><input type="text" id="_GCircleM2P" class="_txtNavi1" list="_Dist" style="width:70px;" placeholder="範囲円"/>
 					<datalist id="_Dist">
 						<option value="50m"/><option value="100m"/><option value="250m"/><option value="500m"/><option value="1km"/><option value="2km"/><option value="4km"/><option value="5km"/><option value="8km"/><option value="10km"/><option value="20km"/><option value="25km"/><option value="40km"/><option value="50km"/><option value="80km"/><option value="100km"/>
 					</datalist>
 					<input type="checkbox" id="_checkboxDist" class="_checkboxNavi1" style="margin:0 0 0 4px;" onclick="subA2P_DistMP('_TA02','_textDist',_checkboxDist.checked);"/><input type="text" id="_textDist" class="_txtNavi2" style="width:80px;" placeholder="総延長表示" readonly/>
-					<input type="button" class="_btnNavi5" style="margin:0 0 0 4px;" value="標高グラフ ON " onclick="if($HeightGraph_OnOff){subHeightGraphOpen(false);this.value='標高グラフ ON ';}else{subHeightGraphOpen(true);this.value='標高グラフ OFF';};"/>
-					<div id="_HgText" style="display:inline-block;margin:0;padding:0;"></div>
 				</div>
 			</div>
 		</div>
@@ -2488,21 +2205,6 @@ function subHeightGraphOpen(
 			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW04');">×</font>
 			<br>
 			<div id="_GCircle" style="width:260px;"><input type="range" id="_GCircleRange" style="width:250px;" min="0" max="15000" value="0" oninput="subGCircle_Slider();"/></div>
-		</div>
-		<!---------
-		// 海水面
-		---------->
-		<span style="float:right;margin:0 4px;">
-			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW05');">海水面</font>
-		</span>
-		<div id="_SW05" class="_simpleWindow" style="right:287px;z-index:2000;">
-			<font class="_simpleWindowTitle">ズーム14以下で利用可能</font>
-			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW05');">×</font>
-			<div style="margin:6px;">
-				<input type="number" id="_Dem10ToSeaLevel1" value="0" style="text-align:right;width:45px;"/>～<input type="number" id="_Dem10ToSeaLevel2" value="10" style="text-align:right;width:55px;"/>ｍ
-				<input type="button" class="_btnNavi1" value="ON" onclick="subDem10ToSeaLevel2('_Dem10ToSeaLevel1','_Dem10ToSeaLevel2');"/>
-				<input type="button" class="_btnNavi2" value="OFF" onclick="$Dem10ToSeaLevel.remove($Map);"/>
-			</div>
 		</div>
 	</div>
 	<div id="_divMap">
@@ -2649,7 +2351,7 @@ function subHeightGraphOpen(
 			var obj = document.getElementById("_TA01");
 
 			if(obj.value.length == 0){
-				obj.value = "// [Tab]区切り\n// タイル種\t拡張子\t透過率(0.1-1.0)\t最大ズーム\t表示名(省略可)\nseamlessphoto\tjpg\t0.5\t18\tシームレス写真／50%\nseamlessphoto\tjpg\t1.0\t18\tシームレス写真／100%\nslopezone1map\tpng\t1.0\t15\t全国傾斜量区分図\n";
+				obj.value = "// [Tab]区切り\n// タイル種\t拡張子\t透過率(0.1-1.0)\t最大ズーム\t表示名(省略可)\nseamlessphoto\tjpg\t0.5\t18\tシームレス写真／50%\nseamlessphoto\tjpg\t1.0\t18\tシームレス写真／100%\n";
 			}
 
 			var ary = [];
@@ -2724,22 +2426,6 @@ function subHeightGraphOpen(
 
 			// 追加タイル
 			ary.push([
-				"シームレス地質図／30%",
-				"https://gbank.gsj.jp/seamless/v2/api/1.2/tiles/{z}/{y}/{x}.png",
-				0.3,
-				13,
-				"",
-				"20万分の1日本シームレス地質図V2@<a href='https://gbank.gsj.jp/seamless/v2.html' target='_blank'>産総研地質調査総合センターウェブサイト</a>"
-			]);
-			ary.push([
-				"シームレス地質図／80%",
-				"https://gbank.gsj.jp/seamless/v2/api/1.2/tiles/{z}/{y}/{x}.png",
-				0.8,
-				13,
-				"",
-				"20万分の1日本シームレス地質図V2@<a href='https://gbank.gsj.jp/seamless/v2.html' target='_blank'>産総研地質調査総合センターウェブサイト</a>"
-			]);
-			ary.push([
 				"UTMグリッド",
 				"http://{s}.tile.stamen.com/utm/{z}/{x}/{y}.png",
 				1.0,
@@ -2790,107 +2476,6 @@ function subHeightGraphOpen(
 				}
 			);
 
-			/*------------------------
-			// 標準地図等を色調変換
-			------------------------*/
-			/*【参考】
-				http://sterfield.co.jp/designer/canvas%E3%81%A7%E7%94%BB%E5%83%8F%E3%81%AE%E7%99%BD%E3%82%92%E9%80%8F%E9%81%8E%E3%81%AB%E3%81%99%E3%82%8B/
-			*/
-			// 標準 => 明色
-			var $StdToBright = new L.GridLayer();
-			$StdToBright.createTile = function(coords){
-				var tile = L.DomUtil.create("canvas", "leaflet-tile");
-					tile.width = tile.height = 256;
-				var ctx = tile.getContext("2d");
-				var img = new Image();
-					img.crossOrigin = "anonymous";
-					// leafletが使うタイルと別のサーバ（https／http）にアクセスし、Access-Control-Allow-Originを回避
-					img.src = "https://cyberjapandata.gsi.go.jp/xyz/std/" + coords.z + "/" + coords.x + "/" + coords.y + ".png";
-				img.onload = function(){
-					ctx.drawImage(this, 0, 0);
-					var rtnImg = ctx.getImageData(0, 0, 256, 256);
-					var rtnImgData = rtnImg.data;
-					// 画像加工
-					for(var _i1 = 0; _i1 < 256 * 256 * 4; _i1+=4){
-						if(rtnImgData[_i1 + 0] > 160 && rtnImgData[_i1 + 1] > 160 && rtnImgData[_i1 + 2] > 160){
-							rtnImgData[_i1 + 3] = 0;
-						}
-						else{
-							rtnImgData[_i1 + 3] = 255;
-						}
-					}
-					ctx.putImageData(rtnImg, 0, 0);
-				}
-				return tile;
-			}
-
-			// 標準 => 褐色
-			var $StdToBrown = new L.GridLayer();
-			$StdToBrown.createTile = function(coords){
-				var tile = L.DomUtil.create("canvas", "leaflet-tile");
-					tile.width = tile.height = 256;
-				var ctx = tile.getContext("2d");
-				var img = new Image();
-					img.crossOrigin = "anonymous";
-					// leafletが使うタイルと別のサーバ（https／http）にアクセスし、Access-Control-Allow-Originを回避
-					img.src = "https://cyberjapandata.gsi.go.jp/xyz/std/" + coords.z + "/" + coords.x + "/" + coords.y + ".png";
-				img.onload = function(){
-					ctx.drawImage(this, 0, 0);
-					var rtnImg = ctx.getImageData(0, 0, 256, 256);
-					var rtnImgData = rtnImg.data;
-					// 画像加工
-					for(var _i1 = 0; _i1 < 256 * 256 * 4; _i1+=4){
-						// 各カラーチャンネルで、一番暗い値を取得
-						var minLuminance = rtnImgData[_i1];
-						if(minLuminance > rtnImgData[_i1 + 1]){
-							minLuminance = rtnImgData[_i1 + 1];
-						}
-						if(minLuminance > rtnImgData[_i1 + 2]){
-							minLuminance = rtnImgData[_i1 + 2];
-						}
-						// 減色
-						rtnImgData[_i1 + 0] -= minLuminance;
-						rtnImgData[_i1 + 1] -= minLuminance;
-						rtnImgData[_i1 + 2] -= minLuminance;
-						// 一番暗い値をアルファチャンネルに反映(明るいところほど透明に)
-						rtnImgData[_i1 + 3] = 255 - minLuminance;
-					}
-					ctx.putImageData(rtnImg, 0, 0);
-				}
-				return tile;
-			}
-
-			// 標準 => 黒色
-			var $StdToBlack = new L.GridLayer();
-			$StdToBlack.createTile = function(coords){
-				var tile = L.DomUtil.create("canvas", "leaflet-tile");
-					tile.width = tile.height = 256;
-				var ctx = tile.getContext("2d");
-				var img = new Image();
-					img.crossOrigin = "anonymous";
-					// leafletが使うタイルと別のサーバ（https／http）にアクセスし、Access-Control-Allow-Originを回避
-					img.src = "https://cyberjapandata.gsi.go.jp/xyz/pale/" + coords.z + "/" + coords.x + "/" + coords.y + ".png";
-				img.onload = function(){
-					ctx.drawImage(this, 0, 0);
-					var rtnImg = ctx.getImageData(0, 0, 256, 256);
-					var rtnImgData = rtnImg.data;
-					// 画像加工
-					for(var _i1 = 0; _i1 < 256 * 256 * 4; _i1+=4){
-						if(rtnImgData[_i1 + 0] >= 200 && rtnImgData[_i1 + 1] >= 200 && rtnImgData[_i1 + 2] >= 200){
-							rtnImgData[_i1 + 3] = 0;
-						}
-						else{
-							rtnImgData[_i1 + 0] = 0;
-							rtnImgData[_i1 + 1] = 0;
-							rtnImgData[_i1 + 2] = 0;
-							rtnImgData[_i1 + 3] = 255;
-						}
-					}
-					ctx.putImageData(rtnImg, 0, 0);
-				}
-				return tile;
-			}
-
 			/*-------------
 			// タイル座標
 			-------------*/
@@ -2917,10 +2502,6 @@ function subHeightGraphOpen(
 			};
 
 			// 追加メニュー
-			$checkBoxSelectMap["注記／明色 [-z18]"] = $StdToBright;
-			$checkBoxSelectMap["注記／褐色 [-z18]"] = $StdToBrown;
-			$checkBoxSelectMap["注記／黒色 [-z18]"] = $StdToBlack;
-			$checkBoxSelectMap["海水面 [-z14]"] = $Dem10ToSeaLevel;
 			$checkBoxSelectMap["タイル座標"] = $TileCoord;
 
 			/*-------------------
