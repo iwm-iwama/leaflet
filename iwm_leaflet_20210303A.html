@@ -1,4 +1,4 @@
-<!-- iwm20210303A Ver.20210303 'U-2S' -->
+<!-- iwm20210303A Ver.20210304 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -1099,7 +1099,8 @@ function subAddMatch_Main(){
 
 	var xhr = new XMLHttpRequest();
 	xhr.onload = function(){
-		$subAddMatch_Cnt = JSON.parse(xhr.responseText).length;
+		var json = JSON.parse(xhr.responseText);
+		$subAddMatch_Cnt = json.length;
 
 		// 再検索時に結果を表示させるため
 		document.getElementById("_AddMatchInput20").innerHTML = $HashAddMatchOutputZoom.none;
@@ -1108,7 +1109,7 @@ function subAddMatch_Main(){
 		if(flg){
 			with(document.getElementById("_AddMatchOutput")){
 				var rtn = "<div id='_AddMatchOutputH'>◆ヒット数 " + $subAddMatch_Cnt + " 件</div>";
-				for(var _s1 of aJson){
+				for(var _s1 of json){
 					with(_s1){
 						var _s2 = "";
 						// データ不完全のため例外処理が必要
