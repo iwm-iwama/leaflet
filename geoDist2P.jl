@@ -38,6 +38,7 @@ const Data1 = """
 35.685187	139.752274	24.340547	124.155636	皇居～竹富町役場
 35.685187	139.752274	24.192485	123.556720	皇居～中御神島
 35.685187	139.752274	24.059749	123.805554	皇居～波照間空港
+0	0	0.5	179.5		Debug:19936.288579km?
 //	35.685187	139.752274	20.423690	136.075829	皇居～沖ノ鳥島
 """
 #---------------------------------------------------------------------
@@ -172,8 +173,6 @@ function rtnGeoVincentry(
 	cos2sm    = 0.0
 	c = 0.0
 
-	count = 0
-
 	while true
 		sinLamda = sin(lamda)
 		cosLamda = cos(lamda)
@@ -191,7 +190,7 @@ function rtnGeoVincentry(
 		dLamda = lamda
 		lamda = omega + (1 - c) * _F * sinAlpha * (sigma + c * sinSigma * (cos2sm + c * cosSigma * (-1 + 2 * cos2sm * cos2sm)))
 
-		if (count += 1) > 10 || abs(lamda - dLamda) <= 1e-12
+		if abs(lamda - dLamda) <= 1e-12
 			break
 		end
 	end

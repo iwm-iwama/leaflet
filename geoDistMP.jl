@@ -503,8 +503,6 @@ function rtnGeoVincentry(
 	cos2sm    = 0.0
 	c = 0.0
 
-	count = 0
-
 	while true
 		sinLamda = sin(lamda)
 		cosLamda = cos(lamda)
@@ -522,7 +520,7 @@ function rtnGeoVincentry(
 		dLamda = lamda
 		lamda = omega + (1 - c) * _F * sinAlpha * (sigma + c * sinSigma * (cos2sm + c * cosSigma * (-1 + 2 * cos2sm * cos2sm)))
 
-		if (count += 1) > 10 || abs(lamda - dLamda) <= 1e-12
+		if abs(lamda - dLamda) <= 1e-12
 			break
 		end
 	end

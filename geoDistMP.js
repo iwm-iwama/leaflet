@@ -510,9 +510,7 @@ function rtnGeoVincentry(
 	var cos2sm    = 0.0;
 	var c = 0.0;
 
-	var count = 0;
-
-	do
+	while(true)
 	{
 		sinLamda = Math.sin(lamda);
 		cosLamda = Math.cos(lamda);
@@ -530,12 +528,11 @@ function rtnGeoVincentry(
 		c = _F / 16 * cos2alpha * (4 + _F * (4 - 3 * cos2alpha));
 		dLamda = lamda;
 		lamda = omega + (1 - c) * _F * sinAlpha * (sigma + c * sinSigma * (cos2sm + c * cosSigma * (-1 + 2 * cos2sm * cos2sm)));
-		if(count++ > 10)
+		if(Math.abs(lamda - dLamda) <= 1e-12)
 		{
 			break;
 		}
 	}
-	while(Math.abs(lamda - dLamda) > 1e-12);
 
 	var u2 = cos2alpha * (1 - f1 * f1) / (f1 * f1);
 	var a = 1 + u2 / 16384 * (4096 + u2 * (-768 + u2 * (320 - 175 * u2)));

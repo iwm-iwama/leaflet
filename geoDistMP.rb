@@ -510,8 +510,6 @@ def rtnGeoVincentry(
 	cos2sm    = 0.0
 	c = 0.0
 
-	count = 0
-
 	while true
 		sinLamda = Math.sin(lamda)
 		cosLamda = Math.cos(lamda)
@@ -529,7 +527,7 @@ def rtnGeoVincentry(
 		dLamda = lamda
 		lamda = omega + (1 - c) * _F * sinAlpha * (sigma + c * sinSigma * (cos2sm + c * cosSigma * (-1 + 2 * cos2sm * cos2sm)))
 
-		if (count += 1) > 10 || (lamda - dLamda).abs <= 1e-12
+		if (lamda - dLamda).abs <= 1e-12
 			break
 		end
 	end
