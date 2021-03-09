@@ -1,4 +1,4 @@
-<!-- iwm20201125EA Ver.20210304 'U-2S' -->
+<!-- iwm20201125EB Ver.20210307 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -171,7 +171,7 @@ input[type="file"]
 }
 ._btnNavi4:hover
 {
-	background:#955aa6;
+	background:#a578a6;
 }
 ._txtNavi1,
 ._txtNavi2
@@ -535,7 +535,7 @@ input[type="file"]
 }
 ._simpleWindowTitle
 {
-	display:;/* 不使用のとき"none"を代入 */
+	display:; /* ''=表示／'none'=非表示 */
 	margin:0;
 	padding:0;
 }
@@ -654,11 +654,22 @@ a.polyline-measure-clearControl:active
 }
 </style>
 
+<!---------
+// 前処理
+---------->
 <script>
+	// Microsoft 独自仕様？
+	var uA = window.navigator.userAgent.toLowerCase();
+
+	if(uA.indexOf("edge") > -1 || uA.indexOf("trident") > -1 || uA.indexOf("msie") > -1){
+		alert("このブラウザでは正しく動作しないことがあります。\n\n【動作確認済】\n・Firefox\n・Google Chrome\n・Opera\n・Vivaldi");
+	}
+
 	// muni.js を使うためのおまじない
 	var GSI = {ClientMode:{}, Modal:{}, Draw:{}, Edit:{}, Control:{}, Utils:{Browser:{}}, GLOBALS:{}, TEXT:{}};
 </script>
 <script type="text/javascript" src="https://maps.gsi.go.jp/js/muni.js"></script>
+
 <script>
 /*-----------------------
 // フレームサイズを調整
@@ -670,19 +681,8 @@ function subInitDisp(){
 	var mapH = window.innerHeight;
 	var mapW = window.innerWidth;
 
-	// Microsoft?
-	var uA = window.navigator.userAgent.toLowerCase();
-	/// console.log(uA);
-
-	if(uA.indexOf("edge") > -1 || uA.indexOf("trident") > -1 || uA.indexOf("msie") > -1){
-		alert("このブラウザでは正しく表示されません\n\n【動作確認済】\n・Firefox\n・Google Chrome\n・Opera\n・Vivaldi");
-		exit;
-	}
-
 	// _divNaviCommander
-	with(document.getElementById("_divNaviCommander").style){
-		width = (mapW - $NaviCommanderPaddingLR) + "px";
-	}
+	document.getElementById("_divNaviCommander").style.width = (mapW - $NaviCommanderPaddingLR) + "px";
 
 	// _divMap
 	with(document.getElementById("_divMap").style){
@@ -704,11 +704,10 @@ function subChangeUrl(
 			arguments[_i1] = document.getElementById(arguments[_i1]).value;
 		}
 	}
-	with(document){
-		getElementById("_NaviLat").value  = parseFloat($Lat).toFixed(8);
-		getElementById("_NaviLng").value  = parseFloat($Lng).toFixed(8);
-		getElementById("_NaviZoom").value = $Zoom;
-	}
+	document.getElementById("_NaviLat").value  = parseFloat($Lat).toFixed(8);
+	document.getElementById("_NaviLng").value  = parseFloat($Lng).toFixed(8);
+	document.getElementById("_NaviZoom").value = $Zoom;
+
 	// URL置換
 	history.replaceState(
 		null,
@@ -815,7 +814,6 @@ function subIwmInput_BL_Keydown(
 	// 他のコントロールに影響するので、
 	// 都度、document.onkeydown = function(evt){} で初期化すること。
 	document.onkeydown = function(evt){
-		/// console.log(evt.keyCode);
 		switch(evt.keyCode){
 			case(13): // [Enter]
 				var obj = document.getElementById($outputId);
@@ -843,7 +841,7 @@ function subIwmInput_BL_Keydown(
 				// センタリング
 				_iwmCM();
 				// 距離円再描画
-				subGCircle_Init();
+				subGCircle_Draw();
 			break;
 		}
 	}
@@ -886,7 +884,6 @@ function subIwmInput_Close(
 		document.getElementById($outputId).style.display = "none";
 	}
 	catch(e){
-		/// console.log(e);
 	}
 	// 初期化
 	$subIwmInput_BL_now = null;
@@ -996,15 +993,11 @@ function _iwmZA(
 	_iwmCU();
 	// センタリング
 	_iwmCM();
-	// 距離円再描画
-	subGCircle_Init();
 }
 function _iwmZA2(){
 	subIwmInput_ZoomA_Close();
 	// センタリング
 	_iwmCM();
-	// 距離円再描画
-	subGCircle_Init();
 }
 function _iwmZB(
 	$str
@@ -1017,8 +1010,6 @@ function _iwmZB(
 		$Map.getCenter(),
 		document.getElementById("_NaviZoom").value
 	);
-	// 距離円再描画
-	subGCircle_Init();
 }
 function _iwmBL(){
 	for(var _s1 of ["_IBL1", "_IBL2", "_IBL3"]){
@@ -1034,7 +1025,7 @@ function _iwmBL(){
 	// センタリング
 	_iwmCM();
 	// 距離円再描画
-	subGCircle_Init();
+	subGCircle_Draw();
 }
 /*---------------------
 // アドレスマッチング
@@ -1062,12 +1053,10 @@ function subAddMatch_Init(){
 	// Output
 	with(document.getElementById("_AddMatchOutput")){
 		style.display = "none";
-
 		var obj = document.getElementById("_AddMatchInput10");
 		var rect = obj.getBoundingClientRect();
-			style.left = (rect.left + window.pageXOffset - 2) + "px";
-			style.top  = (rect.top + window.pageYOffset + obj.clientHeight - 1) + "px";
-
+		style.left = (rect.left + window.pageXOffset - 2) + "px";
+		style.top  = (rect.top + window.pageYOffset + obj.clientHeight - 1) + "px";
 		innerHTML = "";
 	}
 }
@@ -1078,11 +1067,11 @@ function subAddMatch_Main(){
 		subAddMatch_Init();
 		return;
 	}
-	const _Url = "https://msearch.gsi.go.jp/address-search/AddressSearch?q=" + query;
+	const _URL = "https://msearch.gsi.go.jp/address-search/AddressSearch?q=" + query;
 
-	var xhr = new XMLHttpRequest();
-	xhr.onload = function(){
-		var json = JSON.parse(xhr.responseText);
+	fetch(_URL).then(function(response){
+		return response.json();
+	}).then(function(json){
 		$subAddMatch_Cnt = json.length;
 
 		// 再検索時に結果を表示させるため
@@ -1102,7 +1091,6 @@ function subAddMatch_Main(){
 							_s2 = a1[1] + " " + a1[3].replace("　", " ");
 						}
 						catch(e){
-							/// console.log(e + "\n" + _i1 + " | " + properties.addressCode + " | " + properties.title + " | " + geometry.coordinates);
 						}
 						var [lng, lat] = geometry.coordinates;
 
@@ -1116,10 +1104,8 @@ function subAddMatch_Main(){
 				innerHTML = rtn;
 			}
 		}
-	}
-	xhr.open("GET", _Url, true);
-	/// xhr.overrideMimeType("text/javascript");
-	xhr.send(null);
+	}).catch(function(e){
+	});
 }
 function rtnAddMatch_Main(){
 	var rtn = true;
@@ -1190,12 +1176,16 @@ function subAddMatch_Spot(
 			}
 		).openPopup()
 	);
+	// 距離円再描画
+	subGCircle_Draw();
 }
 function subAddMatch_SpotClear(){
 	if($AddMatchMarker){
 		$AddMatchMarker.remove($Map);
 		$AddMatchMarker = null;
 	}
+	// 距離円再描画
+	subGCircle_Draw();
 }
 /*-------------------------------
 // 緯度経度⇒アドレスマッチング
@@ -1206,14 +1196,14 @@ function subLatLngToPlaceName(
 	$oMarker,
 	$placeName
 ){
-	const _Url = "https://mreversegeocoder.gsi.go.jp/reverse-geocoder/LonLatToAddress?lat=" + $lat + "&lon=" + $lng;
+	const _URL = "https://mreversegeocoder.gsi.go.jp/reverse-geocoder/LonLatToAddress?lat=" + $lat + "&lon=" + $lng;
 
-	var xhr = new XMLHttpRequest();
-	xhr.onload = function(){
+	fetch(_URL).then(function(response){
+		return response.json();
+	}).then(function(json){
 		var title = null;
-		var json = JSON.parse(xhr.responseText);
-		if(json.results == undefined){
-			title = "---";
+		if(typeof(json.results) === "undefined"){
+			title = "-----";
 		}
 		else{
 			var muniCd = parseInt(json.results.muniCd, 10);
@@ -1231,10 +1221,8 @@ function subLatLngToPlaceName(
 				$oMarker.options.title = $placeName + "</font><br><font color = \"#555\">＠" + title + "</font>";
 			}
 		}
-	};
-	xhr.open("GET", _Url, true);
-	/// xhr.overrideMimeType("text/javascript");
-	xhr.send(null);
+	}).catch(function(e){
+	});
 }
 /*----------------
 // Simple Window
@@ -1334,7 +1322,7 @@ function subAddReadFile(
 function subA2P_Geocoding(
 	$textareaId
 ){
-	const _Url = "https://msearch.gsi.go.jp/address-search/AddressSearch?q=";
+	const _URL = "https://msearch.gsi.go.jp/address-search/AddressSearch?q=";
 
 	var xhr = new XMLHttpRequest();
 
@@ -1350,10 +1338,10 @@ function subA2P_Geocoding(
 				str += _s1;
 			}
 			else{
-				var url = _Url + query;
-				xhr.open("GET", url, false);
-				/// xhr.overrideMimeType("text/javascript");
+				// バッチ処理のため非同期は不可
+				xhr.open("GET", (_URL + query), false);
 				xhr.send(null);
+
 				var json = JSON.parse(xhr.responseText);
 
 				if(json.length == 1){
@@ -1516,7 +1504,6 @@ function subA2P_PointToMap(
 					"mouseover",
 					function(e){
 						this.openPopup();
-						/// console.log(e);
 					}
 				);
 
@@ -1559,18 +1546,22 @@ function subA2P_EditSave(
 ---------*/
 function subA2P_EditClear(
 	$textareaId,
-	$selectId
+	$gcircleId,
+	$distCbId,
+	$distTextId
 ){
-	/// document.getElementById($textareaId).value = "";
-	document.getElementById($selectId).value = 0;
+	// 範囲円
+	document.getElementById($gcircleId).value = 0;
+	subA2P_GCircle($gcircleId, $textareaId);
 
-	subA2P_GCircle($selectId, $textareaId);
+	// 総延長
+	document.getElementById($distCbId).checked = false;
+	subA2P_DistMP($textareaId, $distTextId, false);
 
+	// ローカルマーカー
 	var i1 = $AryPoint.length;
 	while(i1--){
-		// マーカー消去
 		$AryPoint[i1].remove($Map);
-		// 配列から削除
 		$AryPoint.splice(i1, 1);
 	}
 }
@@ -1620,7 +1611,7 @@ function subA2P_GCircle(
 				[_a1[0], _a1[1]],
 				{
 					radius:rad,
-					color:"#f00",
+					color:"#f50",
 					fill:true,
 					fillColor:"#faa",
 					fillOpacity:0.1,
@@ -1808,14 +1799,13 @@ function rtnGeoVincentry(
 	var cos2sm    = 0.0;
 	var c = 0.0;
 
-	var count = 0;
-
-	do{
+	while(true)
+	{
 		sinLamda = Math.sin(lamda);
 		cosLamda = Math.cos(lamda);
 		sin2sigma = (cosU2 * sinLamda) * (cosU2 * sinLamda) + (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda);
 		if(sin2sigma < 0){
-			return [0, 0];
+			return [0.0, 0.0];
 		}
 		sinSigma = Math.sqrt(sin2sigma);
 		cosSigma = sinU1 * sinU2 + cosU1 * cosU2 * cosLamda;
@@ -1823,16 +1813,13 @@ function rtnGeoVincentry(
 		sinAlpha = cosU1 * cosU2 * sinLamda / sinSigma;
 		cos2alpha = 1 - sinAlpha * sinAlpha;
 		cos2sm = cosSigma - 2 * sinU1 * sinU2 / cos2alpha;
-		if(isNaN(cos2sm)){
-			cos2sm = 0;
-		}
 		c = _F / 16 * cos2alpha * (4 + _F * (4 - 3 * cos2alpha));
 		dLamda = lamda;
 		lamda = omega + (1 - c) * _F * sinAlpha * (sigma + c * sinSigma * (cos2sm + c * cosSigma * (-1 + 2 * cos2sm * cos2sm)));
-		if(count++ > 10){
+		if(Math.abs(lamda - dLamda) <= 1e-12){
 			break;
 		}
-	}while(Math.abs(lamda - dLamda) > 1e-12);
+	}
 
 	var u2 = cos2alpha * (1 - f1 * f1) / (f1 * f1);
 	var a = 1 + u2 / 16384 * (4096 + u2 * (-768 + u2 * (320 - 175 * u2)));
@@ -1857,21 +1844,14 @@ function subGetElevation(
 	$lng,
 	$oMarker
 ){
-	const _Url = "https://cyberjapandata2.gsi.go.jp/general/dem/scripts/getelevation.php?lat=" + $lat + "&lon=" + $lng + "&outtype=JSON";
+	const _URL = "https://cyberjapandata2.gsi.go.jp/general/dem/scripts/getelevation.php?lat=" + $lat + "&lon=" + $lng + "&outtype=JSON";
 
-	var xhr = new XMLHttpRequest();
-	xhr.onload = function(){
-		try{
-			var json = xhr.response;
-			$oMarker.elevation = json.elevation + "m DEM" + json.hsrc;
-		}
-		catch(e){
-			$oMarker.elevation = "---";
-		}
-	};
-	xhr.open("GET", _Url, true);
-	xhr.responseType = "json";
-	xhr.send(null);
+	fetch(_URL).then(function(response){
+		return response.json();
+	}).then(function(json){
+		$oMarker.elevation = json.elevation + "m DEM" + json.hsrc;
+	}).catch(function(e){
+	});
 }
 /*---------------------------------
 // ポップアップ ← ベースマーカー
@@ -1983,6 +1963,8 @@ function subMyObj_Remove(
 	while((obj = $aryObj.pop()) != undefined){
 		obj.remove($Map);
 	}
+	// 距離円再描画
+	subGCircle_Draw();
 	// [マーカー消去]ボタン 非表示
 	document.getElementById("_btnMarker").style.display = "none";
 }
@@ -2011,17 +1993,20 @@ function subAddTabCtrl(
 /*----------------------
 // Leaflet.greatCircle
 ----------------------*/
-var $GCircle = null;
+var $GCircleBase = null;
+var $GCircleAryLocal = [];
 
-// 初期化
-function subGCircle_Init(){
-	if($GCircle){
-		$GCircle.remove();
+// 距離円描画
+function subGCircle_Draw(){
+	$Map.createPane("_pane220").style.zIndex = 220;
+	$Map.createPane("_pane210").style.zIndex = 210;
+
+	// ベースマーカー
+	if($GCircleBase){
+		$GCircleBase.remove();
 	}
 
-	$Map.createPane("_pane220").style.zIndex = 220;
-
-	$GCircle = L.greatCircle(
+	$GCircleBase = L.greatCircle(
 		$BaseMarker.getLatLng(),
 		{
 			radius:rtnGCircle_Scale(),
@@ -2032,14 +2017,47 @@ function subGCircle_Init(){
 			pane:"_pane220"
 		}
 	);
-	$GCircle.addTo($Map);
-	$GCircle.bindTo($BaseMarker);
+	$GCircleBase.addTo($Map);
+	$GCircleBase.bindTo($BaseMarker);
+
+	// ローカルマーカー
+	for(var _s1 of $GCircleAryLocal){
+		_s1.remove();
+	}
+
+	$GCircleAryLocal = [];
+
+	for(var _s1 of $AryLocalMarker){
+		$GCircleAryLocal.push(
+			L.greatCircle(
+				_s1.getLatLng(),
+				{
+					radius:rtnGCircle_Scale(),
+					color:"#f00",
+					fill:true,
+					fillColor:"#faa",
+					fillOpacity:0.1,
+					pane:"_pane210"
+				}
+			)
+		);
+	}
+
+	for(var _i1 = 0; _i1 < $GCircleAryLocal.length; _i1++){
+		$GCircleAryLocal[_i1].addTo($Map);
+		$GCircleAryLocal[_i1].bindTo($AryLocalMarker[_i1]);
+	}
 }
 // スライダー制御
 function subGCircle_Slider(){
 	var iDist = rtnGCircle_Scale();
 	document.getElementById("$GCircleKm").innerHTML = (iDist / 1000.0).toFixed(2) + "km";
-	$GCircle.setRadius(iDist);
+
+	$GCircleBase.setRadius(iDist);
+
+	for(var _s1 of $GCircleAryLocal){
+		_s1.setRadius(iDist);
+	}
 }
 // 目盛毎の単位で変換 (例)10 => 10mスケール
 function rtnGCircle_Scale(){
@@ -2049,7 +2067,7 @@ function rtnGCircle_Scale(){
 </script>
 </head>
 
-<body onload="subInitDisp();subIwmInput_Init();subMyObj_Init();subAddMatch_Init();subGCircle_Init();subSimpleWindow_Init($ArySimpleWindowId);" onresize="subInitDisp();">
+<body onload="subInitDisp();subIwmInput_Init();subMyObj_Init();subAddMatch_Init();subGCircle_Draw();subSimpleWindow_Init($ArySimpleWindowId);" onresize="subInitDisp();">
 	<!---------------
 	// 数値入力補完
 	---------------->
@@ -2161,13 +2179,13 @@ function rtnGCircle_Scale(){
 				</div>
 				<div style="margin:4px 0 0 0;">
 					<input type="button" class="_btnNavi3" value="←地図へ反映" onclick="subA2P_PointToMap('_TA02');subA2P_DistMP('_TA02','_textDist',_checkboxDist.checked);"/>
-					<input type="button" class="_btnNavi3" value="←クリア" onclick="subA2P_EditClear('_TA02','_GCircleM2P');"/>
+					<input type="button" class="_btnNavi3" value="←クリア" onclick="subA2P_EditClear('_TA02','_GCircleM2P','_checkboxDist','_textDist');"/>
 					<a href="#" id="_btnDL" download="" onclick="subA2P_EditSave('_TA02',this.id)"><div class="_btnNavi2" style="display:inline-block;_display:inline;height:18px;line-height:18px;margin:0 0 0 4px;padding:0 8px;">ファイルに保存</div></a>
 					<input type="button" class="_btnNavi3" style="margin:0 0 0 8px;padding:0 3px;" value="←" onclick="subA2P_GCircle('_GCircleM2P','_TA02');"/><input type="text" id="_GCircleM2P" class="_txtNavi1" list="_Dist" style="width:70px;" placeholder="範囲円"/>
 					<datalist id="_Dist">
 						<option value="50m"/><option value="100m"/><option value="250m"/><option value="500m"/><option value="1km"/><option value="2km"/><option value="4km"/><option value="5km"/><option value="8km"/><option value="10km"/><option value="20km"/><option value="25km"/><option value="40km"/><option value="50km"/><option value="80km"/><option value="100km"/>
 					</datalist>
-					<input type="checkbox" id="_checkboxDist" class="_checkboxNavi1" style="margin:0 0 0 4px;" onclick="subA2P_DistMP('_TA02','_textDist',_checkboxDist.checked);"/><input type="text" id="_textDist" class="_txtNavi2" style="width:80px;" placeholder="総延長表示" readonly/>
+					<input type="checkbox" id="_checkboxDist" class="_checkboxNavi1" style="margin:0 0 0 4px;" onclick="subA2P_DistMP('_TA02','_textDist',_checkboxDist.checked);"/><input type="text" id="_textDist" class="_txtNavi2" style="width:80px;" placeholder="総延長" readonly/>
 				</div>
 			</div>
 		</div>
@@ -2194,37 +2212,31 @@ function rtnGCircle_Scale(){
 
 		if(hash.length){
 			var aHash = hash.split("/");
-			with(document){
-				getElementById("_NaviZoom").value = aHash[0].substr(1); // 先頭の'#'より後
-				getElementById("_NaviLat").value  = parseFloat(aHash[1]).toFixed(8);
-				getElementById("_NaviLng").value  = parseFloat(aHash[2]).toFixed(8);
-			}
+			document.getElementById("_NaviZoom").value = aHash[0].substr(1); // 先頭の'#'より後
+			document.getElementById("_NaviLat").value  = parseFloat(aHash[1]).toFixed(8);
+			document.getElementById("_NaviLng").value  = parseFloat(aHash[2]).toFixed(8);
 		}
 		else{
 			// 初回座標＠皇居
-			with(document){
-				getElementById("_NaviZoom").value = 5;
-				getElementById("_NaviLat").value  = (35.68518697509636).toFixed(8);
-				getElementById("_NaviLng").value  = (139.7522735595703).toFixed(8);
-			}
+			document.getElementById("_NaviZoom").value = 5;
+			document.getElementById("_NaviLat").value  = (35.68518697509636).toFixed(8);
+			document.getElementById("_NaviLng").value  = (139.7522735595703).toFixed(8);
 
 			// 現在座標取得
 			navigator.geolocation.getCurrentPosition(
 				function(position){
-					with(document){
-						getElementById("_NaviLat").value = position.coords.latitude.toFixed(8);
-						getElementById("_NaviLng").value = position.coords.longitude.toFixed(8);
-					}
+					document.getElementById("_NaviLat").value = position.coords.latitude.toFixed(8);
+					document.getElementById("_NaviLng").value = position.coords.longitude.toFixed(8);
 					_iwmBMN();
 					_iwmCU();
 					_iwmCM();
-					subGCircle_Init();
+					subGCircle_Draw();
 				},
 				function(error){
 					_iwmBMN();
 					_iwmCU();
 					_iwmCM();
-					subGCircle_Init();
+					subGCircle_Draw();
 				}
 			);
 		}
@@ -2604,7 +2616,7 @@ function rtnGCircle_Scale(){
 				}
 			).addTo($Map);
 
-			$BaseMarker.elevation = "---";
+			$BaseMarker.elevation = "-----";
 
 			// URL／BL表示を変更
 			subChangeUrl($Lat, $Lng, "_NaviZoom");
@@ -2660,18 +2672,6 @@ function rtnGCircle_Scale(){
 					rtnMarkerPopup1($BaseMarker._latlng.lat, $BaseMarker._latlng.lng);
 				}
 			);
-			// ポップアップ非表示 <= mouseout
-			$BaseMarker.on(
-				"mouseout",
-				function(e){
-					/// $BaseMarker.closePopup();
-					/*
-						for(var _s1 of $AryLocalMarker){
-							_s1.closePopup();
-						}
-					*/
-				}
-			);
 		}
 
 		// ベースマーカー初回描画
@@ -2719,7 +2719,7 @@ function rtnGCircle_Scale(){
 				).addTo($Map)
 			);
 
-			$AryLocalMarker[$AryLocalMarker.length - 1].elevation = "---";
+			$AryLocalMarker[$AryLocalMarker.length - 1].elevation = "-----";
 
 			// [マーカー消去]ボタン表示
 			subMyObj_OnOff($AryLocalMarker);
@@ -2773,6 +2773,8 @@ function rtnGCircle_Scale(){
 					}
 					// [マーカー消去]ボタン非表示
 					subMyObj_OnOff($AryLocalMarker);
+					// 距離円再描画
+					subGCircle_Draw();
 				}
 			);
 			// ドラッグ <= dragend
@@ -2841,13 +2843,15 @@ function rtnGCircle_Scale(){
 				// ベースマーカー再描画
 				subBaseMarkerNew(e.latlng.lat, e.latlng.lng);
 				// 距離円再描画
-				subGCircle_Init();
+				subGCircle_Draw();
 			}
 		);
 		$Map.on(
 			"contextmenu",
 			function(e){
 				subMapOnRClick(e.latlng.lat, e.latlng.lng, null);
+				// 距離円再描画
+				subGCircle_Draw();
 			}
 		);
 		$Map.on(
@@ -2916,6 +2920,6 @@ function rtnGCircle_Scale(){
 </li>
 </textarea>
 <script>
-	// 代入
+	// 初期化
 	document.getElementById("_SW01Doc").innerHTML = document.getElementById("_HDoc01").value;
 </script>
