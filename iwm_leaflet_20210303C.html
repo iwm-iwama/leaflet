@@ -1,4 +1,4 @@
-<!-- iwm20210303B Ver.20210307 'U-2S' -->
+<!-- iwm20210303C Ver.20210325 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -676,14 +676,14 @@ a.polyline-measure-clearControl:active
 ---------->
 <script>
 	// Microsoft 独自仕様？
-	var uA = window.navigator.userAgent.toLowerCase();
+	const uA = window.navigator.userAgent.toLowerCase();
 
 	if(uA.indexOf("edge") > -1 || uA.indexOf("trident") > -1 || uA.indexOf("msie") > -1){
 		alert("このブラウザでは正しく動作しないことがあります。\n\n【動作確認済】\n・Firefox\n・Google Chrome\n・Opera\n・Vivaldi");
 	}
 
 	// muni.js を使うためのおまじない
-	var GSI = {ClientMode:{}, Modal:{}, Draw:{}, Edit:{}, Control:{}, Utils:{Browser:{}}, GLOBALS:{}, TEXT:{}};
+	const GSI = {ClientMode:{}, Modal:{}, Draw:{}, Edit:{}, Control:{}, Utils:{Browser:{}}, GLOBALS:{}, TEXT:{}};
 </script>
 <script type="text/javascript" src="https://maps.gsi.go.jp/js/muni.js"></script>
 
@@ -691,12 +691,12 @@ a.polyline-measure-clearControl:active
 /*-----------------------
 // フレームサイズを調整
 -----------------------*/
-var $NaviCommanderPaddingLR = 14;
-var $MapTop = 24;
+let $NaviCommanderPaddingLR = 14;
+let $MapTop = 24;
 
 function subInitDisp(){
-	var mapH = window.innerHeight;
-	var mapW = window.innerWidth;
+	const mapH = window.innerHeight;
+	const mapW = window.innerWidth;
 
 	// _divNaviCommander
 	document.getElementById("_divNaviCommander").style.width = (mapW - $NaviCommanderPaddingLR) + "px";
@@ -716,7 +716,7 @@ function subChangeUrl(
 	$Lng,
 	$Zoom
 ){
-	for(var _i1 = 0, _i2 = arguments.length; _i1 < _i2; _i1++){
+	for(let _i1 = 0, _i2 = arguments.length; _i1 < _i2; _i1++){
 		if(isNaN(arguments[_i1])){
 			arguments[_i1] = document.getElementById(arguments[_i1]).value;
 		}
@@ -736,14 +736,14 @@ function subChangeUrl(
 // 数値入力補完
 ---------------*/
 // 大域変数
-var $subIwmInput_BL_now = null;
-var $subIwmInput_BL_toSave = null;
+let $subIwmInput_BL_now = null;
+let $subIwmInput_BL_toSave = null;
 
 // 環境に合わせて設定
-const $subIwmInput_array = ["_InputBL"];
+let $subIwmInput_array = ["_InputBL"];
 
 function subIwmInput_Init(){
-	for(var _s1 of $subIwmInput_array){
+	for(let _s1 of $subIwmInput_array){
 		subIwmInput_Close(_s1);
 	}
 }
@@ -762,33 +762,34 @@ function subIwmInput_Zoom_Change(
 ){
 	document.getElementById("_NaviZoom").value = parseInt($str, 10);
 
-	var Color1 = "#000";
-	var Color2 = "#0c4b9d";
+	const color1 = "#000";
+	const color2 = "#0c4b9d";
 
-	var obj1 = document.getElementsByClassName("_ZA");
-	var obj2 = document.getElementsByClassName("_ZB");
+	const obj1 = document.getElementsByClassName("_ZA");
+	const obj2 = document.getElementsByClassName("_ZB");
 
-	var i1 = $str;
-	var i2 = 0;
-	var i3 = obj1.length;
+	let i1 = $str;
+	let i2 = 0;
+	let i3 = obj1.length;
+
 	for(; i2 < i3; i2++){
-		obj1[i2].style.background = (i1 == obj1[i2].value ? Color2 : Color1);
+		obj1[i2].style.background = (i1 == obj1[i2].value ? color2 : color1);
 
 		if(i1 == obj1[i2].value){
-			obj1[i2].style.background = Color2;
+			obj1[i2].style.background = color2;
 			obj1[i2].style.opacity = 0.8;
 		}
 		else{
-			obj1[i2].style.background = Color1;
+			obj1[i2].style.background = color1;
 			obj1[i2].style.opacity = 0.6;
 		}
 
 		if(i1 == obj2[i2].value){
-			obj2[i2].style.background = Color2;
+			obj2[i2].style.background = color2;
 			obj2[i2].style.opacity = 0.8;
 		}
 		else{
-			obj2[i2].style.background = Color1;
+			obj2[i2].style.background = color1;
 			obj2[i2].style.opacity = 0.6;
 		}
 	}
@@ -801,7 +802,7 @@ function subIwmInput_BL_Open(
 	if(!document.getElementById($outputId).value.length){
 		return;
 	}
-	var iId = "_InputBL";
+	const iId = "_InputBL";
 	$subIwmInput_BL_toSave = $outputId;
 	// "_InputBL" を更新
 	_iwmIBL($outputId);
@@ -833,8 +834,8 @@ function subIwmInput_BL_Keydown(
 	document.onkeydown = function(evt){
 		switch(evt.keyCode){
 			case(13): // [Enter]
-				var obj = document.getElementById($outputId);
-				var d1 = parseFloat(obj.value).toFixed($decimalSize);
+				const obj = document.getElementById($outputId);
+				const d1 = parseFloat(obj.value).toFixed($decimalSize);
 
 				if(isNaN(d1)){
 					return;
@@ -875,11 +876,11 @@ function subIwmInput_Open(
 	// 他の入力フォームを全て閉じる
 	subIwmInput_Init();
 
-	var obj = document.getElementById($outputId);
-	var rect = obj.getBoundingClientRect();
+	const obj = document.getElementById($outputId);
+	const rect = obj.getBoundingClientRect();
 
-	var _posX = ($posX == null || $posX == undefined ? rect.left + window.pageXOffset : $posX);
-	var _posY = ($posY == null || $posY == undefined ? rect.top + window.pageYOffset + obj.clientHeight : $posY);
+	const _posX = ($posX == null || $posX == undefined ? rect.left + window.pageXOffset : $posX);
+	const _posY = ($posY == null || $posY == undefined ? rect.top + window.pageYOffset + obj.clientHeight : $posY);
 
 	// with()において、
 	// 「WebKitではプロパティ名と変数名を自動判別しない → プロパティ名優先 → エラーと見なさない」ので注意!!
@@ -906,13 +907,13 @@ function subIwmInput_Close(
 	$subIwmInput_BL_now = null;
 	document.onkeydown = function(evt){}
 }
-$subIwmInput_strPos = 0;
+let $subIwmInput_strPos = 0;
 function subIwmInput_AddText(
 	$str
 ){
-	var obj = document.getElementById($subIwmInput_BL_now);
-	var strBefore = obj.value;
-	var strBeforeLen = strBefore.length;
+	const obj = document.getElementById($subIwmInput_BL_now);
+	const strBefore = obj.value;
+	const strBeforeLen = strBefore.length;
 	$subIwmInput_strPos = obj.selectionStart;
 	obj.value = strBefore.substr(0, $subIwmInput_strPos) + $str + strBefore.substr($subIwmInput_strPos, strBeforeLen);
 	$subIwmInput_strPos++;
@@ -927,9 +928,9 @@ function subIwmInput_Cls(){
 	$subIwmInput_strPos = 0;
 }
 function subIwmInput_Bs(){
-	var obj = document.getElementById($subIwmInput_BL_now);
-	var strBefore = obj.value;
-	var strBeforeLen = strBefore.length;
+	const obj = document.getElementById($subIwmInput_BL_now);
+	const strBefore = obj.value;
+	const strBeforeLen = strBefore.length;
 	$subIwmInput_strPos = obj.selectionStart;
 	$subIwmInput_strPos--;
 	if($subIwmInput_strPos < 0){
@@ -941,9 +942,9 @@ function subIwmInput_Bs(){
 	obj.selectionStart = $subIwmInput_strPos;
 }
 function subIwmInput_Del(){
-	var obj = document.getElementById($subIwmInput_BL_now);
-	var strBefore = obj.value;
-	var strBeforeLen = strBefore.length;
+	const obj = document.getElementById($subIwmInput_BL_now);
+	const strBefore = obj.value;
+	const strBeforeLen = strBefore.length;
 	$subIwmInput_strPos = obj.selectionStart;
 	if($subIwmInput_strPos > strBeforeLen){
 		$subIwmInput_strPos = strBeforeLen;
@@ -963,7 +964,7 @@ function _iwmIBL(
 	if(isNaN($d1)){
 		$d1 = document.getElementById($d1).value;
 	}
-	var [deg, min, sec] = rtnGeo10toIBL($d1);
+	const [deg, min, sec] = rtnGeo10toIBL($d1);
 		document.getElementById("_IBL1").value = deg.toFixed(0);
 		document.getElementById("_IBL2").value = min.toFixed(0);
 		document.getElementById("_IBL3").value = sec.toFixed(8);
@@ -977,17 +978,17 @@ function _iwmCU(){
 	subChangeUrl("_NaviLat", "_NaviLng", "_NaviZoom");
 }
 // センタリング
-var _iwmCM_hash = null;
+let $iwmCM_hash = null;
 function _iwmCM(){
-	if(_iwmCM_hash){
+	if($iwmCM_hash){
 		$Map.setView(
 			[
-				_iwmCM_hash.lat,
-				_iwmCM_hash.lng
+				$iwmCM_hash.lat,
+				$iwmCM_hash.lng
 			],
 			document.getElementById("_NaviZoom").value
 		);
-		_iwmCM_hash = null;
+		$iwmCM_hash = null;
 	}
 	else{
 		$Map.setView(
@@ -1029,7 +1030,7 @@ function _iwmZB(
 	);
 }
 function _iwmBL(){
-	for(var _s1 of ["_IBL1", "_IBL2", "_IBL3"]){
+	for(let _s1 of ["_IBL1", "_IBL2", "_IBL3"]){
 		if(!document.getElementById(_s1).value.length){
 			return;
 		}
@@ -1047,8 +1048,8 @@ function _iwmBL(){
 /*---------------------
 // アドレスマッチング
 ---------------------*/
-var $subAddMatch_Cnt = 0;
-var $AddMatchMarker = null;
+let $subAddMatch_Cnt = 0;
+let $AddMatchMarker = null;
 const $HashAddMatchOutputZoom = {exist:"<i class=\"fa fa-arrow-circle-up\"></i>", none:"<i class=\"fa fa-arrow-circle-down\"></i>"};
 
 // 初期化
@@ -1070,15 +1071,15 @@ function subAddMatch_Init(){
 	// Output
 	with(document.getElementById("_AddMatchOutput")){
 		style.display = "none";
-		var obj = document.getElementById("_AddMatchInput10");
-		var rect = obj.getBoundingClientRect();
+		const obj = document.getElementById("_AddMatchInput10");
+		const rect = obj.getBoundingClientRect();
 		style.left = (rect.left + window.pageXOffset - 2) + "px";
 		style.top  = (rect.top + window.pageYOffset + obj.clientHeight - 1) + "px";
 		innerHTML = "";
 	}
 }
 function subAddMatch_Main(){
-	var query = document.getElementById("_AddMatchInput10").value;
+	const query = document.getElementById("_AddMatchInput10").value;
 
 	if(!query.trim().length){
 		subAddMatch_Init();
@@ -1094,22 +1095,22 @@ function subAddMatch_Main(){
 		// 再検索時に結果を表示させるため
 		document.getElementById("_AddMatchInput20").innerHTML = $HashAddMatchOutputZoom.none;
 
-		var flg = rtnAddMatch_Main();
+		const flg = rtnAddMatch_Main();
 		if(flg){
 			with(document.getElementById("_AddMatchOutput")){
-				var rtn = "<div id='_AddMatchOutputH'>◆ヒット数 " + $subAddMatch_Cnt + " 件</div>";
-				for(var _s1 of json){
+				let rtn = "<div id='_AddMatchOutputH'>◆ヒット数 " + $subAddMatch_Cnt + " 件</div>";
+				for(let _s1 of json){
 					with(_s1){
-						var _s2 = "";
+						let _s2 = "";
 						// データ不完全のため例外処理が必要
 						try{
-							var addCode = parseInt(properties.addressCode, 10) + "";
-							var a1 = GSI.MUNI_ARRAY[addCode].split(",");
+							const addCode = parseInt(properties.addressCode, 10) + "";
+							const a1 = GSI.MUNI_ARRAY[addCode].split(",");
 							_s2 = a1[1] + " " + a1[3].replace("　", " ");
 						}
 						catch(e){
 						}
-						var [lng, lat] = geometry.coordinates;
+						let [lng, lat] = geometry.coordinates;
 
 						rtn += "<div id=\"_AddMatchOutput1\" onmouseover=\"subAddMatch_Spot([" + lat + "," + lng + "],'" + properties.title + "');\" onmouseout=\"subAddMatch_SpotClear();\" onclick=\"subMapOnRClick('" + lat + "','" + lng + "','" + properties.title + "');\">" +
 							"<div class='_AddMatchRem'>" + _s2 + "</div>" +
@@ -1125,11 +1126,11 @@ function subAddMatch_Main(){
 	});
 }
 function rtnAddMatch_Main(){
-	var rtn = true;
+	let rtn = true;
 
-	var oInput2 = document.getElementById("_AddMatchInput20");
-	var oInput3 = document.getElementById("_AddMatchInput30");
-	var oOutput = document.getElementById("_AddMatchOutput");
+	const oInput2 = document.getElementById("_AddMatchInput20");
+	const oInput3 = document.getElementById("_AddMatchInput30");
+	const oOutput = document.getElementById("_AddMatchOutput");
 
 	if($subAddMatch_Cnt > 1000){
 		oInput2.style.display = "none";
@@ -1218,14 +1219,14 @@ function subLatLngToPlaceName(
 	fetch(_URL).then(function(response){
 		return response.json();
 	}).then(function(json){
-		var title = null;
+		let title = null;
 		if(typeof(json.results) === "undefined"){
 			title = "-----";
 		}
 		else{
-			var muniCd = parseInt(json.results.muniCd, 10);
-			var lv01Nm = json.results.lv01Nm;
-			var a1 = GSI.MUNI_ARRAY[muniCd].split(",");
+			const muniCd = parseInt(json.results.muniCd, 10);
+			const lv01Nm = json.results.lv01Nm;
+			const a1 = GSI.MUNI_ARRAY[muniCd].split(",");
 			title = (a1[1] + a1[3] + lv01Nm).replace(/　/g, "");
 		}
 		// 地名付与 ⇒ 自由／固定区別
@@ -1244,13 +1245,13 @@ function subLatLngToPlaceName(
 /*----------------
 // Simple Window
 ----------------*/
-var $AryNaviCommanderId = ['_NC05','_NC04','_NC03','_NC02','_NC01'];
-var $ArySimpleWindowId = ['_SW05','_SW04','_SW03','_SW02','_SW01'];
+const $AryNaviCommanderId = ['_NC05','_NC04','_NC03','_NC02','_NC01'];
+const $ArySimpleWindowId = ['_SW05','_SW04','_SW03','_SW02','_SW01'];
 
 function subSimpleWindow_Init(
 	$aryId
 ){
-	var i1 = $aryId.length;
+	let i1 = $aryId.length;
 	while(i1--){
 		document.getElementById($aryId[i1]).style.display = "none";
 	}
@@ -1259,13 +1260,13 @@ function subSimpleWindow_OpenClose(
 	$id,
 	$btnId
 ){
-	var s1 = document.getElementById($id).style.display;
+	const s1 = document.getElementById($id).style.display;
 
-	for(var _s1 of $AryNaviCommanderId){
+	for(let _s1 of $AryNaviCommanderId){
 		document.getElementById(_s1).style.background = "";
 	}
 
-	for(var _s1 of $ArySimpleWindowId){
+	for(let _s1 of $ArySimpleWindowId){
 		document.getElementById(_s1).style.display = "none";
 	}
 
@@ -1280,13 +1281,13 @@ function subSimpleWindow_OpenClose(
 function subMapToPoint(
 	$textareaId
 ){
-	var str = document.getElementById($textareaId).value
+	let str = document.getElementById($textareaId).value
 
 	// 表示更新されてないと読込エラーになるので意図的にポップアップ
 	subMarkerPopup($BaseMarker, $AryLocalMarker);
 
-	for(var _o1 of $AryLocalMarker){
-		var _s1 = _o1._popup._content;
+	for(let _o1 of $AryLocalMarker){
+		let _s1 = _o1._popup._content;
 
 		if(_s1.match(/\.\d{4}度$/)){
 			_s1 = _s1.substring(0, _s1.lastIndexOf("<br>"));
@@ -1304,7 +1305,7 @@ function subMapToPoint(
 /*----------------------
 // ファイル読込（追加）
 ----------------------*/
-var $FileName = "";
+let $FileName = "";
 
 function subAddReadFile(
 	$fileId,
@@ -1312,12 +1313,12 @@ function subAddReadFile(
 	$mode // 0:上書き／1:追記
 ){
 	// ボタンにイベントを設定
-	var fileList = document.getElementById($fileId).files;
+	const fileList = document.getElementById($fileId).files;
 
 	// ファイル名記憶
 	$FileName = fileList[0].name;
 
-	var reader = new FileReader();
+	const reader = new FileReader();
 	reader.onload = function(evt){
 		switch($mode){
 			// 追記
@@ -1341,15 +1342,15 @@ function subA2P_Geocoding(
 ){
 	const _URL = "https://msearch.gsi.go.jp/address-search/AddressSearch?q=";
 
-	var xhr = new XMLHttpRequest();
+	const xhr = new XMLHttpRequest();
 
-	var str = "";
-	var errCnt = 0;
+	let str = "";
+	let errCnt = 0;
 
-	for(var _s1 of document.getElementById($textareaId).value.trimEnd().split("\n")){
+	for(let _s1 of document.getElementById($textareaId).value.trimEnd().split("\n")){
 		_s1 = _s1.trim();
-		var _a1 = _s1.split("\t");
-		var query = _a1[0];
+		const _a1 = _s1.split("\t");
+		const query = _a1[0];
 		if(query){
 			if(query.match(/^\d+\.*\d*/) || query.substr(0, 2) == "//"){
 				str += _s1;
@@ -1359,17 +1360,17 @@ function subA2P_Geocoding(
 				xhr.open("GET", (_URL + query), false);
 				xhr.send(null);
 
-				var json = JSON.parse(xhr.responseText);
+				const json = JSON.parse(xhr.responseText);
 
 				if(json.length == 1){
-					var [lng, lat] = json[0].geometry.coordinates;
-					var _a2 = [];
+					const [lng, lat] = json[0].geometry.coordinates;
+					let _a2 = [];
 
 					_a2 = rtnGeo10toIBL(lat);
-					var _lat = "<font color=\"#3d7cce\">北緯</font>" + _a2[0] + "度" + _a2[1] + "分" + _a2[2].toFixed(6) + "秒／" + lat.toFixed(6) + "度";
+					const _lat = "<font color=\"#3d7cce\">北緯</font>" + _a2[0] + "度" + _a2[1] + "分" + _a2[2].toFixed(6) + "秒／" + lat.toFixed(6) + "度";
 
 					_a2 = rtnGeo10toIBL(lng);
-					var _lng = "<font color=\"#3d7cce\">東経</font>" + _a2[0] + "度" + _a2[1] + "分" + _a2[2].toFixed(6) + "秒／" + lng.toFixed(6) + "度</font>";
+					const _lng = "<font color=\"#3d7cce\">東経</font>" + _a2[0] + "度" + _a2[1] + "分" + _a2[2].toFixed(6) + "秒／" + lng.toFixed(6) + "度</font>";
 
 					str += lat.toFixed(8) + "\t" + lng.toFixed(8) + "\t" + "<font color=\"#ff5858\">" + _a1[1] + "</font><br>＠<font color = \"#555\">" + _a1[0] + "</font>" + "\t" + _lat + "\t" + _lng + "\t" + _a1.slice(2).join("\t");
 				}
@@ -1425,12 +1426,12 @@ function subA2P_EditInit(
 /*-------------
 // 地図へ反映
 -------------*/
-var $AryPoint = [];
+let $AryPoint = [];
 
 function subA2P_PointToMap(
 	$textareaId
 ){
-	var i1 = $AryPoint.length;
+	let i1 = $AryPoint.length;
 	while(i1--){
 		// マーカー消去
 		$AryPoint[i1].remove($Map);
@@ -1440,9 +1441,9 @@ function subA2P_PointToMap(
 
 	$Map.createPane("_pane230").style.zIndex = 230;
 	$Map.createPane("_pane250").style.zIndex = 250;
-	var str = "";
+	let str = "";
 
-	for(var _s1 of document.getElementById($textareaId).value.trimEnd().split("\n")){
+	for(let _s1 of document.getElementById($textareaId).value.trimEnd().split("\n")){
 		_s1 = _s1.trim();
 
 		// Popup "<br/>" <=> TSV "\t"
@@ -1450,23 +1451,23 @@ function subA2P_PointToMap(
 		_s1 = _s1.replace(/\\t/g, "\t");
 		_s1 = _s1.replace(/\\n/g, "<br>");
 
-		var _a1 = _s1.split("\t");
+		const _a1 = _s1.split("\t");
+
+		// "icon@画像ファイル" でマーカー変更
+		let objIcon = null;
 
 		if(_a1.length >= 2){
 			try{
 				if(_a1.length >= 3){
 					_s2 = _a1[2];
 
-					// "icon@画像ファイル" でマーカー変更
-					var objIcon = null;
-
-					for(var _i1 = 3, _i2 = _a1.length; _i1 < _i2; _i1++){
-						var _$1 = _a1[_i1].match(/icon@(.+)/i);
-						if(_$1){
+					for(let _i1 = 3, _i2 = _a1.length; _i1 < _i2; _i1++){
+						const _s3 = _a1[_i1].match(/icon@(.+)/i);
+						if(_s3){
 							objIcon = L.icon(
 								{
-									iconUrl:_$1[1],
-									iconRetinaUrl:_$1[1],
+									iconUrl:_s3[1],
+									iconRetinaUrl:_s3[1],
 									iconSize:[24, 24],
 									iconAnchor:[12, 12],
 									popupAnchor:[0, -10]
@@ -1482,7 +1483,7 @@ function subA2P_PointToMap(
 					_s2 = "<br>";
 				}
 
-				var obj1 = (
+				const obj1 = (
 					objIcon ?
 						L.marker(
 							[_a1[0], _a1[1]],
@@ -1507,7 +1508,7 @@ function subA2P_PointToMap(
 						)
 				).addTo($Map);
 
-				var obj2 = obj1.bindPopup(
+				const obj2 = obj1.bindPopup(
 					_s2,
 					{
 						autoClose:true,
@@ -1544,9 +1545,9 @@ function subA2P_EditSave(
 	$textareaId,
 	$hrefId
 ){
-	var content = document.getElementById($textareaId).value;
-	var blob = new Blob([content], {type:"text/plain"});
-	var fn = ($FileName ? $FileName : "マーカー変換.tsv");
+	const content = document.getElementById($textareaId).value;
+	const blob = new Blob([content], {type:"text/plain"});
+	const fn = ($FileName ? $FileName : "マーカー変換.tsv");
 
 	// MSIE?
 	if(window.navigator.msSaveBlob){
@@ -1571,12 +1572,12 @@ function subA2P_EditClear(
 	document.getElementById($gcircleId).value = 0;
 	subA2P_GCircle($gcircleId, $textareaId);
 
-	// 総延長
+	// 総距離
 	document.getElementById($distCbId).checked = false;
 	subA2P_DistMP($textareaId, $distTextId, false);
 
 	// ローカルマーカー
-	var i1 = $AryPoint.length;
+	let i1 = $AryPoint.length;
 	while(i1--){
 		$AryPoint[i1].remove($Map);
 		$AryPoint.splice(i1, 1);
@@ -1585,20 +1586,20 @@ function subA2P_EditClear(
 /*----------------------
 // Leaflet.greatCircle
 ----------------------*/
-$AryM2P_Circle = [];
+let $AryM2P_Circle = [];
 
 function subA2P_GCircle(
 	$selectId,
 	$textareaId
 ){
 	// 消去
-	for(var _s1 of $AryM2P_Circle){
+	for(let _s1 of $AryM2P_Circle){
 		_s1.remove();
 	}
 
 	// 描画
-	var rad = document.getElementById($selectId).value.toLowerCase();
-	var a1 = rad.match(/(\d+\.*\d*)(km|m)/);
+	let rad = document.getElementById($selectId).value.toLowerCase();
+	const a1 = rad.match(/(\d+\.*\d*)(km|m)/);
 
 	if(a1){
 		rad = parseFloat(a1[1]);
@@ -1617,13 +1618,13 @@ function subA2P_GCircle(
 	}
 
 	$Map.createPane("_pane210").style.zIndex = 210;
-	var i1 = 0;
+	let i1 = 0;
 
-	for(var _s1 of document.getElementById($textareaId).value.trimEnd().split("\n")){
+	for(let _s1 of document.getElementById($textareaId).value.trimEnd().split("\n")){
 		_s1 = _s1.trim();
 
 		try{
-			var _a1 = _s1.split("\t");
+			const _a1 = _s1.split("\t");
 			$AryM2P_Circle[i1] = L.greatCircle(
 				[_a1[0], _a1[1]],
 				{
@@ -1645,44 +1646,59 @@ function subA2P_GCircle(
 /*---------------
 // 多点間の距離
 ---------------*/
-var $ObjPointLinkedLine = null;
+let $ObjPointLinkedLine = null;
+let $rtnA2P_DistMP_PartKm = 0.0;
 
 function rtnA2P_DistMP(
 	$textareaInputId
 ){
-	// rtn
-	var iTotalDist = 0.0;
-	var aLatLng = [];
-	var iErrCnt = 0;
+	let iErrCnt = 0;
+	let aLatLng1 = [];
 
-	var rgxDecimal = /^[\+\-]{0,1}[0-9]+\.{0,1}[0-9]*$/;
+	const rgxDecimal = /^[\+\-]{0,1}[0-9]+\.{0,1}[0-9]*$/;
 
-	for(var _s1 of document.getElementById($textareaInputId).value.trimEnd().split("\n")){
+	for(let _s1 of document.getElementById($textareaInputId).value.trimEnd().split("\n")){
 		if(_s1.substr(0, 2) != "//"){
-			var _a1 = _s1.split("\t");
+			const _a1 = _s1.split("\t");
 			if(_a1.length >= 2){
 				if(!_a1[0].match(rgxDecimal) || !_a1[1].match(rgxDecimal)){
 					++iErrCnt;
 				}
 				else{
-					aLatLng.push([_a1[0], _a1[1]]);
+					aLatLng1.push([_a1[0], _a1[1]]);
 				}
 			}
 		}
 	}
 
-	var aOld = [];
+	let iTotalDist = 0.0;
+	let aLatLng2 = [];
+	let aOld = [];
 
-	for(var _a1 of aLatLng){
+	// 総距離を仮計算
+	for(let _a1 of aLatLng1){
 		if(aOld[0]){
-			var [dist, angle] = rtnGeoVincentry(aOld[0], aOld[1], _a1[0], _a1[1]);
-			iTotalDist += dist;
+			iTotalDist += rtnGeoVincentryA(aOld[0], aOld[1], _a1[0], _a1[1])[0];
 		}
 		aOld = _a1;
 	}
+	aOld = [];
+
+	// 区間距離=200分割
+	$rtnA2P_DistMP_PartKm = iTotalDist / 200;
+
+	for(let _a1 of aLatLng1){
+		if(aOld[0]){
+			for(let _a2 of rtnGeoVincentryC(aOld[0], aOld[1], _a1[0], _a1[1], $rtnA2P_DistMP_PartKm)){
+				aLatLng2.push([_a2[0], _a2[1]]);
+			}
+		}
+		aOld = _a1;
+	}
+	aLatLng1 = null;
 	aOld = null;
 
-	return [iTotalDist, aLatLng, iErrCnt];
+	return [iTotalDist, aLatLng2, iErrCnt];
 }
 function subA2P_DistMP(
 	$textareaInputId,
@@ -1698,12 +1714,7 @@ function subA2P_DistMP(
 		document.getElementById($textareaOutputId).value = "";
 		return;
 	}
-
-	var iTotalDist = 0.0;
-	var aLatLng = [];
-	var iErrCnt = 0;
-
-	[iTotalDist, aLatLng, iErrCnt] = rtnA2P_DistMP($textareaInputId);
+	const [iTotalDist, aLatLng, iErrCnt] = rtnA2P_DistMP($textareaInputId);
 
 	$Map.createPane("_pane240").style.zIndex = 240;
 
@@ -1711,10 +1722,10 @@ function subA2P_DistMP(
 	$ObjPointLinkedLine = L.polyline(
 		aLatLng,
 		{
-			color:"#333",
-			opacity:0.6,
+			color:"#008",
+			opacity:0.8,
 			pane:"_pane240",
-			weight:3
+			weight:4
 		}
 	).addTo($Map);
 
@@ -1741,17 +1752,17 @@ function rtnGeo10toIBL(
 ){
 	$angle = parseFloat($angle);
 
-	var sign = 1;
+	let sign = 1;
 
 	if($angle < 0){
 		sign = -1;
 		$angle = -$angle;
 	}
-	var deg = parseInt($angle, 10);
+	let deg = parseInt($angle, 10);
 		$angle = ($angle - deg) * 60.0;
-	var min = parseInt($angle, 10);
+	let min = parseInt($angle, 10);
 		$angle -= min;
-	var sec = parseFloat($angle) * 60.0;
+	let sec = parseFloat($angle) * 60.0;
 
 	// 0.999... * 60 => 60.0 対策
 	if(sec == 60.0){
@@ -1761,76 +1772,68 @@ function rtnGeo10toIBL(
 
 	return [parseInt(deg, 10) * sign, parseInt(min, 10), parseFloat(sec)];
 }
-/*-------------------------------
-// Vincenty法による２点間の距離
--------------------------------*/
+/*-------------
+// Vincenty法
+-------------*/
 /*【参考】
 	http://tancro.e-central.tv/grandmaster/script/vincentyJS.html
 */
-function rtnGeoVincentry(
+function rtnGeoVincentryA(
 	$lat1,
 	$lng1,
 	$lat2,
 	$lng2
 ){
-	$lat1 = parseFloat($lat1);
-	$lng1 = parseFloat($lng1);
-	$lat2 = parseFloat($lat2);
-	$lng2 = parseFloat($lng2);
-
 	if($lat1 == $lat2 && $lng1 == $lng2){
-		return [0, 0];
+		return [0.0, 0.0];
 	}
 
-	/// const _A = 6378137.0;
+	/// const A = 6378137.0;
 	const _B   = 6356752.314140356;    // GRS80
 	const _F   = 0.003352810681182319; // 1 / 298.257222101
 	const _RAD = 0.017453292519943295; // π / 180
 
-	const latR1 = $lat1 * _RAD;
-	const lngR1 = $lng1 * _RAD;
-	const latR2 = $lat2 * _RAD;
-	const lngR2 = $lng2 * _RAD;
+	$lat1 = parseFloat($lat1) * _RAD;
+	$lng1 = parseFloat($lng1) * _RAD;
+	$lat2 = parseFloat($lat2) * _RAD;
+	$lng2 = parseFloat($lng2) * _RAD;
 
 	const f1 = 1 - _F;
-
-	const omega = lngR2 - lngR1;
-	const tanU1 = f1 * Math.tan(latR1);
+	const omega = $lng2 - $lng1;
+	const tanU1 = f1 * Math.tan($lat1);
 	const cosU1 = 1 / Math.sqrt(1 + tanU1 * tanU1);
 	const sinU1 = tanU1 * cosU1;
-	const tanU2 = f1 * Math.tan(latR2);
+	const tanU2 = f1 * Math.tan($lat2);
 	const cosU2 = 1 / Math.sqrt(1 + tanU2 * tanU2);
 	const sinU2 = tanU2 * cosU2;
 
-	var lamda = omega;
-	var dLamda = 0;
+	let lamda = omega;
+	let dLamda = 0;
+	let sinLamda  = 0.0;
+	let cosLamda  = 0.0;
+	let sin2Sigma = 0.0;
+	let sinSigma  = 0.0;
+	let cosSigma  = 0.0;
+	let sigma     = 0.0;
+	let sinAlpha  = 0.0;
+	let cos2Alpha = 0.0;
+	let cos2sm    = 0.0;
+	let c = 0.0;
 
-	var sinLamda  = 0.0;
-	var cosLamda  = 0.0;
-	var sin2sigma = 0.0;
-	var sinSigma  = 0.0;
-	var cosSigma  = 0.0;
-	var sigma     = 0.0;
-	var sinAlpha  = 0.0;
-	var cos2alpha = 0.0;
-	var cos2sm    = 0.0;
-	var c = 0.0;
-
-	while(true)
-	{
+	while(true){
 		sinLamda = Math.sin(lamda);
 		cosLamda = Math.cos(lamda);
-		sin2sigma = (cosU2 * sinLamda) * (cosU2 * sinLamda) + (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda);
-		if(sin2sigma < 0){
+		sin2Sigma = (cosU2 * sinLamda) * (cosU2 * sinLamda) + (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda);
+		if(sin2Sigma < 0){
 			return [0.0, 0.0];
 		}
-		sinSigma = Math.sqrt(sin2sigma);
+		sinSigma = Math.sqrt(sin2Sigma);
 		cosSigma = sinU1 * sinU2 + cosU1 * cosU2 * cosLamda;
 		sigma = Math.atan2(sinSigma, cosSigma);
 		sinAlpha = cosU1 * cosU2 * sinLamda / sinSigma;
-		cos2alpha = 1 - sinAlpha * sinAlpha;
-		cos2sm = cosSigma - 2 * sinU1 * sinU2 / cos2alpha;
-		c = _F / 16 * cos2alpha * (4 + _F * (4 - 3 * cos2alpha));
+		cos2Alpha = 1 - sinAlpha * sinAlpha;
+		cos2sm = cosSigma - 2 * sinU1 * sinU2 / cos2Alpha;
+		c = _F / 16 * cos2Alpha * (4 + _F * (4 - 3 * cos2Alpha));
 		dLamda = lamda;
 		lamda = omega + (1 - c) * _F * sinAlpha * (sigma + c * sinSigma * (cos2sm + c * cosSigma * (-1 + 2 * cos2sm * cos2sm)));
 		if(Math.abs(lamda - dLamda) <= 1e-12){
@@ -1838,20 +1841,110 @@ function rtnGeoVincentry(
 		}
 	}
 
-	var u2 = cos2alpha * (1 - f1 * f1) / (f1 * f1);
-	var a = 1 + u2 / 16384 * (4096 + u2 * (-768 + u2 * (320 - 175 * u2)));
-	var b = u2 / 1024 * (256 + u2 * (-128 + u2 * (74 - 47 * u2)));
-	var dSigma = b * sinSigma * (cos2sm + b / 4 * (cosSigma * (-1 + 2 * cos2sm * cos2sm) - b / 6 * cos2sm * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2sm * cos2sm)));
-	var angle = Math.atan2(cosU2 * sinLamda, cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * 57.29577951308232;
-	var dist = _B * a * (sigma - dSigma);
+	let u2 = cos2Alpha * (1 - f1 * f1) / (f1 * f1);
+	let a = 1 + u2 / 16384 * (4096 + u2 * (-768 + u2 * (320 - 175 * u2)));
+	let b = u2 / 1024 * (256 + u2 * (-128 + u2 * (74 - 47 * u2)));
+	let dSigma = b * sinSigma * (cos2sm + b / 4 * (cosSigma * (-1 + 2 * cos2sm * cos2sm) - b / 6 * cos2sm * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2sm * cos2sm)));
+	let km = (_B * a * (sigma - dSigma)) / 1000; // m => km
+	let bearing = Math.atan2(cosU2 * sinLamda, cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * 57.29577951308232;
 
 	// 変換
-	if(angle < 0){
-		angle += 360.0; // "度"
+	if(bearing < 0){
+		bearing += 360.0; // 度
 	}
-	dist /= 1000.0; // "m" => "km"
 
-	return [parseFloat(dist), parseFloat(angle)];
+	return [km, bearing];
+}
+function rtnGeoVincentryB(
+	$lat,
+	$lng,
+	$km,
+	$bearing
+){
+	///	const A = 6378137.0;
+	const _B   = 6356752.314140356;    // GRS80
+	const _F   = 0.003352810681182319; // 1 / 298.257222101
+	const _RAD = 0.017453292519943295; // π / 180
+
+	$lat     = parseFloat($lat) * _RAD;
+	$lng     = parseFloat($lng) * _RAD;
+	$km      = parseFloat($km) * 1000; // km => m
+	$bearing = parseFloat($bearing) * _RAD;
+
+	const f1 = 1 - _F;
+	const sinBearing = Math.sin($bearing);
+	const cosBearing = Math.cos($bearing);
+	const tanU1 = f1 * Math.tan($lat);
+	const cosU1 = 1 / Math.sqrt((1 + tanU1 * tanU1));
+	const sinU1 = tanU1 * cosU1;
+	const sigma1 = Math.atan2(tanU1, cosBearing);
+	const sinAlfa = cosU1 * sinBearing;
+	const cos2Alpha = 1 - sinAlfa * sinAlfa;
+	const u2 = cos2Alpha * (1 - f1 * f1) / (f1 * f1);
+	const a = 1 + u2 / 16384 * (4096 + u2 * (-768 + u2 * (320 - 175 * u2)));
+	const b = u2 / 1024 * (256 + u2 * (-128 + u2 * (74 - 47 * u2)));
+
+	let cos2Sigma  = 0.0;
+	let sinSigma   = 0.0;
+	let cosSigma   = 0.0;
+	let deltaSigma = 0.0;
+	let sigma0     = 0.0;
+	let sigma9     = $km / (_B * a);
+
+	while(true){
+		cos2Sigma = Math.cos(2 * sigma1 + sigma9);
+		sinSigma = Math.sin(sigma9);
+		cosSigma = Math.cos(sigma9);
+		deltaSigma = b * sinSigma * (cos2Sigma + b / 4 * (cosSigma * (-1 + 2 * cos2Sigma * cos2Sigma) - b / 6 * cos2Sigma * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2Sigma * cos2Sigma)));
+		sigma0 = sigma9;
+		sigma9 = $km / (_B * a) + deltaSigma;
+		if(Math.abs(sigma9 - sigma0) <= 1e-12){
+			break;
+		}
+	}
+
+	let x = sinU1 * sinSigma - cosU1 * cosSigma * cosBearing;
+	let lat2 = Math.atan2(sinU1 * cosSigma + cosU1*sinSigma * cosBearing, f1 * Math.sqrt(sinAlfa * sinAlfa + x * x));
+	let Lamda = Math.atan2(sinSigma * sinBearing, cosU1 * cosSigma - sinU1 * sinSigma * cosBearing);
+	let c = _F / 16 * cos2Alpha * (4 + _F * (4 - 3 * cos2Alpha));
+	let _L = Lamda - (1 - c) * _F * sinAlfa * (sigma9 + c * sinSigma * (cos2Sigma + c * cosSigma * (-1 + 2 * cos2Sigma * cos2Sigma)));
+	let lng2 = $lng + _L;
+	let bearing2 = Math.atan2(sinAlfa, -x);
+
+	return [(lat2 / _RAD), (lng2 / _RAD), (bearing2 / _RAD)]
+}
+function rtnGeoVincentryC(
+	$lat1,
+	$lng1,
+	$lat2,
+	$lng2,
+	$partKm = 10.0
+){
+	$lat1   = parseFloat($lat1);
+	$lng1   = parseFloat($lng1);
+	$lat2   = parseFloat($lat2);
+	$lng2   = parseFloat($lng2);
+	$partKm = parseFloat($partKm);
+
+	let rtn = [];
+	let a1 = [];
+	let totalKm = 0.0;
+
+	const allKm = rtnGeoVincentryA($lat1, $lng1, $lat2, $lng2)[0];
+
+	while(true){
+		rtn.push([$lat1, $lng1, totalKm]);
+		const _bearing = rtnGeoVincentryA($lat1, $lng1, $lat2, $lng2)[1];
+		a1 = rtnGeoVincentryB($lat1, $lng1, $partKm, _bearing);
+			$lat1 = a1[0];
+			$lng1 = a1[1];
+		if(allKm < (totalKm += $partKm)){
+			break;
+		}
+	}
+	rtn.push([$lat2, $lng2, allKm]);
+
+	return rtn;
 }
 /*-----------
 // 標高取得
@@ -1879,11 +1972,11 @@ function rtnMarkerPopup1(
 ){
 	subLatLngToPlaceName($lat, $lng, $BaseMarker, null);
 
-	var [deg, min, sec] = rtnGeo10toIBL($lat);
-	var latRem = deg + "度" + min + "分" + parseFloat(sec).toFixed(6) + "秒";
+	let [deg, min, sec] = rtnGeo10toIBL($lat);
+	const latRem = deg + "度" + min + "分" + parseFloat(sec).toFixed(6) + "秒";
 
-	var [deg, min, sec] = rtnGeo10toIBL($lng);
-	var lngRem = deg + "度" + min + "分" + parseFloat(sec).toFixed(6) + "秒";
+	[deg, min, sec] = rtnGeo10toIBL($lng);
+	const lngRem = deg + "度" + min + "分" + parseFloat(sec).toFixed(6) + "秒";
 
 	subGetElevation($lat, $lng, $BaseMarker);
 
@@ -1908,19 +2001,19 @@ function rtnMarkerPopup2(
 ){
 	subLatLngToPlaceName($latTo, $lngTo, $oMarker, null);
 
-	var [deg, min, sec] = rtnGeo10toIBL($latTo);
-	var latRem = deg + "度" + min + "分" + parseFloat(sec).toFixed(6) + "秒";
+	let [deg, min, sec] = rtnGeo10toIBL($latTo);
+	const latRem = deg + "度" + min + "分" + parseFloat(sec).toFixed(6) + "秒";
 
-	var [deg, min, sec] = rtnGeo10toIBL($lngTo);
-	var lngRem = deg + "度" + min + "分" + parseFloat(sec).toFixed(6) + "秒";
+	[deg, min, sec] = rtnGeo10toIBL($lngTo);
+	const lngRem = deg + "度" + min + "分" + parseFloat(sec).toFixed(6) + "秒";
 
-	var [dist, angle] = rtnGeoVincentry($latFrom, $lngFrom, $latTo, $lngTo);
+	let [dist, angle] = rtnGeoVincentryA($latFrom, $lngFrom, $latTo, $lngTo);
 		dist = dist.toFixed(4);
 		angle = angle.toFixed(4);
 
-	var distRem = dist + "km";
+	let distRem = dist + "km";
 
-	var angleRem = "";
+	let angleRem = "";
 	if(angle >= 337.5 || angle <= 22.5){
 		angleRem = "北";
 	}
@@ -1976,7 +2069,7 @@ function subMyObj_OnOff(
 function subMyObj_Remove(
 	$aryObj
 ){
-	var obj = null;
+	let obj = null;
 	while((obj = $aryObj.pop()) != undefined){
 		obj.remove($Map);
 	}
@@ -2000,9 +2093,9 @@ function subAddTabCtrl(
 	}
 	$e.preventDefault();
 
-	var cursorPosition = $obj.selectionStart;
-	var cursorLeft     = $obj.value.substr(0, cursorPosition);
-	var cursorRight    = $obj.value.substr(cursorPosition, $obj.value.length);
+	const cursorPosition = $obj.selectionStart;
+	const cursorLeft     = $obj.value.substr(0, cursorPosition);
+	const cursorRight    = $obj.value.substr(cursorPosition, $obj.value.length);
 
 	$obj.value = cursorLeft + "\t" + cursorRight;
 	$obj.selectionEnd = cursorPosition + 1;
@@ -2010,7 +2103,7 @@ function subAddTabCtrl(
 /*---------
 // 海水面
 ---------*/
-var $Dem10ToSeaLevel = new L.GridLayer();
+let $Dem10ToSeaLevel = new L.GridLayer();
 
 function subDem10ToSeaLevel2(
 	$id1,
@@ -2031,44 +2124,44 @@ function subDem10ToSeaLevel2(
 		return;
 	}
 
-	var SeaLevel1 = parseFloat(document.getElementById($id1).value);
-	var SeaLevel2 = parseFloat(document.getElementById($id2).value);
+	let seaLevel1 = parseFloat(document.getElementById($id1).value);
+	let seaLevel2 = parseFloat(document.getElementById($id2).value);
 
-	if(SeaLevel1 > SeaLevel2){
-		var tmp = SeaLevel1;
-		SeaLevel1 = SeaLevel2;
-		SeaLevel2 = tmp;
+	if(seaLevel1 > seaLevel2){
+		let tmp = seaLevel1;
+		seaLevel1 = seaLevel2;
+		seaLevel2 = tmp;
 		tmp = null;
 
-		document.getElementById($id1).value = SeaLevel1;
-		document.getElementById($id2).value = SeaLevel2;
+		document.getElementById($id1).value = seaLevel1;
+		document.getElementById($id2).value = seaLevel2;
 	}
 
 	// 元データの切り上げ対策
-	++SeaLevel2;
+	++seaLevel2;
 
 	// m => cm
-	SeaLevel1 *= 100;
-	SeaLevel2 *= 100;
+	seaLevel1 *= 100;
+	seaLevel2 *= 100;
 
 	$Dem10ToSeaLevel.createTile = function(coords){
-		var tile = L.DomUtil.create("canvas", "leaflet-tile");
+		const tile = L.DomUtil.create("canvas", "leaflet-tile");
 			tile.width = tile.height = 256;
-		var ctx = tile.getContext("2d");
-		var img = new Image();
+		const ctx = tile.getContext("2d");
+		const img = new Image();
 			img.crossOrigin = "anonymous";
 			// leafletが使うタイルと別のサーバ（https／http）にアクセスし、Access-Control-Allow-Originを回避
 			img.src = "https://cyberjapandata.gsi.go.jp/xyz/dem_png/" + coords.z + "/" + coords.x + "/" + coords.y + ".png";
 		img.onload = function(){
 			ctx.drawImage(this, 0, 0);
-			var rtnImg = ctx.getImageData(0, 0, 256, 256);
-			var rtnImgData = rtnImg.data;
-			for(var _i1 = 0, _i2 = rtnImgData.length; _i1 < _i2; _i1+=4){
-				elevation = (rtnImgData[_i1 + 0] * 65536) + (rtnImgData[_i1 + 1] * 256) + rtnImgData[_i1 + 2];
+			const rtnImg = ctx.getImageData(0, 0, 256, 256);
+			const rtnImgData = rtnImg.data;
+			for(let _i1 = 0, _i2 = rtnImgData.length; _i1 < _i2; _i1+=4){
+				let elevation = (rtnImgData[_i1 + 0] * 65536) + (rtnImgData[_i1 + 1] * 256) + rtnImgData[_i1 + 2];
 				if(elevation > 8388608){
 					elevation = (elevation - 16777216);
 				}
-				rtnImgData[_i1 + 3] = (elevation >= SeaLevel1 && elevation <= SeaLevel2 ? 90 : 0);
+				rtnImgData[_i1 + 3] = (elevation >= seaLevel1 && elevation <= seaLevel2 ? 90 : 0);
 			}
 			ctx.putImageData(rtnImg, 0, 0);
 		}
@@ -2079,8 +2172,8 @@ function subDem10ToSeaLevel2(
 /*----------------------
 // Leaflet.greatCircle
 ----------------------*/
-var $GCircleBase = null;
-var $GCircleAryLocal = [];
+let $GCircleBase = null;
+let $GCircleAryLocal = [];
 
 // 距離円描画
 function subGCircle_Draw(){
@@ -2107,13 +2200,13 @@ function subGCircle_Draw(){
 	$GCircleBase.bindTo($BaseMarker);
 
 	// ローカルマーカー
-	for(var _s1 of $GCircleAryLocal){
+	for(let _s1 of $GCircleAryLocal){
 		_s1.remove();
 	}
 
 	$GCircleAryLocal = [];
 
-	for(var _s1 of $AryLocalMarker){
+	for(let _s1 of $AryLocalMarker){
 		$GCircleAryLocal.push(
 			L.greatCircle(
 				_s1.getLatLng(),
@@ -2129,19 +2222,19 @@ function subGCircle_Draw(){
 		);
 	}
 
-	for(var _i1 = 0; _i1 < $GCircleAryLocal.length; _i1++){
+	for(let _i1 = 0; _i1 < $GCircleAryLocal.length; _i1++){
 		$GCircleAryLocal[_i1].addTo($Map);
 		$GCircleAryLocal[_i1].bindTo($AryLocalMarker[_i1]);
 	}
 }
 // スライダー制御
 function subGCircle_Slider(){
-	var iDist = rtnGCircle_Scale();
+	const iDist = rtnGCircle_Scale();
 	document.getElementById("$GCircleKm").innerHTML = (iDist / 1000.0).toFixed(2) + "km";
 
 	$GCircleBase.setRadius(iDist);
 
-	for(var _s1 of $GCircleAryLocal){
+	for(let _s1 of $GCircleAryLocal){
 		_s1.setRadius(iDist);
 	}
 }
@@ -2153,18 +2246,16 @@ function rtnGCircle_Scale(){
 /*----------------------
 // Leaflet.Heightgraph
 ----------------------*/
-var $HeightGraph_SectionDegree = 0.0;
-var $HeightGraph_On = true;
-var $HeightGraph_Layer = null;
-var $HeightGraph_Title = "標高グラフ ";
-
-const $HeightGraph_Init = L.control.heightgraph(
+let $HeightGraph_On = true;
+let $HeightGraph_Layer = null;
+let $HeightGraph_Title = "標高グラフ ";
+let $HeightGraph_Init = L.control.heightgraph(
 	{
 		mappings:{
 			suitability:function(data){
 				return {
-					text:"±" + ($HeightGraph_SectionDegree * 1.414).toFixed(4) + "°",
-					color:"purple"
+					text:"±" + ($rtnA2P_DistMP_PartKm).toFixed(2) + "km",
+					color:"#c71585"
 				};
 			},
 		},
@@ -2176,7 +2267,9 @@ const $HeightGraph_Init = L.control.heightgraph(
 		expandCallback(expand){},
 		expandControls:false,
 		highlightStyle:{
-			color:"purple"
+			color:"#c71585",
+			opacity:0.6,
+			weight:6
 		},
 		position:"bottomleft",
 		translation:{
@@ -2190,7 +2283,7 @@ const $HeightGraph_Init = L.control.heightgraph(
 		height:150
 	}
 );
-const $HeightGraph_Data = [
+let $HeightGraph_Data = [
 	{
 		"type":"FeatureCollection",
 		"features":[
@@ -2220,15 +2313,15 @@ function rtnHeightGraphElevation(
 	$lng
 ){
 	const _URL = "https://cyberjapandata2.gsi.go.jp/general/dem/scripts/getelevation.php?lat=" + $lat + "&lon=" + $lng + "&outtype=JSON";
-	var rtn = [];
+	let rtn = [];
 
-	var xhr = new XMLHttpRequest();
+	const xhr = new XMLHttpRequest();
 
 	// バッチ処理のため非同期は不可
 	xhr.open("GET", _URL, false);
 	xhr.send(null);
 	if (xhr.status == 200){
-		var i1 = JSON.parse(xhr.responseText).elevation;
+		let i1 = JSON.parse(xhr.responseText).elevation;
 		if(i1 == "-----"){
 			i1 = 0;
 		}
@@ -2240,87 +2333,30 @@ function rtnHeightGraphElevation(
 function subHeightGraphMakeData(){
 	// 初期化
 	$HeightGraph_Data[0]["features"][0]["geometry"]["coordinates"] = [[0, 0, 0], [0, 0, 0]];
+	let [iTotalDist, aLatLng, iErrCnt] = rtnA2P_DistMP("_TA02");
 
-	var iTotalDist = 0.0;
-	var aLatLng = [];
-	var iErrCnt = 0;
-
-	[iTotalDist, aLatLng, iErrCnt] = rtnA2P_DistMP("_TA02");
-
-	// 精度調整
-	if(iTotalDist > 2000.0){
-		$HeightGraph_SectionDegree = 0.05;
-	}
-	else if(iTotalDist > 1000.0){
-		$HeightGraph_SectionDegree = 0.01;
-	}
-	else if(iTotalDist > 500.0){
-		$HeightGraph_SectionDegree = 0.005;
-	}
-	else{
-		$HeightGraph_SectionDegree = 0.0025;
-	}
-
-	var a1 = [];
-	var dx0 = null;
-	var dy0 = null;
-	var dx1 = null;
-	var dy1 = null;
-	var _tan = 0.0;
-
-	for(var _s1 of document.getElementById("_TA02").value.split("\n")){
-		if(_s1.length > 0){
-			var _a1 = _s1.split(/\t|,/);
-				_a1[0] = parseFloat(_a1[0]);
-				_a1[1] = parseFloat(_a1[1]);
-
-			if(dx0){
-				dx1 = _a1[0];
-				dy1 = _a1[1];
-				_tan = (dx1 - dx0) / (dy1 - dy0);
-
-				if(dy0 < dy1){
-					for(var _d1 = dy0; _d1 < dy1; _d1+=$HeightGraph_SectionDegree){
-						a1.push([dx0 + ((_d1 - dy0) * _tan), _d1]);
-					}
-				}
-				else{
-					for(var _d1 = dy0; _d1 > dy1; _d1-=$HeightGraph_SectionDegree){
-						a1.push([dx0 + ((_d1 - dy0) * _tan), _d1]);
-					}
-				}
-				dx0 = dx1;
-				dy0 = dy1;
-			}
-			else{
-				dx0 = _a1[0];
-				dy0 = _a1[1];
-			}
-		}
-	}
-	a1.push([dx1, dy1]);
-
-	var a2 = [];
-	var cnt = 0;
-	var allCnt = a1.length;
-	var aryBeforeData = [
+	let cnt = 0;
+	const allCnt = aLatLng.length;
+	const aryBeforeData = [
 		document.getElementById("_HgBtn").value,
 		document.getElementById("_HgBtn").style.color
 	];
 
 	document.getElementById("_HgBtn").style.color = "#000";
 
-	for(var _a1 of a1){
-		a2.push(rtnHeightGraphElevation(_a1[0], _a1[1]));
+	let a1 = [];
+
+	for(let _a1 of aLatLng){
+		a1.push(rtnHeightGraphElevation(_a1[0], _a1[1]));
 		// WebKit／Blink系は表示不可
 		++cnt;
-		document.getElementById("_HgBtn").value =  $HeightGraph_Title + parseInt(100 * cnt / allCnt, 10) + "%";
+		document.getElementById("_HgBtn").value = $HeightGraph_Title + parseInt(100 * cnt / allCnt, 10) + "%";
 	}
 
 	// 再計算値を代入
-	$HeightGraph_Data[0]["features"][0]["geometry"]["coordinates"] = a2;
+	$HeightGraph_Data[0]["features"][0]["geometry"]["coordinates"] = a1;
 
-	a1 = a2 = null;
+	a1 = null;
 
 	with(document.getElementById("_HgBtn")){
 		value = aryBeforeData[0];
@@ -2329,7 +2365,7 @@ function subHeightGraphMakeData(){
 }
 function subHeightGraphOpen(){
 	if($HeightGraph_On){
-		var flg2 = confirm("処理中は操作ができません。\n処理を開始しますか？");
+		const flg2 = confirm("処理中は操作ができません。\n処理を開始しますか？");
 		if(!flg2){
 			return;
 		}
@@ -2494,7 +2530,7 @@ function subHeightGraphOpen(){
 					<datalist id="_Dist">
 						<option value="50m"/><option value="100m"/><option value="250m"/><option value="500m"/><option value="1km"/><option value="2km"/><option value="4km"/><option value="5km"/><option value="8km"/><option value="10km"/><option value="20km"/><option value="25km"/><option value="40km"/><option value="50km"/><option value="80km"/><option value="100km"/>
 					</datalist>
-					<input type="checkbox" id="_checkboxDist" class="_checkboxNavi1" style="margin:0 0 0 4px;" onclick="subA2P_DistMP('_TA02','_textDist',_checkboxDist.checked);"/><input type="text" id="_textDist" class="_txtNavi2" style="width:80px;" placeholder="総延長" readonly/>
+					<input type="checkbox" id="_checkboxDist" class="_checkboxNavi1" style="margin:0 0 0 4px;" onclick="subA2P_DistMP('_TA02','_textDist',_checkboxDist.checked);"/><input type="text" id="_textDist" class="_txtNavi2" style="width:90px;" placeholder="総距離" readonly/>
 					<input type="button" id="_HgBtn" class="_btnNavi5" style="margin:0 0 0 4px;width:120px;" value="" onclick="subHeightGraphOpen();"/>
 					<script>
 						// 初期化
@@ -2537,10 +2573,10 @@ function subHeightGraphOpen(){
 		subInitDisp();
 
 		// URLからXYZ値を取得
-		var hash = window.location.hash;
+		const hash = window.location.hash;
 
 		if(hash.length){
-			var aHash = hash.split("/");
+			const aHash = hash.split("/");
 			document.getElementById("_NaviZoom").value = aHash[0].substr(1); // 先頭の'#'より後
 			document.getElementById("_NaviLat").value  = parseFloat(aHash[1]).toFixed(8);
 			document.getElementById("_NaviLng").value  = parseFloat(aHash[2]).toFixed(8);
@@ -2587,7 +2623,7 @@ function subHeightGraphOpen(){
 		);
 
 		// 初回表示設定
-		var $Map = L.map(
+		const $Map = L.map(
 			"_divMap",
 			{
 				center:[document.getElementById("_NaviLat").value, document.getElementById("_NaviLng").value],
@@ -2613,7 +2649,7 @@ function subHeightGraphOpen(){
 		/*--------------------------
 		// Leaflet.PolylineMeasure
 		--------------------------*/
-		var $PolylineMeasure = L.control.polylineMeasure(
+		const $PolylineMeasure = L.control.polylineMeasure(
 			{
 				position:"bottomleft",
 				unit:"metres",
@@ -2632,20 +2668,20 @@ function subHeightGraphOpen(){
 		//   (例) ["std", "https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png", 1.0, 18]
 		// http://maps.gsi.go.jp/development/ichiran.html
 		--------------------------------------------------------------------------------------*/
-		var $URL = "https://cyberjapandata.gsi.go.jp/xyz/";
+		const $URL = "https://cyberjapandata.gsi.go.jp/xyz/";
 
 		/*---------------
 		// ラジオボタン
 		---------------*/
-		var $radioButtonSelectMap = [];
+		let $radioButtonSelectMap = [];
 
-		var $radioButtonMap = [];
+		let $radioButtonMap = [];
 			$radioButtonMap.push(["標準地図", $URL + "std/{z}/{x}/{y}.png",   1.0, 18, "地理院タイル std"]);
 			$radioButtonMap.push(["淡色地図", $URL + "pale/{z}/{x}/{y}.png",  1.0, 18, "地理院タイル pale"]);
 			$radioButtonMap.push(["白地図"  , $URL + "blank/{z}/{x}/{y}.png", 1.0, 14, "地理院タイル blank"]);
 			$radioButtonMap.push(["なし", "", 0.0, 18]);
 
-		for(var _a1 of $radioButtonMap){
+		for(let _a1 of $radioButtonMap){
 			$radioButtonSelectMap[_a1[0]] = L.tileLayer(
 				_a1[1],
 				{
@@ -2662,23 +2698,23 @@ function subHeightGraphOpen(){
 		/*-----------------------
 		// チェックボックス可変
 		-----------------------*/
-		var $LMapSelector = null;
+		let $LMapSelector = null;
 
 		function subMapSelector(){
-			var $checkBoxSelectMap = [];
-			var obj = document.getElementById("_TA01");
+			let $checkBoxSelectMap = [];
+			const obj = document.getElementById("_TA01");
 
 			if(obj.value.length == 0){
 				obj.value = "// [Tab]区切り\n// タイル種\t拡張子\t透過率(0.1-1.0)\t最大ズーム\t表示名(省略可)\nseamlessphoto\tjpg\t0.5\t18\tシームレス写真／50%\nseamlessphoto\tjpg\t1.0\t18\tシームレス写真／100%\nrelief\tpng\t1.0\t15\t色別標高図\nslopezone1map\tpng\t1.0\t15\t全国傾斜量区分図\n";
 			}
 
-			var ary = [];
+			let ary = [];
 
-			for(var _s1 of document.getElementById("_TA01").value.trimEnd().split("\n")){
+			for(let _s1 of document.getElementById("_TA01").value.trimEnd().split("\n")){
 				_s1 = _s1.trim();
 
 				if(_s1.length > 0 && _s1.substr(0, 2) != "//"){
-					var _a1 = _s1.split("\t");
+					let _a1 = _s1.split("\t");
 
 					// タイル種
 					_a1[0] = _a1[0].trim();
@@ -2768,7 +2804,7 @@ function subHeightGraphOpen(){
 				"Map tiles by <a href='http://stamen.com' target='_blank'>Stamen Design</a>, under <a href='http://creativecommons.org/licenses/by/3.0' target='_blank'>CC BY 3.0</a>."
 			]);
 
-			for(var _a1 of ary){
+			for(let _a1 of ary){
 				if(!_a1[4].length){
 					_a1[4] = _a1[0];
 				}
@@ -2817,21 +2853,21 @@ function subHeightGraphOpen(){
 				http://sterfield.co.jp/designer/canvas%E3%81%A7%E7%94%BB%E5%83%8F%E3%81%AE%E7%99%BD%E3%82%92%E9%80%8F%E9%81%8E%E3%81%AB%E3%81%99%E3%82%8B/
 			*/
 			// 標準 => 明色
-			var $StdToBright = new L.GridLayer();
+			const $StdToBright = new L.GridLayer();
 			$StdToBright.createTile = function(coords){
-				var tile = L.DomUtil.create("canvas", "leaflet-tile");
+				const tile = L.DomUtil.create("canvas", "leaflet-tile");
 					tile.width = tile.height = 256;
-				var ctx = tile.getContext("2d");
-				var img = new Image();
+				const ctx = tile.getContext("2d");
+				const img = new Image();
 					img.crossOrigin = "anonymous";
 					// leafletが使うタイルと別のサーバ（https／http）にアクセスし、Access-Control-Allow-Originを回避
 					img.src = "https://cyberjapandata.gsi.go.jp/xyz/std/" + coords.z + "/" + coords.x + "/" + coords.y + ".png";
 				img.onload = function(){
 					ctx.drawImage(this, 0, 0);
-					var rtnImg = ctx.getImageData(0, 0, 256, 256);
-					var rtnImgData = rtnImg.data;
+					const rtnImg = ctx.getImageData(0, 0, 256, 256);
+					let rtnImgData = rtnImg.data;
 					// 画像加工
-					for(var _i1 = 0; _i1 < 256 * 256 * 4; _i1+=4){
+					for(let _i1 = 0; _i1 < 256 * 256 * 4; _i1+=4){
 						if(rtnImgData[_i1 + 0] > 160 && rtnImgData[_i1 + 1] > 160 && rtnImgData[_i1 + 2] > 160){
 							rtnImgData[_i1 + 3] = 0;
 						}
@@ -2845,23 +2881,23 @@ function subHeightGraphOpen(){
 			}
 
 			// 標準 => 褐色
-			var $StdToBrown = new L.GridLayer();
+			const $StdToBrown = new L.GridLayer();
 			$StdToBrown.createTile = function(coords){
-				var tile = L.DomUtil.create("canvas", "leaflet-tile");
+				const tile = L.DomUtil.create("canvas", "leaflet-tile");
 					tile.width = tile.height = 256;
-				var ctx = tile.getContext("2d");
-				var img = new Image();
+				const ctx = tile.getContext("2d");
+				const img = new Image();
 					img.crossOrigin = "anonymous";
 					// leafletが使うタイルと別のサーバ（https／http）にアクセスし、Access-Control-Allow-Originを回避
 					img.src = "https://cyberjapandata.gsi.go.jp/xyz/std/" + coords.z + "/" + coords.x + "/" + coords.y + ".png";
 				img.onload = function(){
 					ctx.drawImage(this, 0, 0);
-					var rtnImg = ctx.getImageData(0, 0, 256, 256);
-					var rtnImgData = rtnImg.data;
+					const rtnImg = ctx.getImageData(0, 0, 256, 256);
+					let rtnImgData = rtnImg.data;
 					// 画像加工
-					for(var _i1 = 0; _i1 < 256 * 256 * 4; _i1+=4){
+					for(let _i1 = 0; _i1 < 256 * 256 * 4; _i1+=4){
 						// 各カラーチャンネルで、一番暗い値を取得
-						var minLuminance = rtnImgData[_i1];
+						let minLuminance = rtnImgData[_i1];
 						if(minLuminance > rtnImgData[_i1 + 1]){
 							minLuminance = rtnImgData[_i1 + 1];
 						}
@@ -2881,21 +2917,21 @@ function subHeightGraphOpen(){
 			}
 
 			// 標準 => 黒色
-			var $StdToBlack = new L.GridLayer();
+			const $StdToBlack = new L.GridLayer();
 			$StdToBlack.createTile = function(coords){
-				var tile = L.DomUtil.create("canvas", "leaflet-tile");
+				const tile = L.DomUtil.create("canvas", "leaflet-tile");
 					tile.width = tile.height = 256;
-				var ctx = tile.getContext("2d");
-				var img = new Image();
+				const ctx = tile.getContext("2d");
+				const img = new Image();
 					img.crossOrigin = "anonymous";
 					// leafletが使うタイルと別のサーバ（https／http）にアクセスし、Access-Control-Allow-Originを回避
 					img.src = "https://cyberjapandata.gsi.go.jp/xyz/pale/" + coords.z + "/" + coords.x + "/" + coords.y + ".png";
 				img.onload = function(){
 					ctx.drawImage(this, 0, 0);
-					var rtnImg = ctx.getImageData(0, 0, 256, 256);
-					var rtnImgData = rtnImg.data;
+					const rtnImg = ctx.getImageData(0, 0, 256, 256);
+					let rtnImgData = rtnImg.data;
 					// 画像加工
-					for(var _i1 = 0; _i1 < 256 * 256 * 4; _i1+=4){
+					for(let _i1 = 0; _i1 < 256 * 256 * 4; _i1+=4){
 						if(rtnImgData[_i1 + 0] >= 200 && rtnImgData[_i1 + 1] >= 200 && rtnImgData[_i1 + 2] >= 200){
 							rtnImgData[_i1 + 3] = 0;
 						}
@@ -2914,12 +2950,12 @@ function subHeightGraphOpen(){
 			/*-------------
 			// タイル座標
 			-------------*/
-			var $TileCoord = new L.GridLayer();
+			const $TileCoord = new L.GridLayer();
 			$TileCoord.createTile = function(coords){
-				var tile = L.DomUtil.create("canvas", "leaflet-tile");
+				const tile = L.DomUtil.create("canvas", "leaflet-tile");
 					tile.width = tile.height = 256;
-				var tileText = coords.z + "-" + coords.x + "-" + coords.y;
-				var ctx = tile.getContext("2d");
+				const tileText = coords.z + "-" + coords.x + "-" + coords.y;
+				const ctx = tile.getContext("2d");
 					// 枠線
 					ctx.lineWidth = 1;
 					ctx.strokeStyle = "#000";
@@ -2970,7 +3006,7 @@ function subHeightGraphOpen(){
 		subMapSelector();
 
 		// 座標マーカー
-		var $BaseMarkerIcon = L.AwesomeMarkers.icon(
+		const $BaseMarkerIcon = L.AwesomeMarkers.icon(
 			{
 				icon:"home",
 				prefix:"fa",
@@ -2978,7 +3014,7 @@ function subHeightGraphOpen(){
 				spin:false
 			}
 		);
-		var $LocalMarkerDragOn = L.AwesomeMarkers.icon(
+		const $LocalMarkerDragOn = L.AwesomeMarkers.icon(
 			{
 				icon:"flag",
 				prefix:"fa",
@@ -2986,7 +3022,7 @@ function subHeightGraphOpen(){
 				spin:false
 			}
 		);
-		var $LocalMarkerDragOff = L.AwesomeMarkers.icon(
+		const $LocalMarkerDragOff = L.AwesomeMarkers.icon(
 			{
 				icon:"thumb-tack",
 				prefix:"fa",
@@ -3023,7 +3059,7 @@ function subHeightGraphOpen(){
 			$BaseMarker.openPopup();
 
 			// ローカルマーカー
-			for(var _s1 of $AryLocalMarker){
+			for(let _s1 of $AryLocalMarker){
 				_s1.closePopup();
 				_s1.bindPopup(
 					rtnMarkerPopup2(
@@ -3043,14 +3079,14 @@ function subHeightGraphOpen(){
 		/*---------------------
 		// ベースマーカー描画
 		---------------------*/
-		var $BaseMarker = null;
-		var $AryLocalMarker = [];
+		let $BaseMarker = null;
+		let $AryLocalMarker = [];
 
 		function subBaseMarkerNew(
 			$Lat,
 			$Lng
 		){
-			for(var _i1 = 0, _i2 = arguments.length; _i1 < _i2; _i1++){
+			for(let _i1 = 0, _i2 = arguments.length; _i1 < _i2; _i1++){
 				if(isNaN(arguments[_i1])){
 					arguments[_i1] = document.getElementById(arguments[_i1]).value;
 				}
@@ -3076,7 +3112,7 @@ function subHeightGraphOpen(){
 				"click",
 				function(e){
 					// ズームレベル補完
-					var mouseP = $Map.latLngToContainerPoint(this.getLatLng());
+					const mouseP = $Map.latLngToContainerPoint(this.getLatLng());
 					subIwmInput_ZoomA_Open(
 						"_NaviZoom",
 						(mouseP.x + 30),
@@ -3090,7 +3126,7 @@ function subHeightGraphOpen(){
 				function(e){
 					this.closePopup();
 					subMarkerPopup($BaseMarker, $AryLocalMarker);
-					var i1 = $AryPoint.length;
+					let i1 = $AryPoint.length;
 					while(i1--){
 						$AryPoint[i1].openPopup();
 					}
@@ -3101,7 +3137,7 @@ function subHeightGraphOpen(){
 				"dragend",
 				function(e){
 					// URL／BL表示を変更
-					var a1 = this.getLatLng();
+					const a1 = this.getLatLng();
 
 					subChangeUrl(a1.lat, a1.lng, "_NaviZoom");
 
@@ -3131,7 +3167,7 @@ function subHeightGraphOpen(){
 		subIwmInput_Zoom_Change($Map.getZoom());
 
 		// ミニマップ
-		var miniMapLayer = new L.TileLayer(
+		const miniMapLayer = new L.TileLayer(
 			"https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png",
 			{
 				minZoom:3,
@@ -3153,7 +3189,7 @@ function subHeightGraphOpen(){
 			$lng,
 			$placeName
 		){
-			var bIconDrag = false;
+			let bIconDrag = false;
 			if(!$placeName){
 				bIconDrag = true;
 			}
@@ -3175,7 +3211,7 @@ function subHeightGraphOpen(){
 			subMyObj_OnOff($AryLocalMarker);
 
 			// 現在(配列)のローカルマーカー
-			var obj = $AryLocalMarker[$AryLocalMarker.length - 1];
+			const obj = $AryLocalMarker[$AryLocalMarker.length - 1];
 
 			// 緯度経度から地名を検索
 			subLatLngToPlaceName(
@@ -3198,8 +3234,8 @@ function subHeightGraphOpen(){
 				"click",
 				function(e){
 					// ズームレベル補完
-					_iwmCM_hash = this.getLatLng();
-					var mouseP = $Map.latLngToContainerPoint(_iwmCM_hash);
+					$iwmCM_hash = this.getLatLng();
+					const mouseP = $Map.latLngToContainerPoint($iwmCM_hash);
 					subIwmInput_ZoomA_Open(
 						"_NaviZoom",
 						(mouseP.x + 20),
@@ -3211,7 +3247,7 @@ function subHeightGraphOpen(){
 			obj.on(
 				"contextmenu",
 				function(e){
-					var i1 = $AryLocalMarker.length;
+					let i1 = $AryLocalMarker.length;
 					while(i1--){
 						if(this == $AryLocalMarker[i1]){
 							// マーカー消去
