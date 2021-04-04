@@ -34,7 +34,8 @@ end
 #	deg, min, sec = rtnGeo10toIBL(24.449582)
 #	printf("%d度%d分%f秒\n", deg, min, sec)
 #
-def rtnGeo10toIBL(
+def
+rtnGeo10toIBL(
 	angle # 十進法
 )
 	angle = angle.to_f
@@ -66,16 +67,17 @@ end
 #-------
 require 'nkf'
 
-Splitter = "[,\t]"
+Splitter = /[,\t]/
 Separater = "\t"
 
-def main_Data()
+def
+main()
 	aTag = []
 	iLine = 0
 	sErr = ""
 
 	# 読込データをUTF-8に統一
-	NKF.nkf("-w", File.open($iFn, "rt").read()).each_line do
+	NKF.nkf("-w", File.open($iFn, "rt").read()).split("\n").each do
 		|_s1|
 		_s1 = _s1.strip
 
@@ -83,7 +85,7 @@ def main_Data()
 
 		if _s1.size > 0 && _s1[0, 2] != "//"
 			# 入力フォーマット CSV, TSV に対応
-			_a1 = _s1.split(/#{Splitter}/)
+			_a1 = _s1.split(Splitter)
 
 			iLine += 1
 
@@ -104,8 +106,9 @@ def main_Data()
 				str << "#{Separater}<font color=\"#ff5858\">#{_a1[2]}</font>"
 
 				# [2] 以外のタグを生成
-				_a1.each_with_index do
-					|_s2, _idx|
+				_idx = 0
+				_a1.each do
+					|_s2|
 
 					if _idx != 2
 						str << Separater
@@ -121,6 +124,8 @@ def main_Data()
 							str << _s2
 						end
 					end
+
+					_idx += 1
 				end
 
 				puts str
@@ -136,4 +141,4 @@ end
 #-------
 # Exec
 #-------
-main_Data()
+main()

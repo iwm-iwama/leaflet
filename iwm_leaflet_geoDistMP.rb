@@ -35,7 +35,8 @@ end
 #	dist, angle = rtnGeoVincentry(35.685187, 139.752274, 24.449582, 122.93434)
 #	printf("%fkm %f度\n", dist, angle)
 #
-def rtnGeoVincentry(
+def
+rtnGeoVincentry(
 	lat1, # 開始～緯度
 	lng1, # 開始～経度
 	lat2, # 終了～緯度
@@ -125,7 +126,7 @@ end
 #-------
 require 'nkf'
 
-Splitter = "[,\t]"
+Splitter = /[,\t]/
 Separater = "\t"
 
 # 読込データをUTF-8に統一
@@ -134,14 +135,17 @@ Data1 = NKF.nkf("-w", File.open($iFn, "rt").read())
 #---------------
 # 計算／十進法
 #---------------
-def main_Data(sData)
+def
+main_Data(
+	sData
+)
 	iTotalDist = 0.0
 	aOld = []
 
 	# 距離計算
-	sData.each_line do
+	sData.split("\n").each do
 		|_s1|
-		_a1 = _s1.strip.split(/#{Splitter}/)
+		_a1 = _s1.strip.split(Splitter)
 
 		# 厳密チェック
 		if rtnIsDecimal(_a1[0], _a1[1])
@@ -167,7 +171,10 @@ end
 #---------------------
 # 緯度・経度チェック
 #---------------------
-def rtnIsDecimal(*aStr)
+def
+rtnIsDecimal(
+	*aStr
+)
 	aStr.each() do
 		|_s1|
 		if ! (_s1 =~ /^[\+\-]{0,1}[0-9]+\.{0,1}[0-9]*$/)
@@ -177,18 +184,21 @@ def rtnIsDecimal(*aStr)
 	return true
 end
 
-def main_DataChecker(sData)
+def
+main_DataChecker(
+	sData
+)
 	iLine = 0
 	sErr = ""
 
-	sData.each_line do
+	sData.split("\n").each do
 		|_s1|
 		_s1 = _s1.strip
 
 		iLine += 1
 
 		if _s1.size > 0 && _s1[0, 2] != "//"
-			_a1 = _s1.split(/#{Splitter}/)
+			_a1 = _s1.split(Splitter)
 
 			if ! rtnIsDecimal(_a1[0], _a1[1])
 				sErr << "\e[0;97mL#{iLine.to_s}\t#{_s1}\n"
