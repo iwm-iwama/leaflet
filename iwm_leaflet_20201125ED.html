@@ -1,4 +1,4 @@
-<!-- iwm20201125EC Ver.20210325 'U-2S' -->
+<!-- iwm20201125ED Ver.20210405 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -1324,12 +1324,10 @@ function subA2P_Geocoding(
 	$textareaId
 ){
 	const _URL = "https://msearch.gsi.go.jp/address-search/AddressSearch?q=";
-
-	const xhr = new XMLHttpRequest();
-
 	let str = "";
 	let errCnt = 0;
 
+	const xhr = new XMLHttpRequest();
 	for(let _s1 of document.getElementById($textareaId).value.trimEnd().split("\n")){
 		_s1 = _s1.trim();
 		const _a1 = _s1.split("\t");
@@ -1637,7 +1635,6 @@ function rtnA2P_DistMP(
 ){
 	let iErrCnt = 0;
 	let aLatLng1 = [];
-
 	const rgxDecimal = /^[\+\-]{0,1}[0-9]+\.{0,1}[0-9]*$/;
 
 	for(let _s1 of document.getElementById($textareaInputId).value.trimEnd().split("\n")){
@@ -1667,7 +1664,7 @@ function rtnA2P_DistMP(
 	}
 	aOld = [];
 
-	// 区間距離=200分割
+	// 区間距離 = 200分割 ※地理院地図は300分割／サーバサイド処理のため速い
 	$rtnA2P_DistMP_PartKm = iTotalDist / 200;
 
 	for(let _a1 of aLatLng1){

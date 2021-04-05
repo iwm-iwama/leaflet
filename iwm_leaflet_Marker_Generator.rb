@@ -6,16 +6,17 @@ Signal.trap(:INT) do
 	exit
 end
 
-$iFn = ARGV[0]
+Cmd = File.basename($0)
+IFn = ARGV[0]
 
-if ! $iFn || ! File.exist?($iFn)
+if ! IFn || ! File.exist?(IFn)
 	puts
 	puts "\e[0;97;104m 先頭行がラベル（北緯,東経,...）のCSV／TSVファイルから \e[0;99m"
 	puts "\e[0;97;104m iwm_leaflet.html のマーカーを生成                     \e[0;99m"
 	puts
-	puts "\e[0;97;101m ruby #{File.basename($0)} [File] \e[0;99m"
+	puts "\e[0;97;101m ruby #{Cmd} [File] \e[0;99m"
 	puts
-	puts "\e[0;95m(例)\e[0;97m ruby #{File.basename($0)} ./基本基準点.csv"
+	puts "\e[0;95m(例)\e[0;97m ruby #{Cmd} ./基本基準点.csv"
 	puts
 	puts "\e[0;96m※十進法 ddd.d..."
 	puts "\e[0;93m(入力)\e[0;97m"
@@ -65,8 +66,6 @@ end
 #-------
 # Main
 #-------
-require 'nkf'
-
 Splitter = /[,\t]/
 Separater = "\t"
 
@@ -76,7 +75,7 @@ main()
 	iLine = 0
 	sErr = ""
 
-	File.open($iFn, "rt").read().split("\n").each do
+	File.open(IFn, "rt").read().split("\n").each do
 		|_s1|
 		_s1 = _s1.strip
 

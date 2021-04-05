@@ -1,4 +1,4 @@
-<!-- iwm20210303C Ver.20210325 'U-2S' -->
+<!-- iwm20210303D Ver.20210405 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -136,7 +136,7 @@ input[type="file"]
 	border:0;
 	color:#fff;
 	font-size:12px;
-	line-height:18px;/* WebKitの余白に対応するため以下18pxで統一 */
+	line-height:18px; /* WebKitの余白に対応するため以下18pxで統一 */
 	margin:0;
 	padding:0 8px;
 	text-decoration:none;
@@ -257,7 +257,7 @@ input[type="file"]
 #_InputBL,
 #_InputZoomA
 {
-	top:-1000px;/* フォーマット時に隠すため */
+	top:-1000px; /* フォーマット時に隠すため */
 }
 #_InputZoomB
 {
@@ -464,7 +464,7 @@ input[type="file"]
 	margin:2px 0 0 2px;
 	overflow:auto;
 	position:absolute;
-	top:-1000px;/* フォーマット時に隠すため */
+	top:-1000px; /* フォーマット時に隠すため */
 	z-index:1000;
 	/* 以下、必要に応じて修正 */
 	max-height:480px;
@@ -1341,12 +1341,10 @@ function subA2P_Geocoding(
 	$textareaId
 ){
 	const _URL = "https://msearch.gsi.go.jp/address-search/AddressSearch?q=";
-
-	const xhr = new XMLHttpRequest();
-
 	let str = "";
 	let errCnt = 0;
 
+	const xhr = new XMLHttpRequest();
 	for(let _s1 of document.getElementById($textareaId).value.trimEnd().split("\n")){
 		_s1 = _s1.trim();
 		const _a1 = _s1.split("\t");
@@ -1654,7 +1652,6 @@ function rtnA2P_DistMP(
 ){
 	let iErrCnt = 0;
 	let aLatLng1 = [];
-
 	const rgxDecimal = /^[\+\-]{0,1}[0-9]+\.{0,1}[0-9]*$/;
 
 	for(let _s1 of document.getElementById($textareaInputId).value.trimEnd().split("\n")){
@@ -1684,7 +1681,7 @@ function rtnA2P_DistMP(
 	}
 	aOld = [];
 
-	// 区間距離=200分割
+	// 区間距離 = 200分割 ※地理院地図は300分割／サーバサイド処理のため速い
 	$rtnA2P_DistMP_PartKm = iTotalDist / 200;
 
 	for(let _a1 of aLatLng1){
@@ -2255,7 +2252,7 @@ let $HeightGraph_Init = L.control.heightgraph(
 			suitability:function(data){
 				return {
 					text:"±" + ($rtnA2P_DistMP_PartKm).toFixed(2) + "km",
-					color:"#c71585"
+					color:"#0067c0"
 				};
 			},
 		},
@@ -2308,16 +2305,30 @@ let $HeightGraph_Data = [
 		}
 	}
 ];
+let $HeightGraph_ElevationCash = []; // ["lat@lng", 0]
+
 function rtnHeightGraphElevation(
 	$lat,
 	$lng
 ){
+	// 精度対速度比を調整（小数４桁縛り）
+	$lat = $lat.toFixed(4);
+	$lng = $lng.toFixed(4);
+	const _KEY = $lat + "@" + $lng;
+
+	for(let _k1 in $HeightGraph_ElevationCash){
+		if(_k1 == _KEY){
+			// (入力)[Lat, Lng] => (出力)[Lng, Lat] になることに注意
+			[$lat, $lng] = _k1.split("@");
+			return [$lng, $lat, $HeightGraph_ElevationCash[_k1]];
+		}
+	}
+
 	const _URL = "https://cyberjapandata2.gsi.go.jp/general/dem/scripts/getelevation.php?lat=" + $lat + "&lon=" + $lng + "&outtype=JSON";
 	let rtn = [];
 
-	const xhr = new XMLHttpRequest();
-
 	// バッチ処理のため非同期は不可
+	const xhr = new XMLHttpRequest();
 	xhr.open("GET", _URL, false);
 	xhr.send(null);
 	if (xhr.status == 200){
@@ -2327,6 +2338,8 @@ function rtnHeightGraphElevation(
 		}
 		// (入力)[Lat, Lng] => (出力)[Lng, Lat] になることに注意
 		rtn = [$lng, $lat, i1];
+		// Cash
+		$HeightGraph_ElevationCash[_KEY] = i1;
 	}
 	return rtn;
 }
@@ -2335,7 +2348,6 @@ function subHeightGraphMakeData(){
 	$HeightGraph_Data[0]["features"][0]["geometry"]["coordinates"] = [[0, 0, 0], [0, 0, 0]];
 	let [iTotalDist, aLatLng, iErrCnt] = rtnA2P_DistMP("_TA02");
 
-	let cnt = 0;
 	const allCnt = aLatLng.length;
 	const aryBeforeData = [
 		document.getElementById("_HgBtn").value,
@@ -2345,6 +2357,7 @@ function subHeightGraphMakeData(){
 	document.getElementById("_HgBtn").style.color = "#000";
 
 	let a1 = [];
+	cnt = 0;
 
 	for(let _a1 of aLatLng){
 		a1.push(rtnHeightGraphElevation(_a1[0], _a1[1]));
@@ -2509,7 +2522,7 @@ function subHeightGraphOpen(){
 			<div class="_simpleWindowOutput" style="background:#fafafa;padding:0 8px 8px 8px;">
 				<input type="button" class="_btnNavi3" value="→地図から読込" onclick="subMapToPoint('_TA02');"/>
 				<input type="file" id="_readPointFile" class="_btnNavi2" accept=".tsv" multiple style="font-size:12px;margin:0 0 0 4px;width:403px;" onchange="subAddReadFile(this.id,'_TA02',1);"/>
-				<textarea id="_TA02" class="_editTextBox" wrap="off" style="height:250px;width:496px;" placeholder="[Tab]区切り／UTF-8N&#13;&quot;//&quot; で始まる行はコメント行&#13;// 例 ※&quot;icon@画像ファイル&quot; はオプション&#13;35.68365900&#9;139.75408900&#9;皇居&#9;icon@画像ファイル"></textarea>
+				<textarea id="_TA02" class="_editTextBox" wrap="off" style="height:250px;width:496px;" onchange="$HeightGraph_ElevationCash=[];" placeholder="[Tab]区切り／UTF-8N&#13;&quot;//&quot; で始まる行はコメント行&#13;// 例 ※&quot;icon@画像ファイル&quot; はオプション&#13;35.68365900&#9;139.75408900&#9;皇居&#9;icon@画像ファイル"></textarea>
 				<script>
 					document.getElementById("_TA02").onkeydown = function(e){subAddTabCtrl(e, this);}
 				</script>
@@ -2653,8 +2666,7 @@ function subHeightGraphOpen(){
 			{
 				position:"bottomleft",
 				unit:"metres",
-				/// showBearings:true,
-				showBearings:false,
+				showBearings:true,
 				clearMeasurementsOnStop:false,
 				showClearControl:true,
 				showUnitControl:false
