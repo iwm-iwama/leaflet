@@ -8,7 +8,7 @@ end
 
 $iFn = ARGV[0]
 
-if $iFn == nil || ! File.exist?($iFn)
+if ! $iFn || ! File.exist?($iFn)
 	puts
 	puts "\e[0;97;104m 先頭行がラベル（北緯,東経,...）のCSV／TSVファイルから \e[0;99m"
 	puts "\e[0;97;104m iwm_leaflet.html のマーカーを生成                     \e[0;99m"

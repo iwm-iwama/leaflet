@@ -8,7 +8,7 @@ end
 
 $iFn = ARGV[0]
 
-if $iFn == nil || ! File.exist?($iFn)
+if ! $iFn || ! File.exist?($iFn)
 	puts
 	puts "\e[0;97;104m iwm_leaflet.html が出力したTSVファイルから総延長／区間距離を計算 \e[0;99m"
 	puts
