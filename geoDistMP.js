@@ -430,21 +430,22 @@ const Data2 = `
 /* (例)
 	console.log(rtnGeoIBLto10B(242658.495200).toFixed(6) + "度");
 */
-function rtnGeoIBLto10B(
+function
+rtnGeoIBLto10B(
 	$ddmmss // ddmmss.s...
 )
 {
 	$ddmmss = parseFloat($ddmmss);
 
-	var sign = 1;
+	let sign = 1;
 
 	if($ddmmss < 0){
 		sign = -1;
 		$ddmmss = -$ddmmss;
 	}
-	var sec = parseFloat($ddmmss % 100);
-	var min = parseInt(parseFloat($ddmmss / 100) % 100, 10);
-	var deg = parseInt(parseFloat($ddmmss / 10000), 10);
+	const sec = parseFloat($ddmmss % 100);
+	const min = parseInt(parseFloat($ddmmss / 100) % 100, 10);
+	const deg = parseInt(parseFloat($ddmmss / 10000), 10);
 
 	return parseFloat(deg + (min / 60.0) + (sec / 3600.0)) * sign;
 }
@@ -456,99 +457,86 @@ function rtnGeoIBLto10B(
 	http://tancro.e-central.tv/grandmaster/script/vincentyJS.html
 */
 /* (例)
-	var [dist, angle] = rtnGeoVincentry(35.685187, 139.752274, 24.449582, 122.934340);
+	let [dist, angle] = rtnGeoVincentry(35.685187, 139.752274, 24.449582, 122.934340);
 	console.log("%skm %s度", dist.toFixed(6), angle.toFixed(6));
 */
-function rtnGeoVincentry(
+function
+rtnGeoVincentryA(
 	$lat1,
 	$lng1,
 	$lat2,
 	$lng2
-)
-{
-	$lat1 = parseFloat($lat1);
-	$lng1 = parseFloat($lng1);
-	$lat2 = parseFloat($lat2);
-	$lng2 = parseFloat($lng2);
-
-	if ($lat1 == $lat2 && $lng1 == $lng2)
-	{
+){
+	if($lat1 == $lat2 && $lng1 == $lng2){
 		return [0.0, 0.0];
 	}
 
-	/// const _A = 6378137.0;
+	/// const A = 6378137.0;
 	const _B   = 6356752.314140356;    // GRS80
 	const _F   = 0.003352810681182319; // 1 / 298.257222101
 	const _RAD = 0.017453292519943295; // π / 180
 
-	const latR1 = $lat1 * _RAD;
-	const lngR1 = $lng1 * _RAD;
-	const latR2 = $lat2 * _RAD;
-	const lngR2 = $lng2 * _RAD;
+	$lat1 = parseFloat($lat1) * _RAD;
+	$lng1 = parseFloat($lng1) * _RAD;
+	$lat2 = parseFloat($lat2) * _RAD;
+	$lng2 = parseFloat($lng2) * _RAD;
 
 	const f1 = 1 - _F;
-
-	const omega = lngR2 - lngR1;
-	const tanU1 = f1 * Math.tan(latR1);
+	const omega = $lng2 - $lng1;
+	const tanU1 = f1 * Math.tan($lat1);
 	const cosU1 = 1 / Math.sqrt(1 + tanU1 * tanU1);
 	const sinU1 = tanU1 * cosU1;
-	const tanU2 = f1 * Math.tan(latR2);
+	const tanU2 = f1 * Math.tan($lat2);
 	const cosU2 = 1 / Math.sqrt(1 + tanU2 * tanU2);
 	const sinU2 = tanU2 * cosU2;
 
-	var lamda = omega;
-	var dLamda = 0;
+	let lamda = omega;
+	let dLamda = 0;
+	let sinLamda  = 0.0;
+	let cosLamda  = 0.0;
+	let sin2Sigma = 0.0;
+	let sinSigma  = 0.0;
+	let cosSigma  = 0.0;
+	let sigma     = 0.0;
+	let sinAlpha  = 0.0;
+	let cos2Alpha = 0.0;
+	let cos2sm    = 0.0;
+	let c = 0.0;
 
-	var sinLamda  = 0.0;
-	var cosLamda  = 0.0;
-	var sin2sigma = 0.0;
-	var sinSigma  = 0.0;
-	var cosSigma  = 0.0;
-	var sigma     = 0.0;
-	var sinAlpha  = 0.0;
-	var cos2alpha = 0.0;
-	var cos2sm    = 0.0;
-	var c = 0.0;
-
-	while(true)
-	{
+	while(true){
 		sinLamda = Math.sin(lamda);
 		cosLamda = Math.cos(lamda);
-		sin2sigma = (cosU2 * sinLamda) * (cosU2 * sinLamda) + (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda);
-		if(sin2sigma < 0)
-		{
+		sin2Sigma = (cosU2 * sinLamda) * (cosU2 * sinLamda) + (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda);
+		if(sin2Sigma < 0){
 			return [0.0, 0.0];
 		}
-		sinSigma = Math.sqrt(sin2sigma);
+		sinSigma = Math.sqrt(sin2Sigma);
 		cosSigma = sinU1 * sinU2 + cosU1 * cosU2 * cosLamda;
 		sigma = Math.atan2(sinSigma, cosSigma);
 		sinAlpha = cosU1 * cosU2 * sinLamda / sinSigma;
-		cos2alpha = 1 - sinAlpha * sinAlpha;
-		cos2sm = cosSigma - 2 * sinU1 * sinU2 / cos2alpha;
-		c = _F / 16 * cos2alpha * (4 + _F * (4 - 3 * cos2alpha));
+		cos2Alpha = 1 - sinAlpha * sinAlpha;
+		cos2sm = cosSigma - 2 * sinU1 * sinU2 / cos2Alpha;
+		c = _F / 16 * cos2Alpha * (4 + _F * (4 - 3 * cos2Alpha));
 		dLamda = lamda;
 		lamda = omega + (1 - c) * _F * sinAlpha * (sigma + c * sinSigma * (cos2sm + c * cosSigma * (-1 + 2 * cos2sm * cos2sm)));
-		if(Math.abs(lamda - dLamda) <= 1e-12)
-		{
+		if(Math.abs(lamda - dLamda) <= 1e-12){
 			break;
 		}
 	}
 
-	var u2 = cos2alpha * (1 - f1 * f1) / (f1 * f1);
-	var a = 1 + u2 / 16384 * (4096 + u2 * (-768 + u2 * (320 - 175 * u2)));
-	var b = u2 / 1024 * (256 + u2 * (-128 + u2 * (74 - 47 * u2)));
-	var dSigma = b * sinSigma * (cos2sm + b / 4 * (cosSigma * (-1 + 2 * cos2sm * cos2sm) - b / 6 * cos2sm * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2sm * cos2sm)));
-	var angle = Math.atan2(cosU2 * sinLamda, cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * 57.29577951308232;
-	var dist = _B * a * (sigma - dSigma);
+	let u2 = cos2Alpha * (1 - f1 * f1) / (f1 * f1);
+	let a = 1 + u2 / 16384 * (4096 + u2 * (-768 + u2 * (320 - 175 * u2)));
+	let b = u2 / 1024 * (256 + u2 * (-128 + u2 * (74 - 47 * u2)));
+	let dSigma = b * sinSigma * (cos2sm + b / 4 * (cosSigma * (-1 + 2 * cos2sm * cos2sm) - b / 6 * cos2sm * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2sm * cos2sm)));
+	let km = (_B * a * (sigma - dSigma)) / 1000; // m => km
+	let bearing = Math.atan2(cosU2 * sinLamda, cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * 57.29577951308232;
 
 	// 変換
-	if(angle < 0)
-	{
-		angle += 360.0; // 360度表記
+	if(bearing < 0){
+		bearing += 360.0; // 度
 	}
-	dist /= 1000.0; // "m" => "km"
 
-	return [parseFloat(dist), parseFloat(angle)];
+	return [parseFloat(km), parseFloat(bearing)];
 }
 
 //-------
@@ -559,25 +547,26 @@ const Separater = "\t"
 //---------------
 // 計算／十進法
 //---------------
-function main_Data1()
+function
+main_Data1()
 {
-	var iTotalDist = 0.0;
-	var aOld = [];
+	let iTotalDist = 0.0;
+	let aOld = [];
 
-	for(var _s1 of Data1.split("\n"))
+	for(let _s1 of Data1.split("\n"))
 	{
 		_s1 = _s1.trim();
 
 		if(_s1.length > 0 && _s1.substr(0, 2) != "//")
 		{
-			var as1 = _s1.split(Separater);
+			let as1 = _s1.split(Separater);
 
-			var [dist, angle] = aOld[0] ?
-				rtnGeoVincentry(aOld[0], aOld[1], as1[0], as1[1]) :
+			let [dist, angle] = aOld[0] ?
+				rtnGeoVincentryA(aOld[0], aOld[1], as1[0], as1[1]) :
 				[0.0, 0.0];
 
-			var str = dist.toFixed(6) + "km" + Separater + angle.toFixed(6) + "度";
-			for(var _s2 of as1)
+			let str = dist.toFixed(6) + "km" + Separater + angle.toFixed(6) + "度";
+			for(let _s2 of as1)
 			{
 				str += Separater + _s2;
 			}
@@ -595,32 +584,33 @@ function main_Data1()
 //---------------
 // 計算／度分秒
 //---------------
-function main_Data2()
+function
+main_Data2()
 {
-	var iTotalDist = 0.0
-	var aOld = []
+	let iTotalDist = 0.0
+	let aOld = []
 
-	for(var _s1 of Data2.split("\n"))
+	for(let _s1 of Data2.split("\n"))
 	{
 		_s1 = _s1.trim();
 
 
 		if(_s1.length > 0 && _s1.substr(0, 2) != "//")
 		{
-			var as1 = _s1.split(Separater);
-			var ad1 = []
+			let as1 = _s1.split(Separater);
+			let ad1 = []
 
-			for(var _s2 of as1.slice(0, 2))
+			for(let _s2 of as1.slice(0, 2))
 			{
 				ad1.push(rtnGeoIBLto10B(_s2));
 			}
 
-			var [dist, angle] = aOld[0] ?
-				rtnGeoVincentry(aOld[0], aOld[1], ad1[0], ad1[1]) :
+			let [dist, angle] = aOld[0] ?
+				rtnGeoVincentryA(aOld[0], aOld[1], ad1[0], ad1[1]) :
 				[0.0, 0.0];
 
-			var str = dist.toFixed(6) + "km" + Separater + angle.toFixed(6) + "度";
-			for(var _s2 of as1)
+			let str = dist.toFixed(6) + "km" + Separater + angle.toFixed(6) + "度";
+			for(let _s2 of as1)
 			{
 				str += Separater + _s2;
 			}

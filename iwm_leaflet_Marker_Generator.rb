@@ -76,8 +76,7 @@ main()
 	iLine = 0
 	sErr = ""
 
-	# 読込データをUTF-8に統一
-	NKF.nkf("-w", File.open($iFn, "rt").read()).split("\n").each do
+	File.open($iFn, "rt").read().split("\n").each do
 		|_s1|
 		_s1 = _s1.strip
 

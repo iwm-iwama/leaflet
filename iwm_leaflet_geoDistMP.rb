@@ -124,13 +124,10 @@ end
 #-------
 # Main
 #-------
-require 'nkf'
-
 Splitter = /[,\t]/
 Separater = "\t"
 
-# 読込データをUTF-8に統一
-Data1 = NKF.nkf("-w", File.open($iFn, "rt").read())
+Data1 = File.open($iFn, "rt").read()
 
 #---------------
 # 計算／十進法
