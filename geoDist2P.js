@@ -83,9 +83,9 @@ rtnGeoIBLto10B(
 		sign = -1;
 		$ddmmss = -$ddmmss;
 	}
-	let sec = parseFloat($ddmmss % 100);
-	let min = parseInt(parseFloat($ddmmss / 100) % 100, 10);
-	let deg = parseInt(parseFloat($ddmmss / 10000), 10);
+	const sec = parseFloat($ddmmss % 100);
+	const min = parseInt(parseFloat($ddmmss / 100) % 100, 10);
+	const deg = parseInt(parseFloat($ddmmss / 10000), 10);
 
 	return parseFloat(deg + (min / 60.0) + (sec / 3600.0)) * sign;
 }
@@ -110,11 +110,12 @@ rtnGeo10toIBL(
 		sign = -1;
 		$angle = -$angle;
 	}
-	let deg = parseInt($angle, 10);
+
+	const deg = parseInt($angle, 10);
 		$angle = ($angle - deg) * 60.0;
-	let min = parseInt($angle, 10);
+	const min = parseInt($angle, 10);
 		$angle -= min;
-	let sec = parseFloat($angle) * 60.0;
+	const sec = parseFloat($angle) * 60.0;
 
 	// 0.999... * 60 => 60.0 対策
 	if(sec == 60.0)
