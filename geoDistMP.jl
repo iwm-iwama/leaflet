@@ -1,4 +1,4 @@
-#!julia
+#!/usr/bin/env julia
 # > julia -O3 geoDistMP.jl
 
 #---------------------------------------------------------------------
@@ -428,11 +428,8 @@ const Data2 = """
 #-------------------
 # 度分秒 => 十進法
 #-------------------
-# (例)
-#	using Printf
-#	@printf("%f度\n", rtnGeoIBLto10B(242658.495200))
-#
-function rtnGeoIBLto10B(
+function
+rtnGeoIBLto10B(
 	ddmmss::Float64 # ddmmss.s...
 )
 	sign = 1
@@ -452,15 +449,8 @@ end
 #-------------------------------
 # Vincenty法による２点間の距離
 #-------------------------------
-# (参考)
-#	http://tancro.e-central.tv/grandmaster/script/vincentyJS.html
-#
-# (例)
-#	using Printf
-#	dist, angle = rtnGeoVincentry(35.685187, 139.752274, 24.449582, 122.93434)
-#	@printf("%fkm %f度\n", dist, angle)
-#
-function rtnGeoVincentry(
+function
+rtnGeoVincentry(
 	lat1::Float64, # 開始～緯度
 	lng1::Float64, # 開始～経度
 	lat2::Float64, # 終了～緯度
@@ -551,7 +541,8 @@ const Separater = "\t"
 #---------------
 # 計算／十進法
 #---------------
-function main_Data1()
+function
+main_Data1()
 	iTotalDist = 0.0
 	aOld = []
 
@@ -561,11 +552,13 @@ function main_Data1()
 		if length(_s1) > 0 && SubString(_s1, 1, 2) != "//"
 			as1 = split(_s1, Separater)
 
-			dist, angle = size(aOld)[1] > 0 ?
+			dist, angle = (
+				size(aOld)[1] > 0 ?
 				rtnGeoVincentry(parse(Float64, aOld[1]), parse(Float64, aOld[2]), parse(Float64, as1[1]), parse(Float64, as1[2])) :
 				(0.0, 0.0)
+			)
 
-			str = @sprintf("%fkm%s%f度", dist, Separater, angle)
+			str = @sprintf("%.6fkm%s%.6f度", dist, Separater, angle)
 			for _s2 in as1
 				str *= Separater * _s2
 			end
@@ -576,13 +569,14 @@ function main_Data1()
 		end
 	end
 
-	@printf("%fkm\n\n", iTotalDist)
+	@printf("%.6fkm\n\n", iTotalDist)
 end
 
 #---------------
 # 計算／度分秒
 #---------------
-function main_Data2()
+function
+main_Data2()
 	iTotalDist = 0.0
 	aOld = []
 
@@ -597,11 +591,13 @@ function main_Data2()
 				push!(ad1, rtnGeoIBLto10B(parse(Float64, _s2)))
 			end
 
-			dist, angle = size(aOld)[1] > 0 ?
+			dist, angle = (
+				size(aOld)[1] > 0 ?
 				rtnGeoVincentry(aOld[1], aOld[2], ad1[1], ad1[2]) :
 				(0.0, 0.0)
+			)
 
-			str = @sprintf("%fkm%s%f度", dist, Separater, angle)
+			str = @sprintf("%.6fkm%s%.6f度", dist, Separater, angle)
 			for _s2 in as1
 				str *= Separater * _s2
 			end
@@ -612,7 +608,7 @@ function main_Data2()
 		end
 	end
 
-	@printf("%fkm\n\n", iTotalDist)
+	@printf("%.6fkm\n\n", iTotalDist)
 end
 
 #-------

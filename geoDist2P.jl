@@ -1,4 +1,4 @@
-#!julia
+#!/usr/bin/env julia
 # > julia -O3 geoDist2P.jl
 
 #---------------------------------------------------------------------
@@ -53,23 +53,17 @@ const Data2 = """
 #-------------------
 # 度分秒 => 十進法
 #-------------------
-# (例)
-#	using Printf
-#	@printf("%f度\n", rtnGeoIBLto10A(24, 26, 58.495200))
-#
-function rtnGeoIBLto10A(
+function
+rtnGeoIBLto10A(
 	deg::Int64,  # 度
 	min::Int64,  # 分
 	sec::Float64 # 秒
 )
 	return (deg + (min / 60.0) + (sec / 3600.0))::Float64
 end
-#-------------------
-# (例)
-#	using Printf
-#	@printf("%f度\n", rtnGeoIBLto10B(242658.495200))
-#
-function rtnGeoIBLto10B(
+
+function
+rtnGeoIBLto10B(
 	ddmmss::Float64 # ddmmss.s...
 )
 	sign = 1
@@ -89,12 +83,8 @@ end
 #-------------------
 # 十進法 => 度分秒
 #-------------------
-# (例)
-#	using Printf
-#	deg, min, sec = rtnGeo10toIBL(24.449582)
-#	@printf("%d度%d分%f秒\n", deg, min, sec)
-#
-function rtnGeo10toIBL(
+function
+rtnGeo10toIBL(
 	angle::Float64 # 十進法
 )
 	sign = 1
@@ -122,15 +112,8 @@ end
 #-------------------------------
 # Vincenty法による２点間の距離
 #-------------------------------
-# (参考)
-#	http://tancro.e-central.tv/grandmaster/script/vincentyJS.html
-#
-# (例)
-#	using Printf
-#	dist, angle = rtnGeoVincentry(35.685187, 139.752274, 24.449582, 122.93434)
-#	@printf("%fkm %f度\n", dist, angle)
-#
-function rtnGeoVincentry(
+function
+rtnGeoVincentry(
 	lat1::Float64, # 開始～緯度
 	lng1::Float64, # 開始～経度
 	lat2::Float64, # 終了～緯度
@@ -221,7 +204,8 @@ const Separater = "\t"
 #---------------
 # 計算／十進法
 #---------------
-function main_Data1()
+function
+main_Data1()
 	for _s1 in split(Data1, "\n")
 		_s1 = strip(_s1)
 
@@ -233,12 +217,12 @@ function main_Data1()
 			ad1 = split(_s1, Separater)[1:4]
 			for _d1 in ad1
 				deg, min, sec = rtnGeo10toIBL(parse(Float64, _d1))
-				push!(as1, @sprintf("%d度%d分%f秒", deg, min, sec))
+				push!(as1, @sprintf("%d度%d分%.6f秒", deg, min, sec))
 			end
 			println(join(as1, Separater))
 
 			dist, angle = rtnGeoVincentry(parse(Float64, ad1[1]), parse(Float64, ad1[2]), parse(Float64, ad1[3]), parse(Float64, ad1[4]))
-			@printf("%fkm%s%f度\n\n", dist, Separater, angle)
+			@printf("%.6fkm%s%.6f度\n\n", dist, Separater, angle)
 		end
 	end
 end
@@ -246,7 +230,8 @@ end
 #---------------
 # 計算／度分秒
 #---------------
-function main_Data2()
+function
+main_Data2()
 	for _s1 in split(Data2, "\n")
 		_s1 = strip(_s1)
 
@@ -259,12 +244,12 @@ function main_Data2()
 			for _d1 in split(_s1, Separater)[1:4]
 				angle = rtnGeoIBLto10B(parse(Float64, _d1))
 				push!(aLatLng, angle)
-				push!(as1, @sprintf("%f度", angle))
+				push!(as1, @sprintf("%.6f度", angle))
 			end
 			println(join(as1, Separater))
 
 			dist, angle = rtnGeoVincentry(aLatLng[1], aLatLng[2], aLatLng[3], aLatLng[4])
-			@printf("%fkm%s%f度\n\n", dist, Separater, angle)
+			@printf("%.6fkm%s%.6f度\n\n", dist, Separater, angle)
 		end
 	end
 end

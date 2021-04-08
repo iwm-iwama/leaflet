@@ -427,9 +427,6 @@ const Data2 = `
 //-------------------
 // 度分秒 => 十進法
 //-------------------
-/* (例)
-	console.log(rtnGeoIBLto10B(242658.495200).toFixed(6) + "度");
-*/
 function
 rtnGeoIBLto10B(
 	$ddmmss // ddmmss.s...
@@ -439,7 +436,8 @@ rtnGeoIBLto10B(
 
 	let sign = 1;
 
-	if($ddmmss < 0){
+	if($ddmmss < 0)
+	{
 		sign = -1;
 		$ddmmss = -$ddmmss;
 	}
@@ -447,27 +445,22 @@ rtnGeoIBLto10B(
 	const min = parseInt(parseFloat($ddmmss / 100) % 100, 10);
 	const deg = parseInt(parseFloat($ddmmss / 10000), 10);
 
-	return parseFloat(deg + (min / 60.0) + (sec / 3600.0)) * sign;
+	return sign * parseFloat(deg + (min / 60.0) + (sec / 3600.0));
 }
 
 //-------------------------------
 // Vincenty法による２点間の距離
 //-------------------------------
-/*【参考】
-	http://tancro.e-central.tv/grandmaster/script/vincentyJS.html
-*/
-/* (例)
-	let [dist, angle] = rtnGeoVincentry(35.685187, 139.752274, 24.449582, 122.934340);
-	console.log("%skm %s度", dist.toFixed(6), angle.toFixed(6));
-*/
 function
-rtnGeoVincentryA(
+rtnGeoVincentry(
 	$lat1,
 	$lng1,
 	$lat2,
 	$lng2
-){
-	if($lat1 == $lat2 && $lng1 == $lng2){
+)
+{
+	if($lat1 == $lat2 && $lng1 == $lng2)
+	{
 		return [0.0, 0.0];
 	}
 
@@ -503,11 +496,13 @@ rtnGeoVincentryA(
 	let cos2sm    = 0.0;
 	let c = 0.0;
 
-	while(true){
+	while(true)
+	{
 		sinLamda = Math.sin(lamda);
 		cosLamda = Math.cos(lamda);
 		sin2Sigma = (cosU2 * sinLamda) * (cosU2 * sinLamda) + (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda);
-		if(sin2Sigma < 0){
+		if(sin2Sigma < 0)
+		{
 			return [0.0, 0.0];
 		}
 		sinSigma = Math.sqrt(sin2Sigma);
@@ -519,7 +514,8 @@ rtnGeoVincentryA(
 		c = _F / 16 * cos2Alpha * (4 + _F * (4 - 3 * cos2Alpha));
 		dLamda = lamda;
 		lamda = omega + (1 - c) * _F * sinAlpha * (sigma + c * sinSigma * (cos2sm + c * cosSigma * (-1 + 2 * cos2sm * cos2sm)));
-		if(Math.abs(lamda - dLamda) <= 1e-12){
+		if(Math.abs(lamda - dLamda) <= 1e-12)
+		{
 			break;
 		}
 	}
@@ -532,7 +528,8 @@ rtnGeoVincentryA(
 	let bearing = Math.atan2(cosU2 * sinLamda, cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * 57.29577951308232;
 
 	// 変換
-	if(bearing < 0){
+	if(bearing < 0)
+	{
 		bearing += 360.0; // 度
 	}
 
@@ -542,7 +539,7 @@ rtnGeoVincentryA(
 //-------
 // Main
 //-------
-const Separater = "\t"
+const Separater = "\t";
 
 //---------------
 // 計算／十進法
@@ -561,11 +558,14 @@ main_Data1()
 		{
 			let as1 = _s1.split(Separater);
 
-			let [dist, angle] = aOld[0] ?
-				rtnGeoVincentryA(aOld[0], aOld[1], as1[0], as1[1]) :
-				[0.0, 0.0];
+			let [dist, angle] = (
+				aOld[0] ?
+				rtnGeoVincentry(aOld[0], aOld[1], as1[0], as1[1]) :
+				[0.0, 0.0]
+			);
 
-			let str = dist.toFixed(6) + "km" + Separater + angle.toFixed(6) + "度";
+			let str = `${dist.toFixed(6)}km${Separater}${angle.toFixed(6)}度`;
+
 			for(let _s2 of as1)
 			{
 				str += Separater + _s2;
@@ -576,9 +576,7 @@ main_Data1()
 			aOld = as1;
 		}
 	}
-
-	console.log("%skm", iTotalDist.toFixed(6));
-	console.log();
+	console.log("%skm\n", iTotalDist.toFixed(6));
 }
 
 //---------------
@@ -587,29 +585,31 @@ main_Data1()
 function
 main_Data2()
 {
-	let iTotalDist = 0.0
-	let aOld = []
+	let iTotalDist = 0.0;
+	let aOld = [];
 
 	for(let _s1 of Data2.split("\n"))
 	{
 		_s1 = _s1.trim();
 
-
 		if(_s1.length > 0 && _s1.substr(0, 2) != "//")
 		{
 			let as1 = _s1.split(Separater);
-			let ad1 = []
+			let ad1 = [];
 
 			for(let _s2 of as1.slice(0, 2))
 			{
 				ad1.push(rtnGeoIBLto10B(_s2));
 			}
 
-			let [dist, angle] = aOld[0] ?
-				rtnGeoVincentryA(aOld[0], aOld[1], ad1[0], ad1[1]) :
-				[0.0, 0.0];
+			let [dist, angle] = (
+				aOld[0] ?
+				rtnGeoVincentry(aOld[0], aOld[1], ad1[0], ad1[1]) :
+				[0.0, 0.0]
+			);
 
-			let str = dist.toFixed(6) + "km" + Separater + angle.toFixed(6) + "度";
+			let str = `${dist.toFixed(6)}km${Separater}${angle.toFixed(6)}度`;
+
 			for(let _s2 of as1)
 			{
 				str += Separater + _s2;
@@ -620,9 +620,7 @@ main_Data2()
 			aOld = ad1;
 		}
 	}
-
-	console.log("%skm", iTotalDist.toFixed(6));
-	console.log();
+	console.log("%skm\n", iTotalDist.toFixed(6));
 }
 
 //-------

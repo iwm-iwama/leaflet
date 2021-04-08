@@ -52,9 +52,6 @@ const Data2 = `
 //-------------------
 // 度分秒 => 十進法
 //-------------------
-/* (例)
-	console.log(rtnGeoIBLto10A(24, 26, 58.495200).toFixed(6) + "度");
-*/
 function
 rtnGeoIBLto10A(
 	$deg, // 度
@@ -67,9 +64,7 @@ rtnGeoIBLto10A(
 	$sec = parseFloat($sec);
 	return parseFloat($deg + ($min / 60.0) + ($sec / 3600.0));
 }
-/* (例)
-	console.log(rtnGeoIBLto10B(242658.495200).toFixed(6) + "度");
-*/
+
 function
 rtnGeoIBLto10B(
 	$ddmmss // ddmmss.s...
@@ -79,7 +74,8 @@ rtnGeoIBLto10B(
 
 	let sign = 1;
 
-	if($ddmmss < 0){
+	if($ddmmss < 0)
+	{
 		sign = -1;
 		$ddmmss = -$ddmmss;
 	}
@@ -87,16 +83,12 @@ rtnGeoIBLto10B(
 	const min = parseInt(parseFloat($ddmmss / 100) % 100, 10);
 	const deg = parseInt(parseFloat($ddmmss / 10000), 10);
 
-	return parseFloat(deg + (min / 60.0) + (sec / 3600.0)) * sign;
+	return sign * parseFloat(deg + (min / 60.0) + (sec / 3600.0));
 }
 
 //-------------------
 // 十進法 => 度分秒
 //-------------------
-/* (例)
-	let [deg, min, sec] = rtnGeo10toIBL(24.449582);
-	console.log(deg + "度" + min + "分" + sec.toFixed(6) + "秒");
-*/
 function
 rtnGeo10toIBL(
 	$angle // 十進法
@@ -106,16 +98,17 @@ rtnGeo10toIBL(
 
 	let sign = 1;
 
-	if($angle < 0){
+	if($angle < 0)
+	{
 		sign = -1;
 		$angle = -$angle;
 	}
 
 	const deg = parseInt($angle, 10);
 		$angle = ($angle - deg) * 60.0;
-	const min = parseInt($angle, 10);
+	let min = parseInt($angle, 10);
 		$angle -= min;
-	const sec = parseFloat($angle) * 60.0;
+	let sec = parseFloat($angle) * 60.0;
 
 	// 0.999... * 60 => 60.0 対策
 	if(sec == 60.0)
@@ -124,27 +117,22 @@ rtnGeo10toIBL(
 		sec = 0;
 	}
 
-	return [parseInt(deg, 10) * sign, parseInt(min, 10), parseFloat(sec)];
+	return [(sign * parseInt(deg, 10)), parseInt(min, 10), parseFloat(sec)];
 }
 
 //-------------------------------
 // Vincenty法による２点間の距離
 //-------------------------------
-/*【参考】
-	http://tancro.e-central.tv/grandmaster/script/vincentyJS.html
-*/
-/* (例)
-	let [dist, angle] = rtnGeoVincentryA(35.685187, 139.752274, 24.449582, 122.934340);
-	console.log("%skm %s度", dist.toFixed(6), angle.toFixed(6));
-*/
 function
-rtnGeoVincentryA(
+rtnGeoVincentry(
 	$lat1,
 	$lng1,
 	$lat2,
 	$lng2
-){
-	if($lat1 == $lat2 && $lng1 == $lng2){
+)
+{
+	if($lat1 == $lat2 && $lng1 == $lng2)
+	{
 		return [0.0, 0.0];
 	}
 
@@ -180,11 +168,13 @@ rtnGeoVincentryA(
 	let cos2sm    = 0.0;
 	let c = 0.0;
 
-	while(true){
+	while(true)
+	{
 		sinLamda = Math.sin(lamda);
 		cosLamda = Math.cos(lamda);
 		sin2Sigma = (cosU2 * sinLamda) * (cosU2 * sinLamda) + (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda);
-		if(sin2Sigma < 0){
+		if(sin2Sigma < 0)
+		{
 			return [0.0, 0.0];
 		}
 		sinSigma = Math.sqrt(sin2Sigma);
@@ -196,7 +186,8 @@ rtnGeoVincentryA(
 		c = _F / 16 * cos2Alpha * (4 + _F * (4 - 3 * cos2Alpha));
 		dLamda = lamda;
 		lamda = omega + (1 - c) * _F * sinAlpha * (sigma + c * sinSigma * (cos2sm + c * cosSigma * (-1 + 2 * cos2sm * cos2sm)));
-		if(Math.abs(lamda - dLamda) <= 1e-12){
+		if(Math.abs(lamda - dLamda) <= 1e-12)
+		{
 			break;
 		}
 	}
@@ -209,7 +200,8 @@ rtnGeoVincentryA(
 	let bearing = Math.atan2(cosU2 * sinLamda, cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * 57.29577951308232;
 
 	// 変換
-	if(bearing < 0){
+	if(bearing < 0)
+	{
 		bearing += 360.0; // 度
 	}
 
@@ -219,7 +211,7 @@ rtnGeoVincentryA(
 //-------
 // Main
 //-------
-const Separater = "\t"
+const Separater = "\t";
 
 //---------------
 // 計算／十進法
@@ -240,14 +232,13 @@ main_Data1()
 			let ad1 = _s1.split(Separater).slice(0, 4);
 			for(let _d1 of ad1)
 			{
-				let [deg, min, sec] = rtnGeo10toIBL(_d1);
-				as1.push(deg + "度" + min + "分" + sec.toFixed(6) + "秒");
+				const [deg, min, sec] = rtnGeo10toIBL(_d1);
+				as1.push(`${deg}度${min}分${sec.toFixed(6)}秒`);
 			}
 			console.log(as1.join(Separater));
 
-			let [dist, angle] = rtnGeoVincentryA(ad1[0], ad1[1], ad1[2], ad1[3]);
-			console.log("%skm%s%s度", dist.toFixed(6), Separater, angle.toFixed(6));
-			console.log();
+			const [dist, angle] = rtnGeoVincentry(ad1[0], ad1[1], ad1[2], ad1[3]);
+			console.log("%skm%s%s度\n", dist.toFixed(6), Separater, angle.toFixed(6));
 		}
 	}
 }
@@ -271,15 +262,14 @@ main_Data2()
 
 			for(let _d1 of _s1.split(Separater).slice(0, 4))
 			{
-				let angle = rtnGeoIBLto10B(_d1);
+				const angle = rtnGeoIBLto10B(_d1);
 				aLatLng.push(angle);
 				as1.push(angle.toFixed(6) + "度");
 			}
 			console.log(as1.join(Separater));
 
-			let [dist, angle] = rtnGeoVincentryA(aLatLng[0], aLatLng[1], aLatLng[2], aLatLng[3]);
-			console.log("%skm%s%s度", dist.toFixed(6), Separater, angle.toFixed(6));
-			console.log();
+			const [dist, angle] = rtnGeoVincentry(aLatLng[0], aLatLng[1], aLatLng[2], aLatLng[3]);
+			console.log("%skm%s%s度\n", dist.toFixed(6), Separater, angle.toFixed(6));
 		}
 	}
 }

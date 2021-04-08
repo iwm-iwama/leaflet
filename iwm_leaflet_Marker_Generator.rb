@@ -31,10 +31,6 @@ end
 #-------------------
 # 十進法 => 度分秒
 #-------------------
-# (例)
-#	deg, min, sec = rtnGeo10toIBL(24.449582)
-#	printf("%d度%d分%f秒\n", deg, min, sec)
-#
 def
 rtnGeo10toIBL(
 	angle # 十進法
@@ -132,7 +128,7 @@ main()
 	end
 
 	if sErr.size > 0
-		$stderr.printf("\n\e[0;91m>> Error data?\n%s\n\e[0;99m", sErr)
+		$stderr.printf("\n\e[0;91m>> Error Data?\n%s\n\e[0;99m", sErr)
 	end
 end
 

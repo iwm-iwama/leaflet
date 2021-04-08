@@ -1,4 +1,4 @@
-#!ruby
+#!/usr/bin/env ruby
 #coding:utf-8
 # > ruby geoDist2P.rb
 
@@ -58,10 +58,8 @@ EOD
 #-------------------
 # 度分秒 => 十進法
 #-------------------
-# (例)
-#	printf("%f度\n", rtnGeoIBLto10A(24, 26, 58.495200))
-#
-def rtnGeoIBLto10A(
+def
+rtnGeoIBLto10A(
 	deg, # 度
 	min, # 分
 	sec  # 秒
@@ -69,11 +67,9 @@ def rtnGeoIBLto10A(
 	deg, min, sec = deg.to_i, min.to_i, sec.to_f
 	return (deg + (min / 60.0) + (sec / 3600.0)).to_f
 end
-#-------------------
-# (例)
-#	printf("%f度\n", rtnGeoIBLto10B(242658.495200))
-#
-def rtnGeoIBLto10B(
+
+def
+rtnGeoIBLto10B(
 	ddmmss # ddmmss.s...
 )
 	ddmmss = ddmmss.to_f
@@ -95,11 +91,8 @@ end
 #-------------------
 # 十進法 => 度分秒
 #-------------------
-# (例)
-#	deg, min, sec = rtnGeo10toIBL(24.449582)
-#	printf("%d度%d分%f秒\n", deg, min, sec)
-#
-def rtnGeo10toIBL(
+def
+rtnGeo10toIBL(
 	angle # 十進法
 )
 	angle = angle.to_f
@@ -129,14 +122,8 @@ end
 #-------------------------------
 # Vincenty法による２点間の距離
 #-------------------------------
-# (参考)
-#	http://tancro.e-central.tv/grandmaster/script/vincentyJS.html
-#
-# (例)
-#	dist, angle = rtnGeoVincentry(35.685187, 139.752274, 24.449582, 122.93434)
-#	printf("%fkm %f度\n", dist, angle)
-#
-def rtnGeoVincentry(
+def
+rtnGeoVincentry(
 	lat1, # 開始～緯度
 	lng1, # 開始～経度
 	lat2, # 終了～緯度
@@ -227,7 +214,8 @@ Separater = "\t"
 #---------------
 # 計算／十進法
 #---------------
-def main_Data1()
+def
+main_Data1()
 	Data1.each_line do
 		|ln|
 		ln = ln.strip
@@ -241,12 +229,12 @@ def main_Data1()
 			ad1.each do
 				|ln|
 				deg, min, sec = rtnGeo10toIBL(ln)
-				as1 << sprintf("%d度%d分%f秒", deg, min, sec)
+				as1 << sprintf("%d度%d分%.6f秒", deg, min, sec)
 			end
 			puts as1.join(Separater)
 
 			dist, angle = rtnGeoVincentry(ad1[0], ad1[1], ad1[2], ad1[3])
-			printf("%fkm%s%f度\n\n", dist, Separater, angle)
+			printf("%.6fkm%s%.6f度\n\n", dist, Separater, angle)
 		end
 	end
 end
@@ -254,7 +242,8 @@ end
 #---------------
 # 計算／度分秒
 #---------------
-def main_Data2()
+def
+main_Data2()
 	Data2.each_line do
 		|ln|
 		ln = ln.strip
@@ -267,13 +256,14 @@ def main_Data2()
 
 			ln.split(Separater).slice(0, 4).each do
 				|ln|
-				aLatLng << _deg = rtnGeoIBLto10B(ln)
-				as1 << sprintf("%f度", _deg)
+				angle = rtnGeoIBLto10B(ln)
+				aLatLng << angle
+				as1 << sprintf("%.6f度", angle)
 			end
 			puts as1.join(Separater)
 
 			dist, angle = rtnGeoVincentry(aLatLng[0], aLatLng[1], aLatLng[2], aLatLng[3])
-			printf("%fkm%s%f度\n\n", dist, Separater, angle)
+			printf("%.6fkm%s%.6f度\n\n", dist, Separater, angle)
 		end
 	end
 end

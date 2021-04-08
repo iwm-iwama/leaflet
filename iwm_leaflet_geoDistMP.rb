@@ -6,15 +6,16 @@ Signal.trap(:INT) do
 	exit
 end
 
-$iFn = ARGV[0]
+Cmd = File.basename($0)
+IFn = ARGV[0]
 
-if ! $iFn || ! File.exist?($iFn)
+if ! IFn || ! File.exist?(IFn)
 	puts
 	puts "\e[0;97;104m iwm_leaflet.html が出力したTSVファイルから総延長／区間距離を計算 \e[0;99m"
 	puts
-	puts "\e[0;97;101m ruby #{File.basename($0)} [File] \e[0;99m"
+	puts "\e[0;97;101m ruby #{Cmd} [File] \e[0;99m"
 	puts
-	puts "\e[0;95m(例)\e[0;97m ruby #{File.basename($0)} ./マーカー変換.tsv"
+	puts "\e[0;95m(例)\e[0;97m ruby #{Cmd} ./マーカー変換.tsv"
 	puts
 	puts "\e[0;96m※十進法 ddd.d..."
 	puts "\e[0;93m(入力)\e[0;97m"
@@ -28,13 +29,6 @@ end
 #-------------------------------
 # Vincenty法による２点間の距離
 #-------------------------------
-# (参考)
-#	http://tancro.e-central.tv/grandmaster/script/vincentyJS.html
-#
-# (例)
-#	dist, angle = rtnGeoVincentry(35.685187, 139.752274, 24.449582, 122.93434)
-#	printf("%fkm %f度\n", dist, angle)
-#
 def
 rtnGeoVincentry(
 	lat1, # 開始～緯度
@@ -127,7 +121,23 @@ end
 Splitter = /[,\t]/
 Separater = "\t"
 
-Data1 = File.open($iFn, "rt").read()
+Data1 = File.open(IFn, "rt").read()
+
+#---------------------
+# 緯度・経度チェック
+#---------------------
+def
+rtnIsDecimal(
+	*aStr
+)
+	aStr.each() do
+		|_s1|
+		if _s1 =~ /^[\+\-]{0,1}[0-9]+\.{0,1}[0-9]*$/
+			return true
+		end
+	end
+	return false
+end
 
 #---------------
 # 計算／十進法
@@ -142,15 +152,18 @@ main_Data(
 	# 距離計算
 	sData.split("\n").each do
 		|_s1|
-		_a1 = _s1.strip.split(Splitter)
+		_s1 = _s1.strip
+		_a1 = _s1.split(Splitter)
 
 		# 厳密チェック
 		if rtnIsDecimal(_a1[0], _a1[1])
-			dist, angle = aOld[0] ?
+			dist, angle = (
+				aOld[0] ?
 				rtnGeoVincentry(aOld[0], aOld[1], _a1[0], _a1[1]) :
 				[0.0, 0.0]
+			)
 
-			str = sprintf("%fkm%s%f度", dist, Separater, angle)
+			str = sprintf("%.6fkm%s%.6f度", dist, Separater, angle)
 			_a1.each do
 				|_s2|
 				str << Separater + _s2
@@ -162,25 +175,12 @@ main_Data(
 		end
 	end
 
-	printf("%fkm\n", iTotalDist)
+	printf("%.6fkm\n", iTotalDist)
 end
 
-#---------------------
-# 緯度・経度チェック
-#---------------------
-def
-rtnIsDecimal(
-	*aStr
-)
-	aStr.each() do
-		|_s1|
-		if ! (_s1 =~ /^[\+\-]{0,1}[0-9]+\.{0,1}[0-9]*$/)
-			return false
-		end
-	end
-	return true
-end
-
+#-------------------------
+# 入力データ整合チェック
+#-------------------------
 def
 main_DataChecker(
 	sData
@@ -205,7 +205,7 @@ main_DataChecker(
 	end
 
 	if sErr.size > 0
-		$stderr.printf("\n\e[0;91m>> Error data?\n%s\n\e[0;99m", sErr)
+		$stderr.printf("\n\e[0;91m>> Error Data?\n%s\n\e[0;99m", sErr)
 	end
 end
 

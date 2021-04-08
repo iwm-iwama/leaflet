@@ -1,4 +1,4 @@
-#!ruby
+#!/usr/bin/env ruby
 #coding:utf-8
 # > ruby geoDistMP.rb
 
@@ -433,10 +433,8 @@ EOD
 #-------------------
 # 度分秒 => 十進法
 #-------------------
-# (例)
-#	printf("%f度\n", rtnGeoIBLto10B(242658.495200))
-#
-def rtnGeoIBLto10B(
+def
+rtnGeoIBLto10B(
 	ddmmss # ddmmss.s...
 )
 	ddmmss = ddmmss.to_f
@@ -458,14 +456,8 @@ end
 #-------------------------------
 # Vincenty法による２点間の距離
 #-------------------------------
-# (参考)
-#	http://tancro.e-central.tv/grandmaster/script/vincentyJS.html
-#
-# (例)
-#	dist, angle = rtnGeoVincentry(35.685187, 139.752274, 24.449582, 122.93434)
-#	printf("%fkm %f度\n", dist, angle)
-#
-def rtnGeoVincentry(
+def
+rtnGeoVincentry(
 	lat1, # 開始～緯度
 	lng1, # 開始～経度
 	lat2, # 終了～緯度
@@ -556,7 +548,8 @@ Separater = "\t"
 #---------------
 # 計算／十進法
 #---------------
-def main_Data1()
+def
+main_Data1()
 	iTotalDist = 0.0
 	aOld = []
 
@@ -567,11 +560,13 @@ def main_Data1()
 		if _s1.size > 0 && _s1[0, 2] != "//"
 			as1 = _s1.split(Separater)
 
-			dist, angle = aOld[0] ?
+			dist, angle = (
+				aOld[0] ?
 				rtnGeoVincentry(aOld[0], aOld[1], as1[0], as1[1]) :
 				[0.0, 0.0]
+			)
 
-			str = sprintf("%fkm%s%f度", dist, Separater, angle)
+			str = sprintf("%.6fkm%s%.6f度", dist, Separater, angle)
 			as1.each do
 				|_s2|
 				str << Separater + _s2
@@ -583,13 +578,14 @@ def main_Data1()
 		end
 	end
 
-	printf("%fkm\n\n", iTotalDist)
+	printf("%.6fkm\n\n", iTotalDist)
 end
 
 #---------------
 # 計算／度分秒
 #---------------
-def main_Data2()
+def
+main_Data2()
 	iTotalDist = 0.0
 	aOld = []
 
@@ -606,11 +602,13 @@ def main_Data2()
 				ad1 << rtnGeoIBLto10B(_s2)
 			end
 
-			dist, angle = aOld[0] ?
+			dist, angle = (
+				aOld[0] ?
 				rtnGeoVincentry(aOld[0], aOld[1], ad1[0], ad1[1]) :
 				[0.0, 0.0]
+			)
 
-			str = sprintf("%fkm%s%f度", dist, Separater, angle)
+			str = sprintf("%.6fkm%s%.6f度", dist, Separater, angle)
 			as1.each do
 				|_s2|
 				str << Separater + _s2
@@ -622,7 +620,7 @@ def main_Data2()
 		end
 	end
 
-	printf("%fkm\n\n", iTotalDist)
+	printf("%.6fkm\n\n", iTotalDist)
 end
 
 #-------
