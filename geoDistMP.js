@@ -483,8 +483,8 @@ rtnGeoVincentry(
 	const cosU2 = 1 / Math.sqrt(1 + tanU2 * tanU2);
 	const sinU2 = tanU2 * cosU2;
 
-	let lamda = omega;
-	let dLamda = 0;
+	let lamda     = omega;
+	let dLamda    = 0;
 	let sinLamda  = 0.0;
 	let cosLamda  = 0.0;
 	let sin2Sigma = 0.0;

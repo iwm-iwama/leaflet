@@ -154,9 +154,9 @@ rtnGeoVincentry(
 	tanU2  = f1 * Math.tan(latR2)
 	cosU2  = 1 / Math.sqrt(1 + tanU2 * tanU2)
 	sinU2  = tanU2 * cosU2
-	lamda  = omega
-	dLamda = 0.0
 
+	lamda     = omega
+	dLamda    = 0.0
 	sinLamda  = 0.0
 	cosLamda  = 0.0
 	sin2sigma = 0.0
