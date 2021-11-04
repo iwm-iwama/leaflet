@@ -1,4 +1,4 @@
-<!-- iwm20210822A Ver.20210822 'U-2S' -->
+<!-- iwm20210822A Ver.20211104 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -2564,13 +2564,14 @@ function subAddGeoJson_addToMap(
 		<div id="_SW02" class="_simpleWindow" style="width:470px;">
 			<font class="_simpleWindowTitle">追加タイル編集</font>
 			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW02','_NC02');">×</font>
-			<input type="file" id="_fileAddMap" class="_btnNavi2" accept=".tsv" multiple style="font-size:12px;margin:0;width:468px;" onchange="subAddFile(this.id,'_TA02',0);"/>
-			<br>
-			<textarea id="_TA02" class="_editTextBox" wrap="off" style="height:180px;width:452px;"></textarea>
-			<script>
-				document.getElementById("_TA02").onkeydown = function(e){subAddTabCtrl(e, this);}
-			</script>
-			<div style="margin:0 0 8px 0;">
+			<div class="_simpleWindowOutput" style="background:#f7f7f7;padding:0 0 8px 0;text-align:center;">
+				<input type="file" id="_fileAddMap" class="_btnNavi2" accept=".tsv" multiple style="font-size:12px;margin:0;width:468px;" onchange="subAddFile(this.id,'_TA02',0);"/>
+				<br>
+				<textarea id="_TA02" class="_editTextBox" wrap="off" style="height:180px;width:452px;"></textarea>
+				<script>
+					document.getElementById("_TA02").onkeydown = function(e){subAddTabCtrl(e, this);}
+				</script>
+				<br>
 				<input type="button" class="_btnNavi3" value="←地図へ反映" onclick="subMapSelector();subSimpleWindow_OpenClose('_SW02','_NC02');"/>
 				<a class="_btnNavi4" href="http://maps.gsi.go.jp/development/ichiran.html" target="_blank">地理院タイル一覧⇒</a>
 			</div>
@@ -2584,21 +2585,19 @@ function subAddGeoJson_addToMap(
 		<div id="_SW03" class="_simpleWindow" style="width:400px;">
 			<font class="_simpleWindowTitle">GeoJSON ファイル読込</font>
 			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW03','_NC03');">×</font>
-			<div class="_simpleWindowOutput" style="background:#f7f7f7;">
-				<div class="_simpleWindowOutput" style="line-height:36px;margin:2px 6px 0 4px;text-align:center;">
-					<input type="checkbox" id="_checkboxGeoJson0" class="_checkboxNavi1" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(0);"/><input type="file" id="_fileGeoJson0" class="_btnNavi2" accept=".geojson" multiple style="font-size:12px;margin:0;width:360px;" onchange="subAddGeoJson_readFile(0);"/>
-					<br>
-					<input type="checkbox" id="_checkboxGeoJson1" class="_checkboxNavi1" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(1);"/><input type="file" id="_fileGeoJson1" class="_btnNavi2" accept=".geojson" multiple style="font-size:12px;margin:0;width:360px;" onchange="subAddGeoJson_readFile(1);"/>
-					<br>
-					<input type="checkbox" id="_checkboxGeoJson2" class="_checkboxNavi1" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(2);"/><input type="file" id="_fileGeoJson2" class="_btnNavi2" accept=".geojson" multiple style="font-size:12px;margin:0;width:360px;" onchange="subAddGeoJson_readFile(2);"/>
-					<br>
-					<input type="checkbox" id="_checkboxGeoJson3" class="_checkboxNavi1" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(3);"/><input type="file" id="_fileGeoJson3" class="_btnNavi2" accept=".geojson" multiple style="font-size:12px;margin:0;width:360px;" onchange="subAddGeoJson_readFile(3);"/>
-					<br>
-					<input type="checkbox" id="_checkboxGeoJson4" class="_checkboxNavi1" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(4);"/><input type="file" id="_fileGeoJson4" class="_btnNavi2" accept=".geojson" multiple style="font-size:12px;margin:0;width:360px;" onchange="subAddGeoJson_readFile(4);"/>
-					<br>
-					<textarea id="_TA03" class="_editTextBox" wrap="off" style="display:none;"></textarea>
-					<input type="button" class="_btnNavi1" value="↑クリア" onclick="subAddGeoJson_init()"/>
-				</div>
+			<div class="_simpleWindowOutput" style="background:#f7f7f7;line-height:36px;text-align:center;">
+				<input type="checkbox" id="_checkboxGeoJson0" class="_checkboxNavi1" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(0);"/><input type="file" id="_fileGeoJson0" class="_btnNavi2" accept=".geojson" multiple style="font-size:12px;margin:0;width:360px;" onchange="subAddGeoJson_readFile(0);"/>
+				<br>
+				<input type="checkbox" id="_checkboxGeoJson1" class="_checkboxNavi1" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(1);"/><input type="file" id="_fileGeoJson1" class="_btnNavi2" accept=".geojson" multiple style="font-size:12px;margin:0;width:360px;" onchange="subAddGeoJson_readFile(1);"/>
+				<br>
+				<input type="checkbox" id="_checkboxGeoJson2" class="_checkboxNavi1" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(2);"/><input type="file" id="_fileGeoJson2" class="_btnNavi2" accept=".geojson" multiple style="font-size:12px;margin:0;width:360px;" onchange="subAddGeoJson_readFile(2);"/>
+				<br>
+				<input type="checkbox" id="_checkboxGeoJson3" class="_checkboxNavi1" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(3);"/><input type="file" id="_fileGeoJson3" class="_btnNavi2" accept=".geojson" multiple style="font-size:12px;margin:0;width:360px;" onchange="subAddGeoJson_readFile(3);"/>
+				<br>
+				<input type="checkbox" id="_checkboxGeoJson4" class="_checkboxNavi1" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(4);"/><input type="file" id="_fileGeoJson4" class="_btnNavi2" accept=".geojson" multiple style="font-size:12px;margin:0;width:360px;" onchange="subAddGeoJson_readFile(4);"/>
+				<br>
+				<textarea id="_TA03" class="_editTextBox" wrap="off" style="display:none;"></textarea>
+				<input type="button" class="_btnNavi1" value="↑クリア" onclick="subAddGeoJson_init()"/>
 			</div>
 		</div>
 		<!---------------
