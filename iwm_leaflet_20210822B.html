@@ -1,4 +1,4 @@
-<!-- iwm20210822A Ver.20211107 'U-2S' -->
+<!-- iwm20210822A Ver.20211109 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -2644,10 +2644,9 @@ function subAddGeoJson_addToMap(
 		<span id="_NC05" style="float:right;margin:0 4px;">
 			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW05','_NC05');">距離円</font>
 		</span>
-		<div id="_SW05" class="_simpleWindow" style="height:44px;width:268px;right:305px;">
+		<div id="_SW05" class="_simpleWindow" style="width:268px;right:305px;">
 			<font class="_simpleWindowTitle">半径&nbsp;</font><span id="$GCircleKm">0km</span>
 			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW05','_NC05');">×</font>
-			<br>
 			<div id="_GCircle" style="width:260px;"><input type="range" id="_GCircleRange" style="width:250px;" min="0" max="15000" value="0" oninput="subGCircle_Slider();"/></div>
 		</div>
 		<!---------
@@ -2659,7 +2658,7 @@ function subAddGeoJson_addToMap(
 		<div id="_SW06" class="_simpleWindow" style="right:359px;z-index:2000;">
 			<font class="_simpleWindowTitle">ズーム14以下で利用可能</font>
 			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW06','_NC06');">×</font>
-			<div style="margin:6px;">
+			<div class="_simpleWindowOutput" style="padding:6px;">
 				<input type="number" id="_Dem10ToSeaLevel1" value="0" style="text-align:right;width:45px;"/>～<input type="number" id="_Dem10ToSeaLevel2" value="10" style="text-align:right;width:55px;"/>ｍ
 				<input type="button" class="_btnNavi1" value="ON" onclick="subDem10ToSeaLevel2('_Dem10ToSeaLevel1','_Dem10ToSeaLevel2');"/>
 				<input type="button" class="_btnNavi2" value="OFF" onclick="$Dem10ToSeaLevel.remove($Map);"/>
