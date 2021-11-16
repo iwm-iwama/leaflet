@@ -1,4 +1,4 @@
-<!-- iwm20210822A Ver.20211109 'U-2S' -->
+<!-- iwm20210822B Ver.20211117 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -2617,10 +2617,10 @@ function subAddGeoJson_addToMap(
 					document.getElementById("_TA04").onkeydown = function(e){subAddTabCtrl(e, this);}
 				</script>
 				<div style="line-height:24px;">
-					<input type="button" class="_btnNavi1" value="↑クリア" onclick="subA2P_EditInit('_TA04');"/>
 					<input type="button" class="_btnNavi4" value="→住所から変換" onclick="subA2P_Geocoding('_TA04');"/>
 					<input type="button" class="_btnNavi4" value="↑サンプル出力" onclick="subA2P_GeocodingSample('_TA04');"/>
 					<a href="#" id="_btnDL" download="" onclick="subA2P_EditSave('_TA04')"><div class="_btnNavi2" style="display:inline-block;_display:">ファイルに保存</div></a>
+					<input type="button" class="_btnNavi1" value="↑クリア" onclick="subA2P_EditInit('_TA04');"/>
 					<br>
 					<input type="button" class="_btnNavi3" value="←地図へ反映" onclick="subA2P_addToMap('_TA04');subA2P_DistMP('_TA04','_textDist',_checkboxDist.checked);"/>
 					<input type="button" class="_btnNavi3" value="←クリア" onclick="subA2P_EditClear('_TA04','_GCircleM2P','_checkboxDist','_textDist');"/>
