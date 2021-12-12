@@ -52,30 +52,25 @@ const Data2 = `
 //-------------------
 // 度分秒 => 十進法
 //-------------------
-function
-rtnGeoIBLto10A(
+function rtnGeoIBLto10A(
 	$deg, // 度
 	$min, // 分
 	$sec  // 秒
-)
-{
+) {
 	$deg = parseInt($deg, 10);
 	$min = parseInt($min, 10);
 	$sec = parseFloat($sec);
 	return parseFloat($deg + ($min / 60.0) + ($sec / 3600.0));
 }
 
-function
-rtnGeoIBLto10B(
+function rtnGeoIBLto10B(
 	$ddmmss // ddmmss.s...
-)
-{
+) {
 	$ddmmss = parseFloat($ddmmss);
 
 	let sign = 1;
 
-	if($ddmmss < 0)
-	{
+	if ($ddmmss < 0) {
 		sign = -1;
 		$ddmmss = -$ddmmss;
 	}
@@ -89,30 +84,26 @@ rtnGeoIBLto10B(
 //-------------------
 // 十進法 => 度分秒
 //-------------------
-function
-rtnGeo10toIBL(
+function rtnGeo10toIBL(
 	$angle // 十進法
-)
-{
+) {
 	$angle = parseFloat($angle);
 
 	let sign = 1;
 
-	if($angle < 0)
-	{
+	if ($angle < 0) {
 		sign = -1;
 		$angle = -$angle;
 	}
 
 	const deg = parseInt($angle, 10);
-		$angle = ($angle - deg) * 60.0;
+	$angle = ($angle - deg) * 60.0;
 	let min = parseInt($angle, 10);
-		$angle -= min;
+	$angle -= min;
 	let sec = parseFloat($angle) * 60.0;
 
 	// 0.999... * 60 => 60.0 対策
-	if(sec == 60.0)
-	{
+	if (sec == 60.0) {
 		min += 1;
 		sec = 0;
 	}
@@ -123,22 +114,19 @@ rtnGeo10toIBL(
 //-------------------------------
 // Vincenty法による２点間の距離
 //-------------------------------
-function
-rtnGeoVincentry(
+function rtnGeoVincentry(
 	$lat1,
 	$lng1,
 	$lat2,
 	$lng2
-)
-{
-	if($lat1 == $lat2 && $lng1 == $lng2)
-	{
+) {
+	if ($lat1 == $lat2 && $lng1 == $lng2) {
 		return [0.0, 0.0];
 	}
 
 	/// const A = 6378137.0;
-	const _B   = 6356752.314140356;    // GRS80
-	const _F   = 0.003352810681182319; // 1 / 298.257222101
+	const _B = 6356752.314140356;      // GRS80
+	const _F = 0.003352810681182319;   // 1 / 298.257222101
 	const _RAD = 0.017453292519943295; // π / 180
 
 	$lat1 = parseFloat($lat1) * _RAD;
@@ -155,26 +143,24 @@ rtnGeoVincentry(
 	const cosU2 = 1 / Math.sqrt(1 + tanU2 * tanU2);
 	const sinU2 = tanU2 * cosU2;
 
-	let lamda     = omega;
-	let dLamda    = 0;
-	let sinLamda  = 0.0;
-	let cosLamda  = 0.0;
+	let lamda = omega;
+	let dLamda = 0;
+	let sinLamda = 0.0;
+	let cosLamda = 0.0;
 	let sin2Sigma = 0.0;
-	let sinSigma  = 0.0;
-	let cosSigma  = 0.0;
-	let sigma     = 0.0;
-	let sinAlpha  = 0.0;
+	let sinSigma = 0.0;
+	let cosSigma = 0.0;
+	let sigma = 0.0;
+	let sinAlpha = 0.0;
 	let cos2Alpha = 0.0;
-	let cos2sm    = 0.0;
+	let cos2sm = 0.0;
 	let c = 0.0;
 
-	while(true)
-	{
+	while (true) {
 		sinLamda = Math.sin(lamda);
 		cosLamda = Math.cos(lamda);
 		sin2Sigma = (cosU2 * sinLamda) * (cosU2 * sinLamda) + (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda);
-		if(sin2Sigma < 0)
-		{
+		if (sin2Sigma < 0) {
 			return [0.0, 0.0];
 		}
 		sinSigma = Math.sqrt(sin2Sigma);
@@ -186,8 +172,7 @@ rtnGeoVincentry(
 		c = _F / 16 * cos2Alpha * (4 + _F * (4 - 3 * cos2Alpha));
 		dLamda = lamda;
 		lamda = omega + (1 - c) * _F * sinAlpha * (sigma + c * sinSigma * (cos2sm + c * cosSigma * (-1 + 2 * cos2sm * cos2sm)));
-		if(Math.abs(lamda - dLamda) <= 1e-12)
-		{
+		if (Math.abs(lamda - dLamda) <= 1e-12) {
 			break;
 		}
 	}
@@ -200,8 +185,7 @@ rtnGeoVincentry(
 	let bearing = Math.atan2(cosU2 * sinLamda, cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * 57.29577951308232;
 
 	// 変換
-	if(bearing < 0)
-	{
+	if (bearing < 0) {
 		bearing += 360.0; // 度
 	}
 
@@ -216,22 +200,17 @@ const Separater = "\t";
 //---------------
 // 計算／十進法
 //---------------
-function
-main_Data1()
-{
-	for(let _s1 of Data1.split("\n"))
-	{
+function main_Data1() {
+	for (let _s1 of Data1.split("\n")) {
 		_s1 = _s1.trim();
 
-		if(_s1.length > 0 && _s1.substr(0, 2) != "//")
-		{
+		if (_s1.length > 0 && _s1.substr(0, 2) != "//") {
 			console.log(_s1);
 
 			let as1 = [];
 
 			let ad1 = _s1.split(Separater).slice(0, 4);
-			for(let _d1 of ad1)
-			{
+			for (let _d1 of ad1) {
 				const [deg, min, sec] = rtnGeo10toIBL(_d1);
 				as1.push(`${deg}度${min}分${sec.toFixed(6)}秒`);
 			}
@@ -246,22 +225,17 @@ main_Data1()
 //---------------
 // 計算／度分秒
 //---------------
-function
-main_Data2()
-{
-	for(let _s1 of Data2.split("\n"))
-	{
+function main_Data2() {
+	for (let _s1 of Data2.split("\n")) {
 		_s1 = _s1.trim();
 
-		if(_s1.length > 0 && _s1.substr(0, 2) != "//")
-		{
+		if (_s1.length > 0 && _s1.substr(0, 2) != "//") {
 			console.log(_s1);
 
 			let aLatLng = [];
 			let as1 = [];
 
-			for(let _d1 of _s1.split(Separater).slice(0, 4))
-			{
+			for (let _d1 of _s1.split(Separater).slice(0, 4)) {
 				const angle = rtnGeoIBLto10B(_d1);
 				aLatLng.push(angle);
 				as1.push(angle.toFixed(6) + "度");

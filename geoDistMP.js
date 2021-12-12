@@ -427,17 +427,14 @@ const Data2 = `
 //-------------------
 // 度分秒 => 十進法
 //-------------------
-function
-rtnGeoIBLto10B(
+function rtnGeoIBLto10B(
 	$ddmmss // ddmmss.s...
-)
-{
+) {
 	$ddmmss = parseFloat($ddmmss);
 
 	let sign = 1;
 
-	if($ddmmss < 0)
-	{
+	if ($ddmmss < 0) {
 		sign = -1;
 		$ddmmss = -$ddmmss;
 	}
@@ -451,22 +448,19 @@ rtnGeoIBLto10B(
 //-------------------------------
 // Vincenty法による２点間の距離
 //-------------------------------
-function
-rtnGeoVincentry(
+function rtnGeoVincentry(
 	$lat1,
 	$lng1,
 	$lat2,
 	$lng2
-)
-{
-	if($lat1 == $lat2 && $lng1 == $lng2)
-	{
+) {
+	if ($lat1 == $lat2 && $lng1 == $lng2) {
 		return [0.0, 0.0];
 	}
 
 	/// const A = 6378137.0;
-	const _B   = 6356752.314140356;    // GRS80
-	const _F   = 0.003352810681182319; // 1 / 298.257222101
+	const _B = 6356752.314140356;      // GRS80
+	const _F = 0.003352810681182319;   // 1 / 298.257222101
 	const _RAD = 0.017453292519943295; // π / 180
 
 	$lat1 = parseFloat($lat1) * _RAD;
@@ -483,26 +477,24 @@ rtnGeoVincentry(
 	const cosU2 = 1 / Math.sqrt(1 + tanU2 * tanU2);
 	const sinU2 = tanU2 * cosU2;
 
-	let lamda     = omega;
-	let dLamda    = 0;
-	let sinLamda  = 0.0;
-	let cosLamda  = 0.0;
+	let lamda = omega;
+	let dLamda = 0;
+	let sinLamda = 0.0;
+	let cosLamda = 0.0;
 	let sin2Sigma = 0.0;
-	let sinSigma  = 0.0;
-	let cosSigma  = 0.0;
-	let sigma     = 0.0;
-	let sinAlpha  = 0.0;
+	let sinSigma = 0.0;
+	let cosSigma = 0.0;
+	let sigma = 0.0;
+	let sinAlpha = 0.0;
 	let cos2Alpha = 0.0;
-	let cos2sm    = 0.0;
+	let cos2sm = 0.0;
 	let c = 0.0;
 
-	while(true)
-	{
+	while (true) {
 		sinLamda = Math.sin(lamda);
 		cosLamda = Math.cos(lamda);
 		sin2Sigma = (cosU2 * sinLamda) * (cosU2 * sinLamda) + (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda);
-		if(sin2Sigma < 0)
-		{
+		if (sin2Sigma < 0) {
 			return [0.0, 0.0];
 		}
 		sinSigma = Math.sqrt(sin2Sigma);
@@ -514,8 +506,7 @@ rtnGeoVincentry(
 		c = _F / 16 * cos2Alpha * (4 + _F * (4 - 3 * cos2Alpha));
 		dLamda = lamda;
 		lamda = omega + (1 - c) * _F * sinAlpha * (sigma + c * sinSigma * (cos2sm + c * cosSigma * (-1 + 2 * cos2sm * cos2sm)));
-		if(Math.abs(lamda - dLamda) <= 1e-12)
-		{
+		if (Math.abs(lamda - dLamda) <= 1e-12) {
 			break;
 		}
 	}
@@ -528,8 +519,7 @@ rtnGeoVincentry(
 	let bearing = Math.atan2(cosU2 * sinLamda, cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * 57.29577951308232;
 
 	// 変換
-	if(bearing < 0)
-	{
+	if (bearing < 0) {
 		bearing += 360.0; // 度
 	}
 
@@ -544,30 +534,25 @@ const Separater = "\t";
 //---------------
 // 計算／十進法
 //---------------
-function
-main_Data1()
-{
+function main_Data1() {
 	let iTotalDist = 0.0;
 	let aOld = [];
 
-	for(let _s1 of Data1.split("\n"))
-	{
+	for (let _s1 of Data1.split("\n")) {
 		_s1 = _s1.trim();
 
-		if(_s1.length > 0 && _s1.substr(0, 2) != "//")
-		{
+		if (_s1.length > 0 && _s1.substr(0, 2) != "//") {
 			let as1 = _s1.split(Separater);
 
 			let [dist, angle] = (
 				aOld[0] ?
-				rtnGeoVincentry(aOld[0], aOld[1], as1[0], as1[1]) :
-				[0.0, 0.0]
+					rtnGeoVincentry(aOld[0], aOld[1], as1[0], as1[1]) :
+					[0.0, 0.0]
 			);
 
 			let str = `${dist.toFixed(6)}km${Separater}${angle.toFixed(6)}度`;
 
-			for(let _s2 of as1)
-			{
+			for (let _s2 of as1) {
 				str += Separater + _s2;
 			}
 			console.log(str);
@@ -582,36 +567,30 @@ main_Data1()
 //---------------
 // 計算／度分秒
 //---------------
-function
-main_Data2()
-{
+function main_Data2() {
 	let iTotalDist = 0.0;
 	let aOld = [];
 
-	for(let _s1 of Data2.split("\n"))
-	{
+	for (let _s1 of Data2.split("\n")) {
 		_s1 = _s1.trim();
 
-		if(_s1.length > 0 && _s1.substr(0, 2) != "//")
-		{
+		if (_s1.length > 0 && _s1.substr(0, 2) != "//") {
 			let as1 = _s1.split(Separater);
 			let ad1 = [];
 
-			for(let _s2 of as1.slice(0, 2))
-			{
+			for (let _s2 of as1.slice(0, 2)) {
 				ad1.push(rtnGeoIBLto10B(_s2));
 			}
 
 			let [dist, angle] = (
 				aOld[0] ?
-				rtnGeoVincentry(aOld[0], aOld[1], ad1[0], ad1[1]) :
-				[0.0, 0.0]
+					rtnGeoVincentry(aOld[0], aOld[1], ad1[0], ad1[1]) :
+					[0.0, 0.0]
 			);
 
 			let str = `${dist.toFixed(6)}km${Separater}${angle.toFixed(6)}度`;
 
-			for(let _s2 of as1)
-			{
+			for (let _s2 of as1) {
 				str += Separater + _s2;
 			}
 			console.log(str);
