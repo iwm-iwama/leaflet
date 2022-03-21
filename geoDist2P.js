@@ -177,9 +177,9 @@ function rtnGeoVincentry(
 		}
 	}
 
-	let u2 = cos2Alpha * (1 - f1 * f1) / (f1 * f1);
-	let a = 1 + u2 / 16384 * (4096 + u2 * (-768 + u2 * (320 - 175 * u2)));
-	let b = u2 / 1024 * (256 + u2 * (-128 + u2 * (74 - 47 * u2)));
+	let d2 = cos2Alpha * (1 - f1 * f1) / (f1 * f1);
+	let a = 1 + d2 / 16384 * (4096 + d2 * (-768 + d2 * (320 - 175 * d2)));
+	let b = d2 / 1024 * (256 + d2 * (-128 + d2 * (74 - 47 * d2)));
 	let dSigma = b * sinSigma * (cos2sm + b / 4 * (cosSigma * (-1 + 2 * cos2sm * cos2sm) - b / 6 * cos2sm * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2sm * cos2sm)));
 	let km = (_B * a * (sigma - dSigma)) / 1000; // m => km
 	let bearing = Math.atan2(cosU2 * sinLamda, cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * 57.29577951308232;
