@@ -1,4 +1,4 @@
-<!-- iwm20210822B Ver.20211117 'U-2S' -->
+<!-- iwm20210822B Ver.20220406 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -418,7 +418,7 @@ input[type="file"]
 	cursor:text;
 	font-size:14px;
 	height:18px;
-	ime-mode:inactive;
+	ime-mode:active;
 	margin:0;
 	padding:0 3px;
 	vertical-align:middle;
@@ -1827,9 +1827,9 @@ function rtnGeoVincentryA(
 		}
 	}
 
-	let u2 = cos2Alpha * (1 - f1 * f1) / (f1 * f1);
-	let a = 1 + u2 / 16384 * (4096 + u2 * (-768 + u2 * (320 - 175 * u2)));
-	let b = u2 / 1024 * (256 + u2 * (-128 + u2 * (74 - 47 * u2)));
+	let d2 = cos2Alpha * (1 - f1 * f1) / (f1 * f1);
+	let a = 1 + d2 / 16384 * (4096 + d2 * (-768 + d2 * (320 - 175 * d2)));
+	let b = d2 / 1024 * (256 + d2 * (-128 + d2 * (74 - 47 * d2)));
 	let dSigma = b * sinSigma * (cos2sm + b / 4 * (cosSigma * (-1 + 2 * cos2sm * cos2sm) - b / 6 * cos2sm * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2sm * cos2sm)));
 	let km = (_B * a * (sigma - dSigma)) / 1000; // m => km
 	let bearing = Math.atan2(cosU2 * sinLamda, cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * 57.29577951308232;
@@ -1866,9 +1866,9 @@ function rtnGeoVincentryB(
 	const sigma1 = Math.atan2(tanU1, cosBearing);
 	const sinAlfa = cosU1 * sinBearing;
 	const cos2Alpha = 1 - sinAlfa * sinAlfa;
-	const u2 = cos2Alpha * (1 - f1 * f1) / (f1 * f1);
-	const a = 1 + u2 / 16384 * (4096 + u2 * (-768 + u2 * (320 - 175 * u2)));
-	const b = u2 / 1024 * (256 + u2 * (-128 + u2 * (74 - 47 * u2)));
+	const d2 = cos2Alpha * (1 - f1 * f1) / (f1 * f1);
+	const a = 1 + d2 / 16384 * (4096 + d2 * (-768 + d2 * (320 - 175 * d2)));
+	const b = d2 / 1024 * (256 + d2 * (-128 + d2 * (74 - 47 * d2)));
 
 	let cos2Sigma  = 0.0;
 	let sinSigma   = 0.0;
@@ -2294,7 +2294,6 @@ let $HeightGraph_Data = [
 		}
 	}
 ];
-let $HeightGraph_ElevationCash = []; // ["lat@lng", 0]
 
 function rtnHeightGraphElevation(
 	$lat,
@@ -2303,15 +2302,6 @@ function rtnHeightGraphElevation(
 	// 精度対速度比を調整（小数４桁縛り）
 	$lat = $lat.toFixed(4);
 	$lng = $lng.toFixed(4);
-	const _KEY = $lat + "@" + $lng;
-
-	for(let _k1 in $HeightGraph_ElevationCash){
-		if(_k1 == _KEY){
-			// (入力)[Lat, Lng] => (出力)[Lng, Lat] になることに注意
-			[$lat, $lng] = _k1.split("@");
-			return [$lng, $lat, $HeightGraph_ElevationCash[_k1]];
-		}
-	}
 
 	const _URL = "https://cyberjapandata2.gsi.go.jp/general/dem/scripts/getelevation.php?lat=" + $lat + "&lon=" + $lng + "&outtype=JSON";
 	let rtn = [];
@@ -2327,8 +2317,6 @@ function rtnHeightGraphElevation(
 		}
 		// (入力)[Lat, Lng] => (出力)[Lng, Lat] になることに注意
 		rtn = [$lng, $lat, i1];
-		// Cash
-		$HeightGraph_ElevationCash[_KEY] = i1;
 	}
 	return rtn;
 }
@@ -2612,7 +2600,7 @@ function subAddGeoJson_addToMap(
 			<div class="_simpleWindowOutput" style="padding:0 8px 8px 8px;">
 				<input type="button" class="_btnNavi3" value="→マーカーから読込" onclick="subA2P_EditInit('_TA04');subMapToPoint('_TA04');"/>
 				<input type="file" id="_readPointFile" class="_btnNavi2" accept=".tsv" style="font-size:12px;margin:0 0 0 4px;width:319px;" onchange="subAddFile(this.id,'_TA04',1);"/>
-				<textarea id="_TA04" class="_editTextBox" wrap="off" style="height:250px;width:437px;" onchange="$HeightGraph_ElevationCash=[];" placeholder="[Tab]区切り／UTF-8N&#13;&quot;//&quot; で始まる行はコメント行&#13;// 例 ※&quot;icon@画像ファイル&quot; はオプション&#13;35.68365900&#9;139.75408900&#9;皇居&#9;icon@画像ファイル"></textarea>
+				<textarea id="_TA04" class="_editTextBox" wrap="off" style="height:250px;width:437px;" placeholder="[Tab]区切り／UTF-8N&#13;&quot;//&quot; で始まる行はコメント行&#13;// 例 ※&quot;icon@画像ファイル&quot; はオプション&#13;35.68365900&#9;139.75408900&#9;皇居&#9;icon@画像ファイル"></textarea>
 				<script>
 					document.getElementById("_TA04").onkeydown = function(e){subAddTabCtrl(e, this);}
 				</script>
