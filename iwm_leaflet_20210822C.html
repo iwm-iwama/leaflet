@@ -1,4 +1,4 @@
-<!-- iwm20210822B Ver.20220406 'U-2S' -->
+<!-- iwm20210822C Ver.20220415 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -102,6 +102,11 @@
 .leaflet-container
 {
 	background:#fff;
+}
+.leaflet-tooltip
+{
+	max-width:300px;
+	white-space:normal;
 }
 #map
 {
@@ -418,7 +423,7 @@ input[type="file"]
 	cursor:text;
 	font-size:14px;
 	height:18px;
-	ime-mode:active;
+	/* ime-mode:active; */
 	margin:0;
 	padding:0 3px;
 	vertical-align:middle;
@@ -917,7 +922,7 @@ function subIwmInput_AddText(
 	const strBeforeLen = strBefore.length;
 	$subIwmInput_strPos = obj.selectionStart;
 	obj.value = strBefore.substr(0, $subIwmInput_strPos) + $str + strBefore.substr($subIwmInput_strPos, strBeforeLen);
-	$subIwmInput_strPos++;
+	++$subIwmInput_strPos;
 	// 再フォーカス
 	document.getElementById($subIwmInput_BL_now).focus();
 	obj.selectionStart = $subIwmInput_strPos;
@@ -1373,7 +1378,7 @@ function subA2P_Geocoding(
 				}
 				else{
 					str += "// Err " + (json.length == 0 ? "該当なし" : "複数該当あり") + " => " + _s1;
-					errCnt++;
+					++errCnt;
 				}
 			}
 			str += "\n";
@@ -1624,7 +1629,7 @@ function subA2P_GCircle(
 				}
 			);
 			$AryM2P_Circle[i1].addTo($Map);
-			i1++;
+			++i1;
 		}
 		catch(e){
 		}
@@ -2445,9 +2450,19 @@ function subAddGeoJson_readFile(
 				pane:"_pane200"
 			}
 		).bindPopup(function(layer){
-			return layer.feature.properties.name;
+			let rtn = "";
+			for(let _key in layer.feature.properties)
+			{
+				rtn += "[" + _key + "]&nbsp;" + layer.feature.properties[_key] + "<br>";
+			}
+			return rtn;
 		}).bindTooltip(function(layer){
-			return layer.feature.properties.name;
+			let rtn = "";
+			for(let _key in layer.feature.properties)
+			{
+				rtn += "[" + _key + "]&nbsp;" + layer.feature.properties[_key] + "<br>";
+			}
+			return rtn;
 		});
 	}
 	// 発火
