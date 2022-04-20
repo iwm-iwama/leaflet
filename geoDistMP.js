@@ -459,8 +459,8 @@ function rtnGeoVincentry(
 	}
 
 	/// const A = 6378137.0;
-	const _B = 6356752.314140356;      // GRS80
-	const _F = 0.003352810681182319;   // 1 / 298.257222101
+	const _B = 6356752.314140356; // GRS80
+	const _F = 0.003352810681182319; // 1 / 298.257222101
 	const _RAD = 0.017453292519943295; // π / 180
 
 	$lat1 = parseFloat($lat1) * _RAD;
@@ -490,6 +490,8 @@ function rtnGeoVincentry(
 	let cos2sm = 0.0;
 	let c = 0.0;
 
+	let iLoop = 0;
+
 	while (true) {
 		sinLamda = Math.sin(lamda);
 		cosLamda = Math.cos(lamda);
@@ -508,6 +510,11 @@ function rtnGeoVincentry(
 		lamda = omega + (1 - c) * _F * sinAlpha * (sigma + c * sinSigma * (cos2sm + c * cosSigma * (-1 + 2 * cos2sm * cos2sm)));
 		if (Math.abs(lamda - dLamda) <= 1e-12) {
 			break;
+		}
+		++iLoop;
+		// 日本国内であれば５回程度で収束
+		if (iLoop > 10) {
+			return [-1, -1]; // Err
 		}
 	}
 
@@ -546,8 +553,8 @@ function main_Data1() {
 
 			let [dist, angle] = (
 				aOld[0] ?
-					rtnGeoVincentry(aOld[0], aOld[1], as1[0], as1[1]) :
-					[0.0, 0.0]
+				rtnGeoVincentry(aOld[0], aOld[1], as1[0], as1[1]) :
+				[0.0, 0.0]
 			);
 
 			let str = `${dist.toFixed(6)}km${Separater}${angle.toFixed(6)}度`;
@@ -584,8 +591,8 @@ function main_Data2() {
 
 			let [dist, angle] = (
 				aOld[0] ?
-					rtnGeoVincentry(aOld[0], aOld[1], ad1[0], ad1[1]) :
-					[0.0, 0.0]
+				rtnGeoVincentry(aOld[0], aOld[1], ad1[0], ad1[1]) :
+				[0.0, 0.0]
 			);
 
 			let str = `${dist.toFixed(6)}km${Separater}${angle.toFixed(6)}度`;

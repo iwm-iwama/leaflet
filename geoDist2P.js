@@ -37,7 +37,9 @@ const Data1 = `
 35.685187	139.752274	24.340547	124.155636	皇居～竹富町役場
 35.685187	139.752274	24.192485	123.556720	皇居～中御神島
 35.685187	139.752274	24.059749	123.805554	皇居～波照間空港
-0	0	0.5	179.5		Debug:19936.288579km?
+0	0	0	0		Debug
+0	0	0.5	179.5		Debug
+0	0	0.5	179.7		Debug
 //	35.685187	139.752274	20.423690	136.075829	皇居～沖ノ鳥島
 `;
 //--------------------------------------------------------------------
@@ -55,7 +57,7 @@ const Data2 = `
 function rtnGeoIBLto10A(
 	$deg, // 度
 	$min, // 分
-	$sec  // 秒
+	$sec // 秒
 ) {
 	$deg = parseInt($deg, 10);
 	$min = parseInt($min, 10);
@@ -125,8 +127,8 @@ function rtnGeoVincentry(
 	}
 
 	/// const A = 6378137.0;
-	const _B = 6356752.314140356;      // GRS80
-	const _F = 0.003352810681182319;   // 1 / 298.257222101
+	const _B = 6356752.314140356; // GRS80
+	const _F = 0.003352810681182319; // 1 / 298.257222101
 	const _RAD = 0.017453292519943295; // π / 180
 
 	$lat1 = parseFloat($lat1) * _RAD;
@@ -156,6 +158,8 @@ function rtnGeoVincentry(
 	let cos2sm = 0.0;
 	let c = 0.0;
 
+	let iLoop = 0;
+
 	while (true) {
 		sinLamda = Math.sin(lamda);
 		cosLamda = Math.cos(lamda);
@@ -174,6 +178,11 @@ function rtnGeoVincentry(
 		lamda = omega + (1 - c) * _F * sinAlpha * (sigma + c * sinSigma * (cos2sm + c * cosSigma * (-1 + 2 * cos2sm * cos2sm)));
 		if (Math.abs(lamda - dLamda) <= 1e-12) {
 			break;
+		}
+		++iLoop;
+		// 日本国内であれば５回程度で収束
+		if (iLoop > 10) {
+			return [-1, -1]; // Err
 		}
 	}
 
@@ -217,7 +226,11 @@ function main_Data1() {
 			console.log(as1.join(Separater));
 
 			const [dist, angle] = rtnGeoVincentry(ad1[0], ad1[1], ad1[2], ad1[3]);
-			console.log("%skm%s%s度\n", dist.toFixed(6), Separater, angle.toFixed(6));
+			if (dist < 0) {
+				console.log("計測不能\n");
+			} else {
+				console.log("%skm%s%s度\n", dist.toFixed(6), Separater, angle.toFixed(6));
+			}
 		}
 	}
 }
@@ -243,7 +256,11 @@ function main_Data2() {
 			console.log(as1.join(Separater));
 
 			const [dist, angle] = rtnGeoVincentry(aLatLng[0], aLatLng[1], aLatLng[2], aLatLng[3]);
-			console.log("%skm%s%s度\n", dist.toFixed(6), Separater, angle.toFixed(6));
+			if (dist < 0) {
+				console.log("計測不能\n");
+			} else {
+				console.log("%skm%s%s度\n", dist.toFixed(6), Separater, angle.toFixed(6));
+			}
 		}
 	}
 }

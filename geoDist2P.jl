@@ -38,7 +38,9 @@ const Data1 = """
 35.685187	139.752274	24.340547	124.155636	皇居～竹富町役場
 35.685187	139.752274	24.192485	123.556720	皇居～中御神島
 35.685187	139.752274	24.059749	123.805554	皇居～波照間空港
-0	0	0.5	179.5		Debug:19936.288579km?
+0	0	0	0		Debug
+0	0	0.5	179.5		Debug
+0	0	0.5	179.7		Debug
 //	35.685187	139.752274	20.423690	136.075829	皇居～沖ノ鳥島
 """
 #---------------------------------------------------------------------
@@ -156,6 +158,8 @@ rtnGeoVincentry(
 	cos2sm    = 0.0
 	c = 0.0
 
+	iLoop = 0
+
 	while true
 		sinLamda = sin(lamda)
 		cosLamda = cos(lamda)
@@ -175,6 +179,13 @@ rtnGeoVincentry(
 
 		if abs(lamda - dLamda) <= 1e-12
 			break
+		end
+
+		iLoop += 1
+
+		# 日本国内であれば５回程度で収束
+		if iLoop > 10
+			return (-1, -1) # Err
 		end
 	end
 
@@ -222,7 +233,11 @@ main_Data1()
 			println(join(as1, Separater))
 
 			dist, angle = rtnGeoVincentry(parse(Float64, ad1[1]), parse(Float64, ad1[2]), parse(Float64, ad1[3]), parse(Float64, ad1[4]))
-			@printf("%.6fkm%s%.6f度\n\n", dist, Separater, angle)
+			if dist < 0
+				@printf("計測不能\n\n")
+			else
+				@printf("%.6fkm%s%.6f度\n\n", dist, Separater, angle)
+			end
 		end
 	end
 end
@@ -249,7 +264,11 @@ main_Data2()
 			println(join(as1, Separater))
 
 			dist, angle = rtnGeoVincentry(aLatLng[1], aLatLng[2], aLatLng[3], aLatLng[4])
-			@printf("%.6fkm%s%.6f度\n\n", dist, Separater, angle)
+			if dist < 0
+				@printf("計測不能\n\n")
+			else
+				@printf("%.6fkm%s%.6f度\n\n", dist, Separater, angle)
+			end
 		end
 	end
 end

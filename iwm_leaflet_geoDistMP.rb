@@ -61,9 +61,9 @@ rtnGeoVincentry(
 	tanU2  = f1 * Math.tan(latR2)
 	cosU2  = 1 / Math.sqrt(1 + tanU2 * tanU2)
 	sinU2  = tanU2 * cosU2
-	lamda  = omega
-	dLamda = 0.0
 
+	lamda     = omega
+	dLamda    = 0.0
 	sinLamda  = 0.0
 	cosLamda  = 0.0
 	sin2sigma = 0.0
@@ -75,7 +75,7 @@ rtnGeoVincentry(
 	cos2sm    = 0.0
 	c = 0.0
 
-	count = 0
+	iLoop = 0
 
 	while true
 		sinLamda = Math.sin(lamda)
@@ -94,8 +94,15 @@ rtnGeoVincentry(
 		dLamda = lamda
 		lamda = omega + (1 - c) * _F * sinAlpha * (sigma + c * sinSigma * (cos2sm + c * cosSigma * (-1 + 2 * cos2sm * cos2sm)))
 
-		if (count += 1) > 10 || (lamda - dLamda).abs <= 1e-12
+		if (lamda - dLamda).abs <= 1e-12
 			break
+		end
+
+		iLoop += 1
+
+		# 日本国内であれば５回程度で収束
+		if iLoop > 10
+			return [-1, -1] # Err
 		end
 	end
 

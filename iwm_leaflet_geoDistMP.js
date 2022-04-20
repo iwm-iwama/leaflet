@@ -27,18 +27,18 @@ if (!IFn || !fs.existsSync(IFn)) {
 // Vincenty法による２点間の距離
 //-------------------------------
 function rtnGeoVincentry(
-	$lat1, // 始点～北緯
-	$lng1, // 始点～東経
-	$lat2, // 終点～北緯
-	$lng2  // 終点～東経
+	$lat1,
+	$lng1,
+	$lat2,
+	$lng2
 ) {
 	if ($lat1 == $lat2 && $lng1 == $lng2) {
 		return [0.0, 0.0];
 	}
 
 	/// const A = 6378137.0;
-	const _B = 6356752.314140356;      // GRS80
-	const _F = 0.003352810681182319;   // 1 / 298.257222101
+	const _B = 6356752.314140356; // GRS80
+	const _F = 0.003352810681182319; // 1 / 298.257222101
 	const _RAD = 0.017453292519943295; // π / 180
 
 	$lat1 = parseFloat($lat1) * _RAD;
@@ -68,31 +68,38 @@ function rtnGeoVincentry(
 	let cos2sm = 0.0;
 	let c = 0.0;
 
+	let iLoop = 0;
+
 	while (true) {
 		sinLamda = Math.sin(lamda);
 		cosLamda = Math.cos(lamda);
-		sin2Sigma = cosU2 * sinLamda * (cosU2 * sinLamda) + (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda);
+		sin2Sigma = (cosU2 * sinLamda) * (cosU2 * sinLamda) + (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda);
 		if (sin2Sigma < 0) {
 			return [0.0, 0.0];
 		}
 		sinSigma = Math.sqrt(sin2Sigma);
 		cosSigma = sinU1 * sinU2 + cosU1 * cosU2 * cosLamda;
 		sigma = Math.atan2(sinSigma, cosSigma);
-		sinAlpha = (cosU1 * cosU2 * sinLamda) / sinSigma;
+		sinAlpha = cosU1 * cosU2 * sinLamda / sinSigma;
 		cos2Alpha = 1 - sinAlpha * sinAlpha;
-		cos2sm = cosSigma - (2 * sinU1 * sinU2) / cos2Alpha;
-		c = (_F / 16) * cos2Alpha * (4 + _F * (4 - 3 * cos2Alpha));
+		cos2sm = cosSigma - 2 * sinU1 * sinU2 / cos2Alpha;
+		c = _F / 16 * cos2Alpha * (4 + _F * (4 - 3 * cos2Alpha));
 		dLamda = lamda;
 		lamda = omega + (1 - c) * _F * sinAlpha * (sigma + c * sinSigma * (cos2sm + c * cosSigma * (-1 + 2 * cos2sm * cos2sm)));
 		if (Math.abs(lamda - dLamda) <= 1e-12) {
 			break;
 		}
+		++iLoop;
+		// 日本国内であれば５回程度で収束
+		if (iLoop > 10) {
+			return [-1, -1]; // Err
+		}
 	}
 
-	let d2 = (cos2Alpha * (1 - f1 * f1)) / (f1 * f1);
-	let a = 1 + (d2 / 16384) * (4096 + d2 * (-768 + d2 * (320 - 175 * d2)));
-	let b = (d2 / 1024) * (256 + d2 * (-128 + d2 * (74 - 47 * d2)));
-	let dSigma = b * sinSigma * (cos2sm + (b / 4) * (cosSigma * (-1 + 2 * cos2sm * cos2sm) - (b / 6) * cos2sm * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2sm * cos2sm)));
+	let d2 = cos2Alpha * (1 - f1 * f1) / (f1 * f1);
+	let a = 1 + d2 / 16384 * (4096 + d2 * (-768 + d2 * (320 - 175 * d2)));
+	let b = d2 / 1024 * (256 + d2 * (-128 + d2 * (74 - 47 * d2)));
+	let dSigma = b * sinSigma * (cos2sm + b / 4 * (cosSigma * (-1 + 2 * cos2sm * cos2sm) - b / 6 * cos2sm * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2sm * cos2sm)));
 	let km = (_B * a * (sigma - dSigma)) / 1000; // m => km
 	let bearing = Math.atan2(cosU2 * sinLamda, cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * 57.29577951308232;
 
@@ -101,7 +108,7 @@ function rtnGeoVincentry(
 		bearing += 360.0; // 度
 	}
 
-	return [km, bearing];
+	return [parseFloat(km), parseFloat(bearing)];
 }
 
 //-------

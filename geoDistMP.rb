@@ -502,6 +502,8 @@ rtnGeoVincentry(
 	cos2sm    = 0.0
 	c = 0.0
 
+	iLoop = 0
+
 	while true
 		sinLamda = Math.sin(lamda)
 		cosLamda = Math.cos(lamda)
@@ -521,6 +523,13 @@ rtnGeoVincentry(
 
 		if (lamda - dLamda).abs <= 1e-12
 			break
+		end
+
+		iLoop += 1
+
+		# 日本国内であれば５回程度で収束
+		if iLoop > 10
+			return [-1, -1] # Err
 		end
 	end
 
