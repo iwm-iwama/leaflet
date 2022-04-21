@@ -1,4 +1,4 @@
-<!-- iwm20210822C Ver.20220415 'U-2S' -->
+<!-- iwm20210822C Ver.20220420 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -1789,7 +1789,7 @@ function rtnGeoVincentryA(
 	$lat2 = parseFloat($lat2) * _RAD;
 	$lng2 = parseFloat($lng2) * _RAD;
 
-	const f1 = 1 - _F;
+	const f1    = 1 - _F;
 	const omega = $lng2 - $lng1;
 	const tanU1 = f1 * Math.tan($lat1);
 	const cosU1 = 1 / Math.sqrt(1 + tanU1 * tanU1);
@@ -1811,6 +1811,8 @@ function rtnGeoVincentryA(
 	let cos2sm    = 0.0;
 	let c = 0.0;
 
+	let iLoop = 0;
+
 	while(true){
 		sinLamda = Math.sin(lamda);
 		cosLamda = Math.cos(lamda);
@@ -1829,6 +1831,11 @@ function rtnGeoVincentryA(
 		lamda = omega + (1 - c) * _F * sinAlpha * (sigma + c * sinSigma * (cos2sm + c * cosSigma * (-1 + 2 * cos2sm * cos2sm)));
 		if(Math.abs(lamda - dLamda) <= 1e-12){
 			break;
+		}
+		++iLoop;
+		// 日本国内であれば５回程度で収束
+		if(iLoop > 10){
+			return [-1, -1]; // Err
 		}
 	}
 
@@ -1862,18 +1869,18 @@ function rtnGeoVincentryB(
 	$km      = parseFloat($km) * 1000; // km => m
 	$bearing = parseFloat($bearing) * _RAD;
 
-	const f1 = 1 - _F;
+	const f1         = 1 - _F;
 	const sinBearing = Math.sin($bearing);
 	const cosBearing = Math.cos($bearing);
-	const tanU1 = f1 * Math.tan($lat);
-	const cosU1 = 1 / Math.sqrt((1 + tanU1 * tanU1));
-	const sinU1 = tanU1 * cosU1;
-	const sigma1 = Math.atan2(tanU1, cosBearing);
-	const sinAlfa = cosU1 * sinBearing;
-	const cos2Alpha = 1 - sinAlfa * sinAlfa;
-	const d2 = cos2Alpha * (1 - f1 * f1) / (f1 * f1);
-	const a = 1 + d2 / 16384 * (4096 + d2 * (-768 + d2 * (320 - 175 * d2)));
-	const b = d2 / 1024 * (256 + d2 * (-128 + d2 * (74 - 47 * d2)));
+	const tanU1      = f1 * Math.tan($lat);
+	const cosU1      = 1 / Math.sqrt((1 + tanU1 * tanU1));
+	const sinU1      = tanU1 * cosU1;
+	const sigma1     = Math.atan2(tanU1, cosBearing);
+	const sinAlfa    = cosU1 * sinBearing;
+	const cos2Alpha  = 1 - sinAlfa * sinAlfa;
+	const d2         = cos2Alpha * (1 - f1 * f1) / (f1 * f1);
+	const a          = 1 + d2 / 16384 * (4096 + d2 * (-768 + d2 * (320 - 175 * d2)));
+	const b          = d2 / 1024 * (256 + d2 * (-128 + d2 * (74 - 47 * d2)));
 
 	let cos2Sigma  = 0.0;
 	let sinSigma   = 0.0;
