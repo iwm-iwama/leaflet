@@ -1,4 +1,4 @@
-<!-- iwm20210822C Ver.20220420 'U-2S' -->
+<!-- iwm20220505A Ver.20220505 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -14,8 +14,8 @@
 // leaflet
 // https://leafletjs.com/
 --------------------------------------------------------------------->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
-<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
 
 <!--------------------------------------------------------------------
 // Leaflet.MiniMap
@@ -90,14 +90,12 @@
 	-moz-border-radius:3px !important;
 	border-radius:3px !important;
 }
-.leaflet-popup-content,
-.leaflet-popup-close-button
+.leaflet-popup-content
 {
 	color:#333 !important;
-	font-size:11px;
-	line-height:14px;
+	font-size:12px;
 	margin:0;
-	padding:2px 5px;
+	padding:4px;
 }
 .leaflet-container
 {
@@ -683,11 +681,9 @@ a.polyline-measure-clearControl:active
 <script>
 	// Microsoft 独自仕様？
 	const uA = window.navigator.userAgent.toLowerCase();
-
 	if(uA.indexOf("edge") > -1 || uA.indexOf("trident") > -1 || uA.indexOf("msie") > -1){
 		alert("このブラウザでは正しく動作しないことがあります。\n\n【動作確認済】\n・Firefox\n・Google Chrome\n・Opera\n・Vivaldi");
 	}
-
 	// muni.js を使うためのおまじない
 	const GSI = {ClientMode:{}, Modal:{}, Draw:{}, Edit:{}, Control:{}, Utils:{Browser:{}}, GLOBALS:{}, TEXT:{}};
 </script>
@@ -2574,14 +2570,13 @@ function subAddGeoJson_addToMap(
 		<div id="_SW02" class="_simpleWindow" style="width:470px;">
 			<font class="_simpleWindowTitle">追加タイル編集</font>
 			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW02','_NC02');">×</font>
-			<div class="_simpleWindowOutput" style="padding:0 0 8px 0;text-align:center;">
-				<input type="file" id="_fileAddMap" class="_btnNavi2" accept=".tsv" style="font-size:12px;margin:0;width:468px;" onchange="subAddFile(this.id,'_TA02',0);"/>
+			<div class="_simpleWindowOutput" style="padding:0 8px 8px 8px;text-align:center;">
+				<input type="file" id="_fileAddMap" class="_btnNavi2" accept=".tsv" style="font-size:12px;margin:0;width:450px;" onchange="subAddFile(this.id,'_TA02',0);"/>
 				<br>
-				<textarea id="_TA02" class="_editTextBox" wrap="off" style="height:180px;width:452px;"></textarea>
+				<textarea id="_TA02" class="_editTextBox" wrap="off" style="height:180px;width:437px;"></textarea>
 				<script>
 					document.getElementById("_TA02").onkeydown = function(e){subAddTabCtrl(e, this);}
 				</script>
-				<br>
 				<input type="button" class="_btnNavi3" value="←地図へ反映" onclick="subMapSelector();subSimpleWindow_OpenClose('_SW02','_NC02');"/>
 				<a class="_btnNavi4" href="http://maps.gsi.go.jp/development/ichiran.html" target="_blank">地理院タイル一覧⇒</a>
 			</div>
@@ -2713,22 +2708,6 @@ function subAddGeoJson_addToMap(
 				}
 			);
 		}
-
-		// 【おまじない】複数のポップアップを許可（1.x対応）
-		L.Map = L.Map.include(
-			{
-				openPopup:function(popup, latlng, options){
-					if(latlng){
-						popup.setLatLng(latlng);
-					}
-					if(this._popup && this._popup.options.autoClose){
-						/// this.closePopup();
-					}
-					this._popup = popup;
-					return this.addLayer(popup);
-				}
-			}
-		);
 
 		// 初回表示設定
 		const $Map = L.map(
@@ -3160,7 +3139,8 @@ function subAddGeoJson_addToMap(
 					$BaseMarker._latlng.lng
 				),
 				{
-					autoPan:false // ポップアップ時、表示調整しない
+					autoClose:false, // 複数ポップアップ可
+					autoPan:false    // ポップアップ時、表示調整しない
 				}
 			);
 			$BaseMarker.openPopup();
@@ -3177,7 +3157,8 @@ function subAddGeoJson_addToMap(
 						_s1
 					),
 					{
-						autoPan:false // ポップアップ時、表示調整しない
+						autoClose:false, // 複数ポップアップ可
+						autoPan:false    // ポップアップ時、表示調整しない
 					}
 				);
 				_s1.openPopup();
@@ -3412,7 +3393,8 @@ function subAddGeoJson_addToMap(
 							this
 						),
 						{
-							autoPan:false // ポップアップ時、表示調整しない
+							autoClose:false, // 複数ポップアップ可
+							autoPan:false    // ポップアップ時、表示調整しない
 						}
 					);
 					this.openPopup();
