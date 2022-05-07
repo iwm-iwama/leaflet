@@ -1,4 +1,4 @@
-<!-- iwm20220505A Ver.20220505 'U-2S' -->
+<!-- iwm20220505B Ver.20220507 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -130,6 +130,17 @@ input[type="file"]
 	color:#000;
 	margin:0;
 	padding:0;
+}
+input[type="number"]
+{
+	border:1px solid #3d7cce;
+	margin:0;
+	padding:0;
+	vertical-align:middle;
+}
+input[type="number"]:hover
+{
+	background:#ff5;
 }
 ._btnNavi1,
 ._btnNavi2,
@@ -360,10 +371,7 @@ input[type="file"]
 }
 #_IBL0:hover,
 #_IBL1:hover,
-#_IBL2:hover,
-#_IBL0:focus,
-#_IBL1:focus,
-#_IBL2:focus
+#_IBL2:hover
 {
 	background:#ff5;
 }
@@ -391,9 +399,7 @@ input[type="file"]
 	width:90px;
 }
 #_NaviLat:hover,
-#_NaviLng:hover,
-#_NaviLat:focus,
-#_NaviLng:focus
+#_NaviLng:hover
 {
 	background:#ff5;
 }
@@ -402,7 +408,7 @@ input[type="file"]
 ---------------------*/
 #_AddMatchInput
 {
-	background:#fb9d3e;
+	background:#005bbb;
 	border:0;
 	line-height:14px;
 	margin:0;
@@ -416,7 +422,7 @@ input[type="file"]
 #_AddMatchInput10
 {
 	background:#fff;
-	border:1px solid #fb9d3e;
+	border:1px solid #005bbb;
 	color:#000;
 	cursor:text;
 	font-size:14px;
@@ -427,8 +433,11 @@ input[type="file"]
 	vertical-align:middle;
 	width:100px;
 }
-#_AddMatchInput10:hover,
 #_AddMatchInput10:focus
+{
+	border:1px solid #ff5;
+}
+#_AddMatchInput10:hover
 {
 	background:#ff5;
 }
@@ -455,13 +464,13 @@ input[type="file"]
 #_AddMatchInput20:hover,
 #_AddMatchInput30:hover
 {
-	color:#f00;
+	color:#ff5;
 	cursor:pointer;
 }
 #_AddMatchOutput
 {
 	background-color:rgba(255, 255, 255, 0.2);
-	border:1px solid #fb9d3e;
+	border:1px solid #005bbb;
 	color:#000;
 	font-size:13px;
 	left:0;
@@ -481,7 +490,7 @@ input[type="file"]
 }
 #_AddMatchOutputH
 {
-	color:#00d;
+	color:#005bbb;
 	padding:0 0 4px 0;
 }
 #_AddMatchOutputF
@@ -598,10 +607,9 @@ input[type="file"]
 	padding:2px 6px;
 	resize:none;
 }
-._editTextBox:hover,
-._editTextBox:focus
+._editTextBox:hover
 {
-	background:#ffc;
+	background:#ff5;
 }
 /*--------------------------
 // Leaflet.PolylineMeasure
@@ -1191,7 +1199,7 @@ function subAddMatch_Spot(
 		).addTo($Map).bindPopup(
 			$title,
 			{
-				autoPan:false,
+				autoPan:false, // ポップアップ時、表示調整しない
 				closeButton:false
 			}
 		).openPopup()
@@ -1495,26 +1503,22 @@ function subA2P_addToMap(
 								weight:2
 							}
 						)
-				).addTo($Map);
-
-				const obj2 = obj1.bindPopup(
+				).addTo($Map).bindPopup(
 					_s2,
 					{
-						autoClose:true,
-						autoPan:false,
-						closeButton:true,
-						closeOnClick:true
+						autoClose:false, // 複数ポップアップ可
+						autoPan:false    // ポップアップ時、表示調整しない
 					}
 				).openPopup();
 
-				obj2.on(
+				obj1.on(
 					"mouseover",
 					function(e){
 						this.openPopup();
 					}
 				);
 
-				$AryPoint.push(obj2);
+				$AryPoint.push(obj1);
 			}
 			catch(e){
 			}
@@ -2570,9 +2574,8 @@ function subAddGeoJson_addToMap(
 		<div id="_SW02" class="_simpleWindow" style="width:470px;">
 			<font class="_simpleWindowTitle">追加タイル編集</font>
 			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW02','_NC02');">×</font>
-			<div class="_simpleWindowOutput" style="padding:0 8px 8px 8px;text-align:center;">
+			<div class="_simpleWindowOutput" style="padding:0 0 8px 8px;">
 				<input type="file" id="_fileAddMap" class="_btnNavi2" accept=".tsv" style="font-size:12px;margin:0;width:450px;" onchange="subAddFile(this.id,'_TA02',0);"/>
-				<br>
 				<textarea id="_TA02" class="_editTextBox" wrap="off" style="height:180px;width:437px;"></textarea>
 				<script>
 					document.getElementById("_TA02").onkeydown = function(e){subAddTabCtrl(e, this);}
@@ -2590,7 +2593,7 @@ function subAddGeoJson_addToMap(
 		<div id="_SW03" class="_simpleWindow" style="width:400px;">
 			<font class="_simpleWindowTitle">GeoJSON ファイル読込</font>
 			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW03','_NC03');">×</font>
-			<div class="_simpleWindowOutput" style="line-height:36px;text-align:center;">
+			<div class="_simpleWindowOutput" style="line-height:36px;padding:0 0 2px 8px;">
 				<input type="checkbox" id="_checkboxGeoJson0" class="_checkboxNavi1" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(0);"/><input type="file" id="_fileGeoJson0" class="_btnNavi2" accept=".geojson" style="font-size:12px;margin:0;width:360px;" onchange="subAddGeoJson_readFile(0);"/>
 				<br>
 				<input type="checkbox" id="_checkboxGeoJson1" class="_checkboxNavi1" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(1);"/><input type="file" id="_fileGeoJson1" class="_btnNavi2" accept=".geojson" style="font-size:12px;margin:0;width:360px;" onchange="subAddGeoJson_readFile(1);"/>
@@ -2614,7 +2617,7 @@ function subAddGeoJson_addToMap(
 		<div id="_SW04" class="_simpleWindow" style="width:470px;">
 			<font class="_simpleWindowTitle">マーカーをポイントに変換</font>
 			<font class="_simpleWindowClose" onclick="subSimpleWindow_OpenClose('_SW04','_NC04');">×</font>
-			<div class="_simpleWindowOutput" style="padding:0 8px 8px 8px;">
+			<div class="_simpleWindowOutput" style="padding:0 0 8px 8px;">
 				<input type="button" class="_btnNavi3" value="→マーカーから読込" onclick="subA2P_EditInit('_TA04');subMapToPoint('_TA04');"/>
 				<input type="file" id="_readPointFile" class="_btnNavi2" accept=".tsv" style="font-size:12px;margin:0 0 0 4px;width:319px;" onchange="subAddFile(this.id,'_TA04',1);"/>
 				<textarea id="_TA04" class="_editTextBox" wrap="off" style="height:250px;width:437px;" placeholder="[Tab]区切り／UTF-8N&#13;&quot;//&quot; で始まる行はコメント行&#13;// 例 ※&quot;icon@画像ファイル&quot; はオプション&#13;35.68365900&#9;139.75408900&#9;皇居&#9;icon@画像ファイル"></textarea>
@@ -2675,14 +2678,20 @@ function subAddGeoJson_addToMap(
 		// 地図描写調整
 		subInitDisp();
 
-		// URLからXYZ値を取得
+		// URLからアンカー(#Z/X/Y)取得
 		const hash = window.location.hash;
 
 		if(hash.length){
 			const aHash = hash.split("/");
-			document.getElementById("_NaviZoom").value = aHash[0].substr(1); // 先頭の'#'より後
-			document.getElementById("_NaviLat").value  = parseFloat(aHash[1]).toFixed(8);
-			document.getElementById("_NaviLng").value  = parseFloat(aHash[2]).toFixed(8);
+			let iZoom = parseInt(aHash[0].substr(1), 10);
+			if(isNaN(iZoom)){
+				_iwmCU();
+			}
+			else{
+				document.getElementById("_NaviZoom").value = iZoom;
+				document.getElementById("_NaviLat").value  = parseFloat(aHash[1]).toFixed(8);
+				document.getElementById("_NaviLng").value  = parseFloat(aHash[2]).toFixed(8);
+			}
 		}
 		else{
 			// 初回座標＠皇居
@@ -3449,8 +3458,8 @@ function subAddGeoJson_addToMap(
 ---------------------->
 <textarea id="_HDoc01" style="display:none;">
 <style>
-._div_head{background:#ffc;color:#000;margin:8px 4px 4px 4px;padding:0 8px;font-weight:600;}
-._ol, ._ul{margin:0;padding:0;}
+._div_head{background:#ffc; border:1px solid #666; color:#444; font-weight:600; margin:8px 4px 4px 4px; padding:0 6px;}
+._ol, ._ul{margin:0; padding:0;}
 ._li1, ._li2{padding:0 0 2px 0;}
 ._li1{margin:0 0 0 24px;}
 ._li2{margin:0 0 0 8px;}
