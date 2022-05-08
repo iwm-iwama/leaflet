@@ -1,4 +1,4 @@
-<!-- iwm20220505B Ver.20220507 'U-2S' -->
+<!-- iwm20220505B Ver.20220508 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -2503,14 +2503,12 @@ function subAddGeoJson_addToMap(
 	---------------->
 	<div id="_InputZoomA">
 		ズームレベル<br>
-		<input type="button" class="_ZA" value="5" onclick="_iwmZA('5');"/><input type="button" class="_ZA" value="6" onclick="_iwmZA('6');"/><input type="button" class="_ZA" value="7" onclick="_iwmZA('7');"/><input type="button" class="_ZA" value="8" onclick="_iwmZA('8');"/><input type="button" class="_ZA" value="9" onclick="_iwmZA('9');"/><br>
-		<input type="button" class="_ZA" value="10" onclick="_iwmZA('10');"/><input type="button" class="_ZA" value="11" onclick="_iwmZA('11');"/><input type="button" class="_ZA" value="12" onclick="_iwmZA('12');"/><input type="button" class="_ZA" value="13" onclick="_iwmZA('13');"/><input type="button" class="_ZA" value="14" onclick="_iwmZA('14');"/><br>
-		<input type="button" class="_ZA" value="15" onclick="_iwmZA('15');"/><input type="button" class="_ZA" value="16" onclick="_iwmZA('16');"/><input type="button" class="_ZA" value="17" onclick="_iwmZA('17');"/><input type="button" class="_ZA" value="18" onclick="_iwmZA('18');"/><input type="button" class="_ZA" value="19" onclick="_iwmZA('19');"/><br>
-		<input type="button" class="_ZA" value="20" onclick="_iwmZA('20');"/><input type="button" class="_ZA" value="21" onclick="_iwmZA('21');"/><input type="button" class="_ZA" value="22" onclick="_iwmZA('22');"/><input type="button" class="_ZA" value="23" onclick="_iwmZA('23');"/><div class="_btnNavi1" style="display:inline-block;_display:inline;font-size:14px;height:26px;line-height:26px;margin:2px;padding:0;vertical-align:top;width:26px;" onclick="_iwmZA2();"><i class="fa fa-map-marker"></i></div>
+		<input type="button" class="_ZA" value="3" onclick="_iwmZA('3');"/><input type="button" class="_ZA" value="4" onclick="_iwmZA('4');"/><input type="button" class="_ZA" value="5" onclick="_iwmZA('5');"/><input type="button" class="_ZA" value="6" onclick="_iwmZA('6');"/><input type="button" class="_ZA" value="7" onclick="_iwmZA('7');"/><br>
+		<input type="button" class="_ZA" value="8" onclick="_iwmZA('8');"/><input type="button" class="_ZA" value="9" onclick="_iwmZA('9');"/><input type="button" class="_ZA" value="10" onclick="_iwmZA('10');"/><input type="button" class="_ZA" value="11" onclick="_iwmZA('11');"/><input type="button" class="_ZA" value="12" onclick="_iwmZA('12');"/><br>
+		<input type="button" class="_ZA" value="13" onclick="_iwmZA('13');"/><input type="button" class="_ZA" value="14" onclick="_iwmZA('14');"/><input type="button" class="_ZA" value="15" onclick="_iwmZA('15');"/><input type="button" class="_ZA" value="16" onclick="_iwmZA('16');"/><input type="button" class="_ZA" value="17" onclick="_iwmZA('17');"/><br>
+		<input type="button" class="_ZA" value="18" onclick="_iwmZA('18');"/><input type="button" class="_ZA" value="19" onclick="_iwmZA('19');"/><input type="button" class="_ZA" value="20" onclick="_iwmZA('20');"/><input type="button" class="_ZA" value="21" onclick="_iwmZA('21');"/><div class="_btnNavi1" style="display:inline-block;_display:inline;font-size:14px;height:26px;line-height:26px;margin:2px;padding:0;vertical-align:top;width:26px;" onclick="_iwmZA2();"><i class="fa fa-map-marker"></i></div>
 	</div>
 	<div id="_InputZoomB">
-		<input type="button" class="_ZB" value="23" onclick="_iwmZB('23');"/><br>
-		<input type="button" class="_ZB" value="22" onclick="_iwmZB('22');"/><br>
 		<input type="button" class="_ZB" value="21" onclick="_iwmZB('21');"/><br>
 		<input type="button" class="_ZB" value="20" onclick="_iwmZB('20');"/><br>
 		<input type="button" class="_ZB" value="19" onclick="_iwmZB('19');"/><br>
@@ -2527,7 +2525,9 @@ function subAddGeoJson_addToMap(
 		<input type="button" class="_ZB" value="8" onclick="_iwmZB('8');"/><br>
 		<input type="button" class="_ZB" value="7" onclick="_iwmZB('7');"/><br>
 		<input type="button" class="_ZB" value="6" onclick="_iwmZB('6');"/><br>
-		<input type="button" class="_ZB" value="5" onclick="_iwmZB('5');"/>
+		<input type="button" class="_ZB" value="5" onclick="_iwmZB('5');"/><br>
+		<input type="button" class="_ZB" value="4" onclick="_iwmZB('4');"/><br>
+		<input type="button" class="_ZB" value="3" onclick="_iwmZB('3');"/>
 	</div>
 	<div id="_InputBL">
 		<input type="text" id="_IBL0" onclick="subIwmInput_BL_GetId(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 0);" style="width:37px;"/>度<input type="text" id="_IBL1" onclick="subIwmInput_BL_GetId(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 0);" style="width:37px;"/>分<br>
@@ -2725,8 +2725,8 @@ function subAddGeoJson_addToMap(
 				center:[document.getElementById("_NaviLat").value, document.getElementById("_NaviLng").value],
 				zoom:document.getElementById("_NaviZoom").value,
 				minZoom:3,  // 最小ズーム
-				maxZoom:23, // 最大ズーム
-				zoomControl:false, // Control.Zoom 非表示
+				maxZoom:21, // 最大ズーム
+				zoomControl:false,    // Control.Zoom 非表示
 				doubleClickZoom:false // DblClick制御
 			}
 		);
