@@ -1,4 +1,4 @@
-<!-- iwm20220505B Ver.20220508 'U-2S' -->
+<!-- iwm20220512A Ver.20220512 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -62,6 +62,13 @@
 --------------------------------------------------------------------->
 <link rel="stylesheet" href="https://giscience.github.io/Leaflet.Heightgraph/dist/L.Control.Heightgraph.min.css"/>
 <script type="text/javascript" src="https://giscience.github.io/Leaflet.Heightgraph/dist/L.Control.Heightgraph.min.js"></script>
+
+<!--------------------------------------------------------------------
+// Leaflet.Control.Opacity
+// https://github.com/dayjournal/Leaflet.Control.Opacity
+--------------------------------------------------------------------->
+<link rel="stylesheet" href="https://dayjournal.github.io/Leaflet.Control.Opacity/plugin/Leaflet.Control.Opacity/dist/L.Control.Opacity.css"/>
+<script type="text/javascript" src="https://dayjournal.github.io/Leaflet.Control.Opacity/plugin/Leaflet.Control.Opacity/dist/L.Control.Opacity.js"></script>
 
 <!--------------------------------------------------------------------
 // CSS
@@ -1373,10 +1380,10 @@ function subA2P_Geocoding(
 					let _a2 = [];
 
 					_a2 = rtnGeo10toIBL(lat);
-					const _lat = "<font color=\"#3d7cce\">北緯</font>" + _a2[0] + "度" + _a2[1] + "分" + _a2[2].toFixed(6) + "秒／" + lat.toFixed(6) + "度";
+					const _lat = "<font color=\"#3d7cce\">緯度</font>" + _a2[0] + "度" + _a2[1] + "分" + _a2[2].toFixed(6) + "秒／" + lat.toFixed(6) + "度";
 
 					_a2 = rtnGeo10toIBL(lng);
-					const _lng = "<font color=\"#3d7cce\">東経</font>" + _a2[0] + "度" + _a2[1] + "分" + _a2[2].toFixed(6) + "秒／" + lng.toFixed(6) + "度";
+					const _lng = "<font color=\"#3d7cce\">経度</font>" + _a2[0] + "度" + _a2[1] + "分" + _a2[2].toFixed(6) + "秒／" + lng.toFixed(6) + "度";
 
 					str += lat.toFixed(8) + "\t" + lng.toFixed(8) + "\t" + "<font color=\"#ff5858\">" + _a1[1] + "</font><br>＠<font color=\"#333\">" + _a1[0] + "</font>" + "\t" + _lat + "\t" + _lng + "\t" + _a1.slice(2).join("\t");
 				}
@@ -1982,8 +1989,8 @@ function rtnMarkerPopup1(
 	// HTML上の改行表記は "<br>"
 	return(
 		"<font color='#ff5858'>" + $BaseMarker.options.title + "</font><br>" +
-		"<font color='#3d7cce'>北緯</font>" + latRem + "／" + $lat.toFixed(6) + "度<br>" +
-		"<font color='#3d7cce'>東経</font>" + lngRem + "／" + $lng.toFixed(6) + "度<br>" +
+		"<font color='#3d7cce'>緯度</font>" + latRem + "／" + $lat.toFixed(6) + "度<br>" +
+		"<font color='#3d7cce'>経度</font>" + lngRem + "／" + $lng.toFixed(6) + "度<br>" +
 		"<font color='#3d7cce'>標高</font>" + $BaseMarker.elevation
 	);
 }
@@ -2044,8 +2051,8 @@ function rtnMarkerPopup2(
 	// HTML上の改行表記は "<br>"
 	return(
 		"<font color='#ff5858'>" + $oMarker.options.title + "</font><br>" +
-		"<font color='#3d7cce'>北緯</font>" + latRem + "／" + $latTo.toFixed(6) + "度<br>" +
-		"<font color='#3d7cce'>東経</font>" + lngRem + "／" + $lngTo.toFixed(6) + "度<br>" +
+		"<font color='#3d7cce'>緯度</font>" + latRem + "／" + $latTo.toFixed(6) + "度<br>" +
+		"<font color='#3d7cce'>経度</font>" + lngRem + "／" + $lngTo.toFixed(6) + "度<br>" +
 		"<font color='#3d7cce'>標高</font>" + $oMarker.elevation + "<br>" +
 		"<font color='#3d7cce'>距離</font>" + distRem + "／" + angleRem
 	);
@@ -2549,8 +2556,8 @@ function subAddGeoJson_addToMap(
 	// 拡張機能
 	------------>
 	<div id="_divNaviCommander">
-		北緯&nbsp;<input type="text" id="_NaviLat" onclick="subIwmInput_BL_Open(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 8);" placeholder="緯度入力"/>
-		東経&nbsp;<input type="text" id="_NaviLng" onclick="subIwmInput_BL_Open(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 8);" placeholder="経度入力"/>
+		緯度&nbsp;<input type="text" id="_NaviLat" onclick="subIwmInput_BL_Open(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 8);" placeholder="緯度入力"/>
+		経度&nbsp;<input type="text" id="_NaviLng" onclick="subIwmInput_BL_Open(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 8);" placeholder="経度入力"/>
 		<!-- ズーム --><input type="hidden" id="_NaviZoom"/>
 		<div class="_btnNavi1" style="display:inline-block;_display:inline;font-size:14px;line-height:16px;" onclick="_iwmZA2();"><i class="fa fa-map-marker"></i></div>
 		<input type="button" id="_btnMarker" class="_btnNavi2" value="マーカー消去" onclick="subMyObj_Remove($AryLocalMarker);"/>
@@ -2581,7 +2588,7 @@ function subAddGeoJson_addToMap(
 					document.getElementById("_TA02").onkeydown = function(e){subAddTabCtrl(e, this);}
 				</script>
 				<input type="button" class="_btnNavi3" value="←地図へ反映" onclick="subMapSelector();subSimpleWindow_OpenClose('_SW02','_NC02');"/>
-				<a class="_btnNavi4" href="http://maps.gsi.go.jp/development/ichiran.html" target="_blank">地理院タイル一覧⇒</a>
+				<a class="_btnNavi4" href="http://maps.gsi.go.jp/development/ichiran.html" target="_blank">地理院タイル一覧</a>
 			</div>
 		</div>
 		<!----------
@@ -2757,167 +2764,90 @@ function subAddGeoJson_addToMap(
 		);
 		$PolylineMeasure.addTo($Map);
 
-		/*--------------------------------------------------------------------------------------
-		// メニュー等で使用
-		//   [0]'地図種', [1]'URL', [2]'拡張子', [3]'opacity', [4]'maxNativeZoom'
-		//   (例) ["std", "https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png", 1.0, 18]
-		// http://maps.gsi.go.jp/development/ichiran.html
-		--------------------------------------------------------------------------------------*/
-		const $URL = "https://cyberjapandata.gsi.go.jp/xyz/";
-
 		/*---------------
 		// ラジオボタン
 		---------------*/
-		let $RadioButtonSelectMap = [];
+		let $MapBaseLayers = [];
 
 		let $RadioButtonMap = [];
-			$RadioButtonMap.push(["標準地図", $URL + "std/{z}/{x}/{y}.png",   1.0, 18, "地理院タイル std"]);
-			$RadioButtonMap.push(["淡色地図", $URL + "pale/{z}/{x}/{y}.png",  1.0, 18, "地理院タイル pale"]);
-			$RadioButtonMap.push(["白地図"  , $URL + "blank/{z}/{x}/{y}.png", 1.0, 14, "地理院タイル blank"]);
-			$RadioButtonMap.push(["なし", "", 0.0, 18]);
+			// [0]メニュー, [1]タイルURL, [2]最大ズームレベル, [3]コピーライト
+			$RadioButtonMap.push(["標準地図", "https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png",   18, "地理院タイル 標準地図"]);
+			$RadioButtonMap.push(["淡色地図", "https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png",  18, "地理院タイル 淡色地図"]);
+			$RadioButtonMap.push(["白地図"  , "https://cyberjapandata.gsi.go.jp/xyz/blank/{z}/{x}/{y}.png", 14, "地理院タイル 白地図"]);
+			$RadioButtonMap.push(["なし", "", 1.0, 18]);
 
 		for(let _a1 of $RadioButtonMap){
-			$RadioButtonSelectMap[_a1[0]] = L.tileLayer(
+			$MapBaseLayers[_a1[0]] = L.tileLayer(
 				_a1[1],
 				{
-					attribution:_a1[4],
-					opacity:_a1[2],
-					maxNativeZoom:_a1[3],
-					maxZoom:23
+					attribution:_a1[3],
+					opacity:1.0,
+					maxNativeZoom:_a1[2],
+					maxZoom:21
 				}
 			);
 		}
 		// 初期選択値
-		$RadioButtonSelectMap[$RadioButtonMap[0][0]].addTo($Map);
+		$MapBaseLayers[$RadioButtonMap[0][0]].addTo($Map);
 
 		/*-----------------------
 		// チェックボックス可変
 		-----------------------*/
-		let $LMapSelector = null;
+		let $MapSelector = null;
+		let $MapOpacityCtrl = null;
 
 		function subMapSelector(){
-			let checkBoxSelectMap = [];
 			const obj = document.getElementById("_TA02");
-
 			if(obj.value.length == 0){
-				obj.value = "// [Tab]区切り\n// タイル種\t拡張子\t透過率(0.1-1.0)\t最大ズーム\t表示名(省略可)\nseamlessphoto\tjpg\t0.5\t18\tシームレス写真／50%\nseamlessphoto\tjpg\t1.0\t18\tシームレス写真／100%\nrelief\tpng\t1.0\t15\t色別標高図\nslopezone1map\tpng\t1.0\t15\t全国傾斜量区分図\n";
+				obj.value =
+					"// [Tab]区切り\n" +
+					"// [0]メニュー\t[1]タイルURL\t[2]最大ズームレベル\t[3]コピーライト\n" +
+					"シームレス写真\thttps://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg\t18\t地理院地図 シームレス写真\n" +
+					"色別標高図\thttps://cyberjapandata.gsi.go.jp/xyz/relief/{z}/{x}/{y}.png\t15\t地理院地図 色別標高図\n" +
+					"全国傾斜量区分図\thttps://cyberjapandata.gsi.go.jp/xyz/slopezone1map/{z}/{x}/{y}.png\t15\t地理院地図 全国傾斜量区分図\n" +
+					"シームレス地質図\thttps://gbank.gsj.jp/seamless/v2/api/1.2/tiles/{z}/{y}/{x}.png\t13\tGSJ, AIST、<a href='https://gbank.gsj.jp/seamless/' target='_blank'>20万分の1日本シームレス地質図V2</a>\n" +
+					"UTMグリッド\thttp://{s}.tile.stamen.com/utm/{z}/{x}/{y}.png\t21\tMap tiles by <a href='http://stamen.com' target='_blank'>Stamen Design</a>, under <a href='http://creativecommons.org/licenses/by/3.0' target='_blank'>CC BY 3.0</a>\n";
 			}
 
-			let ary = [];
+			let $MapOverlays = [];
 
 			for(let _s1 of document.getElementById("_TA02").value.trimEnd().split("\n")){
 				_s1 = _s1.trim();
-
 				if(_s1.length > 0 && _s1.substr(0, 2) != "//"){
 					let _a1 = _s1.split("\t");
-
-					// タイル種
-					_a1[0] = _a1[0].trim();
-
-					// 拡張子
-					try{
-						_a1[1] = _a1[1].trim();
-						if(!_a1[1].length){
-							throw null;
-						}
+					if(_a1[0].trim().length > 0 && _a1[1].trim().length > 0 && _a1[2].trim().length > 0 && _a1[3].trim().length > 0){
+						$MapOverlays[_a1[0]] = L.tileLayer(
+							_a1[1],
+							{
+								attribution:_a1[3],
+								opacity:0.5,
+								maxNativeZoom:parseInt(_a1[2], 10),
+								maxZoom:21
+							}
+						);
 					}
-					catch(e){
-						_a1[1] = "png";
-					}
-
-					// 透過率(0.1-1.0)
-					try{
-						_a1[2] = parseFloat(_a1[2]);
-						if(isNaN(_a1[2])){
-							throw null;
-						}
-					}
-					catch(e){
-						_a1[2] = 0.5;
-					}
-
-					// 最大ズーム
-					try{
-						_a1[3] = parseInt(_a1[3]);
-						if(isNaN(_a1[3])){
-							throw null;
-						}
-					}
-					catch(e){
-						_a1[3] = 18;
-					}
-
-					// 表示名(省略可)
-					try{
-						_a1[4] = _a1[4].trim();
-						if(!_a1[4].length){
-							throw null;
-						}
-					}
-					catch(e){
-						_a1[4] = _a1[0];
-					}
-
-					// attribution(省略可)
-					try{
-						_a1[5] = _a1[5].trim();
-						if(!_a1[5].length){
-							throw null;
-						}
-					}
-					catch(e){
-						_a1[5] = "地理院タイル " + _a1[0];
-					}
-
-					ary.push([_a1[0], ($URL + _a1[0] + "/{z}/{x}/{y}." + _a1[1]), _a1[2], _a1[3], _a1[4], _a1[5]]);
 				}
 			}
 
-			// 追加タイル
-			ary.push([
-				"シームレス地質図／30%",
-				"https://gbank.gsj.jp/seamless/v2/api/1.2/tiles/{z}/{y}/{x}.png",
-				0.3,
-				13,
-				"",
-				"20万分の1日本シームレス地質図V2@<a href='https://gbank.gsj.jp/seamless/v2.html' target='_blank'>産総研地質調査総合センターウェブサイト</a>"
-			]);
-			ary.push([
-				"シームレス地質図／80%",
-				"https://gbank.gsj.jp/seamless/v2/api/1.2/tiles/{z}/{y}/{x}.png",
-				0.8,
-				13,
-				"",
-				"20万分の1日本シームレス地質図V2@<a href='https://gbank.gsj.jp/seamless/v2.html' target='_blank'>産総研地質調査総合センターウェブサイト</a>"
-			]);
-			ary.push([
-				"UTMグリッド",
-				"http://{s}.tile.stamen.com/utm/{z}/{x}/{y}.png",
-				1.0,
-				23,
-				"",
-				"Map tiles by <a href='http://stamen.com' target='_blank'>Stamen Design</a>, under <a href='http://creativecommons.org/licenses/by/3.0' target='_blank'>CC BY 3.0</a>."
-			]);
-
-			for(let _a1 of ary){
-				if(!_a1[4].length){
-					_a1[4] = _a1[0];
-				}
-				checkBoxSelectMap[_a1[4]] = L.tileLayer(
-					_a1[1],
-					{
-						attribution:_a1[5],
-						opacity:_a1[2],
-						maxNativeZoom:_a1[3],
-						maxZoom:23
-					}
-				);
+			/*-------------------
+			// 透過コントロール
+			-------------------*/
+			if($MapOpacityCtrl){
+				$Map.removeControl($MapOpacityCtrl); // 前出を削除
 			}
+			$MapOpacityCtrl = L.control.opacity(
+				$MapOverlays,
+				{
+					collapsed:true,
+					position:'bottomright'
+				}
+			);
+			$MapOpacityCtrl.addTo($Map);
 
 			/*-----------------
 			// 経緯度グリッド
 			-----------------*/
-			checkBoxSelectMap["経緯度グリッド"] = L.latlngGraticule(
+			$MapOverlays["経緯度グリッド"] = L.latlngGraticule(
 				{
 					color:"#003",
 					font:"16px sans-serif",
@@ -2929,12 +2859,12 @@ function subAddGeoJson_addToMap(
 					zoomInterval:[
 						{
 							start:0,
-							end:5,
+							end:3,
 							interval:5
 						},
 						{
 							start:6,
-							end:23,
+							end:21,
 							interval:1
 						}
 					]
@@ -3068,36 +2998,53 @@ function subAddGeoJson_addToMap(
 			};
 
 			// 追加メニュー
-			checkBoxSelectMap["注記／明色 [-z18]"] = $StdToBright;
-			checkBoxSelectMap["注記／褐色 [-z18]"] = $StdToBrown;
-			checkBoxSelectMap["注記／黒色 [-z18]"] = $StdToBlack;
-			checkBoxSelectMap["海水面 [-z14]"] = $Dem10ToSeaLevel;
-			checkBoxSelectMap["タイル座標"] = $TileCoord;
+			$MapOverlays["注記／明色 [-z18]"] = $StdToBright;
+			$MapOverlays["注記／褐色 [-z18]"] = $StdToBrown;
+			$MapOverlays["注記／黒色 [-z18]"] = $StdToBlack;
+			$MapOverlays["海水面 [-z14]"] = $Dem10ToSeaLevel;
+			$MapOverlays["タイル座標"] = $TileCoord;
 
 			/*-------------------
 			// 地図選択メニュー
 			-------------------*/
-			if($LMapSelector){
-				$Map.removeControl($LMapSelector); // 前出を削除
+			if($MapSelector){
+				$Map.removeControl($MapSelector); // 前出を削除
 			}
-			$LMapSelector = L.control.layers(
-				$RadioButtonSelectMap,
-				checkBoxSelectMap,
+			$MapSelector = L.control.layers(
+				$MapBaseLayers,
+				$MapOverlays,
 				{
 					position:"topright"
 				}
 			);
-			$LMapSelector.addTo($Map);
+			$MapSelector.addTo($Map);
 
 			// 初回表示の処理
 			$Map.on(
 				"overlayremove",
 				function(e){
 					// 地図選択メニューから削除
-					checkBoxSelectMap[e.name].remove($Map);
+					$MapOverlays[e.name].remove($Map);
 				}
 			);
 		}
+
+		// ミニマップ
+		const miniMapLayer = new L.TileLayer(
+			"https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png",
+			{
+				minZoom:3,
+				maxZoom:21
+			}
+		);
+		new L.Control.MiniMap(
+			miniMapLayer,
+			{
+				toggleDisplay:true
+			}
+		).addTo($Map);
+
+		// 透過コントロール等を再設定
 		subMapSelector();
 
 		// 座標マーカー
@@ -3262,21 +3209,6 @@ function subAddGeoJson_addToMap(
 
 		// ズームバー
 		subIwmInput_Zoom_Change($Map.getZoom());
-
-		// ミニマップ
-		const miniMapLayer = new L.TileLayer(
-			"https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png",
-			{
-				minZoom:3,
-				maxZoom:18
-			}
-		);
-		new L.Control.MiniMap(
-			miniMapLayer,
-			{
-				toggleDisplay:true
-			}
-		).addTo($Map);
 
 		/*-----------------
 		// 右クリック共通
@@ -3464,6 +3396,7 @@ function subAddGeoJson_addToMap(
 ._li1{margin:0 0 0 24px;}
 ._li2{margin:0 0 0 8px;}
 ._font_size22px{font-size:22px;}
+._font_color1, ._font_color2, ._font_color3{font-weight:600;}
 ._font_color1{color:#3d7cce;}
 ._font_color2{color:#bd1e38;}
 ._font_color3{color:#fb9d3e;}
