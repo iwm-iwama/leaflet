@@ -1,4 +1,4 @@
-<!-- iwm20220512B Ver.20220717 'U-2S' -->
+<!-- iwm20220512B Ver.20220801 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -88,14 +88,15 @@
 /*------------------
 // leaflet CSS置換
 ------------------*/
-.leaflet-popup-content-wrapper,
-.leaflet-popup-tip
+.leaflet-container
 {
 	background:#fff;
-	border-color:#333;
-	-webkit-border-radius:3px !important;
-	-moz-border-radius:3px !important;
-	border-radius:3px !important;
+}
+.leaflet-control-minimap
+{
+	border:solid rgba(0, 0, 0, 0.6) 2px;
+	border-radius:10px;
+	box-shadow:none;
 }
 .leaflet-popup-content
 {
@@ -104,9 +105,14 @@
 	margin:0;
 	padding:4px;
 }
-.leaflet-container
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip
 {
 	background:#fff;
+	border-color:#333;
+	-webkit-border-radius:3px !important;
+	-moz-border-radius:3px !important;
+	border-radius:3px !important;
 }
 .leaflet-tooltip
 {
@@ -2513,7 +2519,7 @@ function subAddGeoJson_addToMap(
 		<input type="button" class="_ZA" value="3" onclick="_iwmZA('3');"/><input type="button" class="_ZA" value="4" onclick="_iwmZA('4');"/><input type="button" class="_ZA" value="5" onclick="_iwmZA('5');"/><input type="button" class="_ZA" value="6" onclick="_iwmZA('6');"/><input type="button" class="_ZA" value="7" onclick="_iwmZA('7');"/><br>
 		<input type="button" class="_ZA" value="8" onclick="_iwmZA('8');"/><input type="button" class="_ZA" value="9" onclick="_iwmZA('9');"/><input type="button" class="_ZA" value="10" onclick="_iwmZA('10');"/><input type="button" class="_ZA" value="11" onclick="_iwmZA('11');"/><input type="button" class="_ZA" value="12" onclick="_iwmZA('12');"/><br>
 		<input type="button" class="_ZA" value="13" onclick="_iwmZA('13');"/><input type="button" class="_ZA" value="14" onclick="_iwmZA('14');"/><input type="button" class="_ZA" value="15" onclick="_iwmZA('15');"/><input type="button" class="_ZA" value="16" onclick="_iwmZA('16');"/><input type="button" class="_ZA" value="17" onclick="_iwmZA('17');"/><br>
-		<input type="button" class="_ZA" value="18" onclick="_iwmZA('18');"/><input type="button" class="_ZA" value="19" onclick="_iwmZA('19');"/><input type="button" class="_ZA" value="20" onclick="_iwmZA('20');"/><input type="button" class="_ZA" value="21" onclick="_iwmZA('21');"/><div class="_btnNavi1" style="display:inline-block;_display:inline;font-size:14px;height:26px;line-height:26px;margin:2px;padding:0;vertical-align:top;width:26px;" onclick="_iwmZA2();"><i class="fa fa-map-marker"></i></div>
+		<input type="button" class="_ZA" value="18" onclick="_iwmZA('18');"/><input type="button" class="_ZA" value="19" onclick="_iwmZA('19');"/><input type="button" class="_ZA" value="20" onclick="_iwmZA('20');"/><input type="button" class="_ZA" value="21" onclick="_iwmZA('21');"/><div class="_btnNavi1" style="border-radius:13px;display:inline-block;font-size:14px;height:26px;line-height:26px;margin:2px;padding:0;vertical-align:top;width:26px;" onclick="_iwmZA2();"><i class="fa fa-map-marker"></i></div>
 	</div>
 	<div id="_InputZoomB">
 		<input type="button" class="_ZB" value="21" onclick="_iwmZB('21');"/><br>
@@ -2559,8 +2565,8 @@ function subAddGeoJson_addToMap(
 		緯度&nbsp;<input type="text" id="_NaviLat" onclick="subIwmInput_BL_Open(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 8);" placeholder="緯度入力"/>
 		経度&nbsp;<input type="text" id="_NaviLng" onclick="subIwmInput_BL_Open(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 8);" placeholder="経度入力"/>
 		<!-- ズーム --><input type="hidden" id="_NaviZoom"/>
-		<div class="_btnNavi1" style="display:inline-block;_display:inline;font-size:14px;line-height:16px;" onclick="_iwmZA2();"><i class="fa fa-map-marker"></i></div>
-		<input type="button" id="_btnMarker" class="_btnNavi2" value="マーカー消去" onclick="subMyObj_Remove($AryLocalMarker);"/>
+		<div class="_btnNavi1" style="border-radius:10px;display:inline-block;font-size:14px;line-height:20px;margin:0;padding:0 6px;" onclick="_iwmZA2();"><i class="fa fa-map-marker"></i></div>
+		<input type="button" id="_btnMarker" class="_btnNavi2" style="border-radius:10px;display:inline-block;font-size:12px;line-height:20px;margin:0;padding:0 8px;" value="マーカー消去" onclick="subMyObj_Remove($AryLocalMarker);"/>
 		<!---------
 		// ヘルプ
 		---------->
@@ -2644,7 +2650,7 @@ function subAddGeoJson_addToMap(
 				<div style="line-height:24px;">
 					<input type="button" class="_btnNavi4" value="→住所から変換" onclick="subA2P_Geocoding('_TA04');"/>
 					<input type="button" class="_btnNavi4" value="↑サンプル出力" onclick="subA2P_GeocodingSample('_TA04');"/>
-					<a href="#" id="_btnDL" download="" onclick="subA2P_EditSave('_TA04')"><div class="_btnNavi2" style="display:inline-block;_display:">ファイルに保存</div></a>
+					<a href="#" id="_btnDL" download="" onclick="subA2P_EditSave('_TA04')"><div class="_btnNavi2" style="display:inline-block;">ファイルに保存</div></a>
 					<input type="button" class="_btnNavi1" value="↑クリア" onclick="subA2P_EditInit('_TA04');"/>
 					<br>
 					<input type="button" class="_btnNavi3" value="←地図へ反映" onclick="subA2P_addToMap('_TA04');subA2P_DistMP('_TA04','_textDist',_checkboxDist.checked);"/>
