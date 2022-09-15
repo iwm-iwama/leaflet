@@ -1688,7 +1688,7 @@ function rtnA2P_DistMP(
 	}
 	aOld = [];
 
-	// 区間距離 = 200分割 ※地理院地図は300分割／サーバサイド処理のため速い
+	// 区間距離 = 200分割 ※地理院タイルは300分割／サーバサイド処理のため速い
 	$rtnA2P_DistMP_PartKm = iTotalDist / 200;
 
 	for(let _a1 of aLatLng1){
@@ -2818,9 +2818,9 @@ function subAddGeoJson_addToMap(
 				obj.value =
 					"// [Tab]区切り\n" +
 					"// [0]メニュー\t[1]タイルURL\t[2]最大ズームレベル\t[3]コピーライト\n" +
-					"シームレス写真\thttps://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg\t18\t地理院地図 シームレス写真\n" +
-					"色別標高図\thttps://cyberjapandata.gsi.go.jp/xyz/relief/{z}/{x}/{y}.png\t15\t地理院地図 色別標高図\n" +
-					"全国傾斜量区分図\thttps://cyberjapandata.gsi.go.jp/xyz/slopezone1map/{z}/{x}/{y}.png\t15\t地理院地図 全国傾斜量区分図\n" +
+					"シームレス写真\thttps://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg\t18\t地理院タイル シームレス写真\n" +
+					"色別標高図\thttps://cyberjapandata.gsi.go.jp/xyz/relief/{z}/{x}/{y}.png\t15\t地理院タイル 色別標高図\n" +
+					"全国傾斜量区分図\thttps://cyberjapandata.gsi.go.jp/xyz/slopezone1map/{z}/{x}/{y}.png\t15\t地理院タイル 全国傾斜量区分図\n" +
 					"シームレス地質図\thttps://gbank.gsj.jp/seamless/v2/api/1.2/tiles/{z}/{y}/{x}.png\t13\tGSJ, AIST、<a href='https://gbank.gsj.jp/seamless/' target='_blank'>20万分の1日本シームレス地質図V2</a>\n" +
 					"UTMグリッド\thttp://{s}.tile.stamen.com/utm/{z}/{x}/{y}.png\t21\tMap tiles by <a href='http://stamen.com' target='_blank'>Stamen Design</a>, under <a href='http://creativecommons.org/licenses/by/3.0' target='_blank'>CC BY 3.0</a>\n";
 			}
