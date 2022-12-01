@@ -1,4 +1,4 @@
-<!-- iwm20221101A Ver.20221114 'U-2S' -->
+<!-- iwm20221202A Ver.20221202 'U-2S' -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -35,7 +35,7 @@
 // fork-awesome
 // https://forkaweso.me/Fork-Awesome/
 --------------------------------------------------------------------->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css" integrity="sha256-XoaMnoYC5TH6/+ihMEnospgm0J1PM/nioxbOUdnM8HY=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css" integrity="sha256-XoaMnoYC5TH6/+ihMEnospgm0J1PM/nioxbOUdnM8HY=" crossorigin="anonymous"/>
 
 <!--------------------------------------------------------------------
 // Leaflet.PolylineMeasure
@@ -103,7 +103,7 @@
 	color:#333 !important;
 	font-size:12px;
 	margin:0;
-	padding:4px;
+	padding:5px 10px 5px 5px;
 }
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip
@@ -116,7 +116,7 @@
 }
 .leaflet-tooltip
 {
-	max-width:300px;
+	max-width:600px;
 	white-space:normal;
 }
 #map
@@ -138,13 +138,33 @@ body
 	margin:0;
 	padding:0;
 }
-textarea:focus,
-input[type="text"]:focus,
-input[type="number"]:focus
+a
+{
+	text-decoration:none;
+}
+table
+{
+	border-collapse:collapse;
+}
+input[type=button],
+input[type=checkbox],
+input[type=file],
+input[type=number],
+input[type=range],
+input[type=text]
+{
+	vertical-align:middle;
+}
+input[type=checkbox]:focus,
+input[type=file]:focus,
+input[type=number]:focus,
+input[type=range]:focus,
+input[type=text]:focus,
+textarea:focus
 {
 	outline:1px solid #3d7cce; /* ブラウザの強調設定を上書き */
 }
-input[type="file"]
+input[type=file]
 {
 	background:#bd1e38;
 	color:#000;
@@ -152,17 +172,17 @@ input[type="file"]
 	margin:0;
 	padding:0;
 }
-input[type="file"]:hover
+input[type=file]:hover
 {
 	color:#fff;
 }
-input[type="number"]
+input[type=number]
 {
 	border:solid 1px #3d7cce;
 	margin:0;
 	padding:0;
 }
-input[type="range"]
+input[type=range]
 {
 	width:160px; /* Leaflet.Control.Opacity */
 }
@@ -175,11 +195,16 @@ input[type="range"]
 	border:0;
 	color:#fff;
 	font-size:12px;
-	line-height:20px;
+	height:20px;
 	margin:0;
 	padding:0 8px;
-	text-align:center;
+	vertical-align:middle;
+	/* a[href] 対応 */
+	display:inline-block;
+	line-height:20px;
 	text-decoration:none;
+	/* div 対応 */
+	text-align:center;
 }
 ._btnNavi1:hover,
 ._btnNavi2:hover,
@@ -240,7 +265,7 @@ input[type="range"]
 {
 	background:#ffc520;
 }
-._txtNavi1
+._textNavi1
 {
 	border:solid 1px #3d7cce;
 	color:#000;
@@ -249,11 +274,6 @@ input[type="range"]
 	line-height:18px;
 	margin:0;
 	padding:0 3px;
-}
-._checkboxNavi1
-{
-	margin:0;
-	padding:0;
 }
 /*---------------
 // 上部メニュー
@@ -388,8 +408,9 @@ input[type="range"]
 	font-size:12px;
 	height:18px;
 	ime-mode:inactive;
+	line-height:18px;
 	margin:0;
-	padding:0 2px;
+	padding:0 3px;
 }
 #_NaviZoom
 {
@@ -398,47 +419,65 @@ input[type="range"]
 #_NaviLat,
 #_NaviLng
 {
-	width:90px;
+	width:85px;
 }
 /*---------------------
 // アドレスマッチング
 ---------------------*/
-#_AddMatchInput1
+._AddMatch_iPos
+{
+	left:46px;
+	position:absolute;
+	top:32px;
+	z-index:1000;
+}
+._AddMatch_oPos
+{
+	left:0;
+	position:absolute;
+	top:0;
+	z-index:1000;
+}
+._AddMatch_iText
 {
 	background:#fff;
 	border:solid 1px #005bbb;
+	border-radius:6px 0 0 0;
 	color:#000;
 	cursor:text;
 	font-size:14px;
 	height:21px;
 	/* ime-mode:active; */
+	line-height:21px;
 	margin:0;
-	padding:0 3px;
+	padding:1px 0 0 5px;
 	width:120px;
 }
-#_AddMatchInput1:hover
+._AddMatch_iText:hover
 {
 	background:#ff5;
 }
-#_AddMatchInput2,
-#_AddMatchInput3,
-#_AddMatchInput4
+._AddMatch_iButton
 {
 	background:#005bbb;
 	border:0;
 	color:#fff;
+	display:inline-block;
 	font-size:15px;
+	height:24px;
+	line-height:24px;
 	margin:0;
-	padding:0 4px;
+	padding:0;
+	text-align:center;
+	vertical-align:middle;
+	width:24px;
 }
-#_AddMatchInput2:hover,
-#_AddMatchInput3:hover,
-#_AddMatchInput4:hover
+._AddMatch_iButton:hover
 {
-	color:#ff5;
+	color:#f00;
 	cursor:pointer;
 }
-#_AddMatchOutput
+._AddMatch_oResult
 {
 	background-color:rgba(255, 255, 255, 0.2);
 	border:solid 1px #005bbb;
@@ -452,24 +491,24 @@ input[type="range"]
 	position:absolute;
 	top:-1000px;
 	width:240px;
-	z-index:1000;
 }
-#_AddMatchOutput:hover
+._AddMatch_oResult:hover
 {
 	background:#fff;
+	cursor:pointer;
 }
-#_AddMatchOutput1
+._AddMatch_oResultOpt1
 {
 	color:#000;
 	font-size:14px;
 	margin:0;
 	padding:4px;
 }
-#_AddMatchOutput1:hover
+._AddMatch_oResultOpt1:hover
 {
 	background:#ff5;
 }
-._AddMatchOutput2
+._AddMatch_oResultOpt2
 {
 	color:#f00;
 	font-size:11px;
@@ -494,6 +533,7 @@ input[type="range"]
 ----------------*/
 ._simpleWindowCall
 {
+	background:transparent;
 	border:solid 1px #fff;
 	color:#fff;
 	font-size:12px;
@@ -582,6 +622,7 @@ a.polyline-measure-clearControl:active
 	text-align:left;
 	white-space:nowrap;
 	width:auto !important;
+	z-index:500;
 }
 .polyline-measure-tooltip-end
 {
@@ -622,7 +663,8 @@ a.polyline-measure-clearControl:active
 <script>
 	// Microsoft 独自仕様？
 	const uA = window.navigator.userAgent.toLowerCase();
-	if(uA.indexOf("edge") != -1 || uA.indexOf("trident") != -1 || uA.indexOf("msie") != -1){
+	if(uA.indexOf("edge") != -1 || uA.indexOf("trident") != -1 || uA.indexOf("msie") != -1)
+	{
 		alert("このブラウザでは正しく動作しないことがあります。\n\n【動作確認済】\n・Firefox\n・Google Chrome\n・Opera\n・Vivaldi");
 	}
 	// muni.js を使うためのおまじない
@@ -635,7 +677,8 @@ a.polyline-measure-clearControl:active
 /*-----------------------
 // フレームサイズを調整
 -----------------------*/
-function subInitDisp(){
+function subInitDisp()
+{
 	const naviCommanderWidthPad = 14;
 	const mapTopPad = 24;
 
@@ -646,7 +689,8 @@ function subInitDisp(){
 	document.getElementById("_divNaviCommander").style.width = (mapW - naviCommanderWidthPad) + "px";
 
 	// _divMap
-	with(document.getElementById("_divMap").style){
+	with(document.getElementById("_divMap").style)
+	{
 		height = (mapH - mapTopPad) + "px";
 		top    = mapTopPad + "px";
 		width  = mapW + "px";
@@ -659,14 +703,17 @@ function subChangeUrl(
 	$Lat,
 	$Lng,
 	$Zoom
-){
-	for(let _i1 = 0, _i2 = arguments.length; _i1 < _i2; _i1++){
-		if(isNaN(arguments[_i1])){
+)
+{
+	for(let _i1 = 0, _i2 = arguments.length; _i1 < _i2; _i1++)
+	{
+		if(isNaN(arguments[_i1]))
+		{
 			arguments[_i1] = document.getElementById(arguments[_i1]).value;
 		}
 	}
-	document.getElementById("_NaviLat").value  = parseFloat($Lat).toFixed(8);
-	document.getElementById("_NaviLng").value  = parseFloat($Lng).toFixed(8);
+	document.getElementById("_NaviLat").value  = parseFloat($Lat).toFixed(6);
+	document.getElementById("_NaviLng").value  = parseFloat($Lng).toFixed(6);
 	document.getElementById("_NaviZoom").value = $Zoom;
 
 	// URL置換
@@ -686,8 +733,10 @@ let $subIwmInput_BL_toSave = null;
 // 環境に合わせて設定
 let $subIwmInput_array = ["_InputBL"];
 
-function subIwmInput_Init(){
-	for(let _s1 of $subIwmInput_array){
+function subIwmInput_Init()
+{
+	for(let _s1 of $subIwmInput_array)
+	{
 		subIwmInput_Close(_s1);
 	}
 }
@@ -695,15 +744,18 @@ function subIwmInput_ZoomA_Open(
 	$outputId, // [id]
 	$posX,     // INT
 	$posY      // INT
-){
+)
+{
 	subIwmInput_Open("_InputZoomA", $outputId, $posX, $posY, true);
 }
-function subIwmInput_ZoomA_Close(){
+function subIwmInput_ZoomA_Close()
+{
 	subIwmInput_Close("_InputZoomA");
 }
 function subIwmInput_Zoom_Change(
 	$str
-){
+)
+{
 	document.getElementById("_NaviZoom").value = parseInt($str, 10);
 
 	const color1 = "#000";
@@ -716,23 +768,28 @@ function subIwmInput_Zoom_Change(
 	let i2 = 0;
 	let i3 = obj1.length;
 
-	for(; i2 < i3; i2++){
+	for(; i2 < i3; i2++)
+	{
 		obj1[i2].style.background = (i1 == obj1[i2].value ? color2 : color1);
 
-		if(i1 == obj1[i2].value){
+		if(i1 == obj1[i2].value)
+		{
 			obj1[i2].style.background = color2;
 			obj1[i2].style.opacity = 0.8;
 		}
-		else{
+		else
+		{
 			obj1[i2].style.background = color1;
 			obj1[i2].style.opacity = 0.6;
 		}
 
-		if(i1 == obj2[i2].value){
+		if(i1 == obj2[i2].value)
+		{
 			obj2[i2].style.background = color2;
 			obj2[i2].style.opacity = 0.8;
 		}
-		else{
+		else
+		{
 			obj2[i2].style.background = color1;
 			obj2[i2].style.opacity = 0.6;
 		}
@@ -742,8 +799,10 @@ function subIwmInput_Zoom_Change(
 }
 function subIwmInput_BL_Open(
 	$outputId // [id]
-){
-	if(!document.getElementById($outputId).value.length){
+)
+{
+	if(! document.getElementById($outputId).value.length)
+	{
 		return;
 	}
 	const iId = "_InputBL";
@@ -751,7 +810,8 @@ function subIwmInput_BL_Open(
 	_iwmIBL($outputId);
 	subIwmInput_Open(iId, $outputId, null, null, false);
 }
-function subIwmInput_BL_Close(){
+function subIwmInput_BL_Close()
+{
 	document.getElementById($subIwmInput_BL_toSave).value = rtnGeoIBLto10A(
 		document.getElementById("_IBL0").value,
 		document.getElementById("_IBL1").value,
@@ -761,34 +821,42 @@ function subIwmInput_BL_Close(){
 }
 function subIwmInput_BL_GetId(
 	$outputId // [id]
-){
+)
+{
 	$subIwmInput_BL_now = $outputId;
 }
 function subIwmInput_BL_Keydown(
 	$outputId,   // [id]
 	$decimalSize // 小数点桁数
-){
-	if($decimalSize == undefined){
+)
+{
+	if($decimalSize == undefined)
+	{
 		$decimalSize = 0;
 	}
 
 	// 他のコントロールに影響するので、
 	// 都度、document.onkeydown = function(evt){} で初期化すること。
-	document.onkeydown = function(evt){
+	document.onkeydown = function(evt)
+	{
 		// [Enter]
-		if(evt.keyCode == 13){
+		if(evt.keyCode == 13)
+		{
 			const obj = document.getElementById($outputId);
 			const d1 = parseFloat(obj.value).toFixed($decimalSize);
 
-			if(isNaN(d1)){
+			if(isNaN(d1))
+			{
 				return;
 			}
 			obj.value = d1;
 
-			if($subIwmInput_BL_now == null){
+			if($subIwmInput_BL_now == null)
+			{
 				_iwmIBL(d1);
 			}
-			else{
+			else
+			{
 				document.getElementById($subIwmInput_BL_toSave).value = rtnGeoIBLto10A(
 					document.getElementById("_IBL0").value,
 					document.getElementById("_IBL1").value,
@@ -806,7 +874,8 @@ function subIwmInput_Open(
 	$posX,      // iNT
 	$posY,      // INT
 	$autoHidden // BOOL
-){
+)
+{
 	$subIwmInput_BL_now = $outputId;
 
 	// 他の入力フォームを全て閉じる
@@ -820,24 +889,29 @@ function subIwmInput_Open(
 
 	// with()において、
 	// 「WebKitではプロパティ名と変数名を自動判別しない → プロパティ名優先 → エラーと見なさない」ので注意!!
-	with(document.getElementById($inputId).style){
+	with(document.getElementById($inputId).style)
+	{
 		display = "";
 		left    = _posX + "px";
 		top     = _posY + "px";
 	}
 
 	// 設定ミリ秒後に自動終了
-	if($autoHidden){
+	if($autoHidden)
+	{
 		setTimeout("subIwmInput_Close('" + $inputId + "')", 2500);
 	}
 }
 function subIwmInput_Close(
 	$outputId // [id]
-){
-	try{
+)
+{
+	try
+	{
 		document.getElementById($outputId).style.display = "none";
 	}
-	catch(e){
+	catch(e)
+	{
 	}
 	// 初期化
 	$subIwmInput_BL_now = null;
@@ -846,7 +920,8 @@ function subIwmInput_Close(
 let $subIwmInput_strPos = 0;
 function subIwmInput_AddText(
 	$str
-){
+)
+{
 	const obj = document.getElementById($subIwmInput_BL_now);
 	const strBefore = obj.value;
 	const strBeforeLen = strBefore.length;
@@ -857,19 +932,22 @@ function subIwmInput_AddText(
 	document.getElementById($subIwmInput_BL_now).focus();
 	obj.selectionStart = $subIwmInput_strPos;
 }
-function subIwmInput_Cls(){
+function subIwmInput_Cls()
+{
 	document.getElementById($subIwmInput_BL_now).value = "";
 	// 再フォーカス
 	document.getElementById($subIwmInput_BL_now).focus();
 	$subIwmInput_strPos = 0;
 }
-function subIwmInput_Bs(){
+function subIwmInput_Bs()
+{
 	const obj = document.getElementById($subIwmInput_BL_now);
 	const strBefore = obj.value;
 	const strBeforeLen = strBefore.length;
 	$subIwmInput_strPos = obj.selectionStart;
 	$subIwmInput_strPos--;
-	if($subIwmInput_strPos < 0){
+	if($subIwmInput_strPos < 0)
+	{
 		$subIwmInput_strPos = 0;
 	}
 	obj.value = strBefore.substr(0, $subIwmInput_strPos) + strBefore.substr(($subIwmInput_strPos + 1), strBeforeLen);
@@ -877,12 +955,14 @@ function subIwmInput_Bs(){
 	document.getElementById($subIwmInput_BL_now).focus();
 	obj.selectionStart = $subIwmInput_strPos;
 }
-function subIwmInput_Del(){
+function subIwmInput_Del()
+{
 	const obj = document.getElementById($subIwmInput_BL_now);
 	const strBefore = obj.value;
 	const strBeforeLen = strBefore.length;
 	$subIwmInput_strPos = obj.selectionStart;
-	if($subIwmInput_strPos > strBeforeLen){
+	if($subIwmInput_strPos > strBeforeLen)
+	{
 		$subIwmInput_strPos = strBeforeLen;
 	}
 	obj.value = strBefore.substr(0, $subIwmInput_strPos) + strBefore.substr(($subIwmInput_strPos + 1), strBeforeLen);
@@ -896,23 +976,28 @@ function subIwmInput_Del(){
 // "_InputBL" を更新
 function _iwmIBL(
 	$d1 // DBL
-){
-	if(isNaN($d1)){
+)
+{
+	if(isNaN($d1))
+	{
 		$d1 = document.getElementById($d1).value;
 	}
 	const [deg, min, sec] = rtnGeo10toIBL($d1);
-		document.getElementById("_IBL0").value = deg.toFixed(0);
-		document.getElementById("_IBL1").value = min.toFixed(0);
-		document.getElementById("_IBL2").value = sec.toFixed(8);
+	document.getElementById("_IBL0").value = deg.toFixed(0);
+	document.getElementById("_IBL1").value = min.toFixed(0);
+	document.getElementById("_IBL2").value = sec.toFixed(6);
 }
 // URL／BL表示を変更
-function _iwmCU(){
+function _iwmCU()
+{
 	subChangeUrl("_NaviLat", "_NaviLng", "_NaviZoom");
 }
 // センタリング
 let $iwmSV_hash = null;
-function _iwmSV(){
-	if($iwmSV_hash){
+function _iwmSV()
+{
+	if($iwmSV_hash)
+	{
 		$Map.setView(
 			[
 				$iwmSV_hash.lat,
@@ -922,7 +1007,8 @@ function _iwmSV(){
 		);
 		$iwmSV_hash = null;
 	}
-	else{
+	else
+	{
 		$Map.setView(
 			[
 				document.getElementById("_NaviLat").value,
@@ -933,7 +1019,8 @@ function _iwmSV(){
 	}
 }
 // $BaseMarker 再描画
-function _iwmBM_Reset(){
+function _iwmBM_Reset()
+{
 	// document.getElementById("_NaviLat").value
 	// document.getElementById("_NaviLng").value
 	subBaseMarkerNew("_NaviLat", "_NaviLng");
@@ -943,20 +1030,23 @@ function _iwmBM_Reset(){
 }
 function _iwmZA(
 	$str
-){
+)
+{
 	subIwmInput_ZoomA_Close();
 	subIwmInput_Zoom_Change($str);
 	subBaseMarkerNew("_NaviLat", "_NaviLng");
 	_iwmCU();
 	_iwmSV();
 }
-function _iwmZA2(){
+function _iwmZA2()
+{
 	subIwmInput_ZoomA_Close();
 	_iwmSV();
 }
 function _iwmZB(
 	$str
-){
+)
+{
 	subIwmInput_Zoom_Change($str);
 	// URL／BL表示を変更
 	_iwmCU();
@@ -966,28 +1056,36 @@ function _iwmZB(
 		document.getElementById("_NaviZoom").value
 	);
 }
-function _iwmBL(){
-	for(let _i1 = 0; _i1 < 3; _i1++){
-		if(!document.getElementById("_IBL" + _i1).value.length){
+function _iwmBL()
+{
+	for(let _i1 = 0; _i1 < 3; _i1++)
+	{
+		if(! document.getElementById("_IBL" + _i1).value.length)
+		{
 			return;
 		}
 	}
 	subIwmInput_BL_Close();
 	_iwmBM_Reset();
 }
-function _iwmBM_CurrentPosition(){
+function _iwmBM_CurrentPosition()
+{
 	navigator.geolocation.getCurrentPosition(
-		function(position){
-			with(position.coords){
-				let s1 = "現在地に移動しますか？\n・緯度：" + latitude.toFixed(8) + "\n・経度：" + longitude.toFixed(8) + "\n（誤差：" + accuracy.toFixed(0) + "m）";
-				if(confirm(s1)){
+		function(position)
+		{
+			with(position.coords)
+			{
+				let s1 = "現在地に移動しますか？\n・緯度：" + latitude.toFixed(6) + "\n・経度：" + longitude.toFixed(6) + "\n（誤差：" + accuracy.toFixed(0) + "m）";
+				if(confirm(s1))
+				{
 					document.getElementById("_NaviLat").value = latitude;
 					document.getElementById("_NaviLng").value = longitude;
 					_iwmBM_Reset();
 				}
 			}
 		},
-		function(err){
+		function(err)
+		{
 			alert("現在地の取得に失敗しました。");
 			_iwmBM_Reset();
 		},
@@ -1007,119 +1105,142 @@ const $HashAddMatchOutputZoom = {
 }
 
 // 初期化
-function subAddMatch_Init(){
+function subAddMatch_Init()
+{
 	// 初期化
 	$subAddMatch_Cnt = 0;
 
 	// Input
-	with(document.getElementById("_AddMatchInput1")){
+	with(document.getElementById("_AddMatch_i1"))
+	{
 		value = "";
 		focus();
 	}
+
 	// Zoom
-	document.getElementById("_AddMatchInput3").style.display = "none";
+	document.getElementById("_AddMatch_i3").style.display = "none";
 
 	// Reset
-	document.getElementById("_AddMatchInput4").style.display = "none";
+	document.getElementById("_AddMatch_i4").style.display = "none";
 
 	// Output
-	with(document.getElementById("_AddMatchOutput")){
+	with(document.getElementById("_AddMatch_o1"))
+	{
 		style.display = "none";
-		const obj = document.getElementById("_AddMatchInput1");
+		const obj = document.getElementById("_AddMatch_i1");
 		const rect = obj.getBoundingClientRect();
 		style.left = (rect.left + window.pageXOffset - 2) + "px";
 		style.top  = (rect.top + window.pageYOffset + obj.clientHeight - 1) + "px";
 		innerHTML = "";
 	}
 }
-function subAddMatch_Main(){
-	const query = document.getElementById("_AddMatchInput1").value;
+function subAddMatch_Main()
+{
+	const query = document.getElementById("_AddMatch_i1").value;
 
-	if(!query.trim().length){
+	if(! query.trim().length)
+	{
 		subAddMatch_Init();
 		return;
 	}
 	const _URL = "https://msearch.gsi.go.jp/address-search/AddressSearch?q=" + query;
 
 	fetch(_URL).then(
-		function(response){
+		function(response)
+		{
 			return response.json();
 		}
 	).then(
-		function(json){
+		function(json)
+		{
 			$subAddMatch_Cnt = json.length;
 
 			// 再検索時に結果を表示させるため
-			document.getElementById("_AddMatchInput3").innerHTML = $HashAddMatchOutputZoom.none;
+			document.getElementById("_AddMatch_i3").innerHTML = $HashAddMatchOutputZoom.none;
 
 			const flg = rtnAddMatch_Main();
-			if(flg){
-				with(document.getElementById("_AddMatchOutput")){
-					let rtn = "<div style='color:#005bbb;padding:0 0 6px 0;'>◆ヒット数 " + $subAddMatch_Cnt + " 件</div>";
-					for(let _s1 of json){
-						with(_s1){
+			if(flg)
+			{
+				with(document.getElementById("_AddMatch_o1"))
+				{
+					let rtn = "<div style=\"color:#005bbb;padding:0 0 6px 0;\">◆ヒット数 " + $subAddMatch_Cnt + " 件</div>";
+					for(let _s1 of json)
+					{
+						with(_s1)
+						{
 							let _s2 = "";
 							// データ不完全のため例外処理が必要
-							try{
+							try
+							{
 								const addCode = parseInt(properties.addressCode, 10) + "";
 								const a1 = GSI.MUNI_ARRAY[addCode].split(",");
 								_s2 = a1[1] + " " + a1[3].replace("　", " ");
 							}
-							catch(e){
+							catch(e)
+							{
 							}
 							let [lng, lat] = geometry.coordinates;
 
-							rtn += "<div id=\"_AddMatchOutput1\" onmouseover=\"subAddMatch_Spot([" + lat + "," + lng + "],'" + properties.title + "');\" onmouseout=\"subAddMatch_SpotClear();\" onclick=\"subMapOnRClick('" + lat + "','" + lng + "','" + properties.title + "');\">" +
-								"<div class='_AddMatchOutput2'>" + _s2 + "</div>" + properties.title + "</div>";
+							rtn += "<div id=\"_AddMatch_o2\" class=\"_AddMatch_oResultOpt1\" onmouseover=\"subAddMatch_Spot([" + lat + "," + lng + "],'" + properties.title + "');\" onmouseout=\"subAddMatch_SpotClear();\" onclick=\"subMapOnRClick('" + lat + "','" + lng + "','" + properties.title + "');\">" +
+								"<div class=\"_AddMatch_oResultOpt2\">" + _s2 + "</div>" + properties.title + "</div>";
 						}
 					}
 					// 著作権表示
-					rtn += "<div style='padding:6px 0 0 0;text-align:center;'>【<a href='https://geocode.csis.u-tokyo.ac.jp/' target='_blank'>協力:東大CSIS</a>】</div>";
+					rtn += "<div style=\"padding:6px 0 0 0;text-align:center;\">【<a href=\"https://geocode.csis.u-tokyo.ac.jp/\" target=\"_blank\">協力:東大CSIS</a>】</div>";
 					innerHTML = rtn;
 				}
 			}
 		}
 	).catch(
-		function(e){
+		function(e)
+		{
 		}
 	);
 }
-function rtnAddMatch_Main(){
+function rtnAddMatch_Main()
+{
 	let rtn = true;
 
-	const oInput2 = document.getElementById("_AddMatchInput3");
-	const oInput3 = document.getElementById("_AddMatchInput4");
-	const oOutput = document.getElementById("_AddMatchOutput");
+	const oInput2 = document.getElementById("_AddMatch_i3");
+	const oInput3 = document.getElementById("_AddMatch_i4");
+	const oOutput = document.getElementById("_AddMatch_o1");
 
-	if($subAddMatch_Cnt > 1000){
+	if($subAddMatch_Cnt > 1000)
+	{
 		oInput2.style.display = "none";
 		oInput3.style.display = "";
-		with(oOutput){
+		with(oOutput)
+		{
 			style.display = "";
 			style.height  = "auto";
 			innerHTML     = "★ヒット数が1000件超あります!!<br>　条件を増やしてみてください。";
 		}
 		rtn = false;
 	}
-	else if($subAddMatch_Cnt > 0){
+	else if($subAddMatch_Cnt > 0)
+	{
 		oInput2.style.display = "";
 		oInput3.style.display = "";
 		oOutput.style.display = "";
 
-		if(oInput2.innerHTML == $HashAddMatchOutputZoom.exist){
+		if(oInput2.innerHTML == $HashAddMatchOutputZoom.exist)
+		{
 			oInput2.innerHTML = $HashAddMatchOutputZoom.none;
 			oOutput.style.display = "none";
 		}
-		else{
+		else
+		{
 			oInput2.innerHTML = $HashAddMatchOutputZoom.exist;
 			oOutput.style.display = "";
 			rtn = true;
 		}
 	}
-	else{
+	else
+	{
 		oInput2.style.display = "none";
 		oInput3.style.display = "";
-		with(oOutput){
+		with(oOutput)
+		{
 			style.display = "";
 			style.height  = "auto";
 			innerHTML     = "★ヒット数が0件です。<br>　条件を変えてみてください。";
@@ -1132,7 +1253,8 @@ function rtnAddMatch_Main(){
 function subAddMatch_Spot(
 	$aLatLng,
 	$title
-){
+)
+{
 	$AddMatchMarker = (
 		L.circleMarker(
 			$aLatLng,
@@ -1148,7 +1270,7 @@ function subAddMatch_Spot(
 		).addTo($Map).bindPopup(
 			$title,
 			{
-				autoPan:false, // PopUp時、表示調整しない
+				autoPan:false, // ポップアップ時、表示調整しない
 				closeButton:false
 			}
 		).openPopup()
@@ -1156,8 +1278,10 @@ function subAddMatch_Spot(
 	// Leaflet.greatCircle
 	subGCircle_Draw();
 }
-function subAddMatch_SpotClear(){
-	if($AddMatchMarker){
+function subAddMatch_SpotClear()
+{
+	if($AddMatchMarker)
+	{
 		$AddMatchMarker.remove($Map);
 		$AddMatchMarker = null;
 	}
@@ -1172,69 +1296,84 @@ function subLatLngToPlaceName(
 	$lng,
 	$oMarker,
 	$placeName
-){
+)
+{
 	const _URL = "https://mreversegeocoder.gsi.go.jp/reverse-geocoder/LonLatToAddress?lat=" + $lat + "&lon=" + $lng;
 	fetch(_URL).then(
-		function(response){
+		function(response)
+		{
 			return response.json();
 		}
 	).then(
-		function(json){
+		function(json)
+		{
 			let title = null;
-			if(typeof(json.results) === "undefined"){
+			if(typeof(json.results) === "undefined")
+			{
 				title = "-----";
 			}
-			else{
+			else
+			{
 				const muniCd = parseInt(json.results.muniCd, 10);
 				const lv01Nm = json.results.lv01Nm;
 				const a1 = GSI.MUNI_ARRAY[muniCd].split(",");
 				title = (a1[1] + a1[3] + lv01Nm).replace(/　/g, "");
 			}
 			// 地名付与 => 自由／固定区別
-			if($oMarker.options.draggable){
+			if($oMarker.options.draggable)
+			{
 				$oMarker.options.title = title;
 			}
-			else{
+			else
+			{
 				// 固定点地名 => 初回に付与してあればパス
-				if(!$oMarker.options.title){
-					$oMarker.options.title = $placeName + "<br><font color = '#333'>＠" + title + "</font>";
+				if(! $oMarker.options.title)
+				{
+					$oMarker.options.title = $placeName + "<br><span style=\"color:#333;\">＠" + title + "</span>";
 				}
 			}
 		}
 	).catch(
-		function(e){
+		function(e)
+		{
 		}
 	);
 }
 /*----------------
 // Simple Window
 ----------------*/
-const $AryNaviCommanderId = ['_NC06','_NC05','_NC04','_NC03','_NC02','_NC01'];
-const $ArySimpleWindowId = ['_SW06','_SW05','_SW04','_SW03','_SW02','_SW01'];
+const $AryNaviCommanderId = ["_NC06", "_NC05", "_NC04", "_NC03", "_NC02", "_NC01"];
+const $ArySimpleWindowId  = ["_SW06", "_SW05", "_SW04", "_SW03", "_SW02", "_SW01"];
 
 function subSimpleWindow_Init(
 	$aryId
-){
+)
+{
 	let i1 = $aryId.length;
-	while(i1--){
+	while(i1--)
+	{
 		document.getElementById($aryId[i1]).style.display = "none";
 	}
 }
 function subSimpleWindow_OpenClose(
 	$id,
 	$btnId
-){
+)
+{
 	const s1 = document.getElementById($id).style.display;
 
-	for(let _s1 of $AryNaviCommanderId){
+	for(let _s1 of $AryNaviCommanderId)
+	{
 		document.getElementById(_s1).style.background = "";
 	}
 
-	for(let _s1 of $ArySimpleWindowId){
+	for(let _s1 of $ArySimpleWindowId)
+	{
 		document.getElementById(_s1).style.display = "none";
 	}
 
-	if(s1.length){
+	if(s1.length)
+	{
 		document.getElementById($id).style.display = "";
 		document.getElementById($btnId).style.background = "#3c639b";
 	}
@@ -1244,32 +1383,29 @@ function subSimpleWindow_OpenClose(
 ---------------*/
 function subMapToPoint(
 	$textareaId
-){
-	// 表示更新されてないと読込エラーになるので意図的にPopUp
+)
+{
+	// 表示更新されてないと読込エラーになるので意図的にポップアップ
 	subMarkerPopup($BaseMarker, $AryLocalMarker);
 
-	let str = document.getElementById($textareaId).value
+	let str = document.getElementById($textareaId).value;
 
 	// $BaseMarker
-	if(!str.length){
-		with($BaseMarker._latlng){
-			str += lat.toFixed(8) + "\t" + lng.toFixed(8) + "\t" + rtnMarkerPopup1(lat, lng) + "\n";
+	if(! str.length)
+	{
+		with($BaseMarker._latlng)
+		{
+			str += lat.toFixed(6) + "\t" + lng.toFixed(6) + "\t" + rtnMarkerPopup1(lat, lng).replace(/<br>/g, "\t") + "\n";
 		}
 	}
 
 	// $AryLocalMarker
-	for(let _o1 of $AryLocalMarker){
-		let _s1 = _o1._popup._content;
-
-		if(_s1.match(/\.\d{4}度$/)){
-			_s1 = _s1.substring(0, _s1.lastIndexOf("<br>"));
-		}
-
-		// Popup "<br/>" <=> TSV "\t"
-		// HTML上の改行表記は "<br>"
-		_s1 = _s1.replace(/<br\/>/g, "\t");
-
-		str += _o1._latlng.lat.toFixed(8) + "\t" + _o1._latlng.lng.toFixed(8) + "\t" + _s1 + "\n";
+	for(let _o1 of $AryLocalMarker)
+	{
+		const _a1 = _o1._popup._content.split("<br>").filter(item => item.match(/>距離<.+度/) == null);
+		// TSV上は "\t"
+		// HTML上は "<br>"
+		str += _o1._latlng.lat.toFixed(6) + "\t" + _o1._latlng.lng.toFixed(6) + "\t" + _a1.join("\t") + "\n";
 	}
 
 	document.getElementById($textareaId).value = str;
@@ -1283,7 +1419,8 @@ function subAddFile(
 	$fileId,
 	$textareaId,
 	$mode // 0:上書き／1:追記
-){
+)
+{
 	$mode = parseInt($mode, 10);
 	// ボタンにイベントを設定
 	const fileList = document.getElementById($fileId).files;
@@ -1291,13 +1428,16 @@ function subAddFile(
 	$SaveFileName = fileList[0].name;
 	// 読込
 	const reader = new FileReader();
-	reader.onload = function(evt){
+	reader.onload = function(evt)
+	{
 		// 追記
-		if($mode == 1){
+		if($mode == 1)
+		{
 			document.getElementById($textareaId).value += evt.target.result;
 		}
 		// 上書き
-		else{
+		else
+		{
 			document.getElementById($textareaId).value = evt.target.result;
 		}
 	}
@@ -1309,39 +1449,46 @@ function subAddFile(
 ---------------*/
 function subA2P_Geocoding(
 	$textareaId
-){
+)
+{
 	const _URL = "https://msearch.gsi.go.jp/address-search/AddressSearch?q=";
 	let str = "";
 
 	const xhr = new XMLHttpRequest();
-	for(let _s1 of document.getElementById($textareaId).value.trimEnd().split("\n")){
+	for(let _s1 of document.getElementById($textareaId).value.trimEnd().split("\n"))
+	{
 		_s1 = _s1.trim();
 		const _a1 = _s1.split("\t");
 		const query = _a1[0];
-		if(query){
-			if(query.match(/^\d+\.*\d*/) || query.substr(0, 2) == "//"){
+		if(query)
+		{
+			if(query.match(/^\d+\.*\d*/) || query.substr(0, 2) == "//")
+			{
 				str += _s1;
 			}
-			else{
+			else
+			{
 				// バッチ処理のため非同期は不可
 				xhr.open("GET", (_URL + query), false);
 				xhr.send(null);
 
 				const json = JSON.parse(xhr.responseText);
 
-				if(json.length == 1){
+				if(json.length == 1)
+				{
 					const [lng, lat] = json[0].geometry.coordinates;
 					let _a2 = [];
 
 					_a2 = rtnGeo10toIBL(lat);
-					const _lat = "<font color='#3d7cce'>緯度</font>" + _a2[0] + "度" + _a2[1] + "分" + _a2[2].toFixed(6) + "秒／" + lat.toFixed(6) + "度";
+					const _lat = "<span style=\"color:#88f;\">緯度</span>" + _a2[0] + "度" + _a2[1] + "分" + _a2[2].toFixed(6) + "秒／" + lat.toFixed(6) + "度";
 
 					_a2 = rtnGeo10toIBL(lng);
-					const _lng = "<font color='#3d7cce'>経度</font>" + _a2[0] + "度" + _a2[1] + "分" + _a2[2].toFixed(6) + "秒／" + lng.toFixed(6) + "度";
+					const _lng = "<span style=\"color:#88f;\">経度</span>" + _a2[0] + "度" + _a2[1] + "分" + _a2[2].toFixed(6) + "秒／" + lng.toFixed(6) + "度";
 
-					str += lat.toFixed(8) + "\t" + lng.toFixed(8) + "\t<font color='#ff5858'>" + _a1[1] + "</font>\t＠<font color='#333'>" + _a1[0] + "</font>\t" + _lat + "\t" + _lng + "\t" + _a1.slice(2).join("\t");
+					str += lat.toFixed(6) + "\t" + lng.toFixed(6) + "\t<span style=\"color:#f66;\">" + _a1[1] + "</span>\t＠<span style=\"color:#333\">" + _a1[0] + "</span>\t" + _lat + "\t" + _lng + "\t" + _a1.slice(2).join("\t");
 				}
-				else{
+				else
+				{
 					str += "// Err " + (json.length == 0 ? "該当なし" : "複数該当あり") + "\n" + _s1;
 				}
 			}
@@ -1349,7 +1496,8 @@ function subA2P_Geocoding(
 		}
 	}
 
-	if(str){
+	if(str)
+	{
 		document.getElementById($textareaId).value = str;
 	}
 }
@@ -1358,7 +1506,8 @@ function subA2P_Geocoding(
 ---------------*/
 function subA2P_GeocodingSample(
 	$textareaId
-){
+)
+{
 	document.getElementById($textareaId).value = "千代田区千代田1-1\t皇居\nつくば市北郷1\t国土地理院\n";
 }
 /*---------
@@ -1366,7 +1515,8 @@ function subA2P_GeocodingSample(
 ---------*/
 function subA2P_EditInit(
 	$textareaId
-){
+)
+{
 	document.getElementById($textareaId).value = "";
 }
 /*-------------
@@ -1376,37 +1526,44 @@ let $AryPoint = [];
 
 function subA2P_addToMap(
 	$textareaId
-){
-	let i1 = $AryPoint.length;
-	while(i1--){
-		$AryPoint[i1].remove($Map);
-		$AryPoint.splice(i1, 1);
+)
+{
+	// $AryPoint
+	for(let _s1 of $AryPoint)
+	{
+		_s1.remove($Map);
 	}
+	$AryPoint = [];
 
 	$Map.createPane("_pane230").style.zIndex = 230;
 	$Map.createPane("_pane250").style.zIndex = 250;
 	let str = "";
 
-	for(let _s1 of document.getElementById($textareaId).value.trimEnd().split("\n")){
+	for(let _s1 of document.getElementById($textareaId).value.trimEnd().split("\n"))
+	{
 		_s1 = _s1.trim();
 
-		// Popup "<br/>" <=> TSV "\t"
-		// HTML上の改行表記は "<br>"
-		_s1 = _s1.replace(/\\t/g, "\t");
+		// TSV上は "\t"
+		// HTML上は "<br>"
 		_s1 = _s1.replace(/\\n/g, "<br>");
 
-		const _a1 = _s1.split("\t");
+		const _a1 = _s1.split(/\t|\\t/);
 
 		// "icon@画像ファイル" でアイコン変更
 		let objIcon = null;
 
-		if(_a1.length >= 2){
-			try{
-				if(_a1.length >= 3){
+		if(_a1.length >= 2)
+		{
+			try
+			{
+				if(_a1.length >= 3)
+				{
 					_s2 = _a1[2];
-					for(let _i1 = 3, _i2 = _a1.length; _i1 < _i2; _i1++){
+					for(let _i1 = 3, _i2 = _a1.length; _i1 < _i2; _i1++)
+					{
 						const _s3 = _a1[_i1].match(/icon@(.+)/i);
-						if(_s3){
+						if(_s3)
+						{
 							objIcon = L.icon(
 								{
 									iconUrl:_s3[1],
@@ -1417,12 +1574,14 @@ function subA2P_addToMap(
 								}
 							);
 						}
-						else{
+						else
+						{
 							_s2 += "<br>" + _a1[_i1];
 						}
 					}
 				}
-				else{
+				else
+				{
 					_s2 = "<br>";
 				}
 
@@ -1452,28 +1611,31 @@ function subA2P_addToMap(
 				).addTo($Map).bindPopup(
 					_s2,
 					{
-						autoClose:false, // 複数PopUp可
-						autoPan:false    // PopUp時、表示調整しない
+						autoClose:false, // 複数ポップアップ可
+						autoPan:false    // ポップアップ時、表示調整しない
 					}
 				).openPopup();
 
 				obj1.on(
 					"mouseover",
-					function(e){
+					function(e)
+					{
 						this.openPopup();
 					}
 				);
 
 				$AryPoint.push(obj1);
 			}
-			catch(e){
+			catch(e)
+			{
 			}
 
 			str += _s1 + "\n";
 		}
 	}
 
-	if(str){
+	if(str)
+	{
 		document.getElementById($textareaId).value = str;
 	}
 }
@@ -1482,17 +1644,20 @@ function subA2P_addToMap(
 -----------------*/
 function subA2P_EditSave(
 	$textareaId
-){
+)
+{
 	const content = document.getElementById($textareaId).value;
 	const blob = new Blob([content], {type:"text/plain"});
 	const fn = ($SaveFileName ? $SaveFileName : "マーカー変換.tsv");
 
 	// MSIE?
-	if(window.navigator.msSaveBlob){
+	if(window.navigator.msSaveBlob)
+	{
 		window.navigator.msSaveBlob(blob, fn);
 		window.navigator.msSaveOrOpenBlob(blob, fn);
 	}
-	else{
+	else
+	{
 		document.getElementById("_btnDL").download = fn;
 		document.getElementById("_btnDL").href = window.URL.createObjectURL(blob);
 	}
@@ -1505,7 +1670,8 @@ function subA2P_EditClear(
 	$gcircleId,
 	$distCbId,
 	$distTextId
-){
+)
+{
 	// Leaflet.greatCircle
 	document.getElementById($gcircleId).value = 0;
 	subA2P_GCircle($gcircleId, $textareaId);
@@ -1515,11 +1681,11 @@ function subA2P_EditClear(
 	subA2P_DistMP($textareaId, $distTextId, false);
 
 	// $AryPoint
-	let i1 = $AryPoint.length;
-	while(i1--){
-		$AryPoint[i1].remove($Map);
-		$AryPoint.splice(i1, 1);
+	for(let _s1 of $AryPoint)
+	{
+		_s1.remove($Map);
 	}
+	$AryPoint = [];
 }
 /*----------------------
 // Leaflet.greatCircle
@@ -1529,9 +1695,11 @@ let $AryM2P_Circle = [];
 function subA2P_GCircle(
 	$selectId,
 	$textareaId
-){
+)
+{
 	// 消去
-	for(let _s1 of $AryM2P_Circle){
+	for(let _s1 of $AryM2P_Circle)
+	{
 		_s1.remove();
 	}
 
@@ -1539,18 +1707,22 @@ function subA2P_GCircle(
 	let rad = document.getElementById($selectId).value.toLowerCase();
 	const a1 = rad.match(/(\d+\.*\d*)(km|m)/);
 
-	if(a1){
+	if(a1)
+	{
 		rad = parseFloat(a1[1]);
-		if(a1[2] == "km"){
+		if(a1[2] == "km")
+		{
 			rad *= 1000;
 		}
 	}
-	else{
+	else
+	{
 		rad = parseFloat(rad);
 		document.getElementById($selectId).value = (rad / 1000) + "km";
 	}
 
-	if(isNaN(rad) || rad == 0){
+	if(isNaN(rad) || rad == 0)
+	{
 		document.getElementById($selectId).value = "";
 		return;
 	}
@@ -1558,10 +1730,12 @@ function subA2P_GCircle(
 	$Map.createPane("_pane210").style.zIndex = 210;
 	let i1 = 0;
 
-	for(let _s1 of document.getElementById($textareaId).value.trimEnd().split("\n")){
+	for(let _s1 of document.getElementById($textareaId).value.trimEnd().split("\n"))
+	{
 		_s1 = _s1.trim();
 
-		try{
+		try
+		{
 			const _a1 = _s1.split("\t");
 			$AryM2P_Circle[i1] = L.greatCircle(
 				[_a1[0], _a1[1]],
@@ -1577,7 +1751,8 @@ function subA2P_GCircle(
 			$AryM2P_Circle[i1].addTo($Map);
 			++i1;
 		}
-		catch(e){
+		catch(e)
+		{
 		}
 	}
 }
@@ -1589,19 +1764,25 @@ let $rtnA2P_DistMP_PartKm = 0.0;
 
 function rtnA2P_DistMP(
 	$textareaInputId
-){
+)
+{
 	let iErrCnt = 0;
 	let aLatLng1 = [];
 	const rgxDecimal = /^[\+\-]{0,1}[0-9]+\.{0,1}[0-9]*$/;
 
-	for(let _s1 of document.getElementById($textareaInputId).value.trimEnd().split("\n")){
-		if(_s1.substr(0, 2) != "//"){
+	for(let _s1 of document.getElementById($textareaInputId).value.trimEnd().split("\n"))
+	{
+		if(_s1.substr(0, 2) != "//")
+		{
 			const _a1 = _s1.split("\t");
-			if(_a1.length >= 2){
-				if(!_a1[0].match(rgxDecimal) || !_a1[1].match(rgxDecimal)){
+			if(_a1.length >= 2)
+			{
+				if(! _a1[0].match(rgxDecimal) || ! _a1[1].match(rgxDecimal))
+				{
 					++iErrCnt;
 				}
-				else{
+				else
+				{
 					aLatLng1.push([_a1[0], _a1[1]]);
 				}
 			}
@@ -1613,8 +1794,10 @@ function rtnA2P_DistMP(
 	let aOld = [];
 
 	// 総距離を仮計算
-	for(let _a1 of aLatLng1){
-		if(aOld[0]){
+	for(let _a1 of aLatLng1)
+	{
+		if(aOld[0])
+		{
 			iTotalDist += rtnGeoVincentryA(aOld[0], aOld[1], _a1[0], _a1[1])[0];
 		}
 		aOld = _a1;
@@ -1624,9 +1807,12 @@ function rtnA2P_DistMP(
 	// 区間距離 = 200分割 ※地理院タイルは300分割／サーバサイド処理のため速い
 	$rtnA2P_DistMP_PartKm = iTotalDist / 200;
 
-	for(let _a1 of aLatLng1){
-		if(aOld[0]){
-			for(let _a2 of rtnGeoVincentryC(aOld[0], aOld[1], _a1[0], _a1[1], $rtnA2P_DistMP_PartKm)){
+	for(let _a1 of aLatLng1)
+	{
+		if(aOld[0])
+		{
+			for(let _a2 of rtnGeoVincentryC(aOld[0], aOld[1], _a1[0], _a1[1], $rtnA2P_DistMP_PartKm))
+			{
 				aLatLng2.push([_a2[0], _a2[1]]);
 			}
 		}
@@ -1641,13 +1827,16 @@ function subA2P_DistMP(
 	$textareaInputId,
 	$textareaOutputId,
 	$bool
-){
+)
+{
 	// 線消去
-	if($ObjPointLinkedLine){
+	if($ObjPointLinkedLine)
+	{
 		$Map.removeLayer($ObjPointLinkedLine);
 	}
 
-	if(!$bool){
+	if(! $bool)
+	{
 		document.getElementById($textareaOutputId).value = "";
 		return;
 	}
@@ -1675,7 +1864,8 @@ function rtnGeoIBLto10A(
 	$deg, // 度
 	$min, // 分
 	$sec  // 秒
-){
+)
+{
 	$deg = parseInt($deg, 10);
 	$min = parseInt($min, 10);
 	$sec = parseFloat($sec);
@@ -1686,12 +1876,14 @@ function rtnGeoIBLto10A(
 -------------------*/
 function rtnGeo10toIBL(
 	$angle // 十進法
-){
+)
+{
 	$angle = parseFloat($angle);
 
 	let sign = 1;
 
-	if($angle < 0){
+	if($angle < 0)
+	{
 		sign = -1;
 		$angle = -$angle;
 	}
@@ -1702,7 +1894,8 @@ function rtnGeo10toIBL(
 	let sec = parseFloat($angle) * 60.0;
 
 	// 0.999... * 60 => 60.0 対策
-	if(sec == 60.0){
+	if(sec == 60.0)
+	{
 		min += 1;
 		sec = 0;
 	}
@@ -1720,8 +1913,10 @@ function rtnGeoVincentryA(
 	$lng1,
 	$lat2,
 	$lng2
-){
-	if($lat1 == $lat2 && $lng1 == $lng2){
+)
+{
+	if($lat1 == $lat2 && $lng1 == $lng2)
+	{
 		return [0.0, 0.0];
 	}
 
@@ -1759,11 +1954,13 @@ function rtnGeoVincentryA(
 
 	let iLoop = 0;
 
-	while(true){
+	while(true)
+	{
 		sinLamda = Math.sin(lamda);
 		cosLamda = Math.cos(lamda);
 		sin2Sigma = (cosU2 * sinLamda) * (cosU2 * sinLamda) + (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * (cosU1 * sinU2 - sinU1 * cosU2 * cosLamda);
-		if(sin2Sigma < 0){
+		if(sin2Sigma < 0)
+		{
 			return [0.0, 0.0];
 		}
 		sinSigma = Math.sqrt(sin2Sigma);
@@ -1775,12 +1972,14 @@ function rtnGeoVincentryA(
 		c = _F / 16 * cos2Alpha * (4 + _F * (4 - 3 * cos2Alpha));
 		dLamda = lamda;
 		lamda = omega + (1 - c) * _F * sinAlpha * (sigma + c * sinSigma * (cos2sm + c * cosSigma * (-1 + 2 * cos2sm * cos2sm)));
-		if(Math.abs(lamda - dLamda) <= 1e-12){
+		if(Math.abs(lamda - dLamda) <= 1e-12)
+		{
 			break;
 		}
 		++iLoop;
 		// 日本国内であれば５回程度で収束
-		if(iLoop > 10){
+		if(iLoop > 10)
+		{
 			return [-1, -1]; // Err
 		}
 	}
@@ -1793,7 +1992,8 @@ function rtnGeoVincentryA(
 	let bearing = Math.atan2(cosU2 * sinLamda, cosU1 * sinU2 - sinU1 * cosU2 * cosLamda) * 57.29577951308232;
 
 	// 変換
-	if(bearing < 0){
+	if(bearing < 0)
+	{
 		bearing += 360.0; // 度
 	}
 
@@ -1804,7 +2004,8 @@ function rtnGeoVincentryB(
 	$lng,
 	$km,
 	$bearing
-){
+)
+{
 	///	const A = 6378137.0;
 	const _B   = 6356752.314140356;    // GRS80
 	const _F   = 0.003352810681182319; // 1 / 298.257222101
@@ -1835,14 +2036,16 @@ function rtnGeoVincentryB(
 	let sigma0     = 0.0;
 	let sigma9     = $km / (_B * a);
 
-	while(true){
+	while(true)
+	{
 		cos2Sigma = Math.cos(2 * sigma1 + sigma9);
 		sinSigma = Math.sin(sigma9);
 		cosSigma = Math.cos(sigma9);
 		deltaSigma = b * sinSigma * (cos2Sigma + b / 4 * (cosSigma * (-1 + 2 * cos2Sigma * cos2Sigma) - b / 6 * cos2Sigma * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2Sigma * cos2Sigma)));
 		sigma0 = sigma9;
 		sigma9 = $km / (_B * a) + deltaSigma;
-		if(Math.abs(sigma9 - sigma0) <= 1e-12){
+		if(Math.abs(sigma9 - sigma0) <= 1e-12)
+		{
 			break;
 		}
 	}
@@ -1863,7 +2066,8 @@ function rtnGeoVincentryC(
 	$lat2,
 	$lng2,
 	$partKm = 10.0
-){
+)
+{
 	$lat1   = parseFloat($lat1);
 	$lng1   = parseFloat($lng1);
 	$lat2   = parseFloat($lat2);
@@ -1876,13 +2080,15 @@ function rtnGeoVincentryC(
 
 	const allKm = rtnGeoVincentryA($lat1, $lng1, $lat2, $lng2)[0];
 
-	while(true){
+	while(true)
+	{
 		rtn.push([$lat1, $lng1, totalKm]);
 		const _bearing = rtnGeoVincentryA($lat1, $lng1, $lat2, $lng2)[1];
 		a1 = rtnGeoVincentryB($lat1, $lng1, $partKm, _bearing);
 			$lat1 = a1[0];
 			$lng1 = a1[1];
-		if(allKm < (totalKm += $partKm)){
+		if(allKm < (totalKm += $partKm))
+		{
 			break;
 		}
 	}
@@ -1897,19 +2103,23 @@ function subGetElevation(
 	$lat,
 	$lng,
 	$oMarker
-){
+)
+{
 	const _URL = "https://cyberjapandata2.gsi.go.jp/general/dem/scripts/getelevation.php?lat=" + $lat + "&lon=" + $lng + "&outtype=JSON";
 
 	fetch(_URL).then(
-		function(response){
+		function(response)
+		{
 			return response.json();
 		}
 	).then(
-		function(json){
+		function(json)
+		{
 			$oMarker.elevation = json.elevation + "m DEM" + json.hsrc;
 		}
 	).catch(
-		function(e){
+		function(e)
+		{
 		}
 	);
 }
@@ -1919,7 +2129,8 @@ function subGetElevation(
 function rtnMarkerPopup1(
 	$lat,
 	$lng
-){
+)
+{
 	subLatLngToPlaceName($lat, $lng, $BaseMarker, null);
 
 	let [deg, min, sec] = rtnGeo10toIBL($lat);
@@ -1930,13 +2141,13 @@ function rtnMarkerPopup1(
 
 	subGetElevation($lat, $lng, $BaseMarker);
 
-	// Popup "<br/>" <=> TSV "\t"
-	// HTML上の改行表記は "<br>"
+	// TSV上は "\t"
+	// HTML上は "<br>"
 	return(
-		"<font color='#ff5858'>" + $BaseMarker.options.title + "</font><br>" +
-		"<font color='#3d7cce'>緯度</font>" + latRem + "／" + $lat.toFixed(6) + "度<br>" +
-		"<font color='#3d7cce'>経度</font>" + lngRem + "／" + $lng.toFixed(6) + "度<br>" +
-		"<font color='#3d7cce'>標高</font>" + $BaseMarker.elevation
+		"<span style=\"color:#f66;\">" + $BaseMarker.options.title + "</span><br>" +
+		"<span style=\"color:#88f;\">緯度</span>" + latRem + "／" + $lat.toFixed(6) + "度<br>" +
+		"<span style=\"color:#88f;\">経度</span>" + lngRem + "／" + $lng.toFixed(6) + "度<br>" +
+		"<span style=\"color:#88f;\">標高</span>" + $BaseMarker.elevation
 	);
 }
 /*------------------------
@@ -1948,7 +2159,8 @@ function rtnMarkerPopup2(
 	$latTo,
 	$lngTo,
 	$oMarker
-){
+)
+{
 	subLatLngToPlaceName($latTo, $lngTo, $oMarker, null);
 
 	let [deg, min, sec] = rtnGeo10toIBL($latTo);
@@ -1964,53 +2176,63 @@ function rtnMarkerPopup2(
 	let distRem = dist + "km";
 
 	let angleRem = "";
-	if(angle >= 337.5 || angle <= 22.5){
+	if(angle >= 337.5 || angle <= 22.5)
+	{
 		angleRem = "北";
 	}
-	else if(angle > 22.5 && angle < 67.5){
+	else if(angle > 22.5 && angle < 67.5)
+	{
 		angleRem = "北東";
 	}
-	else if(angle >= 67.5 && angle <= 112.5){
+	else if(angle >= 67.5 && angle <= 112.5)
+	{
 		angleRem = "東";
 	}
-	else if(angle > 112.5 && angle < 157.5){
+	else if(angle > 112.5 && angle < 157.5)
+	{
 		angleRem = "南東";
 	}
-	else if(angle >= 157.5 && angle <= 202.5){
+	else if(angle >= 157.5 && angle <= 202.5)
+	{
 		angleRem = "南";
 	}
-	else if(angle > 202.5 && angle < 247.5){
+	else if(angle > 202.5 && angle < 247.5)
+	{
 		angleRem = "南西";
 	}
-	else if(angle >= 247.5 && angle <= 292.5){
+	else if(angle >= 247.5 && angle <= 292.5)
+	{
 		angleRem = "西";
 	}
-	else if(angle > 292.5 && angle < 337.5){
+	else if(angle > 292.5 && angle < 337.5)
+	{
 		angleRem = "北西";
 	}
 	angleRem += angle + "度";
 
 	subGetElevation($latTo, $lngTo, $oMarker);
 
-	// Popup "<br/>" <=> TSV "\t"
-	// HTML上の改行表記は "<br>"
+	// TSV上は "\t"
+	// HTML上は "<br>"
 	return(
-		"<font color='#ff5858'>" + $oMarker.options.title + "</font><br>" +
-		"<font color='#3d7cce'>緯度</font>" + latRem + "／" + $latTo.toFixed(6) + "度<br>" +
-		"<font color='#3d7cce'>経度</font>" + lngRem + "／" + $lngTo.toFixed(6) + "度<br>" +
-		"<font color='#3d7cce'>標高</font>" + $oMarker.elevation + "<br>" +
-		"<font color='#3d7cce'>距離</font>" + distRem + "／" + angleRem
+		"<span style=\"color:#f66;\">" + $oMarker.options.title + "</span><br>" +
+		"<span style=\"color:#88f;\">緯度</span>" + latRem + "／" + $latTo.toFixed(6) + "度<br>" +
+		"<span style=\"color:#88f;\">経度</span>" + lngRem + "／" + $lngTo.toFixed(6) + "度<br>" +
+		"<span style=\"color:#88f;\">標高</span>" + $oMarker.elevation + "<br>" +
+		"<span style=\"color:#88f;\">距離</span>" + distRem + "／" + angleRem
 	);
 }
 /*------------------------------------
 // [マーカー消去]ボタン 表示／非表示
 ------------------------------------*/
-function subMyObj_Init(){
+function subMyObj_Init()
+{
 	document.getElementById("_RmMarker").style.display = "none";
 }
 function subMyObj_OnOff(
 	$aryObj
-){
+)
+{
 	document.getElementById("_RmMarker").style.display = ($aryObj.length > 0 ? "" : "none");
 }
 /*-----------------------
@@ -2018,9 +2240,11 @@ function subMyObj_OnOff(
 -----------------------*/
 function subMyObj_Remove(
 	$aryObj
-){
+)
+{
 	let obj = null;
-	while((obj = $aryObj.pop()) != undefined){
+	while((obj = $aryObj.pop()) != undefined)
+	{
 		obj.remove($Map);
 	}
 	// Leaflet.greatCircle
@@ -2037,8 +2261,10 @@ function subMyObj_Remove(
 function subAddTabCtrl(
 	$e,
 	$obj
-){
-	if($e.keyCode != 9){
+)
+{
+	if($e.keyCode != 9)
+	{
 		return;
 	}
 	$e.preventDefault();
@@ -2058,26 +2284,32 @@ let $Dem10ToSeaLevel = new L.GridLayer();
 function subDem10ToSeaLevel2(
 	$id1,
 	$id2
-){
-	try{
+)
+{
+	try
+	{
 		$Dem10ToSeaLevel.remove($Map);
 
-		if(document.getElementById($id1).value < 0){
+		if(document.getElementById($id1).value < 0)
+		{
 			document.getElementById($id1).value = 0;
 		}
 
-		if(document.getElementById($id2).value < 0){
+		if(document.getElementById($id2).value < 0)
+		{
 			document.getElementById($id2).value = 0;
 		}
 	}
-	catch(e){
+	catch(e)
+	{
 		return;
 	}
 
 	let seaLevel1 = parseFloat(document.getElementById($id1).value);
 	let seaLevel2 = parseFloat(document.getElementById($id2).value);
 
-	if(seaLevel1 > seaLevel2){
+	if(seaLevel1 > seaLevel2)
+	{
 		let tmp = seaLevel1;
 		seaLevel1 = seaLevel2;
 		seaLevel2 = tmp;
@@ -2094,7 +2326,8 @@ function subDem10ToSeaLevel2(
 	seaLevel1 *= 100;
 	seaLevel2 *= 100;
 
-	$Dem10ToSeaLevel.createTile = function(coords){
+	$Dem10ToSeaLevel.createTile = function(coords)
+	{
 		const tile = L.DomUtil.create("canvas", "leaflet-tile");
 			tile.width = tile.height = 256;
 		const ctx = tile.getContext("2d");
@@ -2102,13 +2335,16 @@ function subDem10ToSeaLevel2(
 			img.crossOrigin = "anonymous";
 			// leafletが使うタイルと別のサーバ（https／http）にアクセスし、Access-Control-Allow-Originを回避
 			img.src = "https://cyberjapandata.gsi.go.jp/xyz/dem_png/" + coords.z + "/" + coords.x + "/" + coords.y + ".png";
-		img.onload = function(){
+		img.onload = function()
+		{
 			ctx.drawImage(this, 0, 0);
 			const rtnImg = ctx.getImageData(0, 0, 256, 256);
 			const rtnImgData = rtnImg.data;
-			for(let _i1 = 0, _i2 = rtnImgData.length; _i1 < _i2; _i1+=4){
+			for(let _i1 = 0, _i2 = rtnImgData.length; _i1 < _i2; _i1+=4)
+			{
 				let elevation = (rtnImgData[_i1 + 0] * 65536) + (rtnImgData[_i1 + 1] * 256) + rtnImgData[_i1 + 2];
-				if(elevation > 8388608){
+				if(elevation > 8388608)
+				{
 					elevation = (elevation - 16777216);
 				}
 				rtnImgData[_i1 + 3] = (elevation >= seaLevel1 && elevation <= seaLevel2 ? 90 : 0);
@@ -2126,12 +2362,14 @@ let $GCircleBase = null;
 let $GCircleAryLocal = [];
 
 // 距離円描画
-function subGCircle_Draw(){
+function subGCircle_Draw()
+{
 	$Map.createPane("_pane220").style.zIndex = 220;
 	$Map.createPane("_pane210").style.zIndex = 210;
 
 	// $BaseMarker
-	if($GCircleBase){
+	if($GCircleBase)
+	{
 		$GCircleBase.remove();
 	}
 
@@ -2150,13 +2388,15 @@ function subGCircle_Draw(){
 	$GCircleBase.bindTo($BaseMarker);
 
 	// $AryLocalMarker
-	for(let _s1 of $GCircleAryLocal){
+	for(let _s1 of $GCircleAryLocal)
+	{
 		_s1.remove();
 	}
 
 	$GCircleAryLocal = [];
 
-	for(let _s1 of $AryLocalMarker){
+	for(let _s1 of $AryLocalMarker)
+	{
 		$GCircleAryLocal.push(
 			L.greatCircle(
 				_s1.getLatLng(),
@@ -2172,24 +2412,28 @@ function subGCircle_Draw(){
 		);
 	}
 
-	for(let _i1 = 0; _i1 < $GCircleAryLocal.length; _i1++){
+	for(let _i1 = 0; _i1 < $GCircleAryLocal.length; _i1++)
+	{
 		$GCircleAryLocal[_i1].addTo($Map);
 		$GCircleAryLocal[_i1].bindTo($AryLocalMarker[_i1]);
 	}
 }
 // スライダー制御
-function subGCircle_Slider(){
+function subGCircle_Slider()
+{
 	const iDist = rtnGCircle_Scale();
 	document.getElementById("$GCircleKm").innerHTML = (iDist / 1000.0).toFixed(2) + "km";
 
 	$GCircleBase.setRadius(iDist);
 
-	for(let _s1 of $GCircleAryLocal){
+	for(let _s1 of $GCircleAryLocal)
+	{
 		_s1.setRadius(iDist);
 	}
 }
 // 目盛毎の単位で変換 (例)10 => 10mスケール
-function rtnGCircle_Scale(){
+function rtnGCircle_Scale()
+{
 	const scale = 10; // Meter単位
 	return parseInt(document.getElementById("_GCircleRange").value, 10) * scale;
 }
@@ -2202,11 +2446,9 @@ let $HeightGraph_Title = "標高グラフ ";
 let $HeightGraph_Init = L.control.heightgraph(
 	{
 		mappings:{
-			suitability:function(data){
-				return {
-					text:"±" + ($rtnA2P_DistMP_PartKm).toFixed(2) + "km",
-					color:"#0067c0"
-				}
+			suitability:function(data)
+			{
+				return {text:"±" + ($rtnA2P_DistMP_PartKm).toFixed(2) + "km", color:"#0067c0"}
 			},
 		},
 		graphStyle:{
@@ -2262,7 +2504,8 @@ let $HeightGraph_Data = [
 function rtnHeightGraphElevation(
 	$lat,
 	$lng
-){
+)
+{
 	// 精度対速度比を調整（小数４桁縛り）
 	$lat = $lat.toFixed(4);
 	$lng = $lng.toFixed(4);
@@ -2274,9 +2517,11 @@ function rtnHeightGraphElevation(
 	const xhr = new XMLHttpRequest();
 	xhr.open("GET", _URL, false);
 	xhr.send(null);
-	if(xhr.status == 200){
+	if(xhr.status == 200)
+	{
 		let i1 = JSON.parse(xhr.responseText).elevation;
-		if(i1 == "-----"){
+		if(i1 == "-----")
+		{
 			i1 = 0;
 		}
 		// (入力)[Lat, Lng] => (出力)[Lng, Lat] になることに注意
@@ -2284,13 +2529,15 @@ function rtnHeightGraphElevation(
 	}
 	return rtn;
 }
-function subHeightGraphMakeData(){
+function subHeightGraphMakeData()
+{
 	// 初期化
 	$HeightGraph_Data[0]["features"][0]["geometry"]["coordinates"] = [[0, 0, 0], [0, 0, 0]];
 	const [iTotalDist, aLatLng, iErrCnt] = rtnA2P_DistMP("_TA04");
 	let a1 = [];
 
-	for(let _a1 of aLatLng){
+	for(let _a1 of aLatLng)
+	{
 		a1.push(rtnHeightGraphElevation(_a1[0], _a1[1]));
 	}
 
@@ -2299,9 +2546,12 @@ function subHeightGraphMakeData(){
 
 	a1 = null;
 }
-function subHeightGraphOpen(){
-	if($HeightGraph_On){
-		if(!confirm("処理中は操作ができません。\n処理を開始しますか？")){
+function subHeightGraphOpen()
+{
+	if($HeightGraph_On)
+	{
+		if(! confirm("処理中は操作ができません。\n処理を開始しますか？"))
+		{
 			return;
 		}
 
@@ -2326,8 +2576,8 @@ function subHeightGraphOpen(){
 			}
 		).on(
 			{
-				'mousemove':event => {$HeightGraph_Init.mapMousemoveHandler(event, {showMapMarker:true});},
-				'mouseout':event => {$HeightGraph_Init.mapMouseoutHandler(2000);}
+				"mousemove":event => {$HeightGraph_Init.mapMousemoveHandler(event, {showMapMarker:true});},
+				"mouseout":event => {$HeightGraph_Init.mapMouseoutHandler(2000);}
 			}
 		).addTo($HeightGraph_Layer);
 
@@ -2338,13 +2588,16 @@ function subHeightGraphOpen(){
 		$HeightGraph_On = false;
 		document.getElementById("_HgBtn").value = $HeightGraph_Title + "OFF";
 	}
-	else{
-		try{
+	else
+	{
+		try
+		{
 			$HeightGraph_Init.remove($Map);
 			$HeightGraph_Layer.remove($Map);
 			$HeightGraph_Layer = null;
 		}
-		catch(e){
+		catch(e)
+		{
 		}
 		$HeightGraph_On = true;
 		document.getElementById("_HgBtn").value = $HeightGraph_Title + "ON";
@@ -2357,10 +2610,12 @@ let $AryGeoJsonLayer = [null, null, null, null, null, null, null, null, null, nu
 
 function subAddGeoJson_init()
 {
-	for(let _i1 = 0; _i1 < $AryGeoJsonLayer.length; _i1++){
+	for(let _i1 = 0; _i1 < $AryGeoJsonLayer.length; _i1++)
+	{
 		document.getElementById("_checkboxGeoJson" + _i1).checked = false;
 		document.getElementById("_fileGeoJson" + _i1).value = "";
-		if($AryGeoJsonLayer[_i1]){
+		if($AryGeoJsonLayer[_i1])
+		{
 			$AryGeoJsonLayer[_i1].remove($Map);
 			$AryGeoJsonLayer[_i1] = null;
 		}
@@ -2369,11 +2624,13 @@ function subAddGeoJson_init()
 }
 function subAddGeoJson_readFile(
 	$aryIndex
-){
+)
+{
 	$aryIndex = parseInt($aryIndex, 10);
 	const fileList = document.getElementById("_fileGeoJson" + $aryIndex).files;
 	const reader = new FileReader();
-	reader.onload = function(evt){
+	reader.onload = function(evt)
+	{
 		document.getElementById("_TA03").value = evt.target.result;
 		$Map.createPane("_pane200").style.zIndex = 200;
 		$AryGeoJsonLayer[$aryIndex] = L.geoJSON(
@@ -2383,7 +2640,8 @@ function subAddGeoJson_readFile(
 				pane:"_pane200"
 			}
 		).bindPopup(
-			function(layer){
+			function(layer)
+			{
 				let rtn = "";
 				for(let _key in layer.feature.properties)
 				{
@@ -2392,7 +2650,8 @@ function subAddGeoJson_readFile(
 				return rtn;
 			}
 		).bindTooltip(
-			function(layer){
+			function(layer)
+			{
 				let rtn = "";
 				for(let _key in layer.feature.properties)
 				{
@@ -2409,13 +2668,17 @@ function subAddGeoJson_addToMap(
 	$aryIndex
 )
 {
-	if(document.getElementById("_checkboxGeoJson" + $aryIndex).checked){
-		if($AryGeoJsonLayer[$aryIndex]){
+	if(document.getElementById("_checkboxGeoJson" + $aryIndex).checked)
+	{
+		if($AryGeoJsonLayer[$aryIndex])
+		{
 			$AryGeoJsonLayer[$aryIndex].addTo($Map);
 		}
 	}
-	else{
-		if($AryGeoJsonLayer[$aryIndex]){
+	else
+	{
+		if($AryGeoJsonLayer[$aryIndex])
+		{
 			$AryGeoJsonLayer[$aryIndex].remove($Map);
 		}
 	}
@@ -2428,22 +2691,67 @@ function subAddGeoJson_addToMap(
 	// メニュー
 	------------>
 	<div id="_divNaviCommander">
-		緯度&nbsp;<input type="text" id="_NaviLat" onclick="subIwmInput_BL_Open(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 8);" placeholder="緯度入力"/>
-		経度&nbsp;<input type="text" id="_NaviLng" onclick="subIwmInput_BL_Open(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 8);" placeholder="経度入力"/>
+		緯度&nbsp;<input type="text" id="_NaviLat" onclick="subIwmInput_BL_Open(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id,8);" placeholder="緯度入力"/>
+		経度&nbsp;<input type="text" id="_NaviLng" onclick="subIwmInput_BL_Open(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id,8);" placeholder="経度入力"/>
 		<!-- ズーム --><input type="hidden" id="_NaviZoom"/>
-		<div id="_NaviExp" class="_simpleWindow" style="background:#000;display:none;font-size:14px;top:30px;"></div>
+		<div class="_btnNavi1" style="border-radius:10px;display:inline-block;font-size:14px;height:20px;margin:0 0 0 2px;padding:0;width:20px;" onclick="_iwmZA2();" onmouseover="subNaviExpOnOff('中心へ移動','98px');" onmouseleave="subNaviExpOnOff();"><i class="fa fa-map-marker"></i></div>
+		<div class="_btnNavi1" style="border-radius:10px;display:inline-block;font-size:14px;height:20px;margin:0 0 0 2px;padding:0;width:20px;" onclick="_iwmBM_CurrentPosition();" onmouseover="subNaviExpOnOff('現在地を取得','112px');" onmouseleave="subNaviExpOnOff();"><i class="fa fa-rss"></i></div>
+		<div class="_btnNavi2" style="border-radius:10px;display:inline-block;font-size:14px;height:20px;margin:0 0 0 4px;padding:0;width:20px;" onclick="subNaviAllMarkerPopupOpen();" onmouseover="subNaviExpOnOff('全ポップアップを開く','168px');" onmouseleave="subNaviExpOnOff();"><i class="fa fa-folder-open"></i></div>
+		<div class="_btnNavi2" style="border-radius:10px;display:inline-block;font-size:14px;height:20px;margin:0 0 0 2px;padding:0;width:20px;" onclick="subNaviAllMarkerPopupClose();" onmouseover="subNaviExpOnOff('全ポップアップを閉じる','182px');" onmouseleave="subNaviExpOnOff();"><i class="fa fa-folder"></i></div>
+		<input type="button" id="_RmMarker" class="_btnNavi2" style="border-radius:10px;font-size:17px;height:20px;margin:0 0 0 4px;padding:0;width:20px;" value="×" onclick="subMyObj_Remove($AryLocalMarker);" onmouseover="subNaviExpOnOff('赤・オレンジマーカー消去','196px');" onmouseleave="subNaviExpOnOff();"/>
+		<div id="_NaviExp" class="_simpleWindow" style="background:#000;display:none;font-size:14px;"></div>
 		<script>
-			function subNaviExpOnOff(str, strWidth){ with(document.getElementById("_NaviExp")){ if(!str || !strWidth){ style.display = "none"; return; } style.display = ""; innerHTML = str; style.left = event.clientX + "px"; style.width = strWidth; }}
+		// コメント表示
+		function subNaviExpOnOff(str, strWidth)
+		{
+			with(document.getElementById("_NaviExp"))
+			{
+				if(! str)
+				{
+					style.display = "none";
+					return;
+				}
+				style.display = "";
+				innerHTML = str;
+				style.left = event.clientX + "px";
+				style.top = "35px";
+				style.width = strWidth;
+			}
+		}
+		// 全ポップアップ表示
+		function subNaviAllMarkerPopupOpen()
+		{
+			// $BaseMarker, $AryLocalMarker
+			subMarkerPopup($BaseMarker, $AryLocalMarker);
+			// $AryPoint
+			for(let _s1 of $AryPoint)
+			{
+				_s1.openPopup();
+			}
+		}
+		// 全ポップアップ非表示
+		function subNaviAllMarkerPopupClose()
+		{
+			// $BaseMarker
+			$BaseMarker.closePopup();
+			// $AryLocalMarker
+			for(let _s1 of $AryLocalMarker)
+			{
+				_s1.closePopup();
+			}
+			// $AryPoint
+			for(let _s1 of $AryPoint)
+			{
+				_s1.closePopup();
+			}
+		}
 		</script>
-		<div class="_btnNavi1" style="border-radius:10px;display:inline-block;font-size:14px;margin:0;padding:0;width:20px;" onclick="_iwmZA2();" onmouseover="subNaviExpOnOff('中心へ移動','105px');" onmouseleave="subNaviExpOnOff();"><i class="fa fa-map-marker"></i></div>
-		<div class="_btnNavi1" style="border-radius:10px;display:inline-block;font-size:14px;margin:0;padding:0;width:20px;" onclick="_iwmBM_CurrentPosition();" onmouseover="subNaviExpOnOff('現在地を取得','120px');" onmouseleave="subNaviExpOnOff();"><i class="fa fa-rss"></i></div>
-		<input type="button" id="_RmMarker" class="_btnNavi2" style="border-radius:10px;display:inline-block;font-size:14px;margin:0;padding:0;width:20px;" value="✕" onclick="subMyObj_Remove($AryLocalMarker);" onmouseover="subNaviExpOnOff('赤・オレンジマーカー消去','210px');" onmouseleave="subNaviExpOnOff();"/>
 		<!---------
 		// ヘルプ
 		---------->
-		<span id="_NC01" style="float:right;margin:0 8px 0 4px;">
-			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW01','_NC01');">？</font>
-		</span>
+		<div id="_NC01" style="float:right;margin:0 8px 0 4px;">
+			<input type="button" class="_simpleWindowCall" value="？" onclick="subSimpleWindow_OpenClose('_SW01','_NC01');"/>
+		</div>
 		<div id="_SW01" class="_simpleWindow" style="right:0;width:360px;">
 			<div>操作説明</div>
 			<div id="_SW01Doc" class="_simpleWindowOutput" style="background:#fff;max-height:600px;padding:0 0 12px 0;"></div>
@@ -2451,9 +2759,9 @@ function subAddGeoJson_addToMap(
 		<!-----------------
 		// 追加タイル編集
 		------------------>
-		<span id="_NC02" style="float:right;margin:0 4px;">
-			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW02','_NC02');">追加タイル編集</font>
-		</span>
+		<div id="_NC02" style="float:right;margin:0 4px;">
+			<input type="button" class="_simpleWindowCall" value="追加タイル編集" onclick="subSimpleWindow_OpenClose('_SW02','_NC02');"/>
+		</div>
 		<div id="_SW02" class="_simpleWindow" style="right:0;width:670px;">
 			<div>追加タイル編集</div>
 			<div class="_simpleWindowOutput" style="padding:4px 6px 6px 6px;">
@@ -2463,28 +2771,28 @@ function subAddGeoJson_addToMap(
 					document.getElementById("_TA02").onkeydown = function(e){subAddTabCtrl(e, this);}
 				</script>
 				<input type="button" class="_btnNavi3" value="←地図に反映" onclick="subMapSelector();subSimpleWindow_OpenClose('_SW02','_NC02');"/>
-				<a class="_btnNavi4" href="http://maps.gsi.go.jp/development/ichiran.html" target="_blank">地理院タイル一覧</a>
+				<a href="http://maps.gsi.go.jp/development/ichiran.html" target="_blank" class="_btnNavi4">地理院タイル一覧</a>
 			</div>
 		</div>
 		<!----------
 		// GeoJSON
 		----------->
-		<span id="_NC03" style="float:right;margin:0 4px;">
-			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW03','_NC03');">GeoJSON</font>
-		</span>
+		<div id="_NC03" style="float:right;margin:0 4px;">
+			<input type="button" class="_simpleWindowCall" value="GeoJSON" onclick="subSimpleWindow_OpenClose('_SW03','_NC03');"/>
+		</div>
 		<div id="_SW03" class="_simpleWindow" style="right:0;width:360px;">
 			<div>GeoJSON ファイル読込</div>
 			<div class="_simpleWindowOutput" style="line-height:36px;padding:0 6px 6px 6px;">
-				<input type="checkbox" id="_checkboxGeoJson0" class="_checkboxNavi1" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(0);"/><input type="file" id="_fileGeoJson0" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(0);"/><br>
-				<input type="checkbox" id="_checkboxGeoJson1" class="_checkboxNavi1" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(1);"/><input type="file" id="_fileGeoJson1" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(1);"/><br>
-				<input type="checkbox" id="_checkboxGeoJson2" class="_checkboxNavi1" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(2);"/><input type="file" id="_fileGeoJson2" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(2);"/><br>
-				<input type="checkbox" id="_checkboxGeoJson3" class="_checkboxNavi1" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(3);"/><input type="file" id="_fileGeoJson3" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(3);"/><br>
-				<input type="checkbox" id="_checkboxGeoJson4" class="_checkboxNavi1" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(4);"/><input type="file" id="_fileGeoJson4" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(4);"/><br>
-				<input type="checkbox" id="_checkboxGeoJson5" class="_checkboxNavi1" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(5);"/><input type="file" id="_fileGeoJson5" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(5);"/><br>
-				<input type="checkbox" id="_checkboxGeoJson6" class="_checkboxNavi1" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(6);"/><input type="file" id="_fileGeoJson6" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(6);"/><br>
-				<input type="checkbox" id="_checkboxGeoJson7" class="_checkboxNavi1" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(7);"/><input type="file" id="_fileGeoJson7" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(7);"/><br>
-				<input type="checkbox" id="_checkboxGeoJson8" class="_checkboxNavi1" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(8);"/><input type="file" id="_fileGeoJson8" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(8);"/><br>
-				<input type="checkbox" id="_checkboxGeoJson9" class="_checkboxNavi1" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(9);"/><input type="file" id="_fileGeoJson9" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(9);"/><br>
+				<input type="checkbox" id="_checkboxGeoJson0" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(0);"/><input type="file" id="_fileGeoJson0" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(0);"/><br>
+				<input type="checkbox" id="_checkboxGeoJson1" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(1);"/><input type="file" id="_fileGeoJson1" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(1);"/><br>
+				<input type="checkbox" id="_checkboxGeoJson2" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(2);"/><input type="file" id="_fileGeoJson2" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(2);"/><br>
+				<input type="checkbox" id="_checkboxGeoJson3" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(3);"/><input type="file" id="_fileGeoJson3" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(3);"/><br>
+				<input type="checkbox" id="_checkboxGeoJson4" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(4);"/><input type="file" id="_fileGeoJson4" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(4);"/><br>
+				<input type="checkbox" id="_checkboxGeoJson5" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(5);"/><input type="file" id="_fileGeoJson5" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(5);"/><br>
+				<input type="checkbox" id="_checkboxGeoJson6" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(6);"/><input type="file" id="_fileGeoJson6" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(6);"/><br>
+				<input type="checkbox" id="_checkboxGeoJson7" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(7);"/><input type="file" id="_fileGeoJson7" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(7);"/><br>
+				<input type="checkbox" id="_checkboxGeoJson8" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(8);"/><input type="file" id="_fileGeoJson8" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(8);"/><br>
+				<input type="checkbox" id="_checkboxGeoJson9" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(9);"/><input type="file" id="_fileGeoJson9" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(9);"/><br>
 				<div style="line-height:24px;">
 					<input type="button" class="_btnNavi1" value="↑クリア" onclick="subAddGeoJson_init()"/>
 					<textarea id="_TA03" class="_editTextBox" wrap="off" style="display:none;"></textarea>
@@ -2494,9 +2802,9 @@ function subAddGeoJson_addToMap(
 		<!---------------
 		// マーカー変換
 		---------------->
-		<span id="_NC04" style="float:right;margin:0 4px;">
-			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW04','_NC04');">マーカー変換</font>
-		</span>
+		<div id="_NC04" style="float:right;margin:0 4px;">
+			<input type="button" class="_simpleWindowCall" value="マーカー変換" onclick="subSimpleWindow_OpenClose('_SW04','_NC04');"/>
+		</div>
 		<div id="_SW04" class="_simpleWindow" style="right:0;width:670px;">
 			<div>マーカーをポイントに変換</div>
 			<div class="_simpleWindowOutput" style="padding:4px 6px 6px 6px;">
@@ -2512,11 +2820,11 @@ function subAddGeoJson_addToMap(
 					<input type="button" class="_btnNavi1" value="↑クリア" onclick="subA2P_EditInit('_TA04');"/>
 					<input type="button" class="_btnNavi4" value="↑サンプル出力" onclick="subA2P_GeocodingSample('_TA04');"/>
 					<input type="button" class="_btnNavi4" value="→住所から変換" onclick="subA2P_Geocoding('_TA04');"/>
-					<a href="#" id="_btnDL" download="" onclick="subA2P_EditSave('_TA04')"><div class="_btnNavi2" style="display:inline-block;">ファイルに保存</div></a><br>
-					<input type="button" class="_btnNavi3" style="margin:0;padding:0 3px;" value="←" onclick="subA2P_GCircle('_GCircleM2P','_TA04');"/><input type="text" id="_GCircleM2P" class="_txtNavi1" list="_Dist" style="width:70px;" placeholder="範囲円"/>
+					<a href="#" id="_btnDL" download="" onclick="subA2P_EditSave('_TA04')"><div class="_btnNavi2" style="">ファイルに保存</div></a><br>
+					<input type="button" class="_btnNavi3" style="padding:0 3px;" value="←" onclick="subA2P_GCircle('_GCircleM2P','_TA04');"/><input type="text" id="_GCircleM2P" class="_textNavi1" list="_Dist" style="width:70px;" placeholder="範囲円"/>
 					<datalist id="_Dist"><option value="50m"/><option value="100m"/><option value="250m"/><option value="500m"/><option value="1km"/><option value="2km"/><option value="4km"/><option value="5km"/><option value="8km"/><option value="10km"/><option value="20km"/><option value="25km"/><option value="40km"/><option value="50km"/><option value="80km"/><option value="100km"/></datalist>
-					<input type="checkbox" id="_checkboxDist" class="_checkboxNavi1" style="margin:0 0 0 4px;" onclick="subA2P_DistMP('_TA04','_textDist',_checkboxDist.checked);"/><input type="text" id="_textDist" class="_txtNavi1" style="width:90px;" placeholder="総距離" readonly/>
-					<input type="button" id="_HgBtn" class="_btnNavi5" style="margin:0 0 0 6px;width:120px;" value="" onclick="subHeightGraphOpen();"/>
+					<input type="checkbox" id="_checkboxDist" style="margin:0 0 0 4px;" onclick="subA2P_DistMP('_TA04','_textDist',_checkboxDist.checked);"/><input type="text" id="_textDist" class="_textNavi1" style="width:90px;" placeholder="総距離" readonly/>
+					<input type="button" id="_HgBtn" class="_btnNavi5" style="margin:0 0 0 4px;width:120px;" value="" onclick="subHeightGraphOpen();"/>
 					<script>
 						// 初期化
 						document.getElementById("_HgBtn").value = $HeightGraph_Title + "ON";
@@ -2527,9 +2835,9 @@ function subAddGeoJson_addToMap(
 		<!----------------------
 		// Leaflet.greatCircle
 		----------------------->
-		<span id="_NC05" style="float:right;margin:0 4px;">
-			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW05','_NC05');">距離円</font>
-		</span>
+		<div id="_NC05" style="float:right;margin:0 4px;">
+			<input type="button" class="_simpleWindowCall" value="距離円" onclick="subSimpleWindow_OpenClose('_SW05','_NC05');"/>
+		</div>
 		<div id="_SW05" class="_simpleWindow" style="right:120px;width:420px;">
 			<div>半径&nbsp;<span id="$GCircleKm">0km</span></div>
 			<div id="_GCircle" style="width:404px;"><input type="range" id="_GCircleRange" style="width:400px;" min="0" max="20000" value="0" oninput="subGCircle_Slider();"/></div>
@@ -2537,10 +2845,10 @@ function subAddGeoJson_addToMap(
 		<!---------
 		// 海水面
 		---------->
-		<span id="_NC06" style="float:right;margin:0 4px;">
-			<font class="_simpleWindowCall" onclick="subSimpleWindow_OpenClose('_SW06','_NC06');">海水面</font>
-		</span>
-		<div id="_SW06" class="_simpleWindow" style="right:270px;z-index:2000;">
+		<div id="_NC06" style="float:right;margin:0 4px;">
+			<input type="button" class="_simpleWindowCall" value="海水面" onclick="subSimpleWindow_OpenClose('_SW06','_NC06');"/>
+		</div>
+		<div id="_SW06" class="_simpleWindow" style="right:270px;">
 			<div>ズーム14以下で利用可能</div>
 			<div class="_simpleWindowOutput" style="padding:6px;">
 				<input type="number" id="_Dem10ToSeaLevel1" value="0" style="text-align:right;width:45px;"/>～<input type="number" id="_Dem10ToSeaLevel2" value="10" style="text-align:right;width:55px;"/>ｍ
@@ -2553,14 +2861,14 @@ function subAddGeoJson_addToMap(
 	// ズームレベル
 	---------------->
 	<div id="_InputZoomA" style="top:-1000px;">
-		ズームレベル<br>
+		<div style="text-align:center;">ズームレベル</div>
 		<input type="button" class="_ZA" value="3" onclick="_iwmZA('3');"/><input type="button" class="_ZA" value="4" onclick="_iwmZA('4');"/><input type="button" class="_ZA" value="5" onclick="_iwmZA('5');"/><input type="button" class="_ZA" value="6" onclick="_iwmZA('6');"/><input type="button" class="_ZA" value="7" onclick="_iwmZA('7');"/><br>
 		<input type="button" class="_ZA" value="8" onclick="_iwmZA('8');"/><input type="button" class="_ZA" value="9" onclick="_iwmZA('9');"/><input type="button" class="_ZA" value="10" onclick="_iwmZA('10');"/><input type="button" class="_ZA" value="11" onclick="_iwmZA('11');"/><input type="button" class="_ZA" value="12" onclick="_iwmZA('12');"/><br>
 		<input type="button" class="_ZA" value="13" onclick="_iwmZA('13');"/><input type="button" class="_ZA" value="14" onclick="_iwmZA('14');"/><input type="button" class="_ZA" value="15" onclick="_iwmZA('15');"/><input type="button" class="_ZA" value="16" onclick="_iwmZA('16');"/><input type="button" class="_ZA" value="17" onclick="_iwmZA('17');"/><br>
-		<input type="button" class="_ZA" value="18" onclick="_iwmZA('18');"/><input type="button" class="_ZA" value="19" onclick="_iwmZA('19');"/><input type="button" class="_ZA" value="20" onclick="_iwmZA('20');"/><input type="button" class="_ZA" value="21" onclick="_iwmZA('21');"/><div class="_btnNavi1" style="border-radius:13px;display:inline-block;font-size:14px;line-height:26px;margin:2px;padding:0;width:26px;" onclick="_iwmZA2();"><i class="fa fa-map-marker"></i></div>
+		<input type="button" class="_ZA" value="18" onclick="_iwmZA('18');"/><input type="button" class="_ZA" value="19" onclick="_iwmZA('19');"/><input type="button" class="_ZA" value="20" onclick="_iwmZA('20');"/><input type="button" class="_ZA" value="21" onclick="_iwmZA('21');"/><div class="_btnNavi1" style="border-radius:12px;display:inline-block;font-size:13px;height:24px;line-height:24px;margin:0 0 0 3px;padding:0;width:24px;" onclick="_iwmZA2();"><i class="fa fa-map-marker"></i></div>
 	</div>
 	<div id="_InputZoomB" style="left:10px;top:33px;">
-		<div style="background:#909090;border-radius:3px 3px 0 0;height:3px;width:26px;"/></div>
+		<div style="background:#999;border-radius:3px 3px 0 0;height:3px;width:26px;"></div>
 		<input type="button" class="_ZB" value="21" onclick="_iwmZB('21');"/><br>
 		<input type="button" class="_ZB" value="20" onclick="_iwmZB('20');"/><br>
 		<input type="button" class="_ZB" value="19" onclick="_iwmZB('19');"/><br>
@@ -2580,11 +2888,11 @@ function subAddGeoJson_addToMap(
 		<input type="button" class="_ZB" value="5" onclick="_iwmZB('5');"/><br>
 		<input type="button" class="_ZB" value="4" onclick="_iwmZB('4');"/><br>
 		<input type="button" class="_ZB" value="3" onclick="_iwmZB('3');"/>
-		<div style="background:#909090;border-radius:0 0 3px 3px;height:3px;width:26px;"/></div>
+		<div style="background:#999;border-radius:0 0 3px 3px;height:3px;width:26px;"></div>
 	</div>
 	<div id="_InputBL" style="top:-1000px;">
-		<input type="text" id="_IBL0" onclick="subIwmInput_BL_GetId(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 0);" style="width:37px;"/>度<input type="text" id="_IBL1" onclick="subIwmInput_BL_GetId(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 0);" style="width:37px;"/>分<br>
-		<input type="text" id="_IBL2" onclick="subIwmInput_BL_GetId(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 8);" style="width:96px;"/>秒<br>
+		<input type="text" id="_IBL0" style="width:37px;" onclick="subIwmInput_BL_GetId(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 0);"/>度<input type="text" id="_IBL1" style="width:37px;" onclick="subIwmInput_BL_GetId(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 0);"/>分<br>
+		<input type="text" id="_IBL2" style="width:96px;" onclick="subIwmInput_BL_GetId(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 8);"/>秒<br>
 		<input type="button" class="_Btn1" value="7" onclick="subIwmInput_AddText('7');"/><input type="button" class="_Btn1" value="8" onclick="subIwmInput_AddText('8');"/><input type="button" class="_Btn1" value="9" onclick="subIwmInput_AddText('9');"/><br>
 		<input type="button" class="_Btn1" value="4" onclick="subIwmInput_AddText('4');"/><input type="button" class="_Btn1" value="5" onclick="subIwmInput_AddText('5');"/><input type="button" class="_Btn1" value="6" onclick="subIwmInput_AddText('6');"/><br>
 		<input type="button" class="_Btn1" value="1" onclick="subIwmInput_AddText('1');"/><input type="button" class="_Btn1" value="2" onclick="subIwmInput_AddText('2');"/><input type="button" class="_Btn1" value="3" onclick="subIwmInput_AddText('3');"/><br>
@@ -2594,47 +2902,60 @@ function subAddGeoJson_addToMap(
 	<!---------------------
 	// アドレスマッチング
 	---------------------->
-	<div style="position:absolute;z-index:1000;left:45px;top:34px;">
-		<input type="text" id="_AddMatchInput1" onchange="subAddMatch_Main();" placeholder="住所検索"/><font id="_AddMatchInput2" onclick="subAddMatch_Main();"><i class="fa fa-search"></i></font><font id="_AddMatchInput3" onclick="rtnAddMatch_Main();"></font><font id="_AddMatchInput4" onclick="subAddMatch_Init();"><i class="fa fa-times-circle"></i></font>
+	<table class="_AddMatch_iPos">
+		<tr>
+			<td><input type="text" id="_AddMatch_i1" class="_AddMatch_iText" onchange="subAddMatch_Main();" placeholder="住所検索"/></td>
+			<td><div id="_AddMatch_i2" class="_AddMatch_iButton" onclick="subAddMatch_Main();"><i class="fa fa-search"></i></div></td>
+			<td><div id="_AddMatch_i3" class="_AddMatch_iButton" onclick="rtnAddMatch_Main();"></div></td>
+			<td><input type="button" id="_AddMatch_i4" class="_AddMatch_iButton" value="×" onclick="subAddMatch_Init();"/></td>
+		</tr>
+	</table>
+	<div class="_AddMatch_oPos">
+		<div id="_AddMatch_o1" class="_AddMatch_oResult"></div>
 	</div>
-	<div id="_AddMatchOutput"></div>
 	<!----------
 	// _divMap
 	------------>
 	<div id="_divMap">
-		<script>
+	<script>
 		// 地図描写調整
 		subInitDisp();
 
 		// URLからアンカー(#Z/X/Y)取得
 		const hash = window.location.hash;
 
-		if(hash.length){
+		if(hash.length)
+		{
 			const aHash = hash.split("/");
 			let iZoom = parseInt(aHash[0].substr(1), 10);
-			if(isNaN(iZoom)){
+			if(isNaN(iZoom))
+			{
 				_iwmCU();
 			}
-			else{
+			else
+			{
 				document.getElementById("_NaviZoom").value = iZoom;
-				document.getElementById("_NaviLat").value  = parseFloat(aHash[1]).toFixed(8);
-				document.getElementById("_NaviLng").value  = parseFloat(aHash[2]).toFixed(8);
+				document.getElementById("_NaviLat").value  = parseFloat(aHash[1]).toFixed(6);
+				document.getElementById("_NaviLng").value  = parseFloat(aHash[2]).toFixed(6);
 			}
 		}
-		else{
+		else
+		{
 			// 初回座標＠皇居
 			document.getElementById("_NaviZoom").value = 5;
-			document.getElementById("_NaviLat").value  = (35.68518697509636).toFixed(8);
-			document.getElementById("_NaviLng").value  = (139.7522735595703).toFixed(8);
+			document.getElementById("_NaviLat").value  = (35.68518697509636).toFixed(6);
+			document.getElementById("_NaviLng").value  = (139.7522735595703).toFixed(6);
 
 			// 現在座標取得
 			navigator.geolocation.getCurrentPosition(
-				function(position){
-					document.getElementById("_NaviLat").value = position.coords.latitude.toFixed(8);
-					document.getElementById("_NaviLng").value = position.coords.longitude.toFixed(8);
+				function(position)
+				{
+					document.getElementById("_NaviLat").value = position.coords.latitude.toFixed(6);
+					document.getElementById("_NaviLng").value = position.coords.longitude.toFixed(6);
 					_iwmBM_Reset();
 				},
-				function(error){
+				function(error)
+				{
 					_iwmBM_Reset();
 				}
 			);
@@ -2686,13 +3007,14 @@ function subAddGeoJson_addToMap(
 
 		let $RadioButtonMap = [];
 			// [0]メニュー, [1]タイルURL, [2]最大ズームレベル, [3]コピーライト
-			$RadioButtonMap.push(["OpenStreetMap", "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"        , 19, "&copy; <a href='https://www.openstreetmap.org/copyright' target='_blank'>OpenStreetMap 協力者</a>"]);
-			$RadioButtonMap.push(["GSI 標準地図" , "https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png"  , 18, "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>国土地理院</a>"]);
-			$RadioButtonMap.push(["GSI 淡色地図" , "https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png" , 18, "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>国土地理院</a>"]);
-			$RadioButtonMap.push(["GSI 白地図"   , "https://cyberjapandata.gsi.go.jp/xyz/blank/{z}/{x}/{y}.png", 14, "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>国土地理院</a>"]);
+			$RadioButtonMap.push(["OpenStreetMap", "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"        , 19, "&copy; <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">OpenStreetMap 協力者</a>"]);
+			$RadioButtonMap.push(["GSI 標準地図" , "https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png"  , 18, "<a href=\"https://maps.gsi.go.jp/development/ichiran.html\" target=\"_blank\">国土地理院</a>"]);
+			$RadioButtonMap.push(["GSI 淡色地図" , "https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png" , 18, "<a href=\"https://maps.gsi.go.jp/development/ichiran.html\" target=\"_blank\">国土地理院</a>"]);
+			$RadioButtonMap.push(["GSI 白地図"   , "https://cyberjapandata.gsi.go.jp/xyz/blank/{z}/{x}/{y}.png", 14, "<a href=\"https://maps.gsi.go.jp/development/ichiran.html\" target=\"_blank\">国土地理院</a>"]);
 			$RadioButtonMap.push(["なし"         , ""                                                          ,  0, ""]);
 
-		for(let _a1 of $RadioButtonMap){
+		for(let _a1 of $RadioButtonMap)
+		{
 			$MapBaseLayers[_a1[0]] = L.tileLayer(
 				_a1[1],
 				{
@@ -2712,26 +3034,39 @@ function subAddGeoJson_addToMap(
 		let $MapSelector = null;
 		let $MapOpacityCtrl = null;
 
-		function subMapSelector(){
+		function subMapSelector()
+		{
 			const obj = document.getElementById("_TA02");
-			if(obj.value.length == 0){
+			if(obj.value.length == 0)
+			{
 				obj.value =
 					"// [Tab]区切り\n" +
 					"// [0]メニュー\t[1]タイルURL\t[2]最大ズームレベル\t[3]コピーライト\n" +
-					"GSI シームレス写真\thttps://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg\t18\t<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>国土地理院</a>\n" +
-					"GSI 色別標高図\thttps://cyberjapandata.gsi.go.jp/xyz/relief/{z}/{x}/{y}.png\t15\t<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>国土地理院</a>\n" +
-					"GSI 全国傾斜量区分図\thttps://cyberjapandata.gsi.go.jp/xyz/slopezone1map/{z}/{x}/{y}.png\t15\t<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>国土地理院</a>\n" +
-					"シームレス地質図\thttps://gbank.gsj.jp/seamless/v2/api/1.2/tiles/{z}/{y}/{x}.png\t13\tGSJ, AIST、<a href='https://gbank.gsj.jp/seamless/' target='_blank'>20万分の1日本シームレス地質図V2</a>\n" +
-					"UTMグリッド\thttp://{s}.tile.stamen.com/utm/{z}/{x}/{y}.png\t21\tMap tiles by <a href='http://stamen.com' target='_blank'>Stamen Design</a>, under <a href='http://creativecommons.org/licenses/by/3.0' target='_blank'>CC BY 3.0</a>\n";
+					"GSI シームレス写真\thttps://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg\t18\t<a href=\"https://maps.gsi.go.jp/development/ichiran.html\" target=\"_blank\">国土地理院</a>\n" +
+					"GSI 色別標高図\thttps://cyberjapandata.gsi.go.jp/xyz/relief/{z}/{x}/{y}.png\t15\t<a href=\"https://maps.gsi.go.jp/development/ichiran.html\" target=\"_blank\">国土地理院</a>\n" +
+					"GSI 全国傾斜量区分図\thttps://cyberjapandata.gsi.go.jp/xyz/slopezone1map/{z}/{x}/{y}.png\t15\t<a href=\"https://maps.gsi.go.jp/development/ichiran.html\" target=\"_blank\">国土地理院</a>\n" +
+					"シームレス地質図\thttps://gbank.gsj.jp/seamless/v2/api/1.2/tiles/{z}/{y}/{x}.png\t13\tGSJ, AIST、<a href=\"https://gbank.gsj.jp/seamless/\" target=\"_blank\">20万分の1日本シームレス地質図V2</a>\n" +
+					"UTMグリッド\thttp://{s}.tile.stamen.com/utm/{z}/{x}/{y}.png\t21\tMap tiles by <a href=\"http://stamen.com\" target=\"_blank\">Stamen Design</a>, under <a href=\"http://creativecommons.org/licenses/by/3.0\" target=\"_blank\">CC BY 3.0</a>\n";
 			}
 
 			let $MapOverlays = [];
 
-			for(let _s1 of document.getElementById("_TA02").value.trimEnd().split("\n")){
+			for(let _s1 of document.getElementById("_TA02").value.trimEnd().split("\n"))
+			{
 				_s1 = _s1.trim();
-				if(_s1.length > 0 && _s1.substr(0, 2) != "//"){
+				if(_s1.length > 0 && _s1.substr(0, 2) != "//")
+				{
 					let _a1 = _s1.split("\t");
-					if(_a1[0].trim().length > 0 && _a1[1].trim().length > 0 && _a1[2].trim().length > 0 && _a1[3].trim().length > 0){
+					if(_a1[0].trim().length > 0 && _a1[1].trim().length > 0)
+					{
+						if(! _a1[2])
+						{
+							_a1[2] = "18";
+						}
+						if(! _a1[3])
+						{
+							_a1[3] = _a1[0];
+						}
 						$MapOverlays[_a1[0]] = L.tileLayer(
 							_a1[1],
 							{
@@ -2748,7 +3083,8 @@ function subAddGeoJson_addToMap(
 			/*--------------------------
 			// Leaflet.Control.Opacity
 			--------------------------*/
-			if($MapOpacityCtrl){
+			if($MapOpacityCtrl)
+			{
 				$Map.removeControl($MapOpacityCtrl); // 前出を削除
 			}
 			$MapOpacityCtrl = L.control.opacity(
@@ -2788,7 +3124,8 @@ function subAddGeoJson_addToMap(
 			*/
 			// 標準 => 明色
 			const $StdToBright = new L.GridLayer();
-			$StdToBright.createTile = function(coords){
+			$StdToBright.createTile = function(coords)
+			{
 				const tile = L.DomUtil.create("canvas", "leaflet-tile");
 					tile.width = tile.height = 256;
 				const ctx = tile.getContext("2d");
@@ -2796,16 +3133,20 @@ function subAddGeoJson_addToMap(
 					img.crossOrigin = "anonymous";
 					// leafletが使うタイルと別のサーバ（https／http）にアクセスし、Access-Control-Allow-Originを回避
 					img.src = "https://cyberjapandata.gsi.go.jp/xyz/std/" + coords.z + "/" + coords.x + "/" + coords.y + ".png";
-				img.onload = function(){
+				img.onload = function()
+				{
 					ctx.drawImage(this, 0, 0);
 					const rtnImg = ctx.getImageData(0, 0, 256, 256);
 					let rtnImgData = rtnImg.data;
 					// 画像加工
-					for(let _i1 = 0; _i1 < 256 * 256 * 4; _i1+=4){
-						if(rtnImgData[_i1 + 0] > 160 && rtnImgData[_i1 + 1] > 160 && rtnImgData[_i1 + 2] > 160){
+					for(let _i1 = 0; _i1 < 256 * 256 * 4; _i1+=4)
+					{
+						if(rtnImgData[_i1 + 0] > 160 && rtnImgData[_i1 + 1] > 160 && rtnImgData[_i1 + 2] > 160)
+						{
 							rtnImgData[_i1 + 3] = 0;
 						}
-						else{
+						else
+						{
 							rtnImgData[_i1 + 3] = 255;
 						}
 					}
@@ -2816,7 +3157,8 @@ function subAddGeoJson_addToMap(
 
 			// 標準 => 褐色
 			const $StdToBrown = new L.GridLayer();
-			$StdToBrown.createTile = function(coords){
+			$StdToBrown.createTile = function(coords)
+			{
 				const tile = L.DomUtil.create("canvas", "leaflet-tile");
 					tile.width = tile.height = 256;
 				const ctx = tile.getContext("2d");
@@ -2824,18 +3166,22 @@ function subAddGeoJson_addToMap(
 					img.crossOrigin = "anonymous";
 					// leafletが使うタイルと別のサーバ（https／http）にアクセスし、Access-Control-Allow-Originを回避
 					img.src = "https://cyberjapandata.gsi.go.jp/xyz/std/" + coords.z + "/" + coords.x + "/" + coords.y + ".png";
-				img.onload = function(){
+				img.onload = function()
+				{
 					ctx.drawImage(this, 0, 0);
 					const rtnImg = ctx.getImageData(0, 0, 256, 256);
 					let rtnImgData = rtnImg.data;
 					// 画像加工
-					for(let _i1 = 0; _i1 < 256 * 256 * 4; _i1+=4){
+					for(let _i1 = 0; _i1 < 256 * 256 * 4; _i1+=4)
+					{
 						// 各カラーチャンネルで、一番暗い値を取得
 						let minLuminance = rtnImgData[_i1];
-						if(minLuminance > rtnImgData[_i1 + 1]){
+						if(minLuminance > rtnImgData[_i1 + 1])
+						{
 							minLuminance = rtnImgData[_i1 + 1];
 						}
-						if(minLuminance > rtnImgData[_i1 + 2]){
+						if(minLuminance > rtnImgData[_i1 + 2])
+						{
 							minLuminance = rtnImgData[_i1 + 2];
 						}
 						// 減色
@@ -2850,9 +3196,10 @@ function subAddGeoJson_addToMap(
 				return tile;
 			}
 
-			// 標準 => 黒色
-			const $StdToBlack = new L.GridLayer();
-			$StdToBlack.createTile = function(coords){
+			// 標準 => 赤色
+			const $StdToSimpleColor = new L.GridLayer();
+			$StdToSimpleColor.createTile = function(coords)
+			{
 				const tile = L.DomUtil.create("canvas", "leaflet-tile");
 					tile.width = tile.height = 256;
 				const ctx = tile.getContext("2d");
@@ -2860,17 +3207,21 @@ function subAddGeoJson_addToMap(
 					img.crossOrigin = "anonymous";
 					// leafletが使うタイルと別のサーバ（https／http）にアクセスし、Access-Control-Allow-Originを回避
 					img.src = "https://cyberjapandata.gsi.go.jp/xyz/pale/" + coords.z + "/" + coords.x + "/" + coords.y + ".png";
-				img.onload = function(){
+				img.onload = function()
+				{
 					ctx.drawImage(this, 0, 0);
 					const rtnImg = ctx.getImageData(0, 0, 256, 256);
 					let rtnImgData = rtnImg.data;
 					// 画像加工
-					for(let _i1 = 0; _i1 < 256 * 256 * 4; _i1+=4){
-						if(rtnImgData[_i1 + 0] >= 200 && rtnImgData[_i1 + 1] >= 200 && rtnImgData[_i1 + 2] >= 200){
+					for(let _i1 = 0; _i1 < 256 * 256 * 4; _i1+=4)
+					{
+						if(rtnImgData[_i1 + 0] >= 200 && rtnImgData[_i1 + 1] >= 200 && rtnImgData[_i1 + 2] >= 200)
+						{
 							rtnImgData[_i1 + 3] = 0;
 						}
-						else{
-							rtnImgData[_i1 + 0] = 0;
+						else
+						{
+							rtnImgData[_i1 + 0] = 255;
 							rtnImgData[_i1 + 1] = 0;
 							rtnImgData[_i1 + 2] = 0;
 							rtnImgData[_i1 + 3] = 255;
@@ -2885,7 +3236,8 @@ function subAddGeoJson_addToMap(
 			// タイル座標
 			-------------*/
 			const $TileCoord = new L.GridLayer();
-			$TileCoord.createTile = function(coords){
+			$TileCoord.createTile = function(coords)
+			{
 				const tile = L.DomUtil.create("canvas", "leaflet-tile");
 					tile.width = tile.height = 256;
 				const tileText = coords.z + "-" + coords.x + "-" + coords.y;
@@ -2911,14 +3263,15 @@ function subAddGeoJson_addToMap(
 			---------------*/
 			$MapOverlays["注記／明色 [-z18]"] = $StdToBright;
 			$MapOverlays["注記／褐色 [-z18]"] = $StdToBrown;
-			$MapOverlays["注記／黒色 [-z18]"] = $StdToBlack;
+			$MapOverlays["注記／赤色 [-z18]"] = $StdToSimpleColor;
 			$MapOverlays["海水面 [-z14]"]     = $Dem10ToSeaLevel;
 			$MapOverlays["タイル座標"]        = $TileCoord;
 
 			/*-------------
 			// タイル選択
 			-------------*/
-			if($MapSelector){
+			if($MapSelector)
+			{
 				$Map.removeControl($MapSelector); // 前出を削除
 			}
 			$MapSelector = L.control.layers(
@@ -2933,7 +3286,8 @@ function subAddGeoJson_addToMap(
 			// 初回表示の処理
 			$Map.on(
 				"overlayremove",
-				function(e){
+				function(e)
+				{
 					// 地図選択メニューから削除
 					$MapOverlays[e.name].remove($Map);
 				}
@@ -2987,52 +3341,57 @@ function subAddGeoJson_addToMap(
 				spin:false
 			}
 		);
-		/*----------------------
-		// マーカーのPopUp更新
-		----------------------*/
+		/*-----------------------------
+		// マーカーのポップアップ更新
+		-----------------------------*/
 		function subMarkerPopup(
 			$BaseMarker,
 			$AryLocalMarker
-		){
+		)
+		{
 			// $BaseMarker
-			$BaseMarker.closePopup();
-
-			subLatLngToPlaceName(
-				$BaseMarker._latlng.lat,
-				$BaseMarker._latlng.lng,
-				$BaseMarker,
-				null
-			);
-
-			$BaseMarker.bindPopup(
-				rtnMarkerPopup1(
+			if($BaseMarker)
+			{
+				$BaseMarker.closePopup();
+				subLatLngToPlaceName(
 					$BaseMarker._latlng.lat,
-					$BaseMarker._latlng.lng
-				),
-				{
-					autoClose:false, // 複数PopUp可
-					autoPan:false    // PopUp時、表示調整しない
-				}
-			);
-			$BaseMarker.openPopup();
-
-			// $AryLocalMarker
-			for(let _s1 of $AryLocalMarker){
-				_s1.closePopup();
-				_s1.bindPopup(
-					rtnMarkerPopup2(
+					$BaseMarker._latlng.lng,
+					$BaseMarker,
+					null
+				);
+				$BaseMarker.bindPopup(
+					rtnMarkerPopup1(
 						$BaseMarker._latlng.lat,
-						$BaseMarker._latlng.lng,
-						_s1._latlng.lat,
-						_s1._latlng.lng,
-						_s1
+						$BaseMarker._latlng.lng
 					),
 					{
-						autoClose:false, // 複数PopUp可
-						autoPan:false    // PopUp時、表示調整しない
+						autoClose:false, // 複数ポップアップ可
+						autoPan:false    // ポップアップ時、表示調整しない
 					}
 				);
-				_s1.openPopup();
+				$BaseMarker.openPopup();
+			}
+			// $AryLocalMarker
+			if($AryLocalMarker)
+			{
+				for(let _s1 of $AryLocalMarker)
+				{
+					_s1.closePopup();
+					_s1.bindPopup(
+						rtnMarkerPopup2(
+							$BaseMarker._latlng.lat,
+							$BaseMarker._latlng.lng,
+							_s1._latlng.lat,
+							_s1._latlng.lng,
+							_s1
+						),
+						{
+							autoClose:false, // 複数ポップアップ可
+							autoPan:false    // ポップアップ時、表示調整しない
+						}
+					);
+					_s1.openPopup();
+				}
 			}
 		}
 		/*-------------------
@@ -3044,13 +3403,17 @@ function subAddGeoJson_addToMap(
 		function subBaseMarkerNew(
 			$Lat,
 			$Lng
-		){
-			for(let _i1 = 0, _i2 = arguments.length; _i1 < _i2; _i1++){
-				if(isNaN(arguments[_i1])){
+		)
+		{
+			for(let _i1 = 0, _i2 = arguments.length; _i1 < _i2; _i1++)
+			{
+				if(isNaN(arguments[_i1]))
+				{
 					arguments[_i1] = document.getElementById(arguments[_i1]).value;
 				}
 			}
-			if($BaseMarker){
+			if($BaseMarker)
+			{
 				$BaseMarker.remove($Map);
 			}
 			$BaseMarker = L.marker(
@@ -3068,44 +3431,45 @@ function subAddGeoJson_addToMap(
 			// ズームレベル変更
 			$BaseMarker.on(
 				"click",
-				function(e){
+				function(e)
+				{
 					const mouseP = $Map.latLngToContainerPoint(this.getLatLng());
 					subIwmInput_ZoomA_Open(
 						"_NaviZoom",
 						(mouseP.x + 30),
 						(mouseP.y - 40)
 					);
+					// 以下、"click"時、動作不具合
+					// subMarkerPopup(this, null);
 				}
 			);
-			// 全PopUp表示
-			$BaseMarker.on(
-				"contextmenu",
-				function(e){
-					this.closePopup();
-					subMarkerPopup($BaseMarker, $AryLocalMarker);
-					let i1 = $AryPoint.length;
-					while(i1--){
-						$AryPoint[i1].openPopup();
-					}
-				}
-			);
-			// PopUp情報更新
+			// ポップアップ情報更新
 			$BaseMarker.on(
 				"dragend",
-				function(e){
+				function(e)
+				{
 					const a1 = this.getLatLng();
 					subChangeUrl(a1.lat, a1.lng, "_NaviZoom");
 					_iwmIBL($subIwmInput_BL_toSave);
-					subMarkerPopup($BaseMarker, $AryLocalMarker);
+					subMarkerPopup(this, $AryLocalMarker);
 					this.closePopup();
 				}
 			);
-			// 何もしない
+			// 先読みしておく
 			$BaseMarker.on(
 				"mouseover",
-				function(e){
-					// 先読みしておく
-					rtnMarkerPopup1($BaseMarker._latlng.lat, $BaseMarker._latlng.lng);
+				function(e)
+				{
+					rtnMarkerPopup1(this._latlng.lat, this._latlng.lng);
+					this.closePopup();
+				}
+			);
+			// ポップアップ再表示
+			$BaseMarker.on(
+				"mouseout",
+				function(e)
+				{
+					subMarkerPopup(this, null);
 				}
 			);
 		}
@@ -3120,9 +3484,12 @@ function subAddGeoJson_addToMap(
 			$lat,
 			$lng,
 			$placeName
-		){
+		)
+		{
 			let bIconDrag = false;
-			if(!$placeName){
+
+			if(! $placeName)
+			{
 				bIconDrag = true;
 			}
 
@@ -3151,7 +3518,8 @@ function subAddGeoJson_addToMap(
 			);
 
 			// 固定点のときだけセンタリング
-			if(!bIconDrag){
+			if(! bIconDrag)
+			{
 				$Map.setView(
 					[$lat, $lng],
 					document.getElementById("_NaviZoom").value
@@ -3161,7 +3529,8 @@ function subAddGeoJson_addToMap(
 			// ズームレベル補完
 			obj.on(
 				"click",
-				function(e){
+				function(e)
+				{
 					$iwmSV_hash = this.getLatLng();
 					const mouseP = $Map.latLngToContainerPoint($iwmSV_hash);
 					subIwmInput_ZoomA_Open(
@@ -3174,10 +3543,13 @@ function subAddGeoJson_addToMap(
 			// $AryLocalMarker 消去
 			obj.on(
 				"contextmenu",
-				function(e){
+				function(e)
+				{
 					let i1 = $AryLocalMarker.length;
-					while(i1--){
-						if(this == $AryLocalMarker[i1]){
+					while(i1--)
+					{
+						if(this == $AryLocalMarker[i1])
+						{
 							$AryLocalMarker[i1].remove($Map);
 							$AryLocalMarker.splice(i1, 1);
 							break;
@@ -3187,11 +3559,11 @@ function subAddGeoJson_addToMap(
 					subGCircle_Draw();
 				}
 			);
-			// ドラッグ
+			// 先読みしておく
 			obj.on(
 				"dragend",
-				function(e){
-					// 先読みしておく
+				function(e)
+				{
 					rtnMarkerPopup2(
 						$BaseMarker._latlng.lat,
 						$BaseMarker._latlng.lng,
@@ -3201,11 +3573,11 @@ function subAddGeoJson_addToMap(
 					);
 				}
 			);
-			// PopUp表示更新
+			// 先読みしておく
 			obj.on(
 				"mouseover",
-				function(e){
-					// 先読みしておく
+				function(e)
+				{
 					rtnMarkerPopup2(
 						$BaseMarker._latlng.lat,
 						$BaseMarker._latlng.lng,
@@ -3215,10 +3587,11 @@ function subAddGeoJson_addToMap(
 					);
 				}
 			);
-			// PopUp再表示
+			// ポップアップ再表示
 			obj.on(
 				"mouseout",
-				function(e){
+				function(e)
+				{
 					this.closePopup();
 					this.bindPopup(
 						rtnMarkerPopup2(
@@ -3229,8 +3602,8 @@ function subAddGeoJson_addToMap(
 							this
 						),
 						{
-							autoClose:false, // 複数PopUp可
-							autoPan:false    // PopUp時、表示調整しない
+							autoClose:false, // 複数ポップアップ可
+							autoPan:false    // ポップアップ時、表示調整しない
 						}
 					);
 					this.openPopup();
@@ -3244,7 +3617,8 @@ function subAddGeoJson_addToMap(
 		// マーカー毎のイベント設定後でないと不具合
 		$Map.on(
 			"dblclick",
-			function(e){
+			function(e)
+			{
 				subIwmInput_ZoomA_Open(
 					"_NaviZoom",
 					(e.containerPoint.x + 20),
@@ -3256,19 +3630,21 @@ function subAddGeoJson_addToMap(
 		);
 		$Map.on(
 			"contextmenu",
-			function(e){
+			function(e)
+			{
 				subMapOnRClick(e.latlng.lat, e.latlng.lng, null);
 				subGCircle_Draw();
 			}
 		);
 		$Map.on(
 			"zoomend",
-			function(e){
+			function(e)
+			{
 				subChangeUrl("_NaviLat", "_NaviLng", $Map.getZoom());
 				subIwmInput_Zoom_Change($Map.getZoom());
 			}
 		);
-		</script>
+	</script>
 	</div>
 </body>
 
@@ -3292,34 +3668,31 @@ function subAddGeoJson_addToMap(
 </style>
 <div class="_div_head">地図上でのマウス操作</div>
  <ul class="_ul">
-  <li class="_li1">ダブルクリック：<font class="_font_color1">青マーカー<i class="fa fa-map-marker _font_size22px"></i></font>&nbsp;移動</li>
-  <li class="_li1">左クリック：全ポップアップ&nbsp;非表示</li>
-  <li class="_li1">右クリック：<font class="_font_color2">赤マーカー<i class="fa fa-map-marker _font_size22px"></i></font>&nbsp;追加</li>
+  <li class="_li1">ダブルクリック：<span class="_font_color1">青マーカー<i class="fa fa-map-marker _font_size22px"></i></span>&nbsp;移動</li>
+  <li class="_li1">左クリック：全ポップアップを閉じる</li>
+  <li class="_li1">右クリック：<span class="_font_color2">赤マーカー<i class="fa fa-map-marker _font_size22px"></i></span>&nbsp;追加</li>
  </ul>
 <div class="_div_head">マーカー上でのマウス操作</div>
  <ol class="_ol">
-  <li class="_li1"><font class="_font_color1">青マーカー<i class="fa fa-map-marker _font_size22px"></i></font>
+  <li class="_li1"><span class="_font_color1">青マーカー<i class="fa fa-map-marker _font_size22px"></i></span>
    <ul class="_ul">
-    <li class="_li2">左クリック：ズームレベル</li>
-    <li class="_li2">右クリック：全ポップアップ<font class="_font_size22px"><i class="fa fa-commenting-o _font_color1"></i><i class="fa fa-commenting-o _font_color2"></i><i class="fa fa-commenting-o _font_color3"></i></font></li>
+    <li class="_li2">左クリック：ズームレベルとポップアップ<span class="_font_size22px"><i class="fa fa-commenting-o _font_color1"></i></span></li>
     <li class="_li2">ドラッグ：移動</li>
-    <li class="_li2">マウスオーバー：何もしない</li>
    </ul>
   </li>
-  <li class="_li1"><font class="_font_color2">赤マーカー<i class="fa fa-map-marker _font_size22px"></i></font>
+  <li class="_li1"><span class="_font_color2">赤マーカー<i class="fa fa-map-marker _font_size22px"></i></span>
    <ul class="_ul">
     <li class="_li2">左クリック：ズームレベル</li>
     <li class="_li2">右クリック：消去</li>
     <li class="_li2">ドラッグ：移動</li>
-    <li class="_li2">マウスオーバー：ポップアップ<font class="_font_size22px"><i class="fa fa-commenting-o _font_color2"></i></font></li>
+    <li class="_li2">マウスオーバー：ポップアップ<span class="_font_size22px"><i class="fa fa-commenting-o _font_color2"></i></span></li>
    </ul>
   </li>
-  <li class="_li1"><font class="_font_color3">オレンジマーカー<i class="fa fa-map-marker _font_size22px"></i></font>
+  <li class="_li1"><span class="_font_color3">オレンジマーカー<i class="fa fa-map-marker _font_size22px"></i></span>
    <ul class="_ul">
     <li class="_li2">左クリック：ズームレベル</li>
     <li class="_li2">右クリック：消去</li>
-    <li class="_li2">ドラッグ：何もしない</li>
-    <li class="_li2">マウスオーバー：ポップアップ<font class="_font_size22px"><i class="fa fa-commenting-o _font_color3"></i></font></li>
+    <li class="_li2">マウスオーバー：ポップアップ<span class="_font_size22px"><i class="fa fa-commenting-o _font_color3"></i></span></li>
    </ul>
   </li>
  </ol>
