@@ -8,7 +8,7 @@ const IFn = process.argv[2];
 
 if (!IFn || !fs.existsSync(IFn)) {
 	console.log();
-	console.log(`\u001b[0;97;104m 先頭行がラベル（北緯,東経,...）のCSV／TSVファイルから \u001b[0;99m`);
+	console.log(`\u001b[0;97;104m 先頭行がラベル（緯度,経度,...）のCSV／TSVファイルから \u001b[0;99m`);
 	console.log(`\u001b[0;97;104m iwm_leaflet.html のマーカーを生成                     \u001b[0;99m`);
 	console.log();
 	console.log(`\u001b[0;97;101m node ${Cmd} [File] \u001b[0;99m`);
@@ -17,10 +17,10 @@ if (!IFn || !fs.existsSync(IFn)) {
 	console.log();
 	console.log(`\u001b[0;96m※十進法 ddd.d...`);
 	console.log(`\u001b[0;93m(入力)\u001b[0;97m`);
-	console.log(`  北緯,東経,場所`);
+	console.log(`  緯度,経度,場所`);
 	console.log(`  35.685187,139.752274,皇居`);
 	console.log(`\u001b[0;93m(出力)\u001b[0;97m`);
-	console.log(`  35.685187	139.752274	<font color=\"#ff5858\">皇居</font>	<font color=\"#3d7cce\">北緯</font>35度41分6.673200秒／35.685187度	<font color=\"#3d7cce\">東経</font>139度45分8.186400秒／139.752274度`);
+	console.log(`  35.685187	139.752274	<font color=\"#ff5858\">皇居</font>	<font color=\"#3d7cce\">緯度</font>35度41分6.673200秒／35.685187度	<font color=\"#3d7cce\">経度</font>139度45分8.186400秒／139.752274度`);
 	console.log(`\u001b[0;99m`);
 	return;
 }
@@ -91,7 +91,7 @@ function main() {
 				}
 				// ２行目以降はデータ
 				else {
-					// [0]北緯, [1]東経 を付与
+					// [0]緯度, [1]経度 を付与
 					str += _a1[0] + Separater + _a1[1];
 
 					// [2] のタグを生成
@@ -109,7 +109,7 @@ function main() {
 
 							if (_idx < 2) {
 								const [deg, min, sec] = rtnGeo10toIBL(_a1[_idx]);
-								str += `${deg}度${min}分${sec.toFixed(6)}秒／${parseFloat(_a1[_idx]).toFixed(6)}度`;
+								str += `${deg}度${min}分${sec.toFixed(4)}秒／${parseFloat(_a1[_idx]).toFixed(8)}度`;
 							} else {
 								str += _s2;
 							}
