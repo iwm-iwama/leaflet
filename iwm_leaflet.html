@@ -1,4 +1,4 @@
-<!-- iwm20230530A Ver.20230530 'U-2S' -->
+<!-- iwm20230530B Ver.20230531 'U-2S' -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -1336,9 +1336,13 @@ function subMapToPoint(
 	// $AryLocalMarker
 	for(let _o1 of $AryLocalMarker)
 	{
-		const r = GEOD.Inverse(oldLat, oldLng, _o1._latlng.lat, _o1._latlng.lng);
+		const _r = GEOD.Inverse(oldLat, oldLng, _o1._latlng.lat, _o1._latlng.lng);
 		const _a1 = _o1._popup._content.split("<br>");
-		str += _o1._latlng.lat.toFixed(8) + "\t" + _o1._latlng.lng.toFixed(8) + "\t" + _a1.join("\t") + "\t<span style=\"color:#3c3;\">点間の距離</span>" + (r.s12 / 1000.0).toFixed(3) + "km <span style=\"color:#3c3;s\">方位角</span>" + r.azi1.toFixed(4) + "°\n";
+		if(_r.azi1 < 0.0)
+		{
+			_r.azi1 += 360.0;
+		}
+		str += _o1._latlng.lat.toFixed(8) + "\t" + _o1._latlng.lng.toFixed(8) + "\t" + _a1.join("\t") + "\t<span style=\"color:#3c3;\">点間の距離</span>" + (_r.s12 / 1000.0).toFixed(3) + "km <span style=\"color:#3c3;s\">方位角</span>" + _r.azi1.toFixed(4) + "°\n";
 		oldLat = _o1._latlng.lat;
 		oldLng = _o1._latlng.lng;
 	}
@@ -1407,9 +1411,9 @@ function rtnA2P_DistMP(
 			}
 		}
 	}
-	let iTotalDist = 0.0;
 	let aLatLng2 = [];
 	let aOld = [];
+	let iTotalDist = 0.0;
 	for(let _a1 of aLatLng1)
 	{
 		if(aOld[0])
@@ -1417,31 +1421,23 @@ function rtnA2P_DistMP(
 			const r = GEOD.Inverse(aOld[0], aOld[1], _a1[0], _a1[1]);
 			iTotalDist += r.s12;
 			const l = GEOD.InverseLine(aOld[0], aOld[1], _a1[0], _a1[1]);
-			// 区間距離を200分割
-			let distM = (iTotalDist / 200) * 1000;
-			let n = Math.ceil(l.s13 / distM);
+			// 区間距離を細分割
+			let dist = iTotalDist / 250;
+			let n = Math.ceil(l.s13 / dist);
 			for(let _i1 = 0; _i1 <= n; _i1++)
 			{
-				let s = Math.min(distM * _i1, l.s13);
+				let s = Math.min(dist * _i1, l.s13);
 				let r = l.Position(s, GEOD.STANDARD | GEOD.LONG_UNROLL);
 				// 東廻りで日付変更線／グリニッジ子午線を越える
 				if(_a1[1] > r.lon2 && r.lon2 < 0.0)
 				{
 					r.lon2 += 360.0;
-					// 日付変更線以東は 315°まで表示有効
-					// グリニッジ子午線以西は 45°まで表示有効
-					if(Math.abs(Math.ceil(r.lon2)) > 315)
-					{
-						r.lon2 -= 360.0;
-					}
 				}
 				aLatLng2.push([r.lat2, r.lon2]);
 			}
 		}
 		aOld = _a1;
 	}
-	aLatLng1 = null;
-	aOld = null;
 	return [iTotalDist, aLatLng2, iErrCnt];
 }
 /*-------------------
@@ -1548,14 +1544,18 @@ function rtnMarkerPopup2(
 	const sLatRem = aLatDms[0] + "°" + aLatDms[1] + "′" + parseFloat(aLatDms[2]).toFixed(4) + "″";
 	const aLngDms = rtnGeo10toIBL($lngTo);
 	const sLngRem = aLngDms[0] + "°" + aLngDms[1] + "′" + parseFloat(aLngDms[2]).toFixed(4) + "″";
-	let r = GEOD.Inverse($latFrom, $lngFrom, $latTo, $lngTo);
+	let _r = GEOD.Inverse($latFrom, $lngFrom, $latTo, $lngTo);
 	subGetElevation($latTo, $lngTo, $oMarker);
+	if(_r.azi1 < 0.0)
+	{
+		_r.azi1 += 360.0;
+	}
 	return(
 		"<span style=\"color:#f66;\">" + $oMarker.options.title + "</span><br>" +
 		"<span style=\"color:#88f;\">緯度</span>" + $latTo.toFixed(8) + "°／" + sLatRem + "<br>" +
 		"<span style=\"color:#88f;\">経度</span>" + $lngTo.toFixed(8) + "°／" + sLngRem + "<br>" +
 		"<span style=\"color:#88f;\">標高</span>" + $oMarker.elevation + "<br>" +
-		"<span style=\"color:#3c3;\">始点からの距離</span>" + (r.s12 / 1000.0).toFixed(3) + "km <span style=\"color:#3c3;\">方位角</span>" + r.azi1.toFixed(4) + "°"
+		"<span style=\"color:#3c3;\">始点からの距離</span>" + (_r.s12 / 1000.0).toFixed(3) + "km <span style=\"color:#3c3;\">方位角</span>" + _r.azi1.toFixed(4) + "°"
 	);
 }
 /*------------------------------------
@@ -1854,7 +1854,6 @@ function subHeightGraphMakeData()
 	}
 	// 再計算値を代入
 	$HeightGraph_Data[0]["features"][0]["geometry"]["coordinates"] = a1;
-	a1 = null;
 }
 function subHeightGraphOpen()
 {
@@ -2128,7 +2127,7 @@ function subAddGeoJson_addToMap(
 				<div style="line-height:24px;">
 					<input type="button" class="_btnNavi3" value="→計算" onclick="subMapToPoint_TA04Output();"/>
 					<input type="button" class="_btnNavi1" value="↑クリア" onclick="document.getElementById('_TA041').value='';document.getElementById('_TA042').value='';document.getElementById('_TA043').value='';"/>
-					<a href="#" id="_DL04" download="" onclick="subA2P_EditSave(this, '_TA043', 'PointDistance.tsv')"><div class="_btnNavi2">ファイルに保存</div></a>
+					<a href="#" id="_DL04" download="" onclick="subA2P_EditSave(this, '_TA043', 'PointDistance.utf8.tsv')"><div class="_btnNavi2">ファイルに保存</div></a>
 				</div>
 			</div>
 		</div>
@@ -2236,6 +2235,14 @@ function subAddGeoJson_addToMap(
 						{
 							a1[2] = "";
 						}
+						if(_r1.azi1 < 0.0)
+						{
+							_r1.azi1 += 360.0;
+						}
+						if(_r2.azi1 < 0.0)
+						{
+							_r2.azi1 += 360.0;
+						}
 						str += _p1.lat.toFixed(8) + "\t" + _p1.lon.toFixed(8) + "\t" + DMS.Encode(_p1.lat, DMS.SECOND, 4) + "\t" + DMS.Encode(_p1.lon, DMS.SECOND, 4) + "\t" + _a1[2].replace(/<.+?>/g, "") + "\t" + (_r1.s12 / 1000.0).toFixed(3) + "km\t" + _r1.azi1.toFixed(4) + "°\t" + (_r2.s12 / 1000.0).toFixed(3) + "km\t" + _r2.azi1.toFixed(4) + "°\n";
 						iTotalDist += _r2.s12;
 						oldLat = _p1.lat;
@@ -2295,7 +2302,7 @@ function subAddGeoJson_addToMap(
 					<input type="button" class="_btnNavi1" value="↑クリア" onclick="document.getElementById('_TA05').value='';"/>
 					<input type="button" class="_btnNavi4" value="↑サンプル出力" onclick="subA2P_GeocodingSample('_TA05');"/>
 					<input type="button" class="_btnNavi4" value="→住所から変換" onclick="subA2P_Geocoding('_TA05');"/>
-					<a href="#" id="_DL05" download="" onclick="subA2P_EditSave(this, '_TA05', 'MarkerToPoint.tsv')"><div class="_btnNavi2">ファイルに保存</div></a><br>
+					<a href="#" id="_DL05" download="" onclick="subA2P_EditSave(this, '_TA05', 'MarkerToPoint.utf8.tsv')"><div class="_btnNavi2">ファイルに保存</div></a><br>
 					<input type="button" class="_btnNavi3" style="padding:0 3px;" value="←" onclick="subA2P_GCircle('_GCircleM2P','_TA05');"/><input type="text" id="_GCircleM2P" class="_textNavi1" list="_Dist" style="width:70px;" placeholder="範囲円"/>
 					<datalist id="_Dist"><option value="50m"/><option value="100m"/><option value="250m"/><option value="500m"/><option value="1km"/><option value="2km"/><option value="4km"/><option value="5km"/><option value="8km"/><option value="10km"/><option value="20km"/><option value="25km"/><option value="40km"/><option value="50km"/><option value="80km"/><option value="100km"/></datalist>
 					<input type="checkbox" id="_checkboxDist" style="margin:0 0 0 4px;" onclick="subA2P_DistMP('_TA05','_textDist',_checkboxDist.checked);"/><input type="text" id="_textDist" class="_textNavi1" style="width:90px;" placeholder="総距離" readonly/>
@@ -2764,10 +2771,10 @@ function subAddGeoJson_addToMap(
 			{
 				position:"bottomleft",
 				unit:"metres",
-				showBearings:true,
+				showBearings:false,
 				clearMeasurementsOnStop:false,
 				showClearControl:true,
-				showUnitControl:false
+				showUnitControl:true
 			}
 		);
 		$PolylineMeasure.addTo($Map);
