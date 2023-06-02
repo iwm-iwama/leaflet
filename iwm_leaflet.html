@@ -1,4 +1,4 @@
-<!-- iwm20230530B Ver.20230601 'U-2S' -->
+<!-- iwm20230530B Ver.20230602 'U-2S' -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -2115,7 +2115,7 @@ function subAddGeoJson_addToMap(
 					<textarea id="_TA041" class="_editTextBox" wrap="off" style="height:40px;width:542px;" placeholder="青マーカー（始点）"></textarea>
 				</div>
 				<div style="margin:4px 0 0 0;">
-					<textarea id="_TA042" class="_editTextBox" wrap="off" style="height:100px;width:542px;" placeholder="赤マーカー／オレンジマーカー"></textarea>
+					<textarea id="_TA042" class="_editTextBox" wrap="off" style="height:100px;width:542px;" placeholder="赤マーカー／オレンジマーカー&#10;(°／°′″) 35.68518698／35°41′06.6731″, 35:41:06.6731"></textarea>
 				</div>
 				<div style="margin:4px 0 0 0;">
 					<textarea id="_TA043" class="_editTextBox" wrap="off" style="height:200px;width:542px;" placeholder="計算結果" readonly></textarea>
@@ -2292,7 +2292,7 @@ function subAddGeoJson_addToMap(
 			<div class="_simpleWindowOutput" style="padding:4px 6px 6px 6px;">
 				<input type="button" class="_btnNavi3" value="→マーカーから読込" onclick="subMapToPoint('_TA05');"/>
 				<input type="file" id="_readPointFile" accept=".tsv" style="margin:0 0 0 8px;width:519px;" onchange="subAddFile(this.id,'_TA05',1);"/>
-				<textarea id="_TA05" class="_editTextBox" wrap="off" style="height:360px;width:642px;" placeholder="[Tab]区切り／UTF-8N&#13;&quot;//&quot; で始まる行はコメント行&#13;※&quot;icon@[画像ファイル]&quot; でマーカーにアイコンを設定可能&#13;// 例&#13;35.68365900&#9;139.75408900&#9;皇居&#9;icon@[画像ファイル]"></textarea>
+				<textarea id="_TA05" class="_editTextBox" wrap="off" style="height:360px;width:642px;" placeholder="[Tab]区切り／UTF-8N&#10;&quot;//&quot; で始まる行はコメント行&#10;※&quot;icon@[画像ファイル]&quot; でマーカーにアイコンを設定可能&#10;// 例&#10;35.68365900&#9;139.75408900&#9;皇居&#9;icon@[画像ファイル]"></textarea>
 				<script>
 					document.getElementById("_TA05").onkeydown = function(e){subAddTabCtrl(this, e);}
 				</script>
