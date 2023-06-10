@@ -1,4 +1,4 @@
-<!-- iwm20230530B Ver.20230602 'U-2S' -->
+<!-- iwm20230530C Ver.20230610 'U-2S' -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -1351,7 +1351,7 @@ function subMapToPoint(
 /*----------------------
 // ファイル読込（追加）
 ----------------------*/
-let $SaveFileName = "";
+let $AddFileName = "";
 function subAddFile(
 	$fileId,
 	$textareaId,
@@ -1362,7 +1362,7 @@ function subAddFile(
 	// ボタンにイベントを設定
 	const fileList = document.getElementById($fileId).files;
 	// ファイル名記憶
-	$SaveFileName = fileList[0].name;
+	$AddFileName = fileList[0].name;
 	// 読込
 	const reader = new FileReader();
 	reader.onload = function(evt)
@@ -1382,6 +1382,16 @@ function subAddFile(
 	reader.readAsText(fileList[0]);
 }
 /*---------------
+// 分割文字取得
+---------------*/
+function rtnTextSeparator(
+	$text
+)
+{
+	// 分割文字記憶
+	return $text.match(/\t/) ? "\t" : ",";
+}
+/*---------------
 // 多点間の距離
 ---------------*/
 let $ObjPointLinkedLine = null;
@@ -1397,16 +1407,16 @@ function rtnA2P_DistMP(
 	{
 		if(_s1.substr(0, 2) != "//")
 		{
-			const _a1 = _s1.split("\t");
+			const _a1 = _s1.split(rtnTextSeparator(_s1));
 			if(_a1.length >= 2)
 			{
-				if(! _a1[0].match(rgxDecimal) || ! _a1[1].match(rgxDecimal))
+				if(_a1[0].match(rgxDecimal) && _a1[1].match(rgxDecimal))
 				{
-					++iErrCnt;
+					aLatLng1.push([_a1[0], _a1[1]]);
 				}
 				else
 				{
-					aLatLng1.push([_a1[0], _a1[1]]);
+					++iErrCnt;
 				}
 			}
 		}
@@ -1428,7 +1438,7 @@ function rtnA2P_DistMP(
 			{
 				let s = Math.min(dist * _i1, l.s13);
 				let r = l.Position(s, GEOD.STANDARD | GEOD.LONG_UNROLL);
-				// 東廻りで日付変更線／グリニッジ子午線を越える
+				// 東廻りで日付変更線を越える
 				if(_a1[1] > r.lon2 && r.lon2 < 0.0)
 				{
 					r.lon2 += 360.0;
@@ -1529,7 +1539,7 @@ function rtnMarkerPopup1(
 	);
 }
 /*------------------------
-// $AryLocalMarker PopUp 
+// $AryLocalMarker PopUp
 ------------------------*/
 function rtnMarkerPopup2(
 	$latFrom,
@@ -1925,7 +1935,8 @@ function subAddGeoJson_init()
 	}
 }
 function subAddGeoJson_readFile(
-	$aryIndex
+	$aryIndex,
+	$oId,
 )
 {
 	$aryIndex = parseInt($aryIndex, 10);
@@ -1933,11 +1944,11 @@ function subAddGeoJson_readFile(
 	const reader = new FileReader();
 	reader.onload = function(evt)
 	{
-		document.getElementById("_TA04").value = evt.target.result;
+		document.getElementById($oId).value = evt.target.result;
 		$Map.createPane("_pane200").style.zIndex = 200;
 		$AryGeoJsonLayer[$aryIndex] = L.geoJSON(
 			JSON.parse(
-				document.getElementById("_TA04").value
+				document.getElementById($oId).value
 			),{
 				pane:"_pane200"
 			}
@@ -2084,16 +2095,16 @@ function subAddGeoJson_addToMap(
 		<div id="_SW03" class="_simpleWindow" style="right:0;width:360px;">
 			<div>GeoJSON ファイル読込</div>
 			<div class="_simpleWindowOutput" style="line-height:36px;padding:0 6px 6px 6px;">
-				<input type="checkbox" id="_checkboxGeoJson0" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(0);"/><input type="file" id="_fileGeoJson0" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(0);"/><br>
-				<input type="checkbox" id="_checkboxGeoJson1" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(1);"/><input type="file" id="_fileGeoJson1" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(1);"/><br>
-				<input type="checkbox" id="_checkboxGeoJson2" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(2);"/><input type="file" id="_fileGeoJson2" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(2);"/><br>
-				<input type="checkbox" id="_checkboxGeoJson3" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(3);"/><input type="file" id="_fileGeoJson3" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(3);"/><br>
-				<input type="checkbox" id="_checkboxGeoJson4" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(4);"/><input type="file" id="_fileGeoJson4" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(4);"/><br>
-				<input type="checkbox" id="_checkboxGeoJson5" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(5);"/><input type="file" id="_fileGeoJson5" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(5);"/><br>
-				<input type="checkbox" id="_checkboxGeoJson6" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(6);"/><input type="file" id="_fileGeoJson6" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(6);"/><br>
-				<input type="checkbox" id="_checkboxGeoJson7" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(7);"/><input type="file" id="_fileGeoJson7" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(7);"/><br>
-				<input type="checkbox" id="_checkboxGeoJson8" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(8);"/><input type="file" id="_fileGeoJson8" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(8);"/><br>
-				<input type="checkbox" id="_checkboxGeoJson9" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(9);"/><input type="file" id="_fileGeoJson9" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(9);"/><br>
+				<input type="checkbox" id="_checkboxGeoJson0" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(0);"/><input type="file" id="_fileGeoJson0" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(0,'_TA03');"/><br>
+				<input type="checkbox" id="_checkboxGeoJson1" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(1);"/><input type="file" id="_fileGeoJson1" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(1,'_TA03');"/><br>
+				<input type="checkbox" id="_checkboxGeoJson2" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(2);"/><input type="file" id="_fileGeoJson2" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(2,'_TA03');"/><br>
+				<input type="checkbox" id="_checkboxGeoJson3" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(3);"/><input type="file" id="_fileGeoJson3" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(3,'_TA03');"/><br>
+				<input type="checkbox" id="_checkboxGeoJson4" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(4);"/><input type="file" id="_fileGeoJson4" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(4,'_TA03');"/><br>
+				<input type="checkbox" id="_checkboxGeoJson5" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(5);"/><input type="file" id="_fileGeoJson5" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(5,'_TA03');"/><br>
+				<input type="checkbox" id="_checkboxGeoJson6" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(6);"/><input type="file" id="_fileGeoJson6" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(6,'_TA03');"/><br>
+				<input type="checkbox" id="_checkboxGeoJson7" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(7);"/><input type="file" id="_fileGeoJson7" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(7,'_TA03');"/><br>
+				<input type="checkbox" id="_checkboxGeoJson8" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(8);"/><input type="file" id="_fileGeoJson8" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(8,'_TA03');"/><br>
+				<input type="checkbox" id="_checkboxGeoJson9" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(9);"/><input type="file" id="_fileGeoJson9" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(9,'_TA03');"/><br>
 				<div style="line-height:24px;">
 					<input type="button" class="_btnNavi1" value="↑クリア" onclick="subAddGeoJson_init()"/>
 					<textarea id="_TA03" class="_editTextBox" wrap="off" style="display:none;"></textarea>
@@ -2127,7 +2138,8 @@ function subAddGeoJson_addToMap(
 				<div style="line-height:24px;">
 					<input type="button" class="_btnNavi3" value="→計算" onclick="subMapToPoint_TA04Output();"/>
 					<input type="button" class="_btnNavi1" value="↑クリア" onclick="document.getElementById('_TA041').value='';document.getElementById('_TA042').value='';document.getElementById('_TA043').value='';"/>
-					<a href="#" id="_DL04" download="" onclick="subA2P_EditSave(this, '_TA043', 'PointDistance.utf8.tsv')"><div class="_btnNavi2">ファイルに保存</div></a>
+					<a href="#" id="_DL04" download="" onclick="subA2P_CnvSV('_TA043')"><div class="_btnNavi2">TSV/CSV</div></a>
+					<a href="#" id="_DL04" download="" onclick="subA2P_EditSave(this, '_TA043', 'PointDistance.utf8')"><div class="_btnNavi2">ファイルに保存</div></a>
 				</div>
 			</div>
 		</div>
@@ -2170,19 +2182,23 @@ function subAddGeoJson_addToMap(
 			}
 			let b1 = true;
 			let str = "";
+			const rgxDecimal = /^[\+\-]{0,1}[0-9]+\.{0,1}[0-9]*$/;
 			for(let _s1 of s1.split("\n"))
 			{
-				const _a1 = _s1.split("\t");
-				// $BaseMarker
-				if(b1)
+				const _a1 = _s1.split(rtnTextSeparator(_s1));
+				if(_a1[0].match(rgxDecimal) && _a1[1].match(rgxDecimal))
 				{
-					document.getElementById("_TA041").value = _a1[0] + "\t" + _a1[1] + "\t" + _a1[2];
-					b1 = false;
-				}
-				// $AryLocalMarker
-				else
-				{
-					str += _a1[0] + "\t" + _a1[1] + "\t" + _a1[2] + "\n";
+					// $BaseMarker
+					if(b1)
+					{
+						document.getElementById("_TA041").value = _a1[0] + "\t" + _a1[1] + "\t" + _a1[2];
+						b1 = false;
+					}
+					// $AryLocalMarker
+					else
+					{
+						str += _a1[0] + "\t" + _a1[1] + "\t" + _a1[2] + "\n";
+					}
 				}
 			}
 			document.getElementById("_TA042").value = str;
@@ -2198,7 +2214,7 @@ function subAddGeoJson_addToMap(
 				return;
 			}
 			// $BaseMarker
-			const a1 = s1.split("\t");
+			const a1 = s1.split(rtnTextSeparator(s1));
 			let p1;
 			try
 			{
@@ -2225,7 +2241,7 @@ function subAddGeoJson_addToMap(
 				_s1 = _s1.trim();
 				if(_s1.length > 0)
 				{
-					const _a1 = _s1.split("\t");
+					const _a1 = _s1.split(rtnTextSeparator(_s1));
 					try
 					{
 						const _p1 = DMS.DecodeLatLon(_a1[0], _a1[1]);
@@ -2256,27 +2272,58 @@ function subAddGeoJson_addToMap(
 			}
 			str += "\t\t\t\t\t\t総距離\t" + (iTotalDist / 1000.0).toFixed(6) + "km\n";
 			document.getElementById("_TA043").value = str;
-		}		
+		}
+		/*-----------------
+		// TSV／CSVに変換
+		-----------------*/
+		function subA2P_CnvSV(
+			$textareaId
+		)
+		{
+			const s1 = document.getElementById($textareaId).value;
+			let s2 = "";
+			if(s1.match("\t"))
+			{
+				s2 = s1.replace(/\t/g, ",");
+			}
+			else
+			{
+				s2 = s1.replace(/,/g, "\t");
+			}
+			document.getElementById($textareaId).value = s2;
+		}
 		/*-----------------
 		// ファイルに保存
 		-----------------*/
 		function subA2P_EditSave(
 			$this,
 			$textareaId,
-			$saveFileName
-			)
+			$AddFileName
+		)
+		{
+			const content = document.getElementById($textareaId).value;
+			const blob = new Blob([content], {type:"text/plain"});
+			if(content.match("\t"))
 			{
-				const content = document.getElementById($textareaId).value;
-				const blob = new Blob([content], {type:"text/plain"});
-			// MSIE?
-			if(window.navigator.msSaveBlob)
+				$AddFileName += ".tsv";
+			}
+			else if(content.match(","))
 			{
-				window.navigator.msSaveBlob(blob, $saveFileName);
-				window.navigator.msSaveOrOpenBlob(blob, $saveFileName);
+				$AddFileName += ".csv";
 			}
 			else
 			{
-				$this.download = $saveFileName;
+				$AddFileName += ".txt";
+			}
+			// MSIE?
+			if(window.navigator.msSaveBlob)
+			{
+				window.navigator.msSaveBlob(blob, $AddFileName);
+				window.navigator.msSaveOrOpenBlob(blob, $AddFileName);
+			}
+			else
+			{
+				$this.download = $AddFileName;
 				$this.href = window.URL.createObjectURL(blob);
 			}
 		}
@@ -2291,8 +2338,8 @@ function subAddGeoJson_addToMap(
 			<div>マーカーをポイントに変換</div>
 			<div class="_simpleWindowOutput" style="padding:4px 6px 6px 6px;">
 				<input type="button" class="_btnNavi3" value="→マーカーから読込" onclick="subMapToPoint('_TA05');"/>
-				<input type="file" id="_readPointFile" accept=".tsv" style="margin:0 0 0 8px;width:519px;" onchange="subAddFile(this.id,'_TA05',1);"/>
-				<textarea id="_TA05" class="_editTextBox" wrap="off" style="height:360px;width:642px;" placeholder="[Tab]区切り／UTF-8N&#10;&quot;//&quot; で始まる行はコメント行&#10;※&quot;icon@[画像ファイル]&quot; でマーカーにアイコンを設定可能&#10;// 例&#10;35.68365900&#9;139.75408900&#9;皇居&#9;icon@[画像ファイル]"></textarea>
+				<input type="file" id="_readPointFile" accept=".tsv,.csv" style="margin:0 0 0 8px;width:519px;" onchange="subAddFile(this.id,'_TA05',1);"/>
+				<textarea id="_TA05" class="_editTextBox" wrap="off" style="height:360px;width:642px;" placeholder="タブ(TSV), カンマ(CSV)区切り／UTF-8N(BOMなし) ※カンマ(CSV)区切りは試験的実装&#10;&quot;//&quot; で始まる行はコメント行&#10;&quot;icon@[画像ファイルパス]&quot; でマーカーにアイコンを設定可能&#10;// 例&#10;35.68365900&#9;139.75408900&#9;皇居&#9;icon@./image.png"></textarea>
 				<script>
 					document.getElementById("_TA05").onkeydown = function(e){subAddTabCtrl(this, e);}
 				</script>
@@ -2302,7 +2349,8 @@ function subAddGeoJson_addToMap(
 					<input type="button" class="_btnNavi1" value="↑クリア" onclick="document.getElementById('_TA05').value='';"/>
 					<input type="button" class="_btnNavi4" value="↑サンプル出力" onclick="subA2P_GeocodingSample('_TA05');"/>
 					<input type="button" class="_btnNavi4" value="→住所から変換" onclick="subA2P_Geocoding('_TA05');"/>
-					<a href="#" id="_DL05" download="" onclick="subA2P_EditSave(this, '_TA05', 'MarkerToPoint.utf8.tsv')"><div class="_btnNavi2">ファイルに保存</div></a><br>
+					<a href="#" id="_DL05" download="" onclick="subA2P_CnvSV('_TA05')"><div class="_btnNavi2">TSV/CSV</div></a>
+					<a href="#" id="_DL05" download="" onclick="subA2P_EditSave(this, '_TA05', 'MarkerToPoint.utf8')"><div class="_btnNavi2">ファイルに保存</div></a><br>
 					<input type="button" class="_btnNavi3" style="padding:0 3px;" value="←" onclick="subA2P_GCircle('_GCircleM2P','_TA05');"/><input type="text" id="_GCircleM2P" class="_textNavi1" list="_Dist" style="width:70px;" placeholder="範囲円"/>
 					<datalist id="_Dist"><option value="50m"/><option value="100m"/><option value="250m"/><option value="500m"/><option value="1km"/><option value="2km"/><option value="4km"/><option value="5km"/><option value="8km"/><option value="10km"/><option value="20km"/><option value="25km"/><option value="40km"/><option value="50km"/><option value="80km"/><option value="100km"/></datalist>
 					<input type="checkbox" id="_checkboxDist" style="margin:0 0 0 4px;" onclick="subA2P_DistMP('_TA05','_textDist',_checkboxDist.checked);"/><input type="text" id="_textDist" class="_textNavi1" style="width:140px;" placeholder="総距離" readonly/>
@@ -2332,7 +2380,7 @@ function subAddGeoJson_addToMap(
 				for(let _s1 of document.getElementById($textareaId).value.trimEnd().split("\n"))
 				{
 					_s1 = _s1.trim().replace(/\\n/g, "<br>");
-					const _a1 = _s1.split(/\t|\\t/);
+					const _a1 = _s1.split(rtnTextSeparator(_s1));
 					// "icon@画像ファイル" でアイコン変更
 					let objIcon = null;
 					if(_a1.length >= 2)
@@ -2495,7 +2543,7 @@ function subAddGeoJson_addToMap(
 						for(let _s1 of document.getElementById($textareaId).value.trimEnd().split("\n"))
 						{
 							_s1 = _s1.trim();
-							const _a1 = _s1.split("\t");
+							const _a1 = _s1.split(rtnTextSeparator(_s1));
 							const query = _a1[0];
 							if(query)
 							{
@@ -2574,7 +2622,7 @@ function subAddGeoJson_addToMap(
 						_s1 = _s1.trim();
 						try
 						{
-							const _a1 = _s1.split("\t");
+							const _a1 = _s1.split(rtnTextSeparator(_s1));
 							$AryM2P_Circle[i1] = L.greatCircle(
 								[_a1[0], _a1[1]],
 								{
