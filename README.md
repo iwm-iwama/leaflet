@@ -9,6 +9,10 @@
 
 【参考】
 
-	・距離計算に使用しているライブラリ
+	・Web地図ライブラリ
+		Leaflet
+			https://leafletjs.com/
+
+	・距離計算ライブラリ
 		GeographicLib
 			https://geographiclib.sourceforge.io/
