@@ -1,4 +1,4 @@
-<!-- iwm20230530C Ver.20230610 'U-2S' -->
+<!-- iwm20230530C Ver.20240226 'U-2S' -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -550,6 +550,7 @@ input[type=range]
 	padding:0;
 	position:absolute;
 	text-align:center;
+	top: -1000px;
 	z-index:2000;
 }
 ._simpleWindowOutput
@@ -669,10 +670,11 @@ a.polyline-measure-clearControl:active
 /*-----------------------
 // フレームサイズを調整
 -----------------------*/
+// 大域定数
+const $mapTopPx = 24;
 function subInitDisp()
 {
 	const naviCommanderWidthPad = 14;
-	const mapTopPad = 24;
 	const mapH = window.innerHeight;
 	const mapW = window.innerWidth;
 	// _divNaviCommander
@@ -680,8 +682,8 @@ function subInitDisp()
 	// _divMap
 	with(document.getElementById("_divMap").style)
 	{
-		height = (mapH - mapTopPad) + "px";
-		top    = mapTopPad + "px";
+		height = (mapH - $mapTopPx) + "px";
+		top    = $mapTopPx + "px";
 		width  = mapW + "px";
 	}
 }
@@ -1283,33 +1285,23 @@ function subLatLngToPlaceName(
 ----------------*/
 const $AryNaviCommanderId = ["_NC07", "_NC06", "_NC05", "_NC04", "_NC03", "_NC02", "_NC01"];
 const $ArySimpleWindowId  = ["_SW07", "_SW06", "_SW05", "_SW04", "_SW03", "_SW02", "_SW01"];
-function subSimpleWindow_Init(
-	$aryId
-)
-{
-	let i1 = $aryId.length;
-	while(i1--)
-	{
-		document.getElementById($aryId[i1]).style.display = "none";
-	}
-}
 function subSimpleWindow_OpenClose(
 	$id,
 	$btnId
 )
 {
-	const s1 = document.getElementById($id).style.display;
+	const bg1 = document.getElementById($btnId).style.background;
 	for(let _s1 of $AryNaviCommanderId)
 	{
 		document.getElementById(_s1).style.background = "";
 	}
 	for(let _s1 of $ArySimpleWindowId)
 	{
-		document.getElementById(_s1).style.display = "none";
+		document.getElementById(_s1).style.top = "-1000px";
 	}
-	if(s1.length)
+	if(! bg1)
 	{
-		document.getElementById($id).style.display = "";
+		document.getElementById($id).style.top = $mapTopPx + "px";
 		document.getElementById($btnId).style.background = "#3c639b";
 	}
 }
@@ -1998,7 +1990,7 @@ function subAddGeoJson_addToMap(
 }
 </script>
 </head>
-<body onload="subInitDisp();subIwmInput_Init();subMyObj_Init();subAddMatch_Init();subGCircle_Draw();subSimpleWindow_Init($ArySimpleWindowId);" onresize="subInitDisp();">
+<body onload="subInitDisp();subIwmInput_Init();subMyObj_Init();subAddMatch_Init();subGCircle_Draw();" onresize="subInitDisp();">
 	<!-----------
 	// メニュー
 	------------>
