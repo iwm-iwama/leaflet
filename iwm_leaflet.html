@@ -1,4 +1,4 @@
-<!-- iwm20230530D Ver.20240308 'U-2S' -->
+<!-- iwm20230530D Ver.20240315 'U-2S' -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -608,7 +608,7 @@ a.polyline-measure-clearControl:active
 }
 .polyline-measure-tooltip
 {
-	background-color:rgba(0, 0, 0, 0.7);
+	background-color:rgba(0, 0, 0, 1.0);
 	border-radius:4px;
 	box-shadow:none;
 	color:#fff;
@@ -626,15 +626,15 @@ a.polyline-measure-clearControl:active
 }
 .polyline-measure-tooltip-end
 {
-	background-color:rgba(0, 0, 0, 0.7);
+	background-color:rgba(0, 0, 0, 1.0);
 }
 .polyline-measure-tooltip-difference
 {
 	color:#f00;
-	font-size:9px;
+	font-size:11px;
 	font-style:normal;
 	font-weight:400;
-	line-height:9px;
+	line-height:14px;
 }
 .polyline-measure-tooltip-total
 {
@@ -683,7 +683,7 @@ a.polyline-measure-clearControl:active
 		const naviCommanderWidthPad = 14;
 		const mapH = window.innerHeight;
 		const mapW = window.innerWidth;
-		// _divNaviCommander
+		// __divNaviCommander
 		document.getElementById("__divNaviCommander").style.width = (mapW - naviCommanderWidthPad) + "px";
 		// __divMap
 		const obj1 = document.getElementById("__divMap").style;
@@ -787,7 +787,7 @@ a.polyline-measure-clearControl:active
 		}
 		const iId = "__InputBL";
 		$subIwmInput_BL_toSave = $outputId;
-		_iwmIBL($outputId);
+		subIwmIBL($outputId);
 		subIwmInput_Open(iId, $outputId, null, null, false);
 	}
 	function subIwmInput_BL_Close()
@@ -830,7 +830,7 @@ a.polyline-measure-clearControl:active
 				obj1.value = d1;
 				if(! $subIwmInput_BL_now)
 				{
-					_iwmIBL(d1);
+					subIwmIBL(d1);
 				}
 				else
 				{
@@ -840,7 +840,7 @@ a.polyline-measure-clearControl:active
 						document.getElementById("__IBL2").value
 					);
 				}
-				_iwmBL();
+				subIwmBL();
 			}
 		}
 	}
@@ -942,7 +942,7 @@ a.polyline-measure-clearControl:active
 	// エイリアス
 	-------------*/
 	// "__InputBL" を更新
-	function _iwmIBL(
+	function subIwmIBL(
 		$d1 // DBL
 	)
 	{
@@ -956,13 +956,13 @@ a.polyline-measure-clearControl:active
 		document.getElementById("__IBL2").value = sec.toFixed(4);
 	}
 	// URL／BL表示を変更
-	function _iwmCU()
+	function subIwmCU()
 	{
 		subChangeUrl("__NaviLat", "__NaviLng", "__NaviZoom");
 	}
 	// センタリング
 	let $iwmSV_hash = null;
-	function _iwmSV()
+	function subIwmSV()
 	{
 		if($iwmSV_hash)
 		{
@@ -981,27 +981,27 @@ a.polyline-measure-clearControl:active
 		}
 	}
 	// $BaseMarker 再描画
-	function _iwmBM_Reset()
+	function subIwmBM_Reset()
 	{
 		subBaseMarkerNew("__NaviLat", "__NaviLng");
-		_iwmCU();
-		_iwmSV();
+		subIwmCU();
+		subIwmSV();
 		subGCircle_Draw();
 	}
-	function _iwmZB(
+	function subIwmZB(
 		$str
 	)
 	{
 		subIwmInput_Zoom_Change($str);
 		// URL／BL表示を変更
-		_iwmCU();
+		subIwmCU();
 		// センタリング
 		$Map.setView(
 			$Map.getCenter(),
 			document.getElementById("__NaviZoom").value
 		);
 	}
-	function _iwmBL()
+	function subIwmBL()
 	{
 		for(let _i1 = 0; _i1 < 3; _i1++)
 		{
@@ -1011,9 +1011,9 @@ a.polyline-measure-clearControl:active
 			}
 		}
 		subIwmInput_BL_Close();
-		_iwmBM_Reset();
+		subIwmBM_Reset();
 	}
-	function _iwmBM_CurrentPosition()
+	function subIwmBM_CurrentPosition()
 	{
 		navigator.geolocation.getCurrentPosition(
 			function(position)
@@ -1024,13 +1024,13 @@ a.polyline-measure-clearControl:active
 					// 精度固定
 					document.getElementById("__NaviLat").value = obj1.latitude.toFixed(8);
 					document.getElementById("__NaviLng").value = obj1.longitude.toFixed(8);
-					_iwmBM_Reset();
+					subIwmBM_Reset();
 				}
 			},
 			function(err)
 			{
 				alert("現在地の取得に失敗しました。");
-				_iwmBM_Reset();
+				subIwmBM_Reset();
 			},
 			{
 				enableHighAccuracy:true
@@ -1754,7 +1754,7 @@ a.polyline-measure-clearControl:active
 			legend:" "
 		},
 		width:700,
-		height:150
+		height:200
 	});
 	let $HeightGraph_Data = [{
 		"type":"FeatureCollection",
@@ -1832,7 +1832,7 @@ a.polyline-measure-clearControl:active
 			// グラフ描画
 			$HeightGraph_Init.addTo($Map);
 			$HeightGraph_Init.addData($HeightGraph_Data);
-			/// $HeightGraph_Init.resize({width:700, height:150});
+			///$HeightGraph_Init.resize({width:700, height:150});
 			// 線描画
 			$HeightGraph_Layer = new L.LayerGroup();
 			$HeightGraph_Layer.addTo($Map);
@@ -1975,8 +1975,8 @@ a.polyline-measure-clearControl:active
 		緯度&nbsp;<input type="text" id="__NaviLat" onclick="subIwmInput_BL_Open(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id,8);" placeholder="緯度入力"/>
 		経度&nbsp;<input type="text" id="__NaviLng" onclick="subIwmInput_BL_Open(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id,8);" placeholder="経度入力"/>
 		<!-- ズーム --><input type="hidden" id="__NaviZoom"/>
-		<div class="_btnNavi1" style="border-radius:10px;display:inline-block;font-size:14px;height:20px;margin:0 0 0 2px;padding:0;width:20px;" onclick="_iwmZA2();" onmouseover="subNaviExpOnOff('中心へ移動','98px');" onmouseleave="subNaviExpOnOff();"><i class="fa fa-map-marker"></i></div>
-		<div class="_btnNavi1" style="border-radius:10px;display:inline-block;font-size:14px;height:20px;margin:0 0 0 2px;padding:0;width:20px;" onclick="_iwmBM_CurrentPosition();" onmouseover="subNaviExpOnOff('現在地を取得','112px');" onmouseleave="subNaviExpOnOff();"><i class="fa fa-rss"></i></div>
+		<div class="_btnNavi1" style="border-radius:10px;display:inline-block;font-size:14px;height:20px;margin:0 0 0 2px;padding:0;width:20px;" onclick="subIwmZA2();" onmouseover="subNaviExpOnOff('中心へ移動','98px');" onmouseleave="subNaviExpOnOff();"><i class="fa fa-map-marker"></i></div>
+		<div class="_btnNavi1" style="border-radius:10px;display:inline-block;font-size:14px;height:20px;margin:0 0 0 2px;padding:0;width:20px;" onclick="subIwmBM_CurrentPosition();" onmouseover="subNaviExpOnOff('現在地を取得','112px');" onmouseleave="subNaviExpOnOff();"><i class="fa fa-rss"></i></div>
 		<div class="_btnNavi2" style="border-radius:10px;display:inline-block;font-size:14px;height:20px;margin:0 0 0 4px;padding:0;width:20px;" onclick="subNaviAllMarkerPopupOpen();" onmouseover="subNaviExpOnOff('全ポップアップを開く','168px');" onmouseleave="subNaviExpOnOff();"><i class="fa fa-folder-open"></i></div>
 		<div class="_btnNavi2" style="border-radius:10px;display:inline-block;font-size:14px;height:20px;margin:0 0 0 2px;padding:0;width:20px;" onclick="subNaviAllMarkerPopupClose();" onmouseover="subNaviExpOnOff('全ポップアップを閉じる','182px');" onmouseleave="subNaviExpOnOff();"><i class="fa fa-folder"></i></div>
 		<input type="button" id="__RmMarker" class="_btnNavi2" style="border-radius:10px;font-size:17px;height:20px;margin:0 0 0 4px;padding:0;width:20px;" value="×" onclick="subMyObj_Remove($AryLocalMarker);" onmouseover="subNaviExpOnOff('赤・オレンジマーカー消去','196px');" onmouseleave="subNaviExpOnOff();"/>
@@ -2631,49 +2631,49 @@ a.polyline-measure-clearControl:active
 	---------------->
 	<div id="__InputZoomA" style="top:-1000px;">
 		<div style="text-align:center;">ズームレベル</div>
-		<input type="button" class="_ZA" value="3" onclick="_iwmZA('3');"/><input type="button" class="_ZA" value="4" onclick="_iwmZA('4');"/><input type="button" class="_ZA" value="5" onclick="_iwmZA('5');"/><input type="button" class="_ZA" value="6" onclick="_iwmZA('6');"/><input type="button" class="_ZA" value="7" onclick="_iwmZA('7');"/><br>
-		<input type="button" class="_ZA" value="8" onclick="_iwmZA('8');"/><input type="button" class="_ZA" value="9" onclick="_iwmZA('9');"/><input type="button" class="_ZA" value="10" onclick="_iwmZA('10');"/><input type="button" class="_ZA" value="11" onclick="_iwmZA('11');"/><input type="button" class="_ZA" value="12" onclick="_iwmZA('12');"/><br>
-		<input type="button" class="_ZA" value="13" onclick="_iwmZA('13');"/><input type="button" class="_ZA" value="14" onclick="_iwmZA('14');"/><input type="button" class="_ZA" value="15" onclick="_iwmZA('15');"/><input type="button" class="_ZA" value="16" onclick="_iwmZA('16');"/><input type="button" class="_ZA" value="17" onclick="_iwmZA('17');"/><br>
-		<input type="button" class="_ZA" value="18" onclick="_iwmZA('18');"/><input type="button" class="_ZA" value="19" onclick="_iwmZA('19');"/><input type="button" class="_ZA" value="20" onclick="_iwmZA('20');"/><input type="button" class="_ZA" value="21" onclick="_iwmZA('21');"/><div class="_btnNavi1" style="border-radius:12px;display:inline-block;font-size:13px;height:24px;line-height:24px;margin:0 0 0 3px;padding:0;width:24px;" onclick="_iwmZA2();"><i class="fa fa-map-marker"></i></div>
+		<input type="button" class="_ZA" value="3" onclick="subIwmZA('3');"/><input type="button" class="_ZA" value="4" onclick="subIwmZA('4');"/><input type="button" class="_ZA" value="5" onclick="subIwmZA('5');"/><input type="button" class="_ZA" value="6" onclick="subIwmZA('6');"/><input type="button" class="_ZA" value="7" onclick="subIwmZA('7');"/><br>
+		<input type="button" class="_ZA" value="8" onclick="subIwmZA('8');"/><input type="button" class="_ZA" value="9" onclick="subIwmZA('9');"/><input type="button" class="_ZA" value="10" onclick="subIwmZA('10');"/><input type="button" class="_ZA" value="11" onclick="subIwmZA('11');"/><input type="button" class="_ZA" value="12" onclick="subIwmZA('12');"/><br>
+		<input type="button" class="_ZA" value="13" onclick="subIwmZA('13');"/><input type="button" class="_ZA" value="14" onclick="subIwmZA('14');"/><input type="button" class="_ZA" value="15" onclick="subIwmZA('15');"/><input type="button" class="_ZA" value="16" onclick="subIwmZA('16');"/><input type="button" class="_ZA" value="17" onclick="subIwmZA('17');"/><br>
+		<input type="button" class="_ZA" value="18" onclick="subIwmZA('18');"/><input type="button" class="_ZA" value="19" onclick="subIwmZA('19');"/><input type="button" class="_ZA" value="20" onclick="subIwmZA('20');"/><input type="button" class="_ZA" value="21" onclick="subIwmZA('21');"/><div class="_btnNavi1" style="border-radius:12px;display:inline-block;font-size:13px;height:24px;line-height:24px;margin:0 0 0 3px;padding:0;width:24px;" onclick="subIwmZA2();"><i class="fa fa-map-marker"></i></div>
 	</div>
 	<script>
-		function _iwmZA(
+		function subIwmZA(
 			$str
 		)
 		{
 			subIwmInput_ZoomA_Close();
 			subIwmInput_Zoom_Change($str);
 			subBaseMarkerNew("__NaviLat", "__NaviLng");
-			_iwmCU();
-			_iwmSV();
+			subIwmCU();
+			subIwmSV();
 		}
-		function _iwmZA2()
+		function subIwmZA2()
 		{
 			subIwmInput_ZoomA_Close();
-			_iwmSV();
+			subIwmSV();
 		}
 	</script>
 	<div id="__InputZoomB" style="left:10px;top:33px;">
 		<div style="background:#999;border-radius:3px 3px 0 0;height:3px;width:26px;"></div>
-		<input type="button" class="_ZB" value="21" onclick="_iwmZB('21');"/><br>
-		<input type="button" class="_ZB" value="20" onclick="_iwmZB('20');"/><br>
-		<input type="button" class="_ZB" value="19" onclick="_iwmZB('19');"/><br>
-		<input type="button" class="_ZB" value="18" onclick="_iwmZB('18');"/><br>
-		<input type="button" class="_ZB" value="17" onclick="_iwmZB('17');"/><br>
-		<input type="button" class="_ZB" value="16" onclick="_iwmZB('16');"/><br>
-		<input type="button" class="_ZB" value="15" onclick="_iwmZB('15');"/><br>
-		<input type="button" class="_ZB" value="14" onclick="_iwmZB('14');"/><br>
-		<input type="button" class="_ZB" value="13" onclick="_iwmZB('13');"/><br>
-		<input type="button" class="_ZB" value="12" onclick="_iwmZB('12');"/><br>
-		<input type="button" class="_ZB" value="11" onclick="_iwmZB('11');"/><br>
-		<input type="button" class="_ZB" value="10" onclick="_iwmZB('10');"/><br>
-		<input type="button" class="_ZB" value="9" onclick="_iwmZB('9');"/><br>
-		<input type="button" class="_ZB" value="8" onclick="_iwmZB('8');"/><br>
-		<input type="button" class="_ZB" value="7" onclick="_iwmZB('7');"/><br>
-		<input type="button" class="_ZB" value="6" onclick="_iwmZB('6');"/><br>
-		<input type="button" class="_ZB" value="5" onclick="_iwmZB('5');"/><br>
-		<input type="button" class="_ZB" value="4" onclick="_iwmZB('4');"/><br>
-		<input type="button" class="_ZB" value="3" onclick="_iwmZB('3');"/>
+		<input type="button" class="_ZB" value="21" onclick="subIwmZB('21');"/><br>
+		<input type="button" class="_ZB" value="20" onclick="subIwmZB('20');"/><br>
+		<input type="button" class="_ZB" value="19" onclick="subIwmZB('19');"/><br>
+		<input type="button" class="_ZB" value="18" onclick="subIwmZB('18');"/><br>
+		<input type="button" class="_ZB" value="17" onclick="subIwmZB('17');"/><br>
+		<input type="button" class="_ZB" value="16" onclick="subIwmZB('16');"/><br>
+		<input type="button" class="_ZB" value="15" onclick="subIwmZB('15');"/><br>
+		<input type="button" class="_ZB" value="14" onclick="subIwmZB('14');"/><br>
+		<input type="button" class="_ZB" value="13" onclick="subIwmZB('13');"/><br>
+		<input type="button" class="_ZB" value="12" onclick="subIwmZB('12');"/><br>
+		<input type="button" class="_ZB" value="11" onclick="subIwmZB('11');"/><br>
+		<input type="button" class="_ZB" value="10" onclick="subIwmZB('10');"/><br>
+		<input type="button" class="_ZB" value="9" onclick="subIwmZB('9');"/><br>
+		<input type="button" class="_ZB" value="8" onclick="subIwmZB('8');"/><br>
+		<input type="button" class="_ZB" value="7" onclick="subIwmZB('7');"/><br>
+		<input type="button" class="_ZB" value="6" onclick="subIwmZB('6');"/><br>
+		<input type="button" class="_ZB" value="5" onclick="subIwmZB('5');"/><br>
+		<input type="button" class="_ZB" value="4" onclick="subIwmZB('4');"/><br>
+		<input type="button" class="_ZB" value="3" onclick="subIwmZB('3');"/>
 		<div style="background:#999;border-radius:0 0 3px 3px;height:3px;width:26px;"></div>
 	</div>
 	<div id="__InputBL" style="top:-1000px;">
@@ -2683,7 +2683,7 @@ a.polyline-measure-clearControl:active
 		<input type="button" class="_Btn1" value="4" onclick="subIwmInput_AddText('4');"/><input type="button" class="_Btn1" value="5" onclick="subIwmInput_AddText('5');"/><input type="button" class="_Btn1" value="6" onclick="subIwmInput_AddText('6');"/><br>
 		<input type="button" class="_Btn1" value="1" onclick="subIwmInput_AddText('1');"/><input type="button" class="_Btn1" value="2" onclick="subIwmInput_AddText('2');"/><input type="button" class="_Btn1" value="3" onclick="subIwmInput_AddText('3');"/><br>
 		<input type="button" class="_Btn1" value="0" onclick="subIwmInput_AddText('0');"/><input type="button" class="_Btn1" value="." onclick="subIwmInput_AddText('.');"/><input type="button" class="_Btn2" value="Cls" onclick="subIwmInput_Cls();"/><br>
-		<input type="button" class="_Btn2" value="BS" onclick="subIwmInput_Bs();"/><input type="button" class="_Btn2" value="Del" onclick="subIwmInput_Del();"/><input type="button" class="_Btn3" value="OK" onclick="_iwmBL();"/>
+		<input type="button" class="_Btn2" value="BS" onclick="subIwmInput_Bs();"/><input type="button" class="_Btn2" value="Del" onclick="subIwmInput_Del();"/><input type="button" class="_Btn3" value="OK" onclick="subIwmBL();"/>
 	</div>
 	<!---------------------
 	// アドレスマッチング
@@ -2714,7 +2714,7 @@ a.polyline-measure-clearControl:active
 			let iZoom = parseInt(aHash[0].substr(1), 10);
 			if(isNaN(iZoom))
 			{
-				_iwmCU();
+				subIwmCU();
 			}
 			else
 			{
@@ -2735,11 +2735,11 @@ a.polyline-measure-clearControl:active
 				{
 					document.getElementById("__NaviLat").value = position.coords.latitude;
 					document.getElementById("__NaviLng").value = position.coords.longitude;
-				_iwmBM_Reset();
+					subIwmBM_Reset();
 				},
 				function(error)
 				{
-					_iwmBM_Reset();
+					subIwmBM_Reset();
 				}
 			);
 		}
@@ -2976,7 +2976,7 @@ a.polyline-measure-clearControl:active
 				const ctx = tile.getContext("2d");
 				// 枠線
 				ctx.lineWidth = 1;
-				ctx.strokeStyle = "#000";
+				ctx.strokeStyle = "#555";
 				ctx.strokeRect(0, 0, 255, 255);
 				// 文字
 				ctx.font = "24px Arial";
@@ -2985,7 +2985,7 @@ a.polyline-measure-clearControl:active
 				ctx.strokeStyle = "#fff";
 				ctx.strokeText(tileText, 128, 128);
 				// 文字ヌキ
-				ctx.fillStyle = "#88f";
+				ctx.fillStyle = "#55f";
 				ctx.fillText(tileText, 128, 128);
 				return tile;
 			}
@@ -3016,8 +3016,14 @@ a.polyline-measure-clearControl:active
 				"overlayremove",
 				function(e)
 				{
-					// 地図選択メニューから削除
-					$MapOverlays[e.name].remove($Map);
+					try
+					{
+						// 地図選択メニューから削除
+						$MapOverlays[e.name].remove($Map);
+					}
+					catch(e)
+					{
+					}
 				}
 			);
 		}
@@ -3166,7 +3172,7 @@ a.polyline-measure-clearControl:active
 				{
 					const a1 = this.getLatLng();
 					subChangeUrl(a1.lat, a1.lng, "__NaviZoom");
-					_iwmIBL($subIwmInput_BL_toSave);
+					subIwmIBL($subIwmInput_BL_toSave);
 					subMarkerPopup(this, $AryLocalMarker);
 					this.closePopup();
 				}
@@ -3177,7 +3183,6 @@ a.polyline-measure-clearControl:active
 				function(e)
 				{
 					rtnMarkerPopup1(this._latlng.lat, this._latlng.lng);
-					this.closePopup();
 				}
 			);
 			// ポップアップ再表示
@@ -3403,6 +3408,5 @@ a.polyline-measure-clearControl:active
 </li>
 </textarea>
 <script>
-	// 初期化
 	document.getElementById("__SW01Doc").innerHTML = document.getElementById("__HDoc01").value;
 </script>
