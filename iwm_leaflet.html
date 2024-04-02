@@ -1,4 +1,4 @@
-<!-- iwm20230530D Ver.20240315 'U-2S' -->
+<!-- iwm_leaflet1.9.4 Ver.20240401 'U-2S' -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -79,70 +79,62 @@
 -------*/
 *
 {
-	font-family:sans-serif;
-	margin:0;
-	padding:0;
+	font-family: sans-serif;
 }
 /*------------------
 // leaflet CSS置換
 ------------------*/
 .leaflet-container
 {
-	background:#fff;
+	background: #fff;
 }
 .leaflet-control-minimap
 {
-	border:solid 2px rgba(0, 0, 0, 0.6);
-	border-radius:12px;
-	box-shadow:none;
+	border: solid 2px rgba(0, 0, 0, 0.6);
+	border-radius: 12px;
+	box-shadow: none;
 }
 .leaflet-popup-content
 {
-	color:#333 !important;
-	font-size:12px;
-	margin:0;
-	padding:5px 10px 5px 5px;
+	color: #333 !important;
+	font-size: 12px;
+	margin: 0;
+	padding: 5px 10px 5px 5px;
 }
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip
 {
-	background:#fff;
-	border-color:#333;
-	-webkit-border-radius:3px !important;
-	-moz-border-radius:3px !important;
-	border-radius:3px !important;
+	background: #fff;
+	border-color: #333;
+	-webkit-border-radius: 3px !important;
+	-moz-border-radius: 3px !important;
+	border-radius: 3px !important;
 }
 .leaflet-tooltip
 {
-	max-width:600px;
-	white-space:normal;
+	max-width: 600px;
+	white-space: normal;
 }
 #map
 {
-	position:absolute;
-	top:0;
-	left:0;
-	width:100%;
-	height:100%;
-	margin:0;
-	padding:0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
 }
 /*-------------------
 // 本スクリプト関係
 -------------------*/
 body
 {
-	background:#f6f6f7;
-	margin:0;
-	padding:0;
+	background: #f6f6f7;
 }
 a
 {
-	text-decoration:none;
-}
-table
-{
-	border-collapse:collapse;
+	text-decoration: none;
 }
 input[type=button],
 input[type=checkbox],
@@ -151,7 +143,18 @@ input[type=number],
 input[type=range],
 input[type=text]
 {
-	vertical-align:middle;
+	vertical-align: middle;
+}
+input[type=button],
+input[type=checkbox],
+input[type=file],
+input[type=range]
+{
+	cursor: pointer;
+}
+input[type=text]
+{
+	cursor: text;
 }
 input[type=checkbox]:focus,
 input[type=file]:focus,
@@ -160,29 +163,29 @@ input[type=range]:focus,
 input[type=text]:focus,
 textarea:focus
 {
-	outline:1px solid #3d7cce; /* ブラウザの強調設定を上書き */
+	outline: 1px solid #3d7cce; /* ブラウザの強調設定を上書き */
 }
 input[type=file]
 {
-	background:#bd1e38;
-	color:#000;
-	font-size:12px;
-	margin:0;
-	padding:0;
+	background: #bd1e38;
+	color: #000;
+	font-size: 12px;
+	margin: 0;
+	padding: 0;
 }
 input[type=file]:hover
 {
-	color:#fff;
+	color: #fff;
 }
 input[type=number]
 {
-	border:solid 1px #3d7cce;
-	margin:0;
-	padding:0;
+	border: solid 1px #3d7cce;
+	margin: 0;
+	padding: 0;
 }
 input[type=range]
 {
-	width:160px; /* Leaflet.Control.Opacity */
+	width: 160px; /* Leaflet.Control.Opacity */
 }
 ._btnNavi1,
 ._btnNavi2,
@@ -190,27 +193,20 @@ input[type=range]
 ._btnNavi4,
 ._btnNavi5
 {
-	border:0;
-	color:#fff;
-	font-size:12px;
-	height:20px;
-	margin:0;
-	padding:0 8px;
-	vertical-align:middle;
+	border: 0;
+	color: #fff;
+	cursor: pointer;
+	font-size: 12px;
+	height: 20px;
+	margin: 0;
+	padding: 0 8px;
+	vertical-align: middle;
 	/* a[href] 対応 */
-	display:inline-block;
-	line-height:20px;
-	text-decoration:none;
+	display: inline-block;
+	line-height: 20px;
+	text-decoration: none;
 	/* div 対応 */
-	text-align:center;
-}
-._btnNavi1:hover,
-._btnNavi2:hover,
-._btnNavi3:hover,
-._btnNavi4:hover,
-._btnNavi5:hover
-{
-	cursor:pointer;
+	text-align: center;
 }
 /*
 	hover => active の順
@@ -221,113 +217,114 @@ input[type=range]
 ._btnNavi4:active,
 ._btnNavi5:active
 {
-	cursor:wait;
+	cursor: wait;
 }
 ._btnNavi1
 {
-	background:#3d7cce;
+	background: #3d7cce;
 }
 ._btnNavi1:hover
 {
-	background:#6dacff;
+	background: #6dacff;
 }
 ._btnNavi2
 {
-	background:#bd1e38;
+	background: #bd1e38;
 }
 ._btnNavi2:hover
 {
-	background:#ed4e68;
+	background: #ed4e68;
 }
 ._btnNavi3
 {
-	background:#2dae6c;
+	background: #2dae6c;
 }
 ._btnNavi3:hover
 {
-	background:#3dce7c;
+	background: #3dce7c;
 }
 ._btnNavi4
 {
-	background:#855896;
+	background: #855896;
 }
 ._btnNavi4:hover
 {
-	background:#a578a6;
+	background: #a578a6;
 }
 ._btnNavi5
 {
-	background:#ffa500;
+	background: #ffa500;
 }
 ._btnNavi5:hover
 {
-	background:#ffc520;
+	background: #ffc520;
 }
 ._textNavi1
 {
-	border:solid 1px #3d7cce;
-	color:#000;
-	font-size:12px;
-	height:18px;
-	line-height:18px;
-	margin:0;
-	padding:0 3px;
+	border: solid 1px #3d7cce;
+	color: #000;
+	font-size: 12px;
+	height: 18px;
+	line-height: 18px;
+	margin: 0;
+	padding: 0 3px;
 }
 /*---------------
 // 上部メニュー
 ---------------*/
 #__divNaviCommander
 {
-	background:#505050;
-	border:0;
-	border-radius:8px 8px 0 0;
-	color:#fff;
-	font-size:13px;
-	left:0;
-	line-height:17px;
-	margin:0;
-	padding:2px 4px 2px 10px;
-	position:absolute;
-	top:0;
+	background: #505050;
+	border: 0;
+	border-radius: 8px 8px 0 0;
+	color: #fff;
+	font-size: 13px;
+	left: 0;
+	line-height: 17px;
+	margin: 0;
+	padding: 2px 4px 2px 10px;
+	position: absolute;
+	top: 0;
 	/* 動的に変更 */
-	width:0;
+	width: 0;
 }
 #__divMap
 {
-	cursor:crosshair;
-	left:0;
-	position:absolute;
+	cursor: crosshair;
+	left: 0;
+	position: absolute;
 	/* 動的に変更 */
-	height:0;
-	top:0;
-	width:0;
+	height: 0;
+	top: 0;
+	width: 0;
 }
 #__InputZoomA,
 #__InputZoomB,
 #__InputBL
 {
-	background-color:rgba(255, 255, 255, 0.6);
-	font-size:12px;
-	margin:0;
-	position:absolute;
-	z-index:1500;
+	background-color: rgba(255, 255, 255, 0.6);
+	cursor: pointer;
+	font-size: 12px;
+	margin: 0;
+	position: absolute;
+	z-index: 1500;
 }
 #__InputZoomA
 {
-	border:solid 1px #777;
-	padding:2px;
-	width:150px;
+	border: solid 1px #777;
+	padding: 2px;
+	width: 150px;
 }
 #__InputZoomB
 {
-	border:0;
-	padding:0;
+	border: 0;
+	padding: 0;
 }
 #__InputBL
 {
-	border:solid 1px #777;
-	padding:2px;
-	width:120px;
+	border: solid 1px #777;
+	padding: 2px;
+	width: 120px;
 }
 ._ZA,
 ._ZB,
@@ -335,325 +332,311 @@ input[type=range]
 ._Btn2,
 ._Btn3
 {
-	border:0;
-	color:#fff;
-	cursor:pointer;
-	font-size:12px;
-	margin:2px;
-	padding:0;
+	border: 0;
+	color: #fff;
+	font-size: 12px;
+	margin: 2px;
+	padding: 0;
 }
 ._ZA,
 ._ZB,
 ._Btn1
 {
-	background-color:rgba(0, 0, 0, 0.6);
+	background-color: rgba(0, 0, 0, 0.6);
 }
 ._Btn2
 {
-	background-color:rgba(12, 75, 157, 0.8);
+	background-color: rgba(12, 75, 157, 0.8);
 }
 ._ZA:hover,
 ._ZB:hover,
 ._Btn1:hover,
 ._Btn2:hover
 {
-	background:#3c7bff !important;
+	background: #3c7bff !important;
 }
 ._Btn3
 {
-	background-color:rgba(229, 72, 72, 0.9);
+	background-color: rgba(229, 72, 72, 0.9);
 }
 ._Btn3:hover
 {
-	background:#ff5858 !important;
+	background: #ff5858 !important;
 }
 ._ZB
 {
-	margin:0;
+	margin: 0;
 }
 #__InputZoomA > ._ZA,
 #__InputZoomA > ._Btn3,
 #__InputZoomB > ._ZB
 {
-	height:26px;
-	width:26px;
+	height: 26px;
+	width: 26px;
 }
 #__InputBL > ._Btn1,
 #__InputBL > ._Btn2,
 #__InputBL > ._Btn3
 {
-	height:23px;
-	width:36px;
+	height: 23px;
+	width: 36px;
 }
-#__IBL0,
 #__IBL1,
-#__IBL2
+#__IBL2,
+#__IBL3
 {
-	background:#fff;
-	border:solid 1px #000;
-	color:#000;
-	cursor:text;
-	height:18px;
-	ime-mode:inactive;
-	margin:1px 2px;
-	padding:0 2px;
+	background: #fff;
+	border: solid 1px #000;
+	color: #000;
+	height: 18px;
+	margin: 1px 2px;
+	padding: 0 2px;
 }
 #__NaviZoom,
 #__NaviLat,
 #__NaviLng
 {
-	border:0;
-	font-size:12px;
-	height:18px;
-	ime-mode:inactive;
-	line-height:18px;
-	margin:0;
-	padding:0 3px;
+	border: 0;
+	font-size: 12px;
+	height: 18px;
+	line-height: 18px;
+	margin: 0;
+	padding: 0 3px;
 }
 #__NaviZoom
 {
-	width:0;
+	width: 0;
 }
 #__NaviLat,
 #__NaviLng
 {
-	width:90px;
+	width: 90px;
 }
 /*---------------------
 // アドレスマッチング
 ---------------------*/
 ._AddMatch_iPos
 {
-	left:46px;
-	position:absolute;
-	top:32px;
-	z-index:1000;
+	left: 46px;
+	position: absolute;
+	top: 32px;
+	z-index: 1000;
 }
 ._AddMatch_oPos
 {
-	left:0;
-	position:absolute;
-	top:0;
-	z-index:1000;
+	left: 0;
+	position: absolute;
+	top: 0;
+	z-index: 1000;
 }
 ._AddMatch_iText
 {
-	background:#fff;
-	border:solid 1px #005bbb;
-	border-radius:6px 0 0 0;
-	color:#000;
-	cursor:text;
-	font-size:14px;
-	height:21px;
-	/* ime-mode:active; */
-	line-height:21px;
-	margin:0;
-	padding:1px 0 0 5px;
-	width:120px;
+	background: #fff;
+	border: solid 1px #005bbb;
+	border-radius: 6px 0 0 0;
+	color: #000;
+	font-size: 14px;
+	height: 21px;
+	line-height: 21px;
+	margin: 0;
+	padding: 1px 0 0 5px;
+	width: 120px;
 }
 ._AddMatch_iText:hover
 {
-	background:#ff5;
+	background: #ff5;
 }
 ._AddMatch_iButton
 {
-	background:#005bbb;
-	border:0;
-	color:#fff;
-	display:inline-block;
-	font-size:15px;
-	height:24px;
-	line-height:24px;
-	margin:0;
-	padding:0;
-	text-align:center;
-	vertical-align:middle;
-	width:24px;
+	background: #005bbb;
+	border: 0;
+	color: #fff;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 15px;
+	height: 24px;
+	line-height: 24px;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	vertical-align: middle;
+	width: 24px;
 }
 ._AddMatch_iButton:hover
 {
-	color:#f00;
-	cursor:pointer;
+	color: #f00;
 }
 ._AddMatch_oResult
 {
-	background-color:rgba(255, 255, 255, 0.2);
-	border:solid 1px #005bbb;
-	color:#000;
-	font-size:12px;
-	left:0;
-	margin:2px 0 0 2px;
-	max-height:480px;
-	overflow:auto;
-	padding:6px;
-	position:absolute;
-	top:-1000px;
-	width:240px;
+	background-color: rgba(255, 255, 255, 0.2);
+	border: solid 1px #005bbb;
+	color: #000;
+	cursor: pointer;
+	font-size: 12px;
+	left: 0;
+	margin: 2px 0 0 2px;
+	max-height: 480px;
+	overflow: auto;
+	padding: 6px;
+	position: absolute;
+	top: -1000px;
+	width: 240px;
 }
 ._AddMatch_oResult:hover
 {
-	background:#fff;
-	cursor:pointer;
+	background: #fff;
 }
 ._AddMatch_oResultOpt1
 {
-	color:#000;
-	font-size:14px;
-	margin:0;
-	padding:4px;
+	color: #000;
+	font-size: 14px;
+	margin: 0;
+	padding: 4px;
 }
 ._AddMatch_oResultOpt1:hover
 {
-	background:#ff5;
+	background: #ff5;
 }
 ._AddMatch_oResultOpt2
 {
-	color:#f00;
-	font-size:11px;
+	color: #f00;
+	font-size: 11px;
 }
 /*----------------------
 // Leaflet.greatCircle
 ----------------------*/
-#__GCircle
+#__GCircleRange
 {
-	background-color:rgba(0, 0, 0, 0.3);
-	color:#fff;
-	font-size:8pt;
-	height:26px;
-	padding:8px 8px 0 8px;
-	position:absolute;
-	text-align:left;
-	width:200px;
-	z-index:500;
+	color: #fff;
+	height: 12px;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	z-index: 500;
 }
 /*----------------
 // Simple Window
 ----------------*/
 ._simpleWindowCall
 {
-	background:transparent;
-	border:solid 1px #fff;
-	color:#fff;
-	font-size:12px;
-	float:right;
-	height:20px;
-	margin:0;
-	padding:0 4px;
+	background: transparent;
+	border: solid 1px #fff;
+	color: #fff;
+	font-size: 12px;
+	float: right;
+	height: 20px;
+	margin: 0;
+	padding: 0 4px;
 }
 ._simpleWindowCall:hover
 {
-	color:#f00;
-	cursor:pointer;
+	color: #f00;
 }
 ._simpleWindow
 {
-	background-color:rgba(13, 76, 158, 0.8);
-	color:#fff;
-	float:right;
-	font-size:12px;
-	line-height:22px;
-	margin:0;
-	padding:0;
-	position:absolute;
-	text-align:center;
+	background-color: rgba(13, 76, 158, 0.8);
+	color: #fff;
+	cursor: pointer;
+	float: right;
+	font-size: 12px;
+	line-height: 22px;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	text-align: center;
 	top: -1000px;
-	z-index:2000;
+	z-index: 2000;
 }
 ._simpleWindowOutput
 {
-	background:#f7f7f7;
-	border:0;
-	color:#000;
-	font-size:12px;
-	margin:1px;
-	overflow:auto;
-	padding:0;
-	text-align:left;
+	background: #fafafa;
+	border: solid 1px rgba(13, 76, 158, 0.8);
+	color: #000;
+	font-size: 12px;
+	margin: 0;
+	overflow: auto;
+	padding: 0;
+	text-align: left;
 }
 /*---------------
 // Edit Textbox
 ---------------*/
 ._editTextBox
 {
-	border:solid 1px #3d7cce;
-	color:#000;
-	font-size:12px;
-	ime-mode:inactive;
-	margin:0;
-	overflow:auto;
-	padding:2px 6px;
-	resize:none;
+	border: solid 1px #3d7cce;
+	color: #000;
+	font-size: 12px;
+	margin: 0;
+	overflow: auto;
+	padding: 2px 6px;
+	resize: none;
 }
 /*--------------------------
 // Leaflet.PolylineMeasure
 --------------------------*/
-.leaflet-control
-{
-	cursor:pointer;
-}
 a.polyline-measure-controlOnBgColor,
 a.polyline-measure-controlOnBgColor:hover
 {
-	background-color:rgba(0, 0, 0, 0.7);
-	color:#f00;
+	background-color: rgba(0, 0, 0, 0.7);
+	color: #f00;
 }
 .polyline-measure-unicode-icon
 {
-	font-size:20px;
-	font-weight:700;
+	font-size: 20px;
+	font-weight: 700;
 }
 a.polyline-measure-clearControl:active
 {
-	background-color:#f00;
+	background-color: #f00;
 }
 .polyline-measure-tooltip
 {
-	background-color:rgba(0, 0, 0, 1.0);
-	border-radius:4px;
-	box-shadow:none;
-	color:#fff;
-	font-size:11px;
-	font-style:normal;
-	font-weight:400;
-	height:auto !important;
-	line-height:10px;
-	margin:0;
-	padding:1px 4px 2px 4px;
-	text-align:left;
-	white-space:nowrap;
-	width:auto !important;
-	z-index:500;
+	background-color: rgba(0, 0, 0, 1.0);
+	border-radius: 4px;
+	box-shadow: none;
+	color: #fff;
+	font-size: 11px;
+	font-style: normal;
+	font-weight: 400;
+	height: auto !important;
+	line-height: 10px;
+	margin: 0;
+	padding: 1px 4px 2px 4px;
+	text-align: left;
+	white-space: nowrap;
+	width: auto !important;
+	z-index: 500;
 }
 .polyline-measure-tooltip-end
 {
-	background-color:rgba(0, 0, 0, 1.0);
+	background-color: rgba(0, 0, 0, 1.0);
 }
 .polyline-measure-tooltip-difference
 {
-	color:#f00;
-	font-size:11px;
-	font-style:normal;
-	font-weight:400;
-	line-height:14px;
+	color: #f00;
+	font-size: 11px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 14px;
 }
 .polyline-measure-tooltip-total
 {
-	color:#fff;
-	font-size:11px;
-	font-style:normal;
-	font-weight:400;
-	line-height:12px;
+	color: #fff;
+	font-size: 11px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 12px;
 }
 .polyline-measure-popupTooltip
 {
-	background:#000;
-	color:#fff;
-	font-size:12px;
-	font-style:normal;
-	font-weight:400;
-	margin:0;
-	padding:6px 8px;
-	width:240px;
+	background: #000;
+	color: #fff;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 400;
+	margin: 0;
+	padding: 6px 8px;
+	width: 240px;
 }
 </style>
 <!---------
@@ -661,13 +644,24 @@ a.polyline-measure-clearControl:active
 ---------->
 <script>
 	// Microsoft 独自仕様？
-	const uA = window.navigator.userAgent.toLowerCase();
-	if(uA.indexOf("edge") != -1 || uA.indexOf("trident") != -1 || uA.indexOf("msie") != -1)
+	const UA = window.navigator.userAgent.toLowerCase();
+	if(UA.indexOf("edge") != -1 || UA.indexOf("trident") != -1 || UA.indexOf("msie") != -1)
 	{
 		alert("このブラウザでは正しく動作しないことがあります。\n\n【動作確認済】\n・Firefox\n・Google Chrome\n・Opera\n・Vivaldi");
 	}
 	// muni.js を使うためのおまじない
-	const GSI = {ClientMode:{}, Modal:{}, Draw:{}, Edit:{}, Control:{}, Utils:{Browser:{}}, GLOBALS:{}, TEXT:{}}
+	const GSI = {
+		ClientMode: {},
+		Modal: {},
+		Draw: {},
+		Edit: {},
+		Control: {},
+		Utils: {
+			Browser: {}
+		},
+		GLOBALS: {},
+		TEXT: {}
+	};
 	// GeographicLib を使うためのおまじない
 	const GEOD = geodesic.Geodesic.WGS84;
 </script>
@@ -686,10 +680,10 @@ a.polyline-measure-clearControl:active
 		// __divNaviCommander
 		document.getElementById("__divNaviCommander").style.width = (mapW - naviCommanderWidthPad) + "px";
 		// __divMap
-		const obj1 = document.getElementById("__divMap").style;
-		obj1.height = (mapH - $mapTopPx) + "px";
-		obj1.top    = $mapTopPx + "px";
-		obj1.width  = mapW + "px";
+		const E1 = document.getElementById("__divMap").style;
+		E1.height = (mapH - $mapTopPx) + "px";
+		E1.top    = $mapTopPx + "px";
+		E1.width  = mapW + "px";
 	}
 	/*--------------------
 	// URL／BL表示を変更
@@ -746,33 +740,33 @@ a.polyline-measure-clearControl:active
 		document.getElementById("__NaviZoom").value = parseInt($str, 10);
 		const color1 = "#000";
 		const color2 = "#0c4b9d";
-		const obj1 = document.getElementsByClassName("_ZA");
-		const obj2 = document.getElementsByClassName("_ZB");
+		const E1 = document.getElementsByClassName("_ZA");
+		const E2 = document.getElementsByClassName("_ZB");
 		let i1 = $str;
 		let i2 = 0;
-		let i3 = obj1.length;
+		let i3 = E1.length;
 		for(; i2 < i3; i2++)
 		{
-			obj1[i2].style.background = (i1 == obj1[i2].value ? color2 : color1);
-			if(i1 == obj1[i2].value)
+			E1[i2].style.background = (i1 == E1[i2].value ? color2 : color1);
+			if(i1 == E1[i2].value)
 			{
-				obj1[i2].style.background = color2;
-				obj1[i2].style.opacity = 0.8;
+				E1[i2].style.background = color2;
+				E1[i2].style.opacity = 0.8;
 			}
 			else
 			{
-				obj1[i2].style.background = color1;
-				obj1[i2].style.opacity = 0.6;
+				E1[i2].style.background = color1;
+				E1[i2].style.opacity = 0.6;
 			}
-			if(i1 == obj2[i2].value)
+			if(i1 == E2[i2].value)
 			{
-				obj2[i2].style.background = color2;
-				obj2[i2].style.opacity = 0.8;
+				E2[i2].style.background = color2;
+				E2[i2].style.opacity = 0.8;
 			}
 			else
 			{
-				obj2[i2].style.background = color1;
-				obj2[i2].style.opacity = 0.6;
+				E2[i2].style.background = color1;
+				E2[i2].style.opacity = 0.6;
 			}
 		}
 		subIwmInput_Close("__InputZoomA");
@@ -793,9 +787,9 @@ a.polyline-measure-clearControl:active
 	function subIwmInput_BL_Close()
 	{
 		document.getElementById($subIwmInput_BL_toSave).value = rtnGeoIBLto10A(
-			document.getElementById("__IBL0").value,
 			document.getElementById("__IBL1").value,
-			document.getElementById("__IBL2").value
+			document.getElementById("__IBL2").value,
+			document.getElementById("__IBL3").value
 		);
 		subIwmInput_Close("__InputBL");
 	}
@@ -815,19 +809,18 @@ a.polyline-measure-clearControl:active
 			$decimalSize = 0;
 		}
 		// 他のコントロールに影響するので、
-		// 都度、document.onkeydown = function(evt){} で初期化すること。
-		document.onkeydown = function(evt)
-		{
+		// 都度、初期化すること。
+		document.onkeydown = function(e){
 			// [Enter]
-			if(evt.keyCode == 13)
+			if(e.keyCode == 13)
 			{
-				const obj1 = document.getElementById($outputId);
-				const d1 = parseFloat(obj1.value).toFixed($decimalSize);
+				const E1 = document.getElementById($outputId);
+				const d1 = parseFloat(E1.value).toFixed($decimalSize);
 				if(isNaN(d1))
 				{
 					return;
 				}
-				obj1.value = d1;
+				E1.value = d1;
 				if(! $subIwmInput_BL_now)
 				{
 					subIwmIBL(d1);
@@ -835,9 +828,9 @@ a.polyline-measure-clearControl:active
 				else
 				{
 					document.getElementById($subIwmInput_BL_toSave).value = rtnGeoIBLto10A(
-						document.getElementById("__IBL0").value,
 						document.getElementById("__IBL1").value,
-						document.getElementById("__IBL2").value
+						document.getElementById("__IBL2").value,
+						document.getElementById("__IBL3").value
 					);
 				}
 				subIwmBL();
@@ -855,14 +848,14 @@ a.polyline-measure-clearControl:active
 		$subIwmInput_BL_now = $outputId;
 		// 他の入力フォームを全て閉じる
 		subIwmInput_Init();
-		const obj1 = document.getElementById($outputId);
-		const rect = obj1.getBoundingClientRect();
+		const E1 = document.getElementById($outputId);
+		const rect = E1.getBoundingClientRect();
 		const _posX = ($posX == null || $posX == undefined ? rect.left + window.pageXOffset : $posX);
-		const _posY = ($posY == null || $posY == undefined ? rect.top + window.pageYOffset + obj1.clientHeight : $posY);
-		const obj2 = document.getElementById($inputId).style;
-		obj2.display = "";
-		obj2.left    = _posX + "px";
-		obj2.top     = _posY + "px";
+		const _posY = ($posY == null || $posY == undefined ? rect.top + window.pageYOffset + E1.clientHeight : $posY);
+		const E2 = document.getElementById($inputId).style;
+		E2.display = "";
+		E2.left    = _posX + "px";
+		E2.top     = _posY + "px";
 		// 設定ミリ秒後に自動終了
 		if($autoHidden)
 		{
@@ -882,61 +875,79 @@ a.polyline-measure-clearControl:active
 		}
 		// 初期化
 		$subIwmInput_BL_now = null;
-		document.onkeydown = function(evt){}
+		document.onkeydown = function(e){}
 	}
 	let $subIwmInput_strPos = 0;
 	function subIwmInput_AddText(
 		$str
 	)
 	{
-		const obj1 = document.getElementById($subIwmInput_BL_now);
-		const strBefore = obj1.value;
+		const E1 = document.getElementById($subIwmInput_BL_now);
+		const strBefore = E1.value;
 		const strBeforeLen = strBefore.length;
-		$subIwmInput_strPos = obj1.selectionStart;
-		obj1.value = strBefore.substr(0, $subIwmInput_strPos) + $str + strBefore.substr($subIwmInput_strPos, strBeforeLen);
+		$subIwmInput_strPos = E1.selectionStart;
+		E1.value = strBefore.substr(0, $subIwmInput_strPos) + $str + strBefore.substr($subIwmInput_strPos, strBeforeLen);
 		++$subIwmInput_strPos;
 		// 再フォーカス
 		document.getElementById($subIwmInput_BL_now).focus();
-		obj1.selectionStart = $subIwmInput_strPos;
+		E1.selectionStart = $subIwmInput_strPos;
 	}
 	function subIwmInput_Cls()
 	{
-		const obj1 = document.getElementById($subIwmInput_BL_now);
-		obj1.value = "0";
-		// 再フォーカス
-		obj1.focus();
-		$subIwmInput_strPos = 0;
+		try
+		{
+			const E1 = document.getElementById($subIwmInput_BL_now);
+			E1.value = "0";
+			// 再フォーカス
+			E1.focus();
+			$subIwmInput_strPos = 0;
+		}
+		catch(e)
+		{
+		}
 	}
 	function subIwmInput_Bs()
 	{
-		const obj1 = document.getElementById($subIwmInput_BL_now);
-		const strBefore = obj1.value;
-		const strBeforeLen = strBefore.length;
-		$subIwmInput_strPos = obj1.selectionStart;
-		$subIwmInput_strPos--;
-		if($subIwmInput_strPos < 0)
+		try
 		{
-			$subIwmInput_strPos = 0;
+			const E1 = document.getElementById($subIwmInput_BL_now);
+			const strBefore = E1.value;
+			const strBeforeLen = strBefore.length;
+			$subIwmInput_strPos = E1.selectionStart;
+			$subIwmInput_strPos--;
+			if($subIwmInput_strPos < 0)
+			{
+				$subIwmInput_strPos = 0;
+			}
+			E1.value = strBefore.substr(0, $subIwmInput_strPos) + strBefore.substr(($subIwmInput_strPos + 1), strBeforeLen);
+			// 再フォーカス
+			document.getElementById($subIwmInput_BL_now).focus();
+			E1.selectionStart = $subIwmInput_strPos;
 		}
-		obj1.value = strBefore.substr(0, $subIwmInput_strPos) + strBefore.substr(($subIwmInput_strPos + 1), strBeforeLen);
-		// 再フォーカス
-		document.getElementById($subIwmInput_BL_now).focus();
-		obj1.selectionStart = $subIwmInput_strPos;
+		catch(e)
+		{
+		}
 	}
 	function subIwmInput_Del()
 	{
-		const obj1 = document.getElementById($subIwmInput_BL_now);
-		const strBefore = obj1.value;
-		const strBeforeLen = strBefore.length;
-		$subIwmInput_strPos = obj1.selectionStart;
-		if($subIwmInput_strPos > strBeforeLen)
+		try
 		{
-			$subIwmInput_strPos = strBeforeLen;
+			const E1 = document.getElementById($subIwmInput_BL_now);
+			const strBefore = E1.value;
+			const strBeforeLen = strBefore.length;
+			$subIwmInput_strPos = E1.selectionStart;
+			if($subIwmInput_strPos > strBeforeLen)
+			{
+				$subIwmInput_strPos = strBeforeLen;
+			}
+			E1.value = strBefore.substr(0, $subIwmInput_strPos) + strBefore.substr(($subIwmInput_strPos + 1), strBeforeLen);
+			// 再フォーカス
+			document.getElementById($subIwmInput_BL_now).focus();
+			E1.selectionStart = $subIwmInput_strPos;
 		}
-		obj1.value = strBefore.substr(0, $subIwmInput_strPos) + strBefore.substr(($subIwmInput_strPos + 1), strBeforeLen);
-		// 再フォーカス
-		document.getElementById($subIwmInput_BL_now).focus();
-		obj1.selectionStart = $subIwmInput_strPos;
+		catch(e)
+		{
+		}
 	}
 	/*-------------
 	// エイリアス
@@ -951,9 +962,9 @@ a.polyline-measure-clearControl:active
 			$d1 = document.getElementById($d1).value;
 		}
 		const [deg, min, sec] = rtnGeo10toIBL($d1);
-		document.getElementById("__IBL0").value = deg.toFixed(0);
-		document.getElementById("__IBL1").value = min.toFixed(0);
-		document.getElementById("__IBL2").value = sec.toFixed(4);
+		document.getElementById("__IBL1").value = deg.toFixed(0);
+		document.getElementById("__IBL2").value = min.toFixed(0);
+		document.getElementById("__IBL3").value = sec.toFixed(4);
 	}
 	// URL／BL表示を変更
 	function subIwmCU()
@@ -1003,12 +1014,25 @@ a.polyline-measure-clearControl:active
 	}
 	function subIwmBL()
 	{
-		for(let _i1 = 0; _i1 < 3; _i1++)
+		const aE = [document.getElementById("__IBL1"), document.getElementById("__IBL2"), document.getElementById("__IBL3")];
+		for(let _a1 of aE)
 		{
-			if(! document.getElementById("__IBL" + _i1).value.length)
+			if(! _a1.value.length)
 			{
 				return;
 			}
+		}
+		if(isNaN(parseInt(aE[0].value, 10)))
+		{
+			aE[0].value = 0;
+		}
+		if(isNaN(parseInt(aE[1].value, 10)))
+		{
+			aE[1].value = 0;
+		}
+		if(isNaN(parseFloat(aE[2].value)))
+		{
+			aE[2].value = 0.0;
 		}
 		subIwmInput_BL_Close();
 		subIwmBM_Reset();
@@ -1016,24 +1040,22 @@ a.polyline-measure-clearControl:active
 	function subIwmBM_CurrentPosition()
 	{
 		navigator.geolocation.getCurrentPosition(
-			function(position)
-			{
-				const obj1 = position.coords;
-				if(confirm("現在地に移動しますか？\n・緯度：" + obj1.latitude.toFixed(8) + "°\n・経度：" + obj1.longitude.toFixed(8) + "°\n（誤差：" + obj1.accuracy.toFixed(0) + "m）"))
+			(position) => {
+				const P1 = position.coords;
+				if(confirm("現在地に移動しますか？\n・緯度：" + P1.latitude.toFixed(8) + "°\n・経度：" + P1.longitude.toFixed(8) + "°\n（誤差：" + P1.accuracy.toFixed(0) + "m）"))
 				{
 					// 精度固定
-					document.getElementById("__NaviLat").value = obj1.latitude.toFixed(8);
-					document.getElementById("__NaviLng").value = obj1.longitude.toFixed(8);
+					document.getElementById("__NaviLat").value = P1.latitude.toFixed(8);
+					document.getElementById("__NaviLng").value = P1.longitude.toFixed(8);
 					subIwmBM_Reset();
 				}
 			},
-			function(err)
-			{
+			(error) => {
 				alert("現在地の取得に失敗しました。");
 				subIwmBM_Reset();
 			},
 			{
-				enableHighAccuracy:true
+				enableHighAccuracy: true
 			}
 		);
 	}
@@ -1052,20 +1074,20 @@ a.polyline-measure-clearControl:active
 		// 初期化
 		$subAddMatch_Cnt = 0;
 		// Input
-		const obj1 = document.getElementById("__AddMatch_i1");
-		obj1.value = "";
-		obj1.focus();
+		const E1 = document.getElementById("__AddMatch_i1");
+		E1.value = "";
+		E1.focus();
 		// Zoom
 		document.getElementById("__AddMatch_i3").style.display = "none";
 		// Reset
 		document.getElementById("__AddMatch_i4").style.display = "none";
 		// Output
-		const obj2 = document.getElementById("__AddMatch_o1");
-		obj2.style.display = "none";
-		const rect = obj1.getBoundingClientRect();
-		obj2.style.left = (rect.left + window.pageXOffset - 2) + "px";
-		obj2.style.top  = (rect.top + window.pageYOffset + obj1.clientHeight - 1) + "px";
-		obj2.innerHTML = "";
+		const E2 = document.getElementById("__AddMatch_o1");
+		E2.style.display = "none";
+		const rect = E1.getBoundingClientRect();
+		E2.style.left = (rect.left + window.pageXOffset - 2) + "px";
+		E2.style.top  = (rect.top + window.pageYOffset + E1.clientHeight - 1) + "px";
+		E2.innerHTML  = "";
 	}
 	function subAddMatch_Main()
 	{
@@ -1075,46 +1097,41 @@ a.polyline-measure-clearControl:active
 			subAddMatch_Init();
 			return;
 		}
-		const _URL = "https://msearch.gsi.go.jp/address-search/AddressSearch?q=" + query;
-		fetch(_URL).then(
-			function(response)
+		fetch("https://msearch.gsi.go.jp/address-search/AddressSearch?q=" + query)
+		.then((response) => {
+			return response.json();
+		})
+		.then((json) => {
+			$subAddMatch_Cnt = json.length;
+			// 再検索時に結果を表示させるため
+			document.getElementById("__AddMatch_i3").innerHTML = $HashAddMatchOutputZoom.none;
+			const flg = rtnAddMatch_Main();
+			if(flg)
 			{
-				return response.json();
-			}
-		).then(
-			function(json)
-			{
-				$subAddMatch_Cnt = json.length;
-				// 再検索時に結果を表示させるため
-				document.getElementById("__AddMatch_i3").innerHTML = $HashAddMatchOutputZoom.none;
-				const flg = rtnAddMatch_Main();
-				if(flg)
+				const E1 = document.getElementById("__AddMatch_o1");
+				let rtn = "<div style=\"color:#005bbb;padding:0 0 6px 0;\">◆ヒット数 " + $subAddMatch_Cnt + " 件</div>";
+				for(let _o1 of json)
 				{
-					const obj1 = document.getElementById("__AddMatch_o1");
-					let rtn = "<div style=\"color:#005bbb;padding:0 0 6px 0;\">◆ヒット数 " + $subAddMatch_Cnt + " 件</div>";
-					for(let _o1 of json)
+					let _s1 = "";
+					// データ不完全のため例外処理が必要
+					try
 					{
-						let _s1 = "";
-						// データ不完全のため例外処理が必要
-						try
-						{
-							const addCode = parseInt(_o1.properties.addressCode, 10) + "";
-							const a1 = GSI.MUNI_ARRAY[addCode].split(",");
-							_s1 = a1[1] + " " + a1[3].replace("　", " ");
-						}
-						catch(e)
-						{
-						}
-						let [lng, lat] = _o1.geometry.coordinates;
-						rtn += "<div class=\"_AddMatch_oResultOpt1\" onmouseover=\"subAddMatch_Spot([" + lat + "," + lng + "],'" + _o1.properties.title + "');\" onmouseout=\"subAddMatch_SpotClear();\" onclick=\"subMapOnRClick('" + lat + "','" + lng + "','" + _o1.properties.title + "');\">" +
-							"<div class=\"_AddMatch_oResultOpt2\">" + _s1 + "</div>" + _o1.properties.title + "</div>";
+						const addCode = "" + parseInt(_o1.properties.addressCode, 10);
+						const a1 = GSI.MUNI_ARRAY[addCode].split(",");
+						_s1 = a1[1] + " " + a1[3].replace("　", " ");
 					}
-					// 著作権表示
-					rtn += "<div style=\"padding:6px 0 0 0;text-align:center;\">【<a href=\"https://geocode.csis.u-tokyo.ac.jp/\" target=\"_blank\">協力:東大CSIS</a>】</div>";
-					obj1.innerHTML = rtn;
+					catch(e)
+					{
+					}
+					let [lng, lat] = _o1.geometry.coordinates;
+					rtn += "<div class=\"_AddMatch_oResultOpt1\" onmouseover=\"subAddMatch_Spot([" + lat + "," + lng + "],'" + _o1.properties.title + "');\" onmouseout=\"subAddMatch_SpotClear();\" onclick=\"subMapOnRClick('" + lat + "','" + lng + "','" + _o1.properties.title + "');\">" + "<div class=\"_AddMatch_oResultOpt2\">" + _s1 + "</div>" + _o1.properties.title + "</div>";
 				}
+				// 著作権表示
+				rtn += "<div style=\"padding:6px 0 0 0;text-align:center;\">【<a href=\"https://geocode.csis.u-tokyo.ac.jp/\" target=\"_blank\">協力:東大CSIS</a>】</div>";
+				E1.innerHTML = rtn;
 			}
-		).catch();
+		})
+		.catch();
 	}
 	function rtnAddMatch_Main()
 	{
@@ -1166,17 +1183,23 @@ a.polyline-measure-clearControl:active
 	{
 		$AddMatchMarker = (
 			L.circleMarker($aLatLng, {
-				radius:8,
-				color:"#ff5",
-				fill:true,
-				fillColor:"#f00",
-				fillOpacity:0.8,
-				title:$title,
-				weight:8
-			}).addTo($Map).bindPopup($title, {
-				autoPan:false, // ポップアップ時、表示調整しない
-				closeButton:false
-			}).openPopup()
+				radius: 8,
+				color: "#ff5",
+				fill: true,
+				fillColor: "#f00",
+				fillOpacity: 0.8,
+				title: $title,
+				weight: 8
+			})
+			.addTo($Map)
+			.bindPopup(
+				$title,
+				{
+					autoPan: false, // ポップアップ時、表示調整しない
+					closeButton: false
+				}
+			)
+			.openPopup()
 		);
 		// Leaflet.greatCircle
 		subGCircle_Draw();
@@ -1201,42 +1224,38 @@ a.polyline-measure-clearControl:active
 		$placeName
 	)
 	{
-		const _URL = "https://mreversegeocoder.gsi.go.jp/reverse-geocoder/LonLatToAddress?lat=" + $lat + "&lon=" + $lng;
-		fetch(_URL).then(
-			function(response)
+		fetch("https://mreversegeocoder.gsi.go.jp/reverse-geocoder/LonLatToAddress?lat=" + $lat + "&lon=" + $lng)
+		.then((response) => {
+			return response.json();
+		})
+		.then((json) => {
+			let title = null;
+			if(typeof(json.results) === "undefined")
 			{
-				return response.json();
+				title = "-----";
 			}
-		).then(
-			function(json)
+			else
 			{
-				let title = null;
-				if(typeof(json.results) === "undefined")
+				const muniCd = parseInt(json.results.muniCd, 10);
+				const lv01Nm = json.results.lv01Nm;
+				const a1 = GSI.MUNI_ARRAY[muniCd].split(",");
+				title = (a1[1] + a1[3] + lv01Nm).replace(/　/g, "");
+			}
+			// 場所付与 => 自由／固定区別
+			if($oMarker.options.draggable)
+			{
+				$oMarker.options.title = title;
+			}
+			else
+			{
+				// 固定点場所 => 初回に付与してあればパス
+				if(! $oMarker.options.title)
 				{
-					title = "-----";
-				}
-				else
-				{
-					const muniCd = parseInt(json.results.muniCd, 10);
-					const lv01Nm = json.results.lv01Nm;
-					const a1 = GSI.MUNI_ARRAY[muniCd].split(",");
-					title = (a1[1] + a1[3] + lv01Nm).replace(/　/g, "");
-				}
-				// 場所付与 => 自由／固定区別
-				if($oMarker.options.draggable)
-				{
-					$oMarker.options.title = title;
-				}
-				else
-				{
-					// 固定点場所 => 初回に付与してあればパス
-					if(! $oMarker.options.title)
-					{
-						$oMarker.options.title = $placeName + "<br><span style=\"color:#333;\">＠" + title + "</span>";
-					}
+					$oMarker.options.title = $placeName + "<br><span style=\"color:#333;\">＠" + title + "</span>";
 				}
 			}
-		).catch();
+		})
+		.catch();
 	}
 	/*----------------
 	// Simple Window
@@ -1248,7 +1267,7 @@ a.polyline-measure-clearControl:active
 		$btnId
 	)
 	{
-		const bg1 = document.getElementById($btnId).style.background;
+		const E1 = document.getElementById($btnId).style.background;
 		for(let _s1 of $AryNaviCommanderId)
 		{
 			document.getElementById(_s1).style.background = "";
@@ -1257,11 +1276,65 @@ a.polyline-measure-clearControl:active
 		{
 			document.getElementById(_s1).style.top = "-1000px";
 		}
-		if(! bg1)
+		if(! E1)
 		{
 			document.getElementById($id).style.top = $mapTopPx + "px";
 			document.getElementById($btnId).style.background = "#3c639b";
 		}
+	}
+	let $HashSimpleWindowResize = {
+		flag: false,
+		x: 0,
+		y: 0
+	};
+	function subSimpleWindow_Resize(
+		$id,
+		$function
+	)
+	{
+		const E1 = document.getElementById($id);
+		E1.addEventListener("mouseover", (e) => {
+			E1.draggable = true;
+		});
+		E1.addEventListener("dragstart", (e) => {
+			$HashSimpleWindowResize.flag = true;
+			$HashSimpleWindowResize.x = e.screenX;
+			$HashSimpleWindowResize.y = e.screenY;
+		});
+		E1.addEventListener("dragend", (e) => {
+			if($HashSimpleWindowResize.flag)
+			{
+				let i1;
+				$HashSimpleWindowResize.flag = false;
+				e.dragX = e.screenX - $HashSimpleWindowResize.x;
+					let iWidth = E1.clientWidth - e.dragX;
+					i1 = parseInt(E1.style.maxWidth, 10);
+					if(i1 < iWidth)
+					{
+						iWidth = i1;
+					}
+					i1 = parseInt(E1.style.minWidth, 10);
+					if(i1 > iWidth)
+					{
+						iWidth = i1;
+					}
+					E1.style.width = iWidth + "px";
+				e.dragY = e.screenY - $HashSimpleWindowResize.y;
+					let iHeight = E1.clientHeight + e.dragY;
+					i1 = parseInt(E1.style.maxHeight, 10);
+					if(i1 < iHeight)
+					{
+						iHeight = i1;
+					}
+					i1 = parseInt(E1.style.minHeight, 10);
+					if(i1 > iHeight)
+					{
+						iHeight = i1;
+					}
+					E1.style.height = iHeight + "px";
+				$function(iWidth, iHeight);
+			}
+		});
 	}
 	/*---------------
 	// 地図から読込
@@ -1276,8 +1349,8 @@ a.polyline-measure-clearControl:active
 		// $BaseMarker
 		if(! str.length)
 		{
-			const obj1 = $BaseMarker._latlng;
-			str += obj1.lat.toFixed(8) + "\t" + obj1.lng.toFixed(8) + "\t" + rtnMarkerPopup1(obj1.lat, obj1.lng).replace(/<br>/g, "\t") + "\n";
+			const LatLng = $BaseMarker._latlng;
+			str += LatLng.lat.toFixed(8) + "\t" + LatLng.lng.toFixed(8) + "\t" + rtnMarkerPopup1(LatLng.lat, LatLng.lng).replace(/<br>/g, "\t") + "\n";
 		}
 		let oldLat = $BaseMarker._latlng.lat;
 		let oldLng = $BaseMarker._latlng.lng;
@@ -1303,41 +1376,29 @@ a.polyline-measure-clearControl:active
 	function subAddFile(
 		$fileId,
 		$textareaId,
-		$mode // 0:上書き／1:追記
+		$bAdd // true:追記／false:上書き
 	)
 	{
-		$mode = parseInt($mode, 10);
 		// ボタンにイベントを設定
 		const fileList = document.getElementById($fileId).files;
 		// ファイル名記憶
 		$AddFileName = fileList[0].name;
 		// 読込
 		const reader = new FileReader();
-		reader.onload = function(evt)
-		{
+		reader.onload = function(e){
 			// 追記
-			if($mode == 1)
+			if($bAdd)
 			{
-				document.getElementById($textareaId).value += evt.target.result;
+				document.getElementById($textareaId).value += e.target.result;
 			}
 			// 上書き
 			else
 			{
-				document.getElementById($textareaId).value = evt.target.result;
+				document.getElementById($textareaId).value = e.target.result;
 			}
 		}
 		// 発火
 		reader.readAsText(fileList[0]);
-	}
-	/*---------------
-	// 分割文字取得
-	---------------*/
-	function rtnTextSeparator(
-		$text
-	)
-	{
-		// 分割文字記憶
-		return $text.match(/\t/) ? "\t" : ",";
 	}
 	/*---------------
 	// 多点間の距離
@@ -1355,7 +1416,7 @@ a.polyline-measure-clearControl:active
 		{
 			if(_s1.substr(0, 2) != "//")
 			{
-				const _a1 = _s1.split(rtnTextSeparator(_s1));
+				const _a1 = _s1.split("\t");
 				if(_a1.length >= 2)
 				{
 					if(_a1[0].match(rgxDecimal) && _a1[1].match(rgxDecimal))
@@ -1380,11 +1441,11 @@ a.polyline-measure-clearControl:active
 				iTotalDist += r.s12;
 				const l = GEOD.InverseLine(aOld[0], aOld[1], _a1[0], _a1[1]);
 				// 区間距離を細分割
-				let dist = iTotalDist / 250;
-				let n = Math.ceil(l.s13 / dist);
+				$rtnA2P_DistMP_PartKm = iTotalDist / 200.0;
+				let n = Math.ceil(l.s13 / $rtnA2P_DistMP_PartKm);
 				for(let _i1 = 0; _i1 <= n; _i1++)
 				{
-					let s = Math.min(dist * _i1, l.s13);
+					let s = Math.min($rtnA2P_DistMP_PartKm * _i1, l.s13);
 					let r = l.Position(s, GEOD.STANDARD | GEOD.LONG_UNROLL);
 					// 東廻りで日付変更線を越える
 					if(_a1[1] > r.lon2 && r.lon2 < 0.0)
@@ -1431,8 +1492,8 @@ a.polyline-measure-clearControl:active
 		let min = parseInt($angle, 10);
 			$angle -= min;
 		let sec = parseFloat($angle) * 60.0;
-		// 0.999... * 60 => 60.0 対策
-		if(sec == 60.0)
+		// 60.0 対策
+		if(sec > 59.999)
 		{
 			min += 1;
 			sec = 0;
@@ -1448,18 +1509,19 @@ a.polyline-measure-clearControl:active
 		$oMarker
 	)
 	{
-		const _URL = "https://cyberjapandata2.gsi.go.jp/general/dem/scripts/getelevation.php?lat=" + $lat + "&lon=" + $lng + "&outtype=JSON";
-		fetch(_URL).then(
-			function(response)
-			{
-				return response.json();
-			}
-		).then(
-			function(json)
-			{
-				$oMarker.elevation = json.elevation + "m DEM" + json.hsrc;
-			}
-		).catch();
+		fetch(
+			"https://cyberjapandata2.gsi.go.jp/general/dem/scripts/getelevation.php?lat=" +
+			$lat.toFixed(5) +
+			"&lon=" +
+			$lng.toFixed(5) +
+			"&outtype=JSON"
+		)
+		.then((data) => {
+			return data.json();
+		})
+		.then((json) => {
+			$oMarker.elevation = json.elevation + "m DEM" + json.hsrc;
+		});
 	}
 	/*----------------
 	// LatLng => UTM
@@ -1592,37 +1654,29 @@ a.polyline-measure-clearControl:active
 		try
 		{
 			$Dem10ToSeaLevel.remove($Map);
-			if(document.getElementById($id1).value < 0)
-			{
-				document.getElementById($id1).value = 0;
-			}
-			if(document.getElementById($id2).value < 0)
-			{
-				document.getElementById($id2).value = 0;
-			}
 		}
 		catch(e)
 		{
-			return;
 		}
-		let seaLevel1 = parseFloat(document.getElementById($id1).value);
-		let seaLevel2 = parseFloat(document.getElementById($id2).value);
-		if(seaLevel1 > seaLevel2)
+		const aE = [document.getElementById($id1), document.getElementById($id2)];
+		for(let _a1 of aE)
 		{
-			let tmp = seaLevel1;
-			seaLevel1 = seaLevel2;
-			seaLevel2 = tmp;
-			tmp = null;
-			document.getElementById($id1).value = seaLevel1;
-			document.getElementById($id2).value = seaLevel2;
+			if(isNaN(parseInt(_a1.value, 10)))
+			{
+				_a1.value = 0;
+			}
+		}
+		let aSeaLevel = [parseFloat(aE[0].value), parseFloat(aE[1].value)];
+		if(aSeaLevel[0] > aSeaLevel[1])
+		{
+			[aSeaLevel[0], aSeaLevel[1]] = [aSeaLevel[1], aSeaLevel[0]];
 		}
 		// 元データの切り上げ対策
-		++seaLevel2;
+		++aSeaLevel[1];
 		// m => cm
-		seaLevel1 *= 100;
-		seaLevel2 *= 100;
-		$Dem10ToSeaLevel.createTile = function(coords)
-		{
+		aSeaLevel[0] *= 100;
+		aSeaLevel[1] *= 100;
+		$Dem10ToSeaLevel.createTile = (coords) => {
 			tile = L.DomUtil.create("canvas", "leaflet-tile");
 			tile.width = tile.height = 256;
 			const ctx = tile.getContext("2d");
@@ -1630,19 +1684,18 @@ a.polyline-measure-clearControl:active
 			img.crossOrigin = "anonymous";
 			// leafletが使うタイルと別のサーバ（https／http）にアクセスし、Access-Control-Allow-Originを回避
 			img.src = "https://cyberjapandata.gsi.go.jp/xyz/dem_png/" + coords.z + "/" + coords.x + "/" + coords.y + ".png";
-			img.onload = function()
-			{
+			img.onload = function(){
 				ctx.drawImage(this, 0, 0);
 				const rtnImg = ctx.getImageData(0, 0, 256, 256);
 				const rtnImgData = rtnImg.data;
-				for(let _i1 = 0; _i1 < rtnImgData.length; _i1 += 4)
+				for(let _i1 = 0, _i2 = rtnImgData.length; _i1 < _i2; _i1 += 4)
 				{
 					let elevation = (rtnImgData[_i1 + 0] << 16) + (rtnImgData[_i1 + 1] << 8) + rtnImgData[_i1 + 2];
 					if(elevation > 8388608)
 					{
 						elevation = (elevation - 16777216);
 					}
-					rtnImgData[_i1 + 3] = (elevation >= seaLevel1 && elevation <= seaLevel2 ? 63 : 0);
+					rtnImgData[_i1 + 3] = (elevation >= aSeaLevel[0] && elevation <= aSeaLevel[1] ? 63 : 0);
 				}
 				ctx.putImageData(rtnImg, 0, 0);
 			}
@@ -1668,12 +1721,12 @@ a.polyline-measure-clearControl:active
 		$GCircleBase = L.greatCircle(
 			$BaseMarker.getLatLng(),
 			{
-				radius:rtnGCircle_Scale(),
-				color:"#00f",
-				fill:true,
-				fillColor:"#aaf",
-				fillOpacity:0.1,
-				pane:"_pane220"
+				radius: rtnGCircle_Scale(),
+				color: "#00f",
+				fill: true,
+				fillColor: "#aaf",
+				fillOpacity: 0.1,
+				pane: "_pane220"
 			}
 		);
 		$GCircleBase.addTo($Map);
@@ -1688,16 +1741,16 @@ a.polyline-measure-clearControl:active
 		{
 			$GCircleAryLocal.push(
 				L.greatCircle(_s1.getLatLng(), {
-					radius:rtnGCircle_Scale(),
-					color:"#f00",
-					fill:true,
-					fillColor:"#faa",
-					fillOpacity:0.1,
-					pane:"_pane210"
+					radius: rtnGCircle_Scale(),
+					color: "#f00",
+					fill: true,
+					fillColor: "#faa",
+					fillOpacity: 0.1,
+					pane: "_pane210"
 				})
 			);
 		}
-		for(let _i1 = 0; _i1 < $GCircleAryLocal.length; _i1++)
+		for(let _i1 = 0, _i2 = $GCircleAryLocal.length; _i1 < _i2; _i1++)
 		{
 			$GCircleAryLocal[_i1].addTo($Map);
 			$GCircleAryLocal[_i1].bindTo($AryLocalMarker[_i1]);
@@ -1724,45 +1777,16 @@ a.polyline-measure-clearControl:active
 	// Leaflet.Heightgraph
 	----------------------*/
 	let $HeightGraph_On = true;
+	let $HeightGraph_Init = null;
 	let $HeightGraph_Layer = null;
 	let $HeightGraph_Title = "標高グラフ ";
-	let $HeightGraph_Init = L.control.heightgraph({
-		mappings:{
-			suitability:function(data)
-			{
-				return {text:"±" + ($rtnA2P_DistMP_PartKm).toFixed(2) + "km", color:"#0067c0"}
-			},
-		},
-		graphStyle:{
-			opacity:0.8,
-			"fill-opacity":0.2,
-			"stroke-width":"2px"
-		},
-		expandCallback(expand){},
-		expandControls:false,
-		highlightStyle:{
-			color:"#c71585",
-			opacity:0.6,
-			weight:6
-		},
-		position:"bottomleft",
-		translation:{
-			distance:"距離",
-			elevation:"標高",
-			segment_length:"総距離",
-			type:"精度",
-			legend:" "
-		},
-		width:700,
-		height:200
-	});
 	let $HeightGraph_Data = [{
-		"type":"FeatureCollection",
-		"features":[{
-			"type":"Feature",
-			"geometry":{
-				"type":"LineString",
-				"coordinates":[
+		"type": "FeatureCollection",
+		"features": [{
+			"type": "Feature",
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
 					// Lng, Lat, M
 					// (例)
 					[140.4, 38.5, 100.0],
@@ -1771,90 +1795,123 @@ a.polyline-measure-clearControl:active
 					[140.9, 38.4, 200.0]
 				]
 			},
-			"properties":{}
+			"properties": {}
 		}],
-		"properties":{
-			"Creator":"OpenRouteService.org",
-			"records":1,
-			"summary":"suitability",
-			"label":" "
+		"properties": {
+			"Creator": "OpenRouteService.org",
+			"records": 1,
+			"summary": "suitability",
+			"label": " "
 		}
 	}];
-	function rtnHeightGraphElevation(
-		$lat,
-		$lng
+	async function subHeightGraphElevation(
+		$aLatLng // [[lat, lng], ...]
 	)
 	{
-		// 精度対速度比を調整（小数４桁縛り）
-		$lat = $lat.toFixed(4);
-		$lng = $lng.toFixed(4);
-		const _URL = "https://cyberjapandata2.gsi.go.jp/general/dem/scripts/getelevation.php?lat=" + $lat + "&lon=" + $lng + "&outtype=JSON";
 		let rtn = [];
-		// バッチ処理のため非同期は不可
-		const xhr = new XMLHttpRequest();
-		xhr.open("GET", _URL, false);
-		xhr.send(null);
-		if(xhr.status == 200)
+		for(let _a1 of $aLatLng)
 		{
-			let i1 = JSON.parse(xhr.responseText).elevation;
+			const data = await fetch(
+				"https://cyberjapandata2.gsi.go.jp/general/dem/scripts/getelevation.php?lat=" +
+				_a1[0].toFixed(5) +
+				"&lon=" +
+				_a1[1].toFixed(5) +
+				"&outtype=JSON"
+			);
+			const res = await data.json();
+			let i1 = res.elevation;
 			if(i1 == "-----")
 			{
 				i1 = 0;
 			}
-			// (入力)[Lat, Lng] => (出力)[Lng, Lat] になることに注意
-			rtn = [$lng, $lat, i1];
+			// 出力 [Lng, Lat] になることに注意
+			rtn.push([_a1[1], _a1[0], i1]);
 		}
 		return rtn;
-	}
-	function subHeightGraphMakeData()
-	{
-		// 初期化
-		$HeightGraph_Data[0]["features"][0]["geometry"]["coordinates"] = [[0, 0, 0], [0, 0, 0]];
-		const [iTotalDist, aLatLng, iErrCnt] = rtnA2P_DistMP("__TA05");
-		let a1 = [];
-		for(let _a1 of aLatLng)
-		{
-			a1.push(rtnHeightGraphElevation(_a1[0], _a1[1]));
-		}
-		// 再計算値を代入
-		$HeightGraph_Data[0]["features"][0]["geometry"]["coordinates"] = a1;
 	}
 	function subHeightGraphOpen()
 	{
 		if($HeightGraph_On)
 		{
-			if(! confirm("処理中は操作ができません。\n処理を開始しますか？"))
+			if(! confirm("処理に数十秒から数分かかります。\n開始しますか？"))
 			{
 				return;
 			}
-			// 標高GeoJSON作成
-			subHeightGraphMakeData();
-			// グラフ描画
-			$HeightGraph_Init.addTo($Map);
-			$HeightGraph_Init.addData($HeightGraph_Data);
-			///$HeightGraph_Init.resize({width:700, height:150});
-			// 線描画
-			$HeightGraph_Layer = new L.LayerGroup();
-			$HeightGraph_Layer.addTo($Map);
-			// _GCircle(=500) より上位
-			$Map.createPane("_pane510").style.zIndex = 510;
-			L.geoJson($HeightGraph_Data, {
-				pane:"_pane510"
-			}).on({
-				"mousemove":event => {$HeightGraph_Init.mapMousemoveHandler(event, {showMapMarker:true});},
-				"mouseout":event => {$HeightGraph_Init.mapMouseoutHandler(2000);}
-			}).addTo($HeightGraph_Layer);
-			// 再表示
-			$PolylineMeasure.remove($Map);
-			$PolylineMeasure.addTo($Map);
+			// 標高グラフ描画
+			$HeightGraph_Data[0]["features"][0]["geometry"]["coordinates"] = [[0, 0, 0], [0, 0, 0]];
+			const [iTotalDist, aLatLng, iErrCnt] = rtnA2P_DistMP("__TA05");
+			const iPartDist = $rtnA2P_DistMP_PartKm / 1000.0;
+			$HeightGraph_Init = L.control.heightgraph({
+				mappings: {
+					suitability: () => {
+						return {
+							text: "±" + iPartDist.toFixed(3) + "km",
+							color: "#0067c0"
+						}
+					},
+				},
+				graphStyle: {
+					opacity: 0.8,
+					"fill-opacity": 0.2,
+					"stroke-width": "2px"
+				},
+				expandCallback(expand){},
+				expandControls: false,
+				highlightStyle: {
+					color: "#c71585",
+					opacity: 0.6,
+					weight: 6
+				},
+				position: "bottomleft",
+				translation: {
+					distance: "距離",
+					elevation: "標高",
+					segment_length: "総距離",
+					type: "精度",
+					legend: "※" + iPartDist.toFixed(3) + "km毎の計測値"
+				},
+				width: 700,
+				height: 200
+			});
+			subHeightGraphElevation(aLatLng)
+			.then((rtn) => {
+				// 再計算値を代入
+				$HeightGraph_Data[0]["features"][0]["geometry"]["coordinates"] = rtn;
+				// グラフ描画
+				$HeightGraph_Init.addTo($Map);
+				$HeightGraph_Init.addData($HeightGraph_Data);
+				// 線描画
+				$HeightGraph_Layer = new L.LayerGroup();
+				$HeightGraph_Layer.addTo($Map);
+				// _GCircle(=500) より上位
+				$Map.createPane("_pane510").style.zIndex = 510;
+				L.geoJson($HeightGraph_Data, {
+					pane: "_pane510"
+				})
+				.on({
+					"mousemove": (e) => { $HeightGraph_Init.mapMousemoveHandler(e, { showMapMarker: true }); },
+					"mouseout":  (e) => { $HeightGraph_Init.mapMouseoutHandler(2000); }
+				})
+				.addTo($HeightGraph_Layer);
+				// 再表示
+				$PolylineMeasure.remove($Map);
+				$PolylineMeasure.addTo($Map);
+			})
+			.then(() => {
+				// 描画終了時
+				document.getElementById("__HgBtn").disabled = false;
+				document.getElementById("__HgBtn").value = $HeightGraph_Title + "OFF";
+			});
+			// 描画開始時
+			document.getElementById("__HgBtn").disabled = true;
 			$HeightGraph_On = false;
-			document.getElementById("__HgBtn").value = $HeightGraph_Title + "OFF";
 		}
 		else
 		{
 			try
 			{
 				$HeightGraph_Init.remove($Map);
+				$HeightGraph_Init = null;
 				$HeightGraph_Layer.remove($Map);
 				$HeightGraph_Layer = null;
 			}
@@ -1871,7 +1928,7 @@ a.polyline-measure-clearControl:active
 	let $AryGeoJsonLayer = [null, null, null, null, null, null, null, null, null, null];
 	function subAddGeoJson_init()
 	{
-		for(let _i1 = 0; _i1 < $AryGeoJsonLayer.length; _i1++)
+		for(let _i1 = 0, _i2 = $AryGeoJsonLayer.length; _i1 < _i2; _i1++)
 		{
 			document.getElementById("__checkboxGeoJson" + _i1).checked = false;
 			document.getElementById("__fileGeoJson" + _i1).value = "";
@@ -1891,37 +1948,33 @@ a.polyline-measure-clearControl:active
 		$aryIndex = parseInt($aryIndex, 10);
 		const fileList = document.getElementById("__fileGeoJson" + $aryIndex).files;
 		const reader = new FileReader();
-		reader.onload = function(evt)
-		{
-			document.getElementById($oId).value = evt.target.result;
+		reader.onload = function(e){
+			document.getElementById($oId).value = e.target.result;
 			$Map.createPane("_pane200").style.zIndex = 200;
 			$AryGeoJsonLayer[$aryIndex] = L.geoJSON(
 				JSON.parse(
 					document.getElementById($oId).value
-				),{
-					pane:"_pane200"
-				}
-			).bindPopup(
-				function(layer)
+				),
 				{
-					let rtn = "";
-					for(let _key in layer.feature.properties)
-					{
-						rtn += "[" + _key + "]&nbsp;" + layer.feature.properties[_key] + "<br>";
-					}
-					return rtn;
+					pane: "_pane200"
 				}
-			).bindTooltip(
-				function(layer)
+			)
+			.bindPopup((layer) => {
+				let rtn = "";
+				for(let _key in layer.feature.properties)
 				{
-					let rtn = "";
-					for(let _key in layer.feature.properties)
-					{
-						rtn += "[" + _key + "]&nbsp;" + layer.feature.properties[_key] + "<br>";
-					}
-					return rtn;
+					rtn += "[" + _key + "]&nbsp;" + layer.feature.properties[_key] + "<br>";
 				}
-			);
+				return rtn;
+			})
+			.bindTooltip((layer) => {
+				let rtn = "";
+				for(let _key in layer.feature.properties)
+				{
+					rtn += "[" + _key + "]&nbsp;" + layer.feature.properties[_key] + "<br>";
+				}
+				return rtn;
+			});
 		}
 		reader.readAsText(fileList[0]);
 		document.getElementById("__fileGeoJson" + $aryIndex).style.color = "#fff";
@@ -1949,29 +2002,25 @@ a.polyline-measure-clearControl:active
 </head>
 <body>
 	<script>
-		window.addEventListener(
-			"load",
-			function()
-			{
-				subInitDisp();
-				subIwmInput_Init();
-				subMyObj_Init();
-				subAddMatch_Init();
-				subGCircle_Draw();
-			}
-		);
-		window.addEventListener(
-			"resize",
-			function()
-			{
-				subInitDisp();
-			}
-		);
+		window.addEventListener("load", () => {
+			subInitDisp();
+			subIwmInput_Init();
+			subMyObj_Init();
+			subAddMatch_Init();
+			subGCircle_Draw();
+		});
+		window.addEventListener("resize", () => {
+			subInitDisp();
+		});
 	</script>
 	<!-----------
 	// メニュー
 	------------>
-	<div id="__divNaviCommander">
+	<div id="__divNaviCommander" draggable="true">
+		<script async>
+			const $__divNaviCommander = document.getElementById("__divNaviCommander");
+			$__divNaviCommander.addEventListener("mouseover", (e) => { $__divNaviCommander.draggable = true; });
+		</script>
 		緯度&nbsp;<input type="text" id="__NaviLat" onclick="subIwmInput_BL_Open(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id,8);" placeholder="緯度入力"/>
 		経度&nbsp;<input type="text" id="__NaviLng" onclick="subIwmInput_BL_Open(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id,8);" placeholder="経度入力"/>
 		<!-- ズーム --><input type="hidden" id="__NaviZoom"/>
@@ -1981,21 +2030,21 @@ a.polyline-measure-clearControl:active
 		<div class="_btnNavi2" style="border-radius:10px;display:inline-block;font-size:14px;height:20px;margin:0 0 0 2px;padding:0;width:20px;" onclick="subNaviAllMarkerPopupClose();" onmouseover="subNaviExpOnOff('全ポップアップを閉じる','182px');" onmouseleave="subNaviExpOnOff();"><i class="fa fa-folder"></i></div>
 		<input type="button" id="__RmMarker" class="_btnNavi2" style="border-radius:10px;font-size:17px;height:20px;margin:0 0 0 4px;padding:0;width:20px;" value="×" onclick="subMyObj_Remove($AryLocalMarker);" onmouseover="subNaviExpOnOff('赤・オレンジマーカー消去','196px');" onmouseleave="subNaviExpOnOff();"/>
 		<div id="__NaviExp" class="_simpleWindow" style="background:#000;display:none;font-size:14px;"></div>
-		<script>
+		<script async>
 			// コメント表示
 			function subNaviExpOnOff(str, strWidth)
 			{
-				const obj1 = document.getElementById("__NaviExp");
+				const E1 = document.getElementById("__NaviExp");
 				if(! str)
 				{
-					obj1.style.display = "none";
+					E1.style.display = "none";
 					return;
 				}
-				obj1.style.display = "";
-				obj1.innerHTML = str;
-				obj1.style.left = event.clientX + "px";
-				obj1.style.top = "35px";
-				obj1.style.width = strWidth;
+				E1.style.display = "";
+				E1.innerHTML = str;
+				E1.style.left = event.clientX + "px";
+				E1.style.top = "35px";
+				E1.style.width = strWidth;
 			}
 			// 全ポップアップ表示
 			function subNaviAllMarkerPopupOpen()
@@ -2031,7 +2080,7 @@ a.polyline-measure-clearControl:active
 		<div id="__NC01" style="float:right;margin:0 8px 0 4px;">
 			<input type="button" class="_simpleWindowCall" value="？" onclick="subSimpleWindow_OpenClose('__SW01','__NC01');"/>
 		</div>
-		<div id="__SW01" class="_simpleWindow" style="right:0;width:360px;">
+		<div id="__SW01" class="_simpleWindow" style="right:0;width:340px;" draggable="true">
 			<div>操作説明</div>
 			<div id="__SW01Doc" class="_simpleWindowOutput" style="background:#fff;max-height:600px;padding:0 0 12px 0;"></div>
 		</div>
@@ -2041,37 +2090,50 @@ a.polyline-measure-clearControl:active
 		<div id="__NC02" style="float:right;margin:0 4px;">
 			<input type="button" class="_simpleWindowCall" value="追加タイル" onclick="subSimpleWindow_OpenClose('__SW02','__NC02');"/>
 		</div>
-		<div id="__SW02" class="_simpleWindow" style="right:0;width:670px;">
+		<div id="__SW02" class="_simpleWindow" style="max-height:800px;max-width:1600px;min-height:338px;min-width:450px;right:0;width:450px;" draggable="true">
 			<div>追加タイル</div>
 			<div class="_simpleWindowOutput" style="padding:4px 6px 6px 6px;">
-				<input type="file" id="__fileAddMap" accept=".tsv" style="width:656px;" onchange="subAddFile(this.id,'__TA02',0);"/>
-				<textarea id="__TA02" class="_editTextBox" wrap="off" style="height:360px;width:642px;"></textarea>
-				<script>
-					document.getElementById("__TA02").onkeydown = function(e){subAddTabCtrl(this, e);}
+				<input type="file" id="__fileAddMap" accept=".tsv" style="width:436px;" onchange="subAddFile(this.id,'__TA02',true);"/>
+				<textarea id="__TA02" class="_editTextBox" wrap="off" style="height:250px;width:422px;"></textarea>
+				<script async>
+					const $__TA02 = document.getElementById("__TA02");
+					$__TA02.onkeydown = function(e){
+						subAddTabCtrl(this, e);
+					}
 				</script>
 				<input type="button" class="_btnNavi3" value="←地図に反映" onclick="subMapSelector();subSimpleWindow_OpenClose('__SW02','__NC02');"/>
 				<a href="http://maps.gsi.go.jp/development/ichiran.html" target="_blank" class="_btnNavi4">地理院タイル一覧</a>
 			</div>
 		</div>
+		<script async>
+			subSimpleWindow_Resize("__SW02", (width, height) => {
+				$__TA02.style.width = (width - 29) + "px";
+				$__TA02.style.height = (height - 88) + "px";
+			});
+			$__TA02.addEventListener("mousedown", (e) => {
+				document.getElementById("__SW02").draggable = false;
+				$__divNaviCommander.draggable = false;
+			});
+		</script>
 		<!----------
 		// GeoJSON
 		----------->
 		<div id="__NC03" style="float:right;margin:0 4px;">
 			<input type="button" class="_simpleWindowCall" value="GeoJSON" onclick="subSimpleWindow_OpenClose('__SW03','__NC03');"/>
 		</div>
-		<div id="__SW03" class="_simpleWindow" style="right:0;width:360px;">
+		<div id="__SW03" class="_simpleWindow" style="right:0;width:450px;" draggable="true">
 			<div>GeoJSON ファイル読込</div>
 			<div class="_simpleWindowOutput" style="line-height:36px;padding:0 6px 6px 6px;">
-				<input type="checkbox" id="__checkboxGeoJson0" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(0);"/><input type="file" id="__fileGeoJson0" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(0,'__TA03');"/><br>
-				<input type="checkbox" id="__checkboxGeoJson1" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(1);"/><input type="file" id="__fileGeoJson1" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(1,'__TA03');"/><br>
-				<input type="checkbox" id="__checkboxGeoJson2" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(2);"/><input type="file" id="__fileGeoJson2" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(2,'__TA03');"/><br>
-				<input type="checkbox" id="__checkboxGeoJson3" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(3);"/><input type="file" id="__fileGeoJson3" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(3,'__TA03');"/><br>
-				<input type="checkbox" id="__checkboxGeoJson4" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(4);"/><input type="file" id="__fileGeoJson4" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(4,'__TA03');"/><br>
-				<input type="checkbox" id="__checkboxGeoJson5" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(5);"/><input type="file" id="__fileGeoJson5" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(5,'__TA03');"/><br>
-				<input type="checkbox" id="__checkboxGeoJson6" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(6);"/><input type="file" id="__fileGeoJson6" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(6,'__TA03');"/><br>
-				<input type="checkbox" id="__checkboxGeoJson7" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(7);"/><input type="file" id="__fileGeoJson7" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(7,'__TA03');"/><br>
-				<input type="checkbox" id="__checkboxGeoJson8" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(8);"/><input type="file" id="__fileGeoJson8" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(8,'__TA03');"/><br>
-				<input type="checkbox" id="__checkboxGeoJson9" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(9);"/><input type="file" id="__fileGeoJson9" accept=".geojson" style="width:320px;" onchange="subAddGeoJson_readFile(9,'__TA03');"/><br>
+				<input type="checkbox" id="__checkboxGeoJson0" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(0);"/><input type="file" id="__fileGeoJson0" accept=".geojson" style="width:410px;" onchange="subAddGeoJson_readFile(0,'__TA03');"/><br>
+				<input type="checkbox" id="__checkboxGeoJson1" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(1);"/><input type="file" id="__fileGeoJson1" accept=".geojson" style="width:410px;" onchange="subAddGeoJson_readFile(1,'__TA03');"/><br>
+				<input type="checkbox" id="__checkboxGeoJson2" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(2);"/><input type="file" id="__fileGeoJson2" accept=".geojson" style="width:410px;" onchange="subAddGeoJson_readFile(2,'__TA03');"/><br>
+				<input type="checkbox" id="__checkboxGeoJson3" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(3);"/><input type="file" id="__fileGeoJson3" accept=".geojson" style="width:410px;" onchange="subAddGeoJson_readFile(3,'__TA03');"/><br>
+				<input type="checkbox" id="__checkboxGeoJson4" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(4);"/><input type="file" id="__fileGeoJson4" accept=".geojson" style="width:410px;" onchange="subAddGeoJson_readFile(4,'__TA03');"/><br>
+				<input type="checkbox" id="__checkboxGeoJson5" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(5);"/><input type="file" id="__fileGeoJson5" accept=".geojson" style="width:410px;" onchange="subAddGeoJson_readFile(5,'__TA03');"/><br>
+				<input type="checkbox" id="__checkboxGeoJson6" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(6);"/><input type="file" id="__fileGeoJson6" accept=".geojson" style="width:410px;" onchange="subAddGeoJson_readFile(6,'__TA03');"/><br>
+				<input type="checkbox" id="__checkboxGeoJson7" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(7);"/><input type="file" id="__fileGeoJson7" accept=".geojson" style="width:410px;" onchange="subAddGeoJson_readFile(7,'__TA03');"/><br>
+				<input type="checkbox" id="__checkboxGeoJson8" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(8);"/><input type="file" id="__fileGeoJson8" accept=".geojson" style="width:410px;" onchange="subAddGeoJson_readFile(8,'__TA03');"/><br>
+				<input type="checkbox" id="__checkboxGeoJson9" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(9);"/><input type="file" id="__fileGeoJson9" accept=".geojson" style="width:410px;" onchange="subAddGeoJson_readFile(9,'__TA03');"/><br>
 				<div style="line-height:24px;">
 					<input type="button" class="_btnNavi1" value="↑クリア" onclick="subAddGeoJson_init()"/>
 					<textarea id="__TA03" class="_editTextBox" wrap="off" style="display:none;"></textarea>
@@ -2084,23 +2146,29 @@ a.polyline-measure-clearControl:active
 		<div id="__NC04" style="float:right;margin:0 4px;">
 			<input type="button" class="_simpleWindowCall" value="距離計算" onclick="subSimpleWindow_OpenClose('__SW04','__NC04');"/>
 		</div>
-		<div id="__SW04" class="_simpleWindow" style="right:0;width:570px;">
+		<div id="__SW04" class="_simpleWindow" style="max-height:800px;max-width:1600px;min-height:415px;min-width:450px;right:0;width:450px;" draggable="true">
 			<div>距離計算</div>
 			<div class="_simpleWindowOutput" style="padding:4px 6px 6px 6px;">
 				<input type="button" class="_btnNavi3" value="→マーカーから読込" onclick="subMapToPoint_TA04Input();"/>
 				<input type="button" class="_btnNavi4" value="→[マーカー変換]からインポート" onclick="subMapToPoint_TA04Import();"/>
 				<div style="margin:4px 0 0 0;">
-					<textarea id="__TA041" class="_editTextBox" wrap="off" style="height:40px;width:542px;" placeholder="青マーカー（始点）"></textarea>
+					<textarea id="__TA041" class="_editTextBox" wrap="off" style="height:20px;width:422px;" placeholder="青マーカー（始点）"></textarea>
 				</div>
 				<div style="margin:4px 0 0 0;">
-					<textarea id="__TA042" class="_editTextBox" wrap="off" style="height:100px;width:542px;" placeholder="赤マーカー／オレンジマーカー&#10;(°／°′″) 35.68518698／35°41′06.6731″, 35:41:06.6731"></textarea>
+					<textarea id="__TA042" class="_editTextBox" wrap="off" style="height:140px;width:422px;" placeholder="赤マーカー／オレンジマーカー&#10;(°／°′″) 35.68518698／35°41′06.6731″, 35:41:06.6731"></textarea>
 				</div>
 				<div style="margin:4px 0 0 0;">
-					<textarea id="__TA043" class="_editTextBox" wrap="off" style="height:200px;width:542px;" placeholder="計算結果" readonly></textarea>
+					<textarea id="__TA043" class="_editTextBox" wrap="off" style="height:140px;width:422px;" placeholder="計算結果" readonly></textarea>
 				</div>
-				<script>
-					document.getElementById("__TA041").onkeydown = function(e){subAddTabCtrl(this, e);}
-					document.getElementById("__TA042").onkeydown = function(e){subAddTabCtrl(this, e);}
+				<script async>
+					const $__TA041 = document.getElementById("__TA041");
+					const $__TA042 = document.getElementById("__TA042");
+					$__TA041.onkeydown = function(e){
+						subAddTabCtrl(this, e);
+					}
+					$__TA042.onkeydown = function(e){
+						subAddTabCtrl(this, e);
+					}
 				</script>
 				<div style="line-height:24px;">
 					<input type="button" class="_btnNavi3" value="→計算" onclick="subMapToPoint_TA04Output();"/>
@@ -2110,7 +2178,25 @@ a.polyline-measure-clearControl:active
 				</div>
 			</div>
 		</div>
-		<script>
+		<script async>
+			const $__TA043 = document.getElementById("__TA043");
+			subSimpleWindow_Resize("__SW04", (width, height) => {
+				$__TA041.style.width = (width - 29) + "px";
+				$__TA042.style.width = (width - 29) + "px";
+				$__TA043.style.width = (width - 29) + "px";
+				$__TA043.style.height = (height - 275) + "px";
+			});
+			const $__SW04 = document.getElementById("__SW04");
+			$__TA041.addEventListener("mousedown", (e) => {
+				$__SW04.draggable = false;
+				$__divNaviCommander.draggable = false;
+			});
+			$__TA042.addEventListener("mousedown", (e) => {
+				$__SW04.draggable = false;
+				$__divNaviCommander.draggable = false;
+			});
+		</script>
+		<script async>
 			/*-------------------
 			// マーカーから読込
 			-------------------*/
@@ -2118,29 +2204,29 @@ a.polyline-measure-clearControl:active
 			{
 				// 表示更新されてないと読込エラーになるので意図的にポップアップ
 				subMarkerPopup($BaseMarker, $AryLocalMarker);
-				document.getElementById("__TA041").value = "";
-				document.getElementById("__TA042").value = "";
-				document.getElementById("__TA043").value = "";
+				$__TA041.value = "";
+				$__TA042.value = "";
+				$__TA043.value = "";
 				// $BaseMarker
-				const obj1 = $BaseMarker._latlng;
-				document.getElementById("__TA041").value = obj1.lat.toFixed(8) + "\t" + obj1.lng.toFixed(8) + "\t" + $BaseMarker.options.title;
+				const LatLng = $BaseMarker._latlng;
+				$__TA041.value = LatLng.lat.toFixed(8) + "\t" + LatLng.lng.toFixed(8) + "\t" + $BaseMarker.options.title;
 				// $AryLocalMarker
 				let str = "";
 				for(let _o1 of $AryLocalMarker)
 				{
 					str += _o1._latlng.lat.toFixed(8) + "\t" + _o1._latlng.lng.toFixed(8) + "\t" + _o1.options.title.replace(/<.+>/, "") + "\n";
 				}
-				document.getElementById("__TA042").value = str;
+				$__TA042.value = str;
 			}
 			/*-------------------------------
 			// [マーカー変換]からインポート
 			-------------------------------*/
 			function subMapToPoint_TA04Import()
 			{
-				document.getElementById("__TA041").value = "";
-				document.getElementById("__TA042").value = "";
-				document.getElementById("__TA043").value = "";
-				const s1 = document.getElementById("__TA05").value.trimEnd();
+				$__TA041.value = "";
+				$__TA042.value = "";
+				$__TA043.value = "";
+				const s1 = $__TA05.value.trimEnd();
 				if(s1.length == 0)
 				{
 					return;
@@ -2150,13 +2236,13 @@ a.polyline-measure-clearControl:active
 				const rgxDecimal = /^[\+\-]{0,1}[0-9]+\.{0,1}[0-9]*$/;
 				for(let _s1 of s1.split("\n"))
 				{
-					const _a1 = _s1.split(rtnTextSeparator(_s1));
+					const _a1 = _s1.split("\t");
 					if(_a1[0].match(rgxDecimal) && _a1[1].match(rgxDecimal))
 					{
 						// $BaseMarker
 						if(b1)
 						{
-							document.getElementById("__TA041").value = _a1[0] + "\t" + _a1[1] + "\t" + _a1[2];
+							$__TA041.value = _a1[0] + "\t" + _a1[1] + "\t" + _a1[2];
 							b1 = false;
 						}
 						// $AryLocalMarker
@@ -2166,20 +2252,20 @@ a.polyline-measure-clearControl:active
 						}
 					}
 				}
-				document.getElementById("__TA042").value = str;
+				$__TA042.value = str;
 			}
 			/*-------
 			// 計算
 			-------*/
 			function subMapToPoint_TA04Output()
 			{
-				const s1 = document.getElementById("__TA041").value.trimEnd();
+				const s1 = $__TA041.value.trimEnd();
 				if(s1.length == 0)
 				{
 					return;
 				}
 				// $BaseMarker
-				const a1 = s1.split(rtnTextSeparator(s1));
+				const a1 = s1.split("\t");
 				let p1;
 				try
 				{
@@ -2187,7 +2273,7 @@ a.polyline-measure-clearControl:active
 				}
 				catch(e)
 				{
-					document.getElementById("__TA043").value = "[Err]\t" + s1 + "\n";
+					$__TA043.value = "[Err]\t" + s1 + "\n";
 					return;
 				}
 				let str = "緯度°\t経度°\t緯度°′″\t経度°′″\t場所\n";
@@ -2201,12 +2287,12 @@ a.polyline-measure-clearControl:active
 				// $AryLocalMarker
 				str += "緯度°\t経度°\t緯度°′″\t経度°′″\t場所\t始点からの距離\t方位角\t点間の距離\t方位角\n";
 				let iTotalDist = 0.0;
-				for(let _s1 of document.getElementById("__TA042").value.trimEnd().split("\n"))
+				for(let _s1 of $__TA042.value.trimEnd().split("\n"))
 				{
 					_s1 = _s1.trim();
 					if(_s1.length > 0)
 					{
-						const _a1 = _s1.split(rtnTextSeparator(_s1));
+						const _a1 = _s1.split("\t");
 						try
 						{
 							const _p1 = DMS.DecodeLatLon(_a1[0], _a1[1]);
@@ -2236,7 +2322,7 @@ a.polyline-measure-clearControl:active
 					}
 				}
 				str += "\t\t\t\t\t\t総距離\t" + (iTotalDist / 1000.0).toFixed(6) + "km\n";
-				document.getElementById("__TA043").value = str;
+				$__TA043.value = str;
 			}
 			/*-----------------
 			// TSV／CSVに変換
@@ -2299,14 +2385,17 @@ a.polyline-measure-clearControl:active
 		<div id="__NC05" style="float:right;margin:0 4px;">
 			<input type="button" class="_simpleWindowCall" value="マーカー変換" onclick="subSimpleWindow_OpenClose('__SW05','__NC05');"/>
 		</div>
-		<div id="__SW05" class="_simpleWindow" style="right:0;width:670px;">
+		<div id="__SW05" class="_simpleWindow" style="max-height:800px;max-width:1600px;min-height:363px;min-width:640px;right:0;width:640px;" draggable="true">
 			<div>マーカーをポイントに変換</div>
 			<div class="_simpleWindowOutput" style="padding:4px 6px 6px 6px;">
 				<input type="button" class="_btnNavi3" value="→マーカーから読込" onclick="subMapToPoint('__TA05');"/>
-				<input type="file" id="__readPointFile" accept=".tsv,.csv" style="margin:0 0 0 8px;width:519px;" onchange="subAddFile(this.id,'__TA05',1);"/>
-				<textarea id="__TA05" class="_editTextBox" wrap="off" style="height:360px;width:642px;" placeholder="タブ(TSV), カンマ(CSV)区切り／UTF-8N(BOMなし) ※カンマ(CSV)区切りは試験的実装&#10;&quot;//&quot; で始まる行はコメント行&#10;&quot;icon@[画像ファイルパス]&quot; でマーカーにアイコンを設定可能&#10;// 例&#10;35.68365900&#9;139.75408900&#9;皇居&#9;icon@./image.png"></textarea>
-				<script>
-					document.getElementById("__TA05").onkeydown = function(e){subAddTabCtrl(this, e);}
+				<input type="file" id="__readPointFile" accept=".tsv,.csv" style="margin:0 0 0 8px;width:489px;" onchange="subAddFile(this.id,'__TA05',true);"/>
+				<textarea id="__TA05" class="_editTextBox" wrap="off" style="height:250px;width:611px;" placeholder="タブ(TSV), カンマ(CSV)区切り／UTF-8N(BOMなし) ※カンマ(CSV)区切りは試験的実装&#10;&quot;//&quot; で始まる行はコメント行&#10;&quot;icon@[画像ファイルパス]&quot; でマーカーにアイコンを設定可能&#10;// 例&#10;35.68365900&#9;139.75408900&#9;皇居&#9;icon@./image.png"></textarea>
+				<script async>
+					const $__TA05 = document.getElementById("__TA05");
+					$__TA05.onkeydown = function(e){
+						subAddTabCtrl(this, e);
+					}
 				</script>
 				<div style="line-height:24px;">
 					<input type="button" class="_btnNavi3" value="←地図に反映" onclick="subA2P_addToMap('__TA05');subA2P_DistMP('__TA05','__textDist',__checkboxDist.checked);"/>
@@ -2316,308 +2405,335 @@ a.polyline-measure-clearControl:active
 					<input type="button" class="_btnNavi4" value="→住所から変換" onclick="subA2P_Geocoding('__TA05');"/>
 					<a href="#" id="__DL05" download="" onclick="subA2P_CnvSV('__TA05')"><div class="_btnNavi2">TSV/CSV</div></a>
 					<a href="#" id="__DL05" download="" onclick="subA2P_EditSave(this, '__TA05', 'MarkerToPoint.utf8')"><div class="_btnNavi2">ファイルに保存</div></a><br>
-					<input type="button" class="_btnNavi3" style="padding:0 3px;" value="←" onclick="subA2P_GCircle('__GCircleM2P','__TA05');"/><input type="text" id="__GCircleM2P" class="_textNavi1" list="_Dist" style="width:70px;" placeholder="範囲円"/>
+					<input type="button" class="_btnNavi3" style="padding:0 3px;" value="←" onclick="subA2P_GCircle('__GCircleM2P','__TA05');"/><input type="text" id="__GCircleM2P" class="_textNavi1" list="__Dist" style="width:70px;" placeholder="範囲円"/>
 					<datalist id="__Dist"><option value="50m"/><option value="100m"/><option value="250m"/><option value="500m"/><option value="1km"/><option value="2km"/><option value="4km"/><option value="5km"/><option value="8km"/><option value="10km"/><option value="20km"/><option value="25km"/><option value="40km"/><option value="50km"/><option value="80km"/><option value="100km"/></datalist>
 					<input type="checkbox" id="__checkboxDist" style="margin:0 0 0 4px;" onclick="subA2P_DistMP('__TA05','__textDist',__checkboxDist.checked);"/><input type="text" id="__textDist" class="_textNavi1" style="width:140px;" placeholder="総距離" readonly/>
 					<input type="button" id="__HgBtn" class="_btnNavi5" style="margin:0 0 0 4px;width:120px;" value="" onclick="subHeightGraphOpen();"/>
 				</div>
-				<script>
-					// 初期化
-					document.getElementById("__HgBtn").value = $HeightGraph_Title + "ON";
-					/*-------------
-					// 地図に反映
-					-------------*/
-					let $AryPoint = [];
-					function subA2P_addToMap(
-						$textareaId
-					)
+			</div>
+		</div>
+		<script async>
+			subSimpleWindow_Resize("__SW05", (width, height) => {
+				$__TA05.style.width = (width - 29) + "px";
+				$__TA05.style.height = (height - 113) + "px";
+			});
+			$__TA05.addEventListener("mousedown", (e) => {
+				document.getElementById("__SW05").draggable = false;
+				$__divNaviCommander.draggable = false;
+			});
+			document.getElementById("__GCircleM2P").addEventListener("mousedown", (e) => {
+				document.getElementById("__SW05").draggable = false;
+				$__divNaviCommander.draggable = false;
+			});
+			document.getElementById("__GCircleM2P").addEventListener("keydown", (e) => {
+				if(e.key === "Enter")
+				{
+					subA2P_GCircle("__GCircleM2P", "__TA05");
+				}
+			});
+		</script>
+		<script async>
+			// 初期化
+			document.getElementById("__HgBtn").value = $HeightGraph_Title + "ON";
+			/*-------------
+			// 地図に反映
+			-------------*/
+			let $AryPoint = [];
+			function subA2P_addToMap(
+				$textareaId
+			)
+			{
+				// $AryPoint
+				for(let _s1 of $AryPoint)
+				{
+					_s1.remove($Map);
+				}
+				$AryPoint = [];
+				$Map.createPane("_pane230").style.zIndex = 230;
+				$Map.createPane("_pane250").style.zIndex = 250;
+				let str = "";
+				for(let _s1 of document.getElementById($textareaId).value.trimEnd().split("\n"))
+				{
+					_s1 = _s1.trim().replace(/\\n/g, "<br>");
+					const _a1 = _s1.split("\t");
+					// "icon@画像ファイル" でアイコン変更
+					let objIcon = null;
+					if(_a1.length >= 2)
 					{
-						// $AryPoint
-						for(let _s1 of $AryPoint)
+						try
 						{
-							_s1.remove($Map);
-						}
-						$AryPoint = [];
-						$Map.createPane("_pane230").style.zIndex = 230;
-						$Map.createPane("_pane250").style.zIndex = 250;
-						let str = "";
-						for(let _s1 of document.getElementById($textareaId).value.trimEnd().split("\n"))
-						{
-							_s1 = _s1.trim().replace(/\\n/g, "<br>");
-							const _a1 = _s1.split(rtnTextSeparator(_s1));
-							// "icon@画像ファイル" でアイコン変更
-							let objIcon = null;
-							if(_a1.length >= 2)
+							if(_a1.length >= 3)
 							{
-								try
+								_s2 = _a1[2];
+								for(let _i1 = 3, _i2 = _a1.length; _i1 < _i2; _i1++)
 								{
-									if(_a1.length >= 3)
+									const _s3 = _a1[_i1].match(/icon@(.+)/i);
+									if(_s3)
 									{
-										_s2 = _a1[2];
-										for(let _i1 = 3, _i2 = _a1.length; _i1 < _i2; _i1++)
-										{
-											const _s3 = _a1[_i1].match(/icon@(.+)/i);
-											if(_s3)
-											{
-												objIcon = L.icon({
-													iconUrl:_s3[1],
-													iconRetinaUrl:_s3[1],
-													iconSize:[24, 24],
-													iconAnchor:[12, 12],
-													popupAnchor:[0, -10]
-												});
-											}
-											else
-											{
-												_s2 += "<br>" + _a1[_i1];
-											}
-										}
+										objIcon = L.icon({
+											iconUrl: _s3[1],
+											iconRetinaUrl: _s3[1],
+											iconSize: [24, 24],
+											iconAnchor: [12, 12],
+											popupAnchor: [0, -10]
+										});
 									}
 									else
 									{
-										_s2 = "<br>";
-									}
-									const p1 = DMS.DecodeLatLon(_a1[0], _a1[1]);
-									const obj1 = (
-										objIcon ?
-										L.marker([p1.lat, p1.lon], {
-											icon:objIcon,
-											pane:"_pane250"
-										}) :
-										L.circleMarker([p1.lat, p1.lon], {
-											color:"#000",
-											fill:true,
-											fillColor:"#f00",
-											fillOpacity:0.8,
-											pane:"_pane230",
-											radius:6,
-											title:_a1[2],
-											weight:2
-										})
-									).addTo($Map).bindPopup(
-										_s2,
-										{
-											autoClose:false, // 複数ポップアップ可
-											autoPan:false    // ポップアップ時、表示調整しない
-										}
-									).openPopup();
-									obj1.on(
-										"mouseover",
-										function(e)
-										{
-											this.openPopup();
-										}
-									);
-									$AryPoint.push(obj1);
-								}
-								catch(e)
-								{
-								}
-								str += _s1 + "\n";
-							}
-						}
-						if(str)
-						{
-							document.getElementById($textareaId).value = str;
-						}
-					}
-					/*-------------
-					// 距離線描画
-					--------------*/
-					function subA2P_DistMP(
-						$textareaInputId,
-						$textareaOutputId,
-						$bool
-					)
-					{
-						// 線消去
-						if($ObjPointLinkedLine)
-						{
-							$Map.removeLayer($ObjPointLinkedLine);
-						}
-						if(! $bool)
-						{
-							document.getElementById($textareaOutputId).value = "";
-							return;
-						}
-						const [iTotalDist, aLatLng, iErrCnt] = rtnA2P_DistMP($textareaInputId);
-						$Map.createPane("_pane240").style.zIndex = 240;
-						// 線描画
-						$ObjPointLinkedLine = L.polyline(
-							aLatLng,
-							{
-								color:"#008",
-								opacity:0.8,
-								pane:"_pane240",
-								weight:4
-							}
-						).addTo($Map);
-						document.getElementById($textareaOutputId).value = (iTotalDist / 1000.0).toFixed(6) + "km" + (iErrCnt > 0 ? " OK?" : "");
-					}
-					/*---------
-					// クリア
-					---------*/
-					function subA2P_EditClear(
-						$textareaId,
-						$gcircleId,
-						$distCbId,
-						$distTextId
-					)
-					{
-						// Leaflet.greatCircle
-						document.getElementById($gcircleId).value = 0;
-						subA2P_GCircle($gcircleId, $textareaId);
-						// 総距離
-						document.getElementById($distCbId).checked = false;
-						subA2P_DistMP($textareaId, $distTextId, false);
-						// $AryPoint
-						for(let _s1 of $AryPoint)
-						{
-							_s1.remove($Map);
-						}
-						$AryPoint = [];
-					}
-					/*---------------
-					// サンプル出力
-					---------------*/
-					function subA2P_GeocodingSample(
-						$textareaId
-					)
-					{
-						document.getElementById($textareaId).value = "千代田区千代田1-1\t皇居\nつくば市北郷1\t国土地理院\n";
-					}
-					/*---------------
-					// 住所から変換
-					---------------*/
-					function subA2P_Geocoding(
-						$textareaId
-					)
-					{
-						const _URL = "https://msearch.gsi.go.jp/address-search/AddressSearch?q=";
-						let str = "";
-						const xhr = new XMLHttpRequest();
-						for(let _s1 of document.getElementById($textareaId).value.trimEnd().split("\n"))
-						{
-							_s1 = _s1.trim();
-							const _a1 = _s1.split(rtnTextSeparator(_s1));
-							const query = _a1[0];
-							if(query)
-							{
-								if(query.match(/^\d+\.*\d*/) || query.substr(0, 2) == "//")
-								{
-									str += _s1;
-								}
-								else
-								{
-									// バッチ処理のため非同期は不可
-									xhr.open("GET", (_URL + query), false);
-									xhr.send(null);
-									const json = JSON.parse(xhr.responseText);
-									if(json.length == 1)
-									{
-										const [lng, lat] = json[0].geometry.coordinates;
-										let _a2 = [];
-										_a2 = rtnGeo10toIBL(lat);
-										const _lat = "<span style=\"color:#88f;\">緯度</span> " + _a2[0] + "°" + _a2[1] + "′" + _a2[2].toFixed(4) + "″／" + lat.toFixed(8) + "°";
-										_a2 = rtnGeo10toIBL(lng);
-										const _lng = "<span style=\"color:#88f;\">経度</span> " + _a2[0] + "°" + _a2[1] + "′" + _a2[2].toFixed(4) + "″／" + lng.toFixed(8) + "°";
-										str += lat.toFixed(8) + "\t" + lng.toFixed(8) + "\t<span style=\"color:#f66;\">" + _a1[1] + "</span>\t＠<span style=\"color:#333\">" + _a1[0] + "</span>\t" + _lat + "\t" + _lng + "\t" + _a1.slice(2).join("\t");
-									}
-									else
-									{
-										str += "// [Err] " + (json.length == 0 ? "該当なし" : "複数該当あり") + "\n//" + _s1;
+										_s2 += "<br>" + _a1[_i1];
 									}
 								}
-								str += "\n";
 							}
-						}
-						if(str)
-						{
-							document.getElementById($textareaId).value = str;
-						}
-					}
-					/*----------------------
-					// Leaflet.greatCircle
-					----------------------*/
-					let $AryM2P_Circle = [];
-					function subA2P_GCircle(
-						$selectId,
-						$textareaId
-					)
-					{
-						// 消去
-						for(let _s1 of $AryM2P_Circle)
-						{
-							_s1.remove();
-						}
-						// 描画
-						let rad = document.getElementById($selectId).value.toLowerCase();
-						const a1 = rad.match(/(\d+\.*\d*)(km|m)/);
-						if(a1)
-						{
-							rad = parseFloat(a1[1]);
-							if(a1[2] == "km")
+							else
 							{
-								rad *= 1000;
+								_s2 = "<br>";
 							}
+							const p1 = DMS.DecodeLatLon(_a1[0], _a1[1]);
+							const o1 = (
+								objIcon ?
+								L.marker([p1.lat, p1.lon], {
+									icon: objIcon,
+									pane: "_pane250"
+								}) :
+								L.circleMarker([p1.lat, p1.lon], {
+									color: "#000",
+									fill: true,
+									fillColor: "#f00",
+									fillOpacity: 0.8,
+									pane: "_pane230",
+									radius: 6,
+									title: _a1[2],
+									weight: 2
+								})
+							)
+							.addTo($Map)
+							.bindPopup(
+								_s2,
+								{
+									autoClose: false, // 複数ポップアップ可
+									autoPan: false    // ポップアップ時、表示調整しない
+								}
+							)
+							.openPopup();
+							o1.on(
+								"mouseover",
+								function()
+								{
+									this.openPopup();
+								}
+							);
+							$AryPoint.push(o1);
+						}
+						catch(e)
+						{
+						}
+						str += _s1 + "\n";
+					}
+				}
+				if(str)
+				{
+					document.getElementById($textareaId).value = str;
+				}
+			}
+			/*-------------
+			// 距離線描画
+			--------------*/
+			function subA2P_DistMP(
+				$textareaInputId,
+				$textareaOutputId,
+				$bool
+			)
+			{
+				// 線消去
+				if($ObjPointLinkedLine)
+				{
+					$Map.removeLayer($ObjPointLinkedLine);
+				}
+				if(! $bool)
+				{
+					document.getElementById($textareaOutputId).value = "";
+					return;
+				}
+				const [iTotalDist, aLatLng, iErrCnt] = rtnA2P_DistMP($textareaInputId);
+				$Map.createPane("_pane240").style.zIndex = 240;
+				// 線描画
+				$ObjPointLinkedLine = L.polyline(
+					aLatLng,
+					{
+						color: "#008",
+						opacity: 0.8,
+						pane: "_pane240",
+						weight: 4
+					}
+				)
+				.addTo($Map);
+				document.getElementById($textareaOutputId).value = (iTotalDist / 1000.0).toFixed(6) + "km" + (iErrCnt > 0 ? " OK?" : "");
+			}
+			/*---------
+			// クリア
+			---------*/
+			function subA2P_EditClear(
+				$textareaId,
+				$gcircleId,
+				$distCbId,
+				$distTextId
+			)
+			{
+				// Leaflet.greatCircle
+				document.getElementById($gcircleId).value = 0;
+				subA2P_GCircle($gcircleId, $textareaId);
+				// 総距離
+				document.getElementById($distCbId).checked = false;
+				subA2P_DistMP($textareaId, $distTextId, false);
+				// $AryPoint
+				for(let _s1 of $AryPoint)
+				{
+					_s1.remove($Map);
+				}
+				$AryPoint = [];
+			}
+			/*---------------
+			// サンプル出力
+			---------------*/
+			function subA2P_GeocodingSample(
+				$textareaId
+			)
+			{
+				document.getElementById($textareaId).value = "千代田区千代田1-1\t皇居\nつくば市北郷1\t国土地理院\n";
+			}
+			/*---------------
+			// 住所から変換
+			---------------*/
+			async function subA2P_Geocoding(
+				$textareaId
+			)
+			{
+				let rtn = "";
+				const E1 = document.getElementById($textareaId);
+				for(let _s1 of E1.value.trimEnd().split("\n"))
+				{
+					_s1 = _s1.trim();
+					const _a1 = _s1.split("\t");
+					if(_a1[0])
+					{
+						if(_a1[0].match(/^\d+\.*\d*/) || _a1[0].substr(0, 2) == "//")
+						{
+							rtn += _s1;
 						}
 						else
 						{
-							rad = parseFloat(rad);
-							document.getElementById($selectId).value = (rad / 1000.0) + "km";
-						}
-						if(isNaN(rad) || rad == 0)
-						{
-							document.getElementById($selectId).value = "";
-							return;
-						}
-						$Map.createPane("_pane210").style.zIndex = 210;
-						let i1 = 0;
-						for(let _s1 of document.getElementById($textareaId).value.trimEnd().split("\n"))
-						{
-							_s1 = _s1.trim();
-							try
+							const data = await fetch("https://msearch.gsi.go.jp/address-search/AddressSearch?q=" + _a1[0]);
+							const res = await data.json();
+							if(res.length > 0)
 							{
-								const _a1 = _s1.split(rtnTextSeparator(_s1));
-								$AryM2P_Circle[i1] = L.greatCircle(
-									[_a1[0], _a1[1]],
-									{
-										radius:rad,
-										color:"#f50",
-										fill:true,
-										fillColor:"#faa",
-										fillOpacity:0.1,
-										pane:"_pane210"
-									}
-								);
-								$AryM2P_Circle[i1].addTo($Map);
-								++i1;
+								const [lng, lat] = res[0].geometry.coordinates;
+								let _a2 = [];
+								_a2 = rtnGeo10toIBL(lat);
+								const _lat = "<span style=\"color:#88f;\">緯度</span> " + _a2[0] + "°" + _a2[1] + "′" + _a2[2].toFixed(4) + "″／" + lat.toFixed(8) + "°";
+								_a2 = rtnGeo10toIBL(lng);
+								const _lng = "<span style=\"color:#88f;\">経度</span> " + _a2[0] + "°" + _a2[1] + "′" + _a2[2].toFixed(4) + "″／" + lng.toFixed(8) + "°";
+								rtn += lat.toFixed(8) + "\t" + lng.toFixed(8) + "\t<span style=\"color:#f66;\">" + _a1[1] + "</span>\t＠<span style=\"color:#333;\">" + _a1[0] + "</span>\t" + _lat + "\t" + _lng + "\t" + _a1.slice(2).join("\t");
 							}
-							catch(e)
+							else
 							{
+								rtn += "// [Err] " + (res.length == 0 ? "該当なし" : "複数該当あり") + ": " + _s1;
 							}
 						}
+						rtn += "\n";
 					}
-				</script>
-			</div>
-		</div>
+				}
+				E1.value = rtn;
+			}
+			/*----------------------
+			// Leaflet.greatCircle
+			----------------------*/
+			let $AryM2P_Circle = [];
+			function subA2P_GCircle(
+				$selectId,
+				$textareaId
+			)
+			{
+				// 消去
+				for(let _s1 of $AryM2P_Circle)
+				{
+					_s1.remove();
+				}
+				// 描画
+				let rad = document.getElementById($selectId).value.toLowerCase();
+				const a1 = rad.match(/(\d+\.*\d*)(km|m)/);
+				if(a1)
+				{
+					rad = parseFloat(a1[1]);
+					if(a1[2] == "km")
+					{
+						rad *= 1000;
+					}
+				}
+				else
+				{
+					rad = parseFloat(rad);
+					document.getElementById($selectId).value = (rad / 1000.0) + "km";
+				}
+				if(isNaN(rad) || rad == 0)
+				{
+					document.getElementById($selectId).value = "";
+					return;
+				}
+				$Map.createPane("_pane210").style.zIndex = 210;
+				let i1 = 0;
+				for(let _s1 of document.getElementById($textareaId).value.trimEnd().split("\n"))
+				{
+					_s1 = _s1.trim();
+					try
+					{
+						const _a1 = _s1.split("\t");
+						$AryM2P_Circle[i1] = L.greatCircle(
+							[_a1[0], _a1[1]],
+							{
+								radius: rad,
+								color: "#f50",
+								fill: true,
+								fillColor: "#faa",
+								fillOpacity: 0.1,
+								pane: "_pane210"
+							}
+						);
+						$AryM2P_Circle[i1].addTo($Map);
+						++i1;
+					}
+					catch(e)
+					{
+					}
+				}
+			}
+		</script>
 		<!----------------------
 		// Leaflet.greatCircle
 		----------------------->
 		<div id="__NC06" style="float:right;margin:0 4px;">
 			<input type="button" class="_simpleWindowCall" value="距離円" onclick="subSimpleWindow_OpenClose('__SW06','__NC06');"/>
 		</div>
-		<div id="__SW06" class="_simpleWindow" style="right:120px;width:420px;">
+		<div id="__SW06" class="_simpleWindow" style="max-height:50px;max-width:1600px;min-height:50px;min-width:400px;right:0px;width:400px;" draggable="true">
 			<div>半径&nbsp;<span id="__GCircleKm">0km</span></div>
-			<div id="__GCircle" style="width:404px;"><input type="range" id="__GCircleRange" style="width:400px;" min="0" max="20000" value="0" oninput="subGCircle_Slider();"/></div>
+			<input type="range" id="__GCircleRange" style="width:380px;" min="0" max="10000" value="0" oninput="subGCircle_Slider();"/>
 		</div>
+		<script async>
+			subSimpleWindow_Resize("__SW06", (width, height) => {
+				document.getElementById("__GCircleRange").style.width = (width - 20) + "px";
+				document.getElementById("__GCircleRange").max = width * 20;
+			});
+			document.getElementById("__GCircleRange").addEventListener("input", (e) => {
+				document.getElementById("__SW06").draggable = false;
+				$__divNaviCommander.draggable = false;
+			});
+		</script>
 		<!---------
 		// 海水面
 		---------->
 		<div id="__NC07" style="float:right;margin:0 4px;">
 			<input type="button" class="_simpleWindowCall" value="海水面" onclick="subSimpleWindow_OpenClose('__SW07','__NC07');"/>
 		</div>
-		<div id="__SW07" class="_simpleWindow" style="right:270px;">
+		<div id="__SW07" class="_simpleWindow" style="right:310px;" draggable="true">
 			<div>ズーム14以下で利用可能</div>
 			<div class="_simpleWindowOutput" style="padding:6px;">
 				<input type="number" id="__Dem10ToSeaLevel1" value="0" style="text-align:right;width:45px;"/>～<input type="number" id="__Dem10ToSeaLevel2" value="10" style="text-align:right;width:55px;"/>ｍ
@@ -2625,18 +2741,35 @@ a.polyline-measure-clearControl:active
 				<input type="button" class="_btnNavi2" value="OFF" onclick="$Dem10ToSeaLevel.remove($Map);"/>
 			</div>
 		</div>
+		<script async>
+			function subDem10ToSeaLevel()
+			{
+				const E11 = document.getElementById("__Dem10ToSeaLevel1");
+				const E12 = document.getElementById("__Dem10ToSeaLevel2");
+				const E2 = document.getElementById("__SW07");
+				E11.addEventListener("mousedown", (e) => {
+					E2.draggable = false;
+					$__divNaviCommander.draggable = false;
+				});
+				E12.addEventListener("mousedown", (e) => {
+					E2.draggable = false;
+					$__divNaviCommander.draggable = false;
+				});
+			}
+			subDem10ToSeaLevel();
+		</script>
 	</div>
 	<!---------------
 	// ズームレベル
 	---------------->
-	<div id="__InputZoomA" style="top:-1000px;">
+	<div id="__InputZoomA" style="top:-1000px;" draggable="true">
 		<div style="text-align:center;">ズームレベル</div>
 		<input type="button" class="_ZA" value="3" onclick="subIwmZA('3');"/><input type="button" class="_ZA" value="4" onclick="subIwmZA('4');"/><input type="button" class="_ZA" value="5" onclick="subIwmZA('5');"/><input type="button" class="_ZA" value="6" onclick="subIwmZA('6');"/><input type="button" class="_ZA" value="7" onclick="subIwmZA('7');"/><br>
 		<input type="button" class="_ZA" value="8" onclick="subIwmZA('8');"/><input type="button" class="_ZA" value="9" onclick="subIwmZA('9');"/><input type="button" class="_ZA" value="10" onclick="subIwmZA('10');"/><input type="button" class="_ZA" value="11" onclick="subIwmZA('11');"/><input type="button" class="_ZA" value="12" onclick="subIwmZA('12');"/><br>
 		<input type="button" class="_ZA" value="13" onclick="subIwmZA('13');"/><input type="button" class="_ZA" value="14" onclick="subIwmZA('14');"/><input type="button" class="_ZA" value="15" onclick="subIwmZA('15');"/><input type="button" class="_ZA" value="16" onclick="subIwmZA('16');"/><input type="button" class="_ZA" value="17" onclick="subIwmZA('17');"/><br>
 		<input type="button" class="_ZA" value="18" onclick="subIwmZA('18');"/><input type="button" class="_ZA" value="19" onclick="subIwmZA('19');"/><input type="button" class="_ZA" value="20" onclick="subIwmZA('20');"/><input type="button" class="_ZA" value="21" onclick="subIwmZA('21');"/><div class="_btnNavi1" style="border-radius:12px;display:inline-block;font-size:13px;height:24px;line-height:24px;margin:0 0 0 3px;padding:0;width:24px;" onclick="subIwmZA2();"><i class="fa fa-map-marker"></i></div>
 	</div>
-	<script>
+	<script async>
 		function subIwmZA(
 			$str
 		)
@@ -2653,7 +2786,7 @@ a.polyline-measure-clearControl:active
 			subIwmSV();
 		}
 	</script>
-	<div id="__InputZoomB" style="left:10px;top:33px;">
+	<div id="__InputZoomB" style="left:10px;top:33px;" draggable="true">
 		<div style="background:#999;border-radius:3px 3px 0 0;height:3px;width:26px;"></div>
 		<input type="button" class="_ZB" value="21" onclick="subIwmZB('21');"/><br>
 		<input type="button" class="_ZB" value="20" onclick="subIwmZB('20');"/><br>
@@ -2676,31 +2809,45 @@ a.polyline-measure-clearControl:active
 		<input type="button" class="_ZB" value="3" onclick="subIwmZB('3');"/>
 		<div style="background:#999;border-radius:0 0 3px 3px;height:3px;width:26px;"></div>
 	</div>
-	<div id="__InputBL" style="top:-1000px;">
-		<input type="text" id="__IBL0" style="width:40px;" onclick="subIwmInput_BL_GetId(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 0);"/>°<input type="text" id="__IBL1" style="width:40px;" onclick="subIwmInput_BL_GetId(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 0);"/>′<br>
-		<input type="text" id="__IBL2" style="width:97px;" onclick="subIwmInput_BL_GetId(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 8);"/>″<br>
+	<div id="__InputBL" style="top:-1000px;" draggable="true">
+		<input type="text" id="__IBL1" style="width:40px;" onclick="subIwmInput_BL_GetId(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 0);"/>°<input type="text" id="__IBL2" style="width:40px;" onclick="subIwmInput_BL_GetId(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 0);"/>′<br>
+		<input type="text" id="__IBL3" style="width:97px;" onclick="subIwmInput_BL_GetId(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 8);"/>″<br>
 		<input type="button" class="_Btn1" value="7" onclick="subIwmInput_AddText('7');"/><input type="button" class="_Btn1" value="8" onclick="subIwmInput_AddText('8');"/><input type="button" class="_Btn1" value="9" onclick="subIwmInput_AddText('9');"/><br>
 		<input type="button" class="_Btn1" value="4" onclick="subIwmInput_AddText('4');"/><input type="button" class="_Btn1" value="5" onclick="subIwmInput_AddText('5');"/><input type="button" class="_Btn1" value="6" onclick="subIwmInput_AddText('6');"/><br>
 		<input type="button" class="_Btn1" value="1" onclick="subIwmInput_AddText('1');"/><input type="button" class="_Btn1" value="2" onclick="subIwmInput_AddText('2');"/><input type="button" class="_Btn1" value="3" onclick="subIwmInput_AddText('3');"/><br>
 		<input type="button" class="_Btn1" value="0" onclick="subIwmInput_AddText('0');"/><input type="button" class="_Btn1" value="." onclick="subIwmInput_AddText('.');"/><input type="button" class="_Btn2" value="Cls" onclick="subIwmInput_Cls();"/><br>
 		<input type="button" class="_Btn2" value="BS" onclick="subIwmInput_Bs();"/><input type="button" class="_Btn2" value="Del" onclick="subIwmInput_Del();"/><input type="button" class="_Btn3" value="OK" onclick="subIwmBL();"/>
 	</div>
+	<script async>
+		const $__InputBL = document.getElementById("__InputBL");
+		const $__IBL1 = document.getElementById("__IBL1");
+		const $__IBL2 = document.getElementById("__IBL2");
+		const $__IBL3 = document.getElementById("__IBL3");
+		$__InputBL.addEventListener("mouseover", (e) => { $__InputBL.draggable = true; });
+		$__IBL1.addEventListener("mousedown", (e) => { $__InputBL.draggable = false; });
+		$__IBL2.addEventListener("mousedown", (e) => { $__InputBL.draggable = false; });
+		$__IBL3.addEventListener("mousedown", (e) => { $__InputBL.draggable = false; });
+		function subInputBL()
+		{
+			$__IBL1.addEventListener("mousedown", (e) => { $__InputBL.draggable = false; });
+			$__IBL1.addEventListener("mouseout",  (e) => { $__InputBL.draggable = true; });
+			$__IBL2.addEventListener("mousedown", (e) => { $__InputBL.draggable = false; });
+			$__IBL2.addEventListener("mouseout",  (e) => { $__InputBL.draggable = true; });
+			$__IBL3.addEventListener("mousedown", (e) => { $__InputBL.draggable = false; });
+			$__IBL3.addEventListener("mouseout",  (e) => { $__InputBL.draggable = true; });
+		}
+	</script>
 	<!---------------------
 	// アドレスマッチング
 	---------------------->
-	<table class="_AddMatch_iPos">
-		<tr>
-			<td><input type="text" id="__AddMatch_i1" class="_AddMatch_iText" onchange="subAddMatch_Main();" placeholder="住所検索"/></td>
-			<td><div id="__AddMatch_i2" class="_AddMatch_iButton" onclick="subAddMatch_Main();"><i class="fa fa-search"></i></div></td>
-			<td><div id="__AddMatch_i3" class="_AddMatch_iButton" onclick="rtnAddMatch_Main();"></div></td>
-			<td><input type="button" id="__AddMatch_i4" class="_AddMatch_iButton" value="×" onclick="subAddMatch_Init();"/></td>
-		</tr>
-	</table>
-	<div class="_AddMatch_oPos">
+	<div class="_AddMatch_iPos" draggable="false">
+		<input type="text" id="__AddMatch_i1" class="_AddMatch_iText" onchange="subAddMatch_Main();" placeholder="住所検索"/><div id="__AddMatch_i2" class="_AddMatch_iButton" onclick="subAddMatch_Main();"><i class="fa fa-search"></i></div><div id="__AddMatch_i3" class="_AddMatch_iButton" onclick="rtnAddMatch_Main();"></div><input type="button" id="__AddMatch_i4" class="_AddMatch_iButton" value="×" onclick="subAddMatch_Init();"/>
+	</div>
+	<div class="_AddMatch_oPos" draggable="false">
 		<div id="__AddMatch_o1" class="_AddMatch_oResult"></div>
 	</div>
-	<!----------
-	// _divMap
+	<!-----------
+	// __divMap
 	------------>
 	<div id="__divMap">
 	<script>
@@ -2731,14 +2878,12 @@ a.polyline-measure-clearControl:active
 			document.getElementById("__NaviLng").value  = 139.7522735595703;
 			// 現在座標取得
 			navigator.geolocation.getCurrentPosition(
-				function(position)
-				{
+				(position) => {
 					document.getElementById("__NaviLat").value = position.coords.latitude;
 					document.getElementById("__NaviLng").value = position.coords.longitude;
 					subIwmBM_Reset();
 				},
-				function(error)
-				{
+				(error) => {
 					subIwmBM_Reset();
 				}
 			);
@@ -2748,31 +2893,32 @@ a.polyline-measure-clearControl:active
 		document.getElementById("__NaviLng").value = parseFloat(document.getElementById("__NaviLng").value).toFixed(8);
 		// 初回表示設定
 		const $Map = L.map("__divMap", {
-			center:[document.getElementById("__NaviLat").value, document.getElementById("__NaviLng").value],
-			zoom:document.getElementById("__NaviZoom").value,
-			minZoom:3,  // 最小ズーム
-			maxZoom:21, // 最大ズーム
-			zoomControl:false,    // Control.Zoom 非表示
-			doubleClickZoom:false // DblClick制御
+			center: [document.getElementById("__NaviLat").value, document.getElementById("__NaviLng").value],
+			zoom: document.getElementById("__NaviZoom").value,
+			minZoom: 3,  // 最小ズーム
+			maxZoom: 21, // 最大ズーム
+			zoomControl: false,    // Control.Zoom 非表示
+			doubleClickZoom: false // DblClick制御
 		});
 		/*---------------
 		// スケール表示
 		---------------*/
 		L.control.scale({
-			metric:true,
-			imperial:false,
-			position:"bottomleft"
-		}).addTo($Map);
+			metric: true,
+			imperial: false,
+			position: "bottomleft"
+		})
+		.addTo($Map);
 		/*--------------------------
 		// Leaflet.PolylineMeasure
 		--------------------------*/
 		const $PolylineMeasure = L.control.polylineMeasure({
-			position:"bottomleft",
-			unit:"metres",
-			showBearings:false,
-			clearMeasurementsOnStop:false,
-			showClearControl:true,
-			showUnitControl:true
+			position: "bottomleft",
+			unit: "metres",
+			showBearings: false,
+			clearMeasurementsOnStop: false,
+			showClearControl: true,
+			showUnitControl: true
 		});
 		$PolylineMeasure.addTo($Map);
 		/*-------------
@@ -2785,16 +2931,16 @@ a.polyline-measure-clearControl:active
 			$RadioButtonMap.push(["GSI 標準地図",            "https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png",           18, "<a href=\"https://maps.gsi.go.jp/development/ichiran.html\" target=\"_blank\">国土地理院</a>"]);
 			$RadioButtonMap.push(["GSI 淡色地図",            "https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png",          18, "<a href=\"https://maps.gsi.go.jp/development/ichiran.html\" target=\"_blank\">国土地理院</a>"]);
 			$RadioButtonMap.push(["GSI 白地図",              "https://cyberjapandata.gsi.go.jp/xyz/blank/{z}/{x}/{y}.png",         14, "<a href=\"https://maps.gsi.go.jp/development/ichiran.html\" target=\"_blank\">国土地理院</a>"]);
-			$RadioButtonMap.push(["なし",                     ""                                                          ,  0, ""]);
+			$RadioButtonMap.push(["なし", "", 0, ""]);
 		for(let _a1 of $RadioButtonMap)
 		{
 			$MapBaseLayers[_a1[0]] = L.tileLayer(
 				_a1[1],
 				{
-					attribution:_a1[3],
-					opacity:1.0,
-					maxNativeZoom:_a1[2],
-					maxZoom:21
+					attribution: _a1[3],
+					opacity: 1.0,
+					maxNativeZoom: _a1[2],
+					maxZoom: 21
 				}
 			);
 		}
@@ -2803,23 +2949,21 @@ a.polyline-measure-clearControl:active
 		/*-------------
 		// 追加タイル
 		-------------*/
+		// 初回表示
+		document.getElementById("__TA02").value =
+			"// タブ(TSV)区切り\n" +
+			"// [0]メニュー\t[1]タイルURL\t[2]最大ズームレベル\t[3]コピーライト\n" +
+			"GSI シームレス写真\thttps://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg\t18\t<a href=\"https://maps.gsi.go.jp/development/ichiran.html\" target=\"_blank\">国土地理院</a>\n" +
+			"GSI 色別標高図\thttps://cyberjapandata.gsi.go.jp/xyz/relief/{z}/{x}/{y}.png\t15\t<a href=\"https://maps.gsi.go.jp/development/ichiran.html\" target=\"_blank\">国土地理院</a>\n" +
+			"GSI 全国傾斜量区分図\thttps://cyberjapandata.gsi.go.jp/xyz/slopezone1map/{z}/{x}/{y}.png\t15\t<a href=\"https://maps.gsi.go.jp/development/ichiran.html\" target=\"_blank\">国土地理院</a>\n" +
+			"シームレス地質図\thttps://gbank.gsj.jp/seamless/v2/api/1.2/tiles/{z}/{y}/{x}.png\t13\tGSJ, AIST、<a href=\"https://gbank.gsj.jp/seamless/\" target=\"_blank\">20万分の1日本シームレス地質図V2</a>\n";
 		let $MapSelector = null;
 		let $MapOpacityCtrl = null;
 		function subMapSelector()
 		{
-			const obj1 = document.getElementById("__TA02");
-			if(obj1.value.length == 0)
-			{
-				obj1.value =
-					"// タブ(TSV)区切り\n" +
-					"// [0]メニュー\t[1]タイルURL\t[2]最大ズームレベル\t[3]コピーライト\n" +
-					"GSI シームレス写真\thttps://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg\t18\t<a href=\"https://maps.gsi.go.jp/development/ichiran.html\" target=\"_blank\">国土地理院</a>\n" +
-					"GSI 色別標高図\thttps://cyberjapandata.gsi.go.jp/xyz/relief/{z}/{x}/{y}.png\t15\t<a href=\"https://maps.gsi.go.jp/development/ichiran.html\" target=\"_blank\">国土地理院</a>\n" +
-					"GSI 全国傾斜量区分図\thttps://cyberjapandata.gsi.go.jp/xyz/slopezone1map/{z}/{x}/{y}.png\t15\t<a href=\"https://maps.gsi.go.jp/development/ichiran.html\" target=\"_blank\">国土地理院</a>\n" +
-					"シームレス地質図\thttps://gbank.gsj.jp/seamless/v2/api/1.2/tiles/{z}/{y}/{x}.png\t13\tGSJ, AIST、<a href=\"https://gbank.gsj.jp/seamless/\" target=\"_blank\">20万分の1日本シームレス地質図V2</a>\n";
-			}
 			let $MapOverlays = [];
-			for(let _s1 of document.getElementById("__TA02").value.trimEnd().split("\n"))
+			const E1 = document.getElementById("__TA02");
+			for(let _s1 of E1.value.trimEnd().split("\n"))
 			{
 				_s1 = _s1.trim();
 				if(_s1.length > 0 && _s1.substr(0, 2) != "//")
@@ -2838,10 +2982,10 @@ a.polyline-measure-clearControl:active
 						$MapOverlays[_a1[0]] = L.tileLayer(
 							_a1[1],
 							{
-								attribution:_a1[3],
-								opacity:1.0,
-								maxNativeZoom:parseInt(_a1[2], 10),
-								maxZoom:21
+								attribution: _a1[3],
+								opacity: 1.0,
+								maxNativeZoom: parseInt(_a1[2], 10),
+								maxZoom: 21
 							}
 						);
 					}
@@ -2857,8 +3001,8 @@ a.polyline-measure-clearControl:active
 			$MapOpacityCtrl = L.control.opacity(
 				$MapOverlays,
 				{
-					collapsed:true,
-					position:"bottomright"
+					collapsed: true,
+					position: "bottomright"
 				}
 			);
 			$MapOpacityCtrl.addTo($Map);
@@ -2867,17 +3011,17 @@ a.polyline-measure-clearControl:active
 			--------------------*/
 			$MapOverlays["経緯度グリッド"] = L.latlngGraticule(
 				{
-					color:"#003",
-					font:"16px sans-serif",
-					latLineCurved:0,
-					lngLineCurved:0,
-					opacity:1.0,
-					showLabel:true,
-					weight:0.6,
-					zoomInterval:[
-						{start:0, end: 3, interval:10},
-						{start:4, end: 5, interval: 5},
-						{start:6, end:23, interval: 1}
+					color: "#003",
+					font: "16px sans-serif",
+					latLineCurved: 0,
+					lngLineCurved: 0,
+					opacity: 1.0,
+					showLabel: true,
+					weight: 0.6,
+					zoomInterval: [
+						{start: 0, end: 3, interval: 10},
+						{start: 4, end: 5, interval: 5},
+						{start: 6, end: 23, interval: 1}
 					]
 				}
 			);
@@ -2889,8 +3033,7 @@ a.polyline-measure-clearControl:active
 			*/
 			// 標準 => 墨色
 			const $StdToGray = new L.GridLayer();
-			$StdToGray.createTile = function(coords)
-			{
+			$StdToGray.createTile = (coords) => {
 				const tile = L.DomUtil.create("canvas", "leaflet-tile");
 				tile.width  = 256;
 				tile.height = 256;
@@ -2899,8 +3042,7 @@ a.polyline-measure-clearControl:active
 				img.crossOrigin = "anonymous";
 				// leafletが使うタイルと別のサーバ（https／http）にアクセスし、Access-Control-Allow-Originを回避
 				img.src = "https://tile.openstreetmap.jp/styles/maptiler-basic-ja/" + coords.z + "/" + coords.x + "/" + coords.y + ".png";
-				img.onload = function()
-				{
+				img.onload = function(){
 					ctx.drawImage(this, 0, 0);
 					const rtnImg = ctx.getImageData(0, 0, 256, 256);
 					let rtnImgData = rtnImg.data;
@@ -2930,8 +3072,7 @@ a.polyline-measure-clearControl:active
 			}
 			// 標準 => 赤色
 			const $StdToRed = new L.GridLayer();
-			$StdToRed.createTile = function(coords)
-			{
+			$StdToRed.createTile = (coords) => {
 				const tile = L.DomUtil.create("canvas", "leaflet-tile");
 				tile.width  = 256;
 				tile.height = 256;
@@ -2940,8 +3081,7 @@ a.polyline-measure-clearControl:active
 				img.crossOrigin = "anonymous";
 				// leafletが使うタイルと別のサーバ（https／http）にアクセスし、Access-Control-Allow-Originを回避
 				img.src = "https://tile.openstreetmap.jp/styles/maptiler-basic-ja/" + coords.z + "/" + coords.x + "/" + coords.y + ".png";
-				img.onload = function()
-				{
+				img.onload = function(){
 					ctx.drawImage(this, 0, 0);
 					const rtnImg = ctx.getImageData(0, 0, 256, 256);
 					let rtnImgData = rtnImg.data;
@@ -2968,8 +3108,7 @@ a.polyline-measure-clearControl:active
 			// タイル座標
 			-------------*/
 			const $TileCoord = new L.GridLayer();
-			$TileCoord.createTile = function(coords)
-			{
+			$TileCoord.createTile = (coords) => {
 				const tile = L.DomUtil.create("canvas", "leaflet-tile");
 				tile.width = tile.height = 256;
 				const tileText = coords.z + "-" + coords.x + "-" + coords.y;
@@ -3007,64 +3146,61 @@ a.polyline-measure-clearControl:active
 				$MapBaseLayers,
 				$MapOverlays,
 				{
-					position:"topright"
+					position: "topright"
 				}
 			);
 			$MapSelector.addTo($Map);
 			// 初回表示の処理
-			$Map.on(
-				"overlayremove",
-				function(e)
+			$Map.on("overlayremove", (e) => {
+				try
 				{
-					try
-					{
-						// 地図選択メニューから削除
-						$MapOverlays[e.name].remove($Map);
-					}
-					catch(e)
-					{
-					}
+					// 地図選択メニューから削除
+					$MapOverlays[e.name].remove($Map);
 				}
-			);
+				catch(e)
+				{
+				}
+			});
 		}
 		// Leaflet.MiniMap
 		const miniMapLayer = new L.TileLayer(
 			"https://{s}.tile.openstreetmap.jp/{z}/{x}/{y}.png",
 			{
-				minZoom:0,
-				maxZoom:21
+				minZoom: 0,
+				maxZoom: 21
 			}
 		);
 		new L.Control.MiniMap(
 			miniMapLayer,
 			{
-				height:256,
-				position:"bottomright",
-				toggleDisplay:true,
-				width:256,
-				zoomLevelOffset:-4
+				height: 256,
+				position: "bottomright",
+				toggleDisplay: true,
+				width: 256,
+				zoomLevelOffset: -4
 			}
-		).addTo($Map);
+		)
+		.addTo($Map);
 		// Leaflet.Control.Opacity 再設定
 		subMapSelector();
 		// 座標マーカー
 		const $BaseMarkerIcon = L.AwesomeMarkers.icon({
-			icon:"home",
-			prefix:"fa",
-			markerColor:"darkblue",
-			spin:false
+			icon: "home",
+			prefix: "fa",
+			markerColor: "darkblue",
+			spin: false
 		});
 		const $LocalMarkerDragOn = L.AwesomeMarkers.icon({
-			icon:"flag",
-			prefix:"fa",
-			markerColor:"darkred",
-			spin:false
+			icon: "flag",
+			prefix: "fa",
+			markerColor: "darkred",
+			spin: false
 		});
 		const $LocalMarkerDragOff = L.AwesomeMarkers.icon({
-			icon:"thumb-tack",
-			prefix:"fa",
-			markerColor:"orange",
-			spin:false
+			icon: "thumb-tack",
+			prefix: "fa",
+			markerColor: "orange",
+			spin: false
 		});
 		/*-----------------------------
 		// マーカーのポップアップ更新
@@ -3090,8 +3226,8 @@ a.polyline-measure-clearControl:active
 						$BaseMarker._latlng.lng
 					),
 					{
-						autoClose:false, // 複数ポップアップ可
-						autoPan:false    // ポップアップ時、表示調整しない
+						autoClose: false, // 複数ポップアップ可
+						autoPan: false    // ポップアップ時、表示調整しない
 					}
 				);
 				$BaseMarker.openPopup();
@@ -3111,8 +3247,8 @@ a.polyline-measure-clearControl:active
 							_s1
 						),
 						{
-							autoClose:false, // 複数ポップアップ可
-							autoPan:false    // ポップアップ時、表示調整しない
+							autoClose: false, // 複数ポップアップ可
+							autoPan: false    // ポップアップ時、表示調整しない
 						}
 					);
 					_s1.openPopup();
@@ -3144,10 +3280,11 @@ a.polyline-measure-clearControl:active
 			$BaseMarker = L.marker(
 				[$Lat, $Lng],
 				{
-					icon:$BaseMarkerIcon,
-					draggable:true // ドラッグ許可
+					icon: $BaseMarkerIcon,
+					draggable: true // ドラッグ許可
 				}
-			).addTo($Map);
+			)
+			.addTo($Map);
 			$BaseMarker.elevation = "-----";
 			subChangeUrl($Lat, $Lng, "__NaviZoom");
 			// ズームレベル変更
@@ -3215,21 +3352,17 @@ a.polyline-measure-clearControl:active
 			$lng = parseFloat($lng).toFixed(8);
 			$AryLocalMarker.push(
 				L.marker([$lat, $lng], {
-					icon:(bIconDrag ? $LocalMarkerDragOn : $LocalMarkerDragOff),
-					draggable:bIconDrag
-				}).addTo($Map)
+					icon: (bIconDrag ? $LocalMarkerDragOn : $LocalMarkerDragOff),
+					draggable: bIconDrag
+				})
+				.addTo($Map)
 			);
 			// $AryLocalMarker
 			$AryLocalMarker[$AryLocalMarker.length - 1].elevation = "-----";
 			subMyObj_OnOff($AryLocalMarker);
-			const obj1 = $AryLocalMarker[$AryLocalMarker.length - 1];
+			const o1 = $AryLocalMarker[$AryLocalMarker.length - 1];
 			// 緯度経度から場所を検索
-			subLatLngToPlaceName(
-				$lat,
-				$lng,
-				obj1,
-				(bIconDrag ? null : $placeName)
-			);
+			subLatLngToPlaceName($lat, $lng, o1, (bIconDrag ? null : $placeName));
 			// 固定点のときだけセンタリング
 			if(! bIconDrag)
 			{
@@ -3239,7 +3372,7 @@ a.polyline-measure-clearControl:active
 				);
 			}
 			// ズームレベル補完
-			obj1.on(
+			o1.on(
 				"click",
 				function(e)
 				{
@@ -3253,7 +3386,7 @@ a.polyline-measure-clearControl:active
 				}
 			);
 			// $AryLocalMarker 消去
-			obj1.on(
+			o1.on(
 				"contextmenu",
 				function(e)
 				{
@@ -3272,7 +3405,7 @@ a.polyline-measure-clearControl:active
 				}
 			);
 			// 先読みしておく
-			obj1.on(
+			o1.on(
 				"dragend",
 				function(e)
 				{
@@ -3286,21 +3419,15 @@ a.polyline-measure-clearControl:active
 				}
 			);
 			// 先読みしておく
-			obj1.on(
+			o1.on(
 				"mouseover",
 				function(e)
 				{
-					rtnMarkerPopup2(
-						$BaseMarker._latlng.lat,
-						$BaseMarker._latlng.lng,
-						this._latlng.lat,
-						this._latlng.lng,
-						this
-					);
+					rtnMarkerPopup2($BaseMarker._latlng.lat, $BaseMarker._latlng.lng, this._latlng.lat, this._latlng.lng, this);
 				}
 			);
 			// ポップアップ再表示
-			obj1.on(
+			o1.on(
 				"mouseout",
 				function(e)
 				{
@@ -3314,8 +3441,8 @@ a.polyline-measure-clearControl:active
 							this
 						),
 						{
-							autoClose:false, // 複数ポップアップ可
-							autoPan:false    // ポップアップ時、表示調整しない
+							autoClose: false, // 複数ポップアップ可
+							autoPan: false    // ポップアップ時、表示調整しない
 						}
 					);
 					this.openPopup();
@@ -3326,35 +3453,23 @@ a.polyline-measure-clearControl:active
 		// 地図上イベント共通
 		---------------------*/
 		// マーカー毎のイベント設定後でないと不具合
-		$Map.on(
-			"dblclick",
-			function(e)
-			{
-				subIwmInput_ZoomA_Open(
-					"__NaviZoom",
-					(e.containerPoint.x + 20),
-					(e.containerPoint.y - 25)
-				);
-				subBaseMarkerNew(e.latlng.lat, e.latlng.lng);
-				subGCircle_Draw();
-			}
-		);
-		$Map.on(
-			"contextmenu",
-			function(e)
-			{
-				subMapOnRClick(e.latlng.lat, e.latlng.lng, null);
-				subGCircle_Draw();
-			}
-		);
-		$Map.on(
-			"zoomend",
-			function(e)
-			{
-				subChangeUrl("__NaviLat", "__NaviLng", $Map.getZoom());
-				subIwmInput_Zoom_Change($Map.getZoom());
-			}
-		);
+		$Map.on("dblclick", (e) => {
+			subIwmInput_ZoomA_Open(
+				"__NaviZoom",
+				(e.containerPoint.x + 20),
+				(e.containerPoint.y - 25)
+			);
+			subBaseMarkerNew(e.latlng.lat, e.latlng.lng);
+			subGCircle_Draw();
+		});
+		$Map.on("contextmenu", (e) => {
+			subMapOnRClick(e.latlng.lat, e.latlng.lng, null);
+			subGCircle_Draw();
+		});
+		$Map.on("zoomend", (e) => {
+			subChangeUrl("__NaviLat", "__NaviLng", $Map.getZoom());
+			subIwmInput_Zoom_Change($Map.getZoom());
+		});
 	</script>
 	</div>
 </body>
@@ -3364,16 +3479,16 @@ a.polyline-measure-clearControl:active
 ---------------------->
 <textarea id="__HDoc01" style="display:none;">
 <style>
-._div_head{background:#ffc;border:solid 1px #666;color:#444;font-weight:700;margin:8px 4px 4px 4px;padding:0 6px;}
-._ol, ._ul{margin:0; padding:0;}
-._li1, ._li2{padding:0 0 2px 0;}
-._li1{margin:0 0 0 24px;}
-._li2{margin:0 0 0 8px;}
-._font_size22px{font-size:22px;}
-._font_color1, ._font_color2, ._font_color3{font-weight:700;}
-._font_color1{color:#3d7cce;}
-._font_color2{color:#bd1e38;}
-._font_color3{color:#fb9d3e;}
+._div_head{background: #ffc; border: solid 1px #666; color: #444; font-weight: 700; margin: 8px 4px 4px 4px; padding: 0 6px;}
+._ol, ._ul{margin: 0; padding: 0;}
+._li1, ._li2{padding: 0 0 2px 0;}
+._li1{margin: 0 0 0 24px;}
+._li2{margin: 0 0 0 8px;}
+._font_size22px{font-size: 22px;}
+._font_color1, ._font_color2, ._font_color3{font-weight: 700;}
+._font_color1{color: #3d7cce;}
+._font_color2{color: #bd1e38;}
+._font_color3{color: #fb9d3e;}
 </style>
 <div class="_div_head">地図上でのマウス操作</div>
  <ul class="_ul">
@@ -3407,6 +3522,6 @@ a.polyline-measure-clearControl:active
  </ol>
 </li>
 </textarea>
-<script>
+<script async>
 	document.getElementById("__SW01Doc").innerHTML = document.getElementById("__HDoc01").value;
 </script>
