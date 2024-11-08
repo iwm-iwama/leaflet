@@ -1,4 +1,4 @@
-<!-- iwm_leaflet1.9.4 Ver.20240401 'U-2S' -->
+<!-- iwm_leaflet1.9.4 Ver.20241106 'U-2S' -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -188,7 +188,9 @@ input[type=range]
 	width: 160px; /* Leaflet.Control.Opacity */
 }
 ._btnNavi1,
+._btnNavi1fa,
 ._btnNavi2,
+._btnNavi2fa,
 ._btnNavi3,
 ._btnNavi4,
 ._btnNavi5
@@ -212,28 +214,43 @@ input[type=range]
 	hover => active の順
 */
 ._btnNavi1:active,
+._btnNavi1fa:active,
 ._btnNavi2:active,
+._btnNavi2fa:active,
 ._btnNavi3:active,
 ._btnNavi4:active,
 ._btnNavi5:active
 {
 	cursor: wait;
 }
-._btnNavi1
+._btnNavi1,
+._btnNavi1fa
 {
 	background: #3d7cce;
 }
-._btnNavi1:hover
+._btnNavi1:hover,
+._btnNavi1fa:hover
 {
 	background: #6dacff;
 }
-._btnNavi2
+._btnNavi2,
+._btnNavi2fa
 {
 	background: #bd1e38;
 }
-._btnNavi2:hover
+._btnNavi2:hover,
+._btnNavi2fa:hover
 {
 	background: #ed4e68;
+}
+._btnNavi1fa,
+._btnNavi2fa
+{
+	border-radius: 10px;
+	font-size: 14px;
+	margin: 0 0 0 2px;
+	padding:0;
+	width:20px;
 }
 ._btnNavi3
 {
@@ -453,7 +470,7 @@ input[type=range]
 	color: #fff;
 	cursor: pointer;
 	display: inline-block;
-	font-size: 15px;
+	font-size: 14px;
 	height: 24px;
 	line-height: 24px;
 	margin: 0;
@@ -859,7 +876,7 @@ a.polyline-measure-clearControl:active
 		// 設定ミリ秒後に自動終了
 		if($autoHidden)
 		{
-			setTimeout("subIwmInput_Close('" + $inputId + "')", 2500);
+			setTimeout("subIwmInput_Close('" + $inputId + "')", 5000);
 		}
 	}
 	function subIwmInput_Close(
@@ -2024,11 +2041,11 @@ a.polyline-measure-clearControl:active
 		緯度&nbsp;<input type="text" id="__NaviLat" onclick="subIwmInput_BL_Open(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id,8);" placeholder="緯度入力"/>
 		経度&nbsp;<input type="text" id="__NaviLng" onclick="subIwmInput_BL_Open(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id,8);" placeholder="経度入力"/>
 		<!-- ズーム --><input type="hidden" id="__NaviZoom"/>
-		<div class="_btnNavi1" style="border-radius:10px;display:inline-block;font-size:14px;height:20px;margin:0 0 0 2px;padding:0;width:20px;" onclick="subIwmZA2();" onmouseover="subNaviExpOnOff('中心へ移動','98px');" onmouseleave="subNaviExpOnOff();"><i class="fa fa-map-marker"></i></div>
-		<div class="_btnNavi1" style="border-radius:10px;display:inline-block;font-size:14px;height:20px;margin:0 0 0 2px;padding:0;width:20px;" onclick="subIwmBM_CurrentPosition();" onmouseover="subNaviExpOnOff('現在地を取得','112px');" onmouseleave="subNaviExpOnOff();"><i class="fa fa-rss"></i></div>
-		<div class="_btnNavi2" style="border-radius:10px;display:inline-block;font-size:14px;height:20px;margin:0 0 0 4px;padding:0;width:20px;" onclick="subNaviAllMarkerPopupOpen();" onmouseover="subNaviExpOnOff('全ポップアップを開く','168px');" onmouseleave="subNaviExpOnOff();"><i class="fa fa-folder-open"></i></div>
-		<div class="_btnNavi2" style="border-radius:10px;display:inline-block;font-size:14px;height:20px;margin:0 0 0 2px;padding:0;width:20px;" onclick="subNaviAllMarkerPopupClose();" onmouseover="subNaviExpOnOff('全ポップアップを閉じる','182px');" onmouseleave="subNaviExpOnOff();"><i class="fa fa-folder"></i></div>
-		<input type="button" id="__RmMarker" class="_btnNavi2" style="border-radius:10px;font-size:17px;height:20px;margin:0 0 0 4px;padding:0;width:20px;" value="×" onclick="subMyObj_Remove($AryLocalMarker);" onmouseover="subNaviExpOnOff('赤・オレンジマーカー消去','196px');" onmouseleave="subNaviExpOnOff();"/>
+		<div class="_btnNavi1fa" onclick="subIwmZA2();" onmouseover="subNaviExpOnOff('中心へ移動','98px');" onmouseleave="subNaviExpOnOff();"><i class="fa fa-map-marker"></i></div>
+		<div class="_btnNavi1fa" onclick="subIwmBM_CurrentPosition();" onmouseover="subNaviExpOnOff('現在地を取得','112px');" onmouseleave="subNaviExpOnOff();"><i class="fa fa-rss"></i></div>
+		<div class="_btnNavi2fa" onclick="subNaviAllMarkerPopupOpen();" onmouseover="subNaviExpOnOff('全ポップアップを開く','168px');" onmouseleave="subNaviExpOnOff();"><i class="fa fa-folder-open"></i></div>
+		<div class="_btnNavi2fa" onclick="subNaviAllMarkerPopupClose();" onmouseover="subNaviExpOnOff('全ポップアップを閉じる','182px');" onmouseleave="subNaviExpOnOff();"><i class="fa fa-folder"></i></div>
+		<div id="__RmMarker" class="_btnNavi2fa" onclick="subMyObj_Remove($AryLocalMarker);" onmouseover="subNaviExpOnOff('赤・オレンジマーカー消去','196px');" onmouseleave="subNaviExpOnOff();"><i class="fa fa-times"></i></div>
 		<div id="__NaviExp" class="_simpleWindow" style="background:#000;display:none;font-size:14px;"></div>
 		<script async>
 			// コメント表示
@@ -2767,7 +2784,7 @@ a.polyline-measure-clearControl:active
 		<input type="button" class="_ZA" value="3" onclick="subIwmZA('3');"/><input type="button" class="_ZA" value="4" onclick="subIwmZA('4');"/><input type="button" class="_ZA" value="5" onclick="subIwmZA('5');"/><input type="button" class="_ZA" value="6" onclick="subIwmZA('6');"/><input type="button" class="_ZA" value="7" onclick="subIwmZA('7');"/><br>
 		<input type="button" class="_ZA" value="8" onclick="subIwmZA('8');"/><input type="button" class="_ZA" value="9" onclick="subIwmZA('9');"/><input type="button" class="_ZA" value="10" onclick="subIwmZA('10');"/><input type="button" class="_ZA" value="11" onclick="subIwmZA('11');"/><input type="button" class="_ZA" value="12" onclick="subIwmZA('12');"/><br>
 		<input type="button" class="_ZA" value="13" onclick="subIwmZA('13');"/><input type="button" class="_ZA" value="14" onclick="subIwmZA('14');"/><input type="button" class="_ZA" value="15" onclick="subIwmZA('15');"/><input type="button" class="_ZA" value="16" onclick="subIwmZA('16');"/><input type="button" class="_ZA" value="17" onclick="subIwmZA('17');"/><br>
-		<input type="button" class="_ZA" value="18" onclick="subIwmZA('18');"/><input type="button" class="_ZA" value="19" onclick="subIwmZA('19');"/><input type="button" class="_ZA" value="20" onclick="subIwmZA('20');"/><input type="button" class="_ZA" value="21" onclick="subIwmZA('21');"/><div class="_btnNavi1" style="border-radius:12px;display:inline-block;font-size:13px;height:24px;line-height:24px;margin:0 0 0 3px;padding:0;width:24px;" onclick="subIwmZA2();"><i class="fa fa-map-marker"></i></div>
+		<input type="button" class="_ZA" value="18" onclick="subIwmZA('18');"/><input type="button" class="_ZA" value="19" onclick="subIwmZA('19');"/><input type="button" class="_ZA" value="20" onclick="subIwmZA('20');"/><input type="button" class="_ZA" value="21" onclick="subIwmZA('21');"/><div class="_btnNavi1fa" style="margin:0 0 0 5px;" onclick="subIwmZA2();"><i class="fa fa-map-marker"></i></div>
 	</div>
 	<script async>
 		function subIwmZA(
@@ -2841,7 +2858,7 @@ a.polyline-measure-clearControl:active
 	// アドレスマッチング
 	---------------------->
 	<div class="_AddMatch_iPos" draggable="false">
-		<input type="text" id="__AddMatch_i1" class="_AddMatch_iText" onchange="subAddMatch_Main();" placeholder="住所検索"/><div id="__AddMatch_i2" class="_AddMatch_iButton" onclick="subAddMatch_Main();"><i class="fa fa-search"></i></div><div id="__AddMatch_i3" class="_AddMatch_iButton" onclick="rtnAddMatch_Main();"></div><input type="button" id="__AddMatch_i4" class="_AddMatch_iButton" value="×" onclick="subAddMatch_Init();"/>
+		<input type="text" id="__AddMatch_i1" class="_AddMatch_iText" onchange="subAddMatch_Main();" placeholder="住所検索"/><div id="__AddMatch_i2" class="_AddMatch_iButton" onclick="subAddMatch_Main();"><i class="fa fa-search"></i></div><div id="__AddMatch_i3" class="_AddMatch_iButton" onclick="rtnAddMatch_Main();"></div><div id="__AddMatch_i4" class="_AddMatch_iButton" onclick="subAddMatch_Init();"><i class="fa fa-times"></i></div>
 	</div>
 	<div class="_AddMatch_oPos" draggable="false">
 		<div id="__AddMatch_o1" class="_AddMatch_oResult"></div>
