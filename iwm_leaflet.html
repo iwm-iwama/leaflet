@@ -1,4 +1,4 @@
-<!-- iwm_leaflet1.9.4 Ver.20250412 'U-2S' -->
+<!-- iwm_leaflet1.9.4 Ver.20250418 'U-2S' -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -1250,6 +1250,11 @@ a.polyline-measure-clearControl:active
 			if(typeof(json.results) === "undefined")
 			{
 				title = "-----";
+			}
+			// サーバデータ欠損時
+			else if(json.results.muniCd === "")
+			{
+				title = "No data?";
 			}
 			else
 			{
