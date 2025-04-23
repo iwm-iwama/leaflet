@@ -1,4 +1,4 @@
-<!-- iwm_leaflet1.9.4 Ver.20250418 'U-2S' -->
+<!-- iwm_leaflet1.9.4 Ver.20250422 'U-2S' -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -247,10 +247,11 @@ input[type=range]
 ._btnNavi2fa
 {
 	border-radius: 10px;
-	font-size: 14px;
-	margin: 0 0 0 2px;
-	padding:0;
-	width:20px;
+	font-size: 16px;
+	line-height: 17px;
+	margin: 0 0 0 4px;
+	padding: 0;
+	width: 20px;
 }
 ._btnNavi3
 {
@@ -1247,15 +1248,17 @@ a.polyline-measure-clearControl:active
 		})
 		.then((json) => {
 			let title = null;
+			// 未確定データ
 			if(typeof(json.results) === "undefined")
 			{
-				title = "-----";
+				title = "undefined";
 			}
-			// サーバデータ欠損時
+			// 無効データ
 			else if(json.results.muniCd === "")
 			{
-				title = "No data?";
+				title = "no data?";
 			}
+			// 有効データ
 			else
 			{
 				const muniCd = parseInt(json.results.muniCd, 10);
