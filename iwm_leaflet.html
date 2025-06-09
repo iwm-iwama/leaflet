@@ -1,4 +1,4 @@
-<!-- iwm_leaflet1.9.4 Ver.20250520 'U-2S' -->
+<!-- iwm_leaflet1.9.4 Ver.20250610 'U-2S' -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -83,7 +83,7 @@
 }
 .leaflet-control-minimap
 {
-	border: solid 2px rgba(0, 0, 0, 0.6);
+	border: solid 2px #505050;
 	border-radius: 12px;
 	box-shadow: none;
 }
@@ -147,6 +147,10 @@ input[type=text]
 {
 	cursor: text;
 }
+textarea
+{
+	display: block;
+}
 input[type=checkbox]:focus,
 input[type=file]:focus,
 input[type=number]:focus,
@@ -154,14 +158,14 @@ input[type=range]:focus,
 input[type=text]:focus,
 textarea:focus
 {
-	outline: 1px solid #3d7cce; /* ブラウザの強調設定を上書き */
+	outline: 0; /* ブラウザの強調設定を上書き */
 }
 input[type=file]
 {
 	background: #fff;
-	color: #383838;
+	color: #111;
 	font-size: 12px;
-	margin: 1px;
+	margin: 0 0 1px 1px;
 	padding: 1px;
 }
 input[type=file]::file-selector-button,
@@ -429,7 +433,7 @@ input[type=range]
 ._AddMatch_iText
 {
 	background: #fff;
-	border: solid 1px #005bbb;
+	border: solid 1px rgba(12, 75, 157, 0.8);
 	border-radius: 6px 0 0 0;
 	color: #000;
 	font-size: 14px;
@@ -445,7 +449,7 @@ input[type=range]
 }
 ._AddMatch_iButton
 {
-	background: #005bbb;
+	background: rgba(12, 75, 157, 0.8);
 	border: 0;
 	color: #fff;
 	cursor: pointer;
@@ -466,7 +470,7 @@ input[type=range]
 ._AddMatch_oResult
 {
 	background: rgba(255, 255, 255, 0.2);
-	border: solid 1px #005bbb;
+	border: solid 1px rgba(12, 75, 157, 0.8);
 	color: #000;
 	cursor: pointer;
 	font-size: 12px;
@@ -527,7 +531,7 @@ input[type=range]
 }
 ._simpleWindow
 {
-	background: rgba(56, 56, 56, 0.75);
+	background: rgba(56, 56, 56, 0.8);
 	color: #fff;
 	cursor: pointer;
 	float: right;
@@ -578,10 +582,10 @@ a.polyline-measure-clearControl:active
 }
 .polyline-measure-tooltip
 {
-	background: #000;
+	background: rgba(255, 255, 255, 0.5);
 	border-radius: 4px;
 	box-shadow: none;
-	color: #fff;
+	color: #000;
 	font-size: 11px;
 	font-style: normal;
 	font-weight: 400;
@@ -596,7 +600,7 @@ a.polyline-measure-clearControl:active
 }
 .polyline-measure-tooltip-end
 {
-	background: #000;
+	background: rgba(255, 255, 255, 0.5);
 }
 .polyline-measure-tooltip-difference
 {
@@ -608,7 +612,7 @@ a.polyline-measure-clearControl:active
 }
 .polyline-measure-tooltip-total
 {
-	color: #fff;
+	color: #000;
 	font-size: 11px;
 	font-style: normal;
 	font-weight: 400;
@@ -616,17 +620,18 @@ a.polyline-measure-clearControl:active
 }
 .polyline-measure-popupTooltip
 {
-	background: #000;
+	background: rgba(0, 0, 0, 0.75);
+	border: 0;
 	color: #fff;
 	font-size: 12px;
 	font-style: normal;
 	font-weight: 400;
 	margin: 0;
-	padding: 6px 8px;
+	padding: 8px;
 	width: 240px;
 }
 </style>
-<script>
+<script defer>
 	// 前処理
 	// Microsoft 独自仕様？
 	const UA = window.navigator.userAgent.toLowerCase();
@@ -847,12 +852,12 @@ a.polyline-measure-clearControl:active
 		{
 			document.getElementById($outputId).style.display = "none";
 		}
-		catch(e)
+		catch
 		{
 		}
 		// 初期化
 		$subIwmInput_BL_now = null;
-		document.onkeydown = function(e){}
+		document.onkeydown = function(){}
 	}
 	let $subIwmInput_StrPos = 0;
 	function subIwmInput_AddText(
@@ -879,7 +884,7 @@ a.polyline-measure-clearControl:active
 			e1.focus();
 			$subIwmInput_StrPos = 0;
 		}
-		catch(e)
+		catch
 		{
 		}
 	}
@@ -901,7 +906,7 @@ a.polyline-measure-clearControl:active
 			document.getElementById($subIwmInput_BL_now).focus();
 			e1.selectionStart = $subIwmInput_StrPos;
 		}
-		catch(e)
+		catch
 		{
 		}
 	}
@@ -922,7 +927,7 @@ a.polyline-measure-clearControl:active
 			document.getElementById($subIwmInput_BL_now).focus();
 			e1.selectionStart = $subIwmInput_StrPos;
 		}
-		catch(e)
+		catch
 		{
 		}
 	}
@@ -1250,7 +1255,8 @@ a.polyline-measure-clearControl:active
 	const ArySimpleWindowId  = ["__SW07", "__SW06", "__SW05", "__SW04", "__SW03", "__SW02", "__SW01"];
 	function subSimpleWindow_OpenClose(
 		$id,
-		$btnId
+		$btnId,
+		$forceOpenMsec = 0
 	)
 	{
 		const e1 = document.getElementById($btnId).style.borderColor;
@@ -1264,8 +1270,18 @@ a.polyline-measure-clearControl:active
 		}
 		if(! e1)
 		{
-			document.getElementById($id).style.top = MapTopPx + "px";
 			document.getElementById($btnId).style.borderColor = "#f00";
+			document.getElementById($id).style.top = MapTopPx + "px";
+			return;
+		}
+		// 強調するため時間差表示
+		if($forceOpenMsec)
+		{
+			document.getElementById($btnId).style.borderColor = "#f00";
+			setTimeout(() => {
+				document.getElementById($id).style.top = MapTopPx + "px";
+			}, parseInt($forceOpenMsec));
+			return;
 		}
 	}
 	let $HashSimpleWindowResize = {
@@ -1279,7 +1295,11 @@ a.polyline-measure-clearControl:active
 	)
 	{
 		const e1 = document.getElementById($id);
-		e1.addEventListener("mouseover", (e) => { e1.draggable = true; });
+			const iMinWidth = parseInt(e1.style.minWidth);
+			const iMaxWidth = parseInt(e1.style.maxWidth);
+			const iMinHeight = parseInt(e1.style.minHeight);
+			const iMaxHeight = parseInt(e1.style.maxHeight);
+		e1.addEventListener("mouseover", () => { e1.draggable = true; });
 		e1.addEventListener("dragstart", (e) => {
 			$HashSimpleWindowResize.flag = true;
 			$HashSimpleWindowResize.x = e.screenX;
@@ -1288,32 +1308,27 @@ a.polyline-measure-clearControl:active
 		e1.addEventListener("dragend", (e) => {
 			if($HashSimpleWindowResize.flag)
 			{
-				let i1;
 				$HashSimpleWindowResize.flag = false;
 				e.dragX = e.screenX - $HashSimpleWindowResize.x;
 					let iWidth = e1.clientWidth - e.dragX;
-					i1 = parseInt(e1.style.maxWidth);
-					if(i1 < iWidth)
+					if(iWidth > iMaxWidth)
 					{
-						iWidth = i1;
+						iWidth = iMaxWidth;
 					}
-					i1 = parseInt(e1.style.minWidth);
-					if(i1 > iWidth)
+					else if(iWidth < iMinWidth)
 					{
-						iWidth = i1;
+						iWidth = iMinWidth;
 					}
 					e1.style.width = iWidth + "px";
 				e.dragY = e.screenY - $HashSimpleWindowResize.y;
 					let iHeight = e1.clientHeight + e.dragY;
-					i1 = parseInt(e1.style.maxHeight);
-					if(i1 < iHeight)
+					if(iHeight > iMaxHeight)
 					{
-						iHeight = i1;
+						iHeight = iMaxHeight;
 					}
-					i1 = parseInt(e1.style.minHeight);
-					if(i1 > iHeight)
+					else if(iHeight < iMinHeight)
 					{
-						iHeight = i1;
+						iHeight = iMinHeight;
 					}
 					e1.style.height = iHeight + "px";
 				$function(iWidth, iHeight);
@@ -1366,7 +1381,7 @@ a.polyline-measure-clearControl:active
 		}
 		$AddFileName = fileList[0].name;
 		const reader = new FileReader();
-		reader.onload = function(e){
+		reader.onload = (e) => {
 			// 追記
 			if($bAdd)
 			{
@@ -1616,7 +1631,7 @@ a.polyline-measure-clearControl:active
 		$this.selectionEnd = cursorPosition + 1;
 	}
 	// 海水面
-	let $Dem10ToSeaLevel = new L.GridLayer();
+	const $Dem10ToSeaLevel = new L.GridLayer();
 	function subDem10ToSeaLevel2(
 		$id1,
 		$id2
@@ -1626,7 +1641,7 @@ a.polyline-measure-clearControl:active
 		{
 			$Dem10ToSeaLevel.remove($Map);
 		}
-		catch(e)
+		catch
 		{
 		}
 		const aE = [document.getElementById($id1), document.getElementById($id2)];
@@ -1857,7 +1872,7 @@ a.polyline-measure-clearControl:active
 				})
 				.on({
 					"mousemove": (e) => { $HeightGraph_Init.mapMousemoveHandler(e, { showMapMarker: true }); },
-					"mouseout":  (e) => { $HeightGraph_Init.mapMouseoutHandler(2000); }
+					"mouseout": () => { $HeightGraph_Init.mapMouseoutHandler(2000); }
 				})
 				.addTo($HeightGraph_Layer);
 				// 再表示
@@ -1887,7 +1902,7 @@ a.polyline-measure-clearControl:active
 				$HeightGraph_Layer.remove($Map);
 				$HeightGraph_Layer = null;
 			}
-			catch(e)
+			catch
 			{
 			}
 			$HeightGraph_On = true;
@@ -1898,7 +1913,7 @@ a.polyline-measure-clearControl:active
 </script>
 </head>
 <body>
-	<script>
+	<script defer>
 		window.addEventListener("load", () => {
 			subInitDisp();
 			subIwmInput_Init();
@@ -1910,10 +1925,10 @@ a.polyline-measure-clearControl:active
 	</script>
 	<!-- メニュー -->
 	<div id="__divNaviCommander">
-		<script async>
+		<script defer>
 			// Global
 			const $__divNaviCommander = document.getElementById("__divNaviCommander");
-			$__divNaviCommander.addEventListener("mouseover", (e) => { $__divNaviCommander.draggable = true; });
+			$__divNaviCommander.addEventListener("mouseover", () => { $__divNaviCommander.draggable = true; });
 			function subNaviDragOff(id)
 			{
 				document.getElementById(id).draggable = false;
@@ -1929,7 +1944,7 @@ a.polyline-measure-clearControl:active
 		<div class="_btnNavi2fa" onclick="subNaviAllMarkerPopupClose();" onmouseover="subNaviExpOnOff('全ポップアップを閉じる');" onmouseleave="subNaviExpOnOff();"><i class="fa fa-folder"></i></div>
 		<div id="__RmMarker" class="_btnNavi2fa" onclick="subMyObj_Remove($AryLocalMarker);" onmouseover="subNaviExpOnOff('赤・オレンジマーカー消去');" onmouseleave="subNaviExpOnOff();"><i class="fa fa-times"></i></div>
 		<div id="__NaviExp" class="_simpleWindow" style="background:#7a7a7a;display:none;font-size:14px;"></div>
-		<script async>
+		<script defer>
 			// コメント表示
 			function subNaviExpOnOff(str)
 			{
@@ -1985,33 +2000,37 @@ a.polyline-measure-clearControl:active
 		</div>
 		<!-- 追加タイル -->
 		<input type="button" id="__NC02" class="_simpleWindowCall" value="追加タイル" onclick="subSimpleWindow_OpenClose('__SW02','__NC02');"/>
-		<div id="__SW02" class="_simpleWindow" style="max-height:800px;max-width:1600px;min-height:295px;min-width:560px;right:0;width:560px;">
+		<div id="__SW02" class="_simpleWindow" style="max-height:600px;max-width:800px;min-height:300px;min-width:560px;right:0;width:560px;">
 			<div>追加タイル</div>
-			<div class="_simpleWindowOutput" style="padding:4px 6px 6px 6px;">
-				<input type="file" id="__fileAddMap" accept=".tsv" style="width:542px;" oncancel="this.value='';" onchange="subAddFile(this.id,'__TA02',true);"/>
-				<textarea id="__TA02" class="_editTextBox" wrap="off" style="height:206px;width:532px;"></textarea>
-				<script async>
+			<div class="_simpleWindowOutput" style="padding:6px;">
+				<input type="file" id="__fileAddMap" accept=".tsv" style="width:544px;" oncancel="this.value='';" onchange="subAddFile(this.id,'__TA02',true);"/>
+				<textarea id="__TA02" class="_editTextBox" wrap="off" style="height:212px;width:534px;"></textarea>
+				<script defer>
 					document.getElementById("__TA02").onkeydown = function(e){ subAddTabCtrl(this, e); }
 				</script>
-				<input type="button" class="_btnNavi3" value="←地図に反映" onclick="subMapSelector();subSimpleWindow_OpenClose('__SW02','__NC02');"/>
-				<a href="http://maps.gsi.go.jp/development/ichiran.html" target="_blank" class="_btnNavi4">地理院タイル一覧</a>
+				<div style="line-height:24px;">
+					<input type="button" class="_btnNavi3" value="←地図に反映" onclick="subMapSelector();subSimpleWindow_OpenClose('__SW02','__NC02');"/>
+					<a href="http://maps.gsi.go.jp/development/ichiran.html" target="_blank" class="_btnNavi4">地理院タイル一覧</a>
+				</div>
 			</div>
 		</div>
-		<script async>
+		<script defer>
 			{
-				const e1 = document.getElementById("__TA02");
-				subSimpleWindow_Resize("__SW02", (width, height) => {
-					e1.style.width = (width - 29) + "px";
-					e1.style.height = (height - 89) + "px";
+				const e1 = document.getElementById("__fileAddMap");
+				const e2 = document.getElementById("__TA02");
+				subSimpleWindow_Resize("__SW02", (w, h) => {
+					e1.style.width = (w - 16) + "px";
+					e2.style.width = (w - 26) + "px";
+					e2.style.height = (h - 88) + "px";
 				});
-				e1.addEventListener("mousedown", (e) => { subNaviDragOff("__SW02"); });
+				e2.addEventListener("mousedown", () => { subNaviDragOff("__SW02"); });
 			}
 		</script>
 		<!-- GeoJSON -->
 		<input type="button" id="__NC03" class="_simpleWindowCall" value="GeoJSON" onclick="subSimpleWindow_OpenClose('__SW03','__NC03');"/>
 		<div id="__SW03" class="_simpleWindow" style="right:0;width:450px;">
 			<div>GeoJSON ファイル読込</div>
-			<div class="_simpleWindowOutput" style="line-height:36px;padding:0 6px 6px 6px;">
+			<div class="_simpleWindowOutput" style="line-height:36px;padding:6px;">
 				<input type="checkbox" id="__checkboxGeoJson0" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(0);"/><input type="file" id="__fileGeoJson0" accept=".geojson" style="width:410px;" oncancel="subAddGeoJson_firefox(0);" onchange="subAddGeoJson_chrome(0);"/><br>
 				<input type="checkbox" id="__checkboxGeoJson1" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(1);"/><input type="file" id="__fileGeoJson1" accept=".geojson" style="width:410px;" oncancel="subAddGeoJson_firefox(1);" onchange="subAddGeoJson_chrome(1);"/><br>
 				<input type="checkbox" id="__checkboxGeoJson2" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(2);"/><input type="file" id="__fileGeoJson2" accept=".geojson" style="width:410px;" oncancel="subAddGeoJson_firefox(2);" onchange="subAddGeoJson_chrome(2);"/><br>
@@ -2022,7 +2041,7 @@ a.polyline-measure-clearControl:active
 				<input type="checkbox" id="__checkboxGeoJson7" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(7);"/><input type="file" id="__fileGeoJson7" accept=".geojson" style="width:410px;" oncancel="subAddGeoJson_firefox(7);" onchange="subAddGeoJson_chrome(7);"/><br>
 				<input type="checkbox" id="__checkboxGeoJson8" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(8);"/><input type="file" id="__fileGeoJson8" accept=".geojson" style="width:410px;" oncancel="subAddGeoJson_firefox(8);" onchange="subAddGeoJson_chrome(8);"/><br>
 				<input type="checkbox" id="__checkboxGeoJson9" style="margin:0 8px 0 0;" onchange="subAddGeoJson_addToMap(9);"/><input type="file" id="__fileGeoJson9" accept=".geojson" style="width:410px;" oncancel="subAddGeoJson_firefox(9);" onchange="subAddGeoJson_chrome(9);"/><br>
-				<script async>
+				<script defer>
 					let $AryGeoJsonLayer = [null, null, null, null, null, null, null, null, null, null];
 					function subAddGeoJson_init()
 					{
@@ -2067,31 +2086,38 @@ a.polyline-measure-clearControl:active
 							return;
 						}
 						const reader = new FileReader();
-						reader.onload = function(e){
+						reader.onload = (e) => {
 							document.getElementById("__TA03").value = e.target.result;
 							$Map.createPane("_pane200").style.zIndex = 200;
-							$AryGeoJsonLayer[$aryIndex] = L.geoJSON(
-								JSON.parse(e.target.result),
-								{
-									pane: "_pane200"
-								}
-							)
-							.bindPopup((layer) => {
-								let rtn = "";
-								for(let _key in layer.feature.properties)
-								{
-									rtn += "[" + _key + "]&nbsp;" + layer.feature.properties[_key] + "<br>";
-								}
-								return rtn;
-							})
-							.bindTooltip((layer) => {
-								let rtn = "";
-								for(let _key in layer.feature.properties)
-								{
-									rtn += "[" + _key + "]&nbsp;" + layer.feature.properties[_key] + "<br>";
-								}
-								return rtn;
-							});
+							try
+							{
+								$AryGeoJsonLayer[$aryIndex] = L.geoJSON(
+									JSON.parse(e.target.result),
+									{
+										pane: "_pane200"
+									}
+								)
+								.bindPopup((layer) => {
+									let rtn = "";
+									for(let _key in layer.feature.properties)
+									{
+										rtn += "[" + _key + "]&nbsp;" + layer.feature.properties[_key] + "<br>";
+									}
+									return rtn;
+								})
+								.bindTooltip((layer) => {
+									let rtn = "";
+									for(let _key in layer.feature.properties)
+									{
+										rtn += "[" + _key + "]&nbsp;" + layer.feature.properties[_key] + "<br>";
+									}
+									return rtn;
+								});
+							}
+							catch
+							{
+								return;
+							}
 						}
 						reader.readAsText(fileList[0]);
 					}
@@ -2120,21 +2146,21 @@ a.polyline-measure-clearControl:active
 		</div>
 		<!-- 距離計算 -->
 		<input type="button" id="__NC04" class="_simpleWindowCall" value="距離計算" onclick="subSimpleWindow_OpenClose('__SW04','__NC04');"/>
-		<div id="__SW04" class="_simpleWindow" style="max-height:800px;max-width:1600px;min-height:295px;min-width:560px;right:0;width:560px;">
+		<div id="__SW04" class="_simpleWindow" style="max-height:600px;max-width:800px;min-height:300px;min-width:560px;right:0;width:560px;">
 			<div>距離計算</div>
-			<div class="_simpleWindowOutput" style="padding:4px 6px 6px 6px;">
+			<div class="_simpleWindowOutput" style="padding:6px;">
 				<input type="button" class="_btnNavi3" value="→マーカーから読込" onclick="subMapToPoint_TA04Input();"/>
 				<input type="button" class="_btnNavi4" value="→[マーカー変換]からインポート" onclick="subMapToPoint_TA04Import();"/>
 				<div style="margin:4px 0 0 0;">
-					<textarea id="__TA041" class="_editTextBox" wrap="off" style="height:40px;width:532px;" placeholder="青マーカー（始点）"></textarea>
+					<textarea id="__TA041" class="_editTextBox" wrap="off" style="height:40px;width:534px;" placeholder="青マーカー（始点）"></textarea>
 				</div>
 				<div style="margin:4px 0 0 0;">
-					<textarea id="__TA042" class="_editTextBox" wrap="off" style="height:70px;width:532px;" placeholder="赤マーカー／オレンジマーカー&#10;(°／°′″) 35.68518698／35°41′06.6731″, 35:41:06.6731"></textarea>
+					<textarea id="__TA042" class="_editTextBox" wrap="off" style="height:70px;width:534px;" placeholder="赤マーカー／オレンジマーカー&#10;(°／°′″) 35.68518698／35°41′06.6731″, 35:41:06.6731"></textarea>
 				</div>
 				<div style="margin:4px 0 0 0;">
-					<textarea id="__TA043" class="_editTextBox" wrap="off" style="height:70px;width:532px;" placeholder="計算結果" readonly></textarea>
+					<textarea id="__TA043" class="_editTextBox" wrap="off" style="height:78px;width:534px;" placeholder="計算結果" readonly></textarea>
 				</div>
-				<script async>
+				<script defer>
 					// Global
 					const $__TA041 = document.getElementById("__TA041");
 					const $__TA042 = document.getElementById("__TA042");
@@ -2150,16 +2176,19 @@ a.polyline-measure-clearControl:active
 				</div>
 			</div>
 		</div>
-		<script async>
-			subSimpleWindow_Resize("__SW04", (width, height) => {
-				$__TA041.style.width = (width - 29) + "px";
-				$__TA042.style.width = (width - 29) + "px";
-				$__TA043.style.width = (width - 29) + "px";
-				$__TA043.style.height = (height - 225) + "px";
-			});
-			$__TA041.addEventListener("mousedown", (e) => { subNaviDragOff("__SW04"); });
-			$__TA042.addEventListener("mousedown", (e) => { subNaviDragOff("__SW04"); });
-			$__TA043.addEventListener("mousedown", (e) => { subNaviDragOff("__SW04"); });
+		<script defer>
+			{
+				subSimpleWindow_Resize("__SW04", (w, h) => {
+					w -= 26;
+					$__TA041.style.width = w + "px";
+					$__TA042.style.width = w + "px";
+					$__TA043.style.width = w + "px";
+					$__TA043.style.height = (h - 222) + "px";
+				});
+				$__TA041.addEventListener("mousedown", () => { subNaviDragOff("__SW04"); });
+				$__TA042.addEventListener("mousedown", () => { subNaviDragOff("__SW04"); });
+				$__TA043.addEventListener("mousedown", () => { subNaviDragOff("__SW04"); });
+			}
 			// マーカーから読込
 			function subMapToPoint_TA04Input()
 			{
@@ -2226,7 +2255,7 @@ a.polyline-measure-clearControl:active
 				{
 					p1 = DMS.DecodeLatLon(a1[0], a1[1]);
 				}
-				catch(e)
+				catch
 				{
 					$__TA043.value = "[Err]\t" + s1 + "\n";
 					return;
@@ -2270,7 +2299,7 @@ a.polyline-measure-clearControl:active
 							oldLat = _p1.lat;
 							oldLng = _p1.lon;
 						}
-						catch(e)
+						catch
 						{
 							str += "[Err]\t" + _s1 + "\n";
 						}
@@ -2332,13 +2361,13 @@ a.polyline-measure-clearControl:active
 		</script>
 		<!-- マーカー変換 -->
 		<input type="button" id="__NC05" class="_simpleWindowCall" value="マーカー変換" onclick="subSimpleWindow_OpenClose('__SW05','__NC05');"/>
-		<div id="__SW05" class="_simpleWindow" style="max-height:800px;max-width:1600px;min-height:295px;min-width:640px;right:0;width:640px;">
+		<div id="__SW05" class="_simpleWindow" style="max-height:600px;max-width:800px;min-height:300px;min-width:610px;right:0;width:610px;">
 			<div>マーカーをポイントに変換</div>
-			<div class="_simpleWindowOutput" style="padding:4px 6px 6px 6px;">
+			<div class="_simpleWindowOutput" style="padding:6px;">
 				<input type="button" class="_btnNavi3" value="→マーカーから読込" onclick="subMapToPoint('__TA05');"/>
-				<input type="file" id="__readPointFile" accept=".tsv,.csv" style="margin-left:8px;width:487px;" oncancel="this.value='';" onchange="subAddFile(this.id,'__TA05',true);"/>
-				<textarea id="__TA05" class="_editTextBox" wrap="off" style="height:180px;width:611px;" placeholder="タブ(TSV)区切り／UTF-8N(BOMなし)&#10;&quot;//&quot; で始まる行はコメント行&#10;&quot;icon@[画像ファイルパス]&quot; でマーカーにアイコンを設定可能&#10;// 例&#10;35.68365900&#9;139.75408900&#9;皇居&#9;icon@./image.png"></textarea>
-				<script async>
+				<input type="file" id="__readPointFile" accept=".tsv,.csv" style="margin-left:8px;width:460px;" oncancel="this.value='';" onchange="subAddFile(this.id,'__TA05',true);"/>
+				<textarea id="__TA05" class="_editTextBox" wrap="off" style="height:188px;width:584px;" placeholder="タブ(TSV)区切り／UTF-8N(BOMなし)&#10;&quot;//&quot; で始まる行はコメント行&#10;&quot;icon@[画像ファイルパス]&quot; でマーカーにアイコンを設定可能&#10;// 例&#10;35.68365900&#9;139.75408900&#9;皇居&#9;icon@./image.png"></textarea>
+				<script defer>
 					document.getElementById("__TA05").onkeydown = function(e){ subAddTabCtrl(this, e); }
 				</script>
 				<div style="line-height:24px;">
@@ -2356,22 +2385,24 @@ a.polyline-measure-clearControl:active
 				</div>
 			</div>
 		</div>
-		<script async>
+		<script defer>
 			{
-				const e1 = document.getElementById("__TA05");
-				subSimpleWindow_Resize("__SW05", (width, height) => {
-					e1.style.width = (width - 29) + "px";
-					e1.style.height = (height - 115) + "px";
+				const e1 = document.getElementById("__readPointFile");
+				const e2 = document.getElementById("__TA05");
+				subSimpleWindow_Resize("__SW05", (w, h) => {
+					e1.style.width = (w - 150) + "px";
+					e2.style.width = (w - 26) + "px";
+					e2.style.height = (h - 112) + "px";
 				});
-				e1.addEventListener("mousedown", (e) => { subNaviDragOff("__SW05"); });
-				document.getElementById("__GCircleM2P").addEventListener("mousedown", (e) => { subNaviDragOff("__SW05"); });
+				e2.addEventListener("mousedown", () => { subNaviDragOff("__SW05"); });
+				document.getElementById("__GCircleM2P").addEventListener("mousedown", () => { subNaviDragOff("__SW05"); });
 				document.getElementById("__GCircleM2P").addEventListener("keydown", (e) => {
 					if(e.key === "Enter")
 					{
 						subA2P_GCircle("__GCircleM2P", "__TA05");
 					}
 				});
-				document.getElementById("__textDist").addEventListener("mousedown", (e) => { subNaviDragOff("__SW05"); });
+				document.getElementById("__textDist").addEventListener("mousedown", () => { subNaviDragOff("__SW05"); });
 			}
 			// 初期化
 			document.getElementById("__HgBtn").value = $HeightGraph_Title + "ON";
@@ -2462,7 +2493,7 @@ a.polyline-measure-clearControl:active
 							);
 							$AryPoint.push(o1);
 						}
-						catch(e)
+						catch
 						{
 						}
 						str += _s1 + "\n";
@@ -2633,7 +2664,7 @@ a.polyline-measure-clearControl:active
 						$AryM2P_Circle[i1].addTo($Map);
 						++i1;
 					}
-					catch(e)
+					catch
 					{
 					}
 				}
@@ -2641,16 +2672,22 @@ a.polyline-measure-clearControl:active
 		</script>
 		<!-- Leaflet.greatCircle -->
 		<input type="button" id="__NC06" class="_simpleWindowCall" value="距離円" onclick="subSimpleWindow_OpenClose('__SW06','__NC06');"/>
-		<div id="__SW06" class="_simpleWindow" style="max-height:50px;max-width:1600px;min-height:50px;min-width:400px;right:0px;width:400px;">
+		<div id="__SW06" class="_simpleWindow" style="max-height:50px;max-width:1620px;min-height:50px;min-width:420px;right:0px;width:400px;">
 			<div>半径&nbsp;<span id="__GCircleKm">0km</span></div>
-			<input type="range" id="__GCircleRange" style="width:380px;" min="0" max="10000" value="0" oninput="subGCircle_Slider();"/>
+			<input type="range" id="__GCircleRange" style="max-width:1600px;min-width:400px;" min="0" max="10000" value="0" oninput="subGCircle_Slider();"/>
 		</div>
-		<script async>
-			subSimpleWindow_Resize("__SW06", (width, height) => {
-				document.getElementById("__GCircleRange").style.width = (width - 20) + "px";
-				document.getElementById("__GCircleRange").max = width * 20;
-			});
-			document.getElementById("__GCircleRange").addEventListener("input", (e) => { subNaviDragOff("__SW06"); });
+		<script defer>
+			{
+				const e1 = document.getElementById("__GCircleRange");
+				const e2 = document.getElementById("__SW06");
+				const diffWidth = parseInt(e2.style.minWidth) - parseInt(e1.style.minWidth);
+				subSimpleWindow_Resize("__SW06", (w, h) => {
+					w -= diffWidth;
+					e1.style.width = w + "px";
+					e1.max = w * 25;
+				});
+				document.getElementById("__GCircleRange").addEventListener("input", () => { subNaviDragOff("__SW06"); });
+			}
 		</script>
 		<!-- 海水面 -->
 		<input type="button" id="__NC07" class="_simpleWindowCall" value="海水面" onclick="subSimpleWindow_OpenClose('__SW07','__NC07');"/>
@@ -2662,9 +2699,9 @@ a.polyline-measure-clearControl:active
 				<input type="button" class="_btnNavi2" value="OFF" onclick="$Dem10ToSeaLevel.remove($Map);"/>
 			</div>
 		</div>
-		<script async>
-			document.getElementById("__Dem10ToSeaLevel1").addEventListener("mousedown", (e) => { subNaviDragOff("__SW07"); });
-			document.getElementById("__Dem10ToSeaLevel2").addEventListener("mousedown", (e) => { subNaviDragOff("__SW07"); });
+		<script defer>
+			document.getElementById("__Dem10ToSeaLevel1").addEventListener("mousedown", () => { subNaviDragOff("__SW07"); });
+			document.getElementById("__Dem10ToSeaLevel2").addEventListener("mousedown", () => { subNaviDragOff("__SW07"); });
 		</script>
 	</div>
 	<!-- ズームレベル -->
@@ -2674,7 +2711,7 @@ a.polyline-measure-clearControl:active
 		<input type="button" class="_ZA" value="12" onclick="subIwmZA('12');"/><input type="button" class="_ZA" value="13" onclick="subIwmZA('13');"/><input type="button" class="_ZA" value="14" onclick="subIwmZA('14');"/><input type="button" class="_ZA" value="15" onclick="subIwmZA('15');"/><input type="button" class="_ZA" value="16" onclick="subIwmZA('16');"/><br>
 		<input type="button" class="_ZA" value="17" onclick="subIwmZA('17');"/><input type="button" class="_ZA" value="18" onclick="subIwmZA('18');"/><input type="button" class="_ZA" value="19" onclick="subIwmZA('19');"/><input type="button" class="_ZA" value="20" onclick="subIwmZA('20');"/><input type="button" class="_ZA" value="21" onclick="subIwmZA('21');"/>
 	</div>
-	<script async>
+	<script defer>
 		function subIwmZA(
 			$zoom // Int
 		)
@@ -2692,7 +2729,7 @@ a.polyline-measure-clearControl:active
 		}
 	</script>
 	<div id="__InputZoomB" style="left:10px;top:33px;">
-		<div style="background:#999;border-radius:3px 3px 0 0;height:3px;width:26px;"></div>
+		<div style="background:#808080;border-radius:3px 3px 0 0;height:3px;width:26px;"></div>
 		<input type="button" class="_ZB" value="21" onclick="subIwmZB('21');"/><br>
 		<input type="button" class="_ZB" value="20" onclick="subIwmZB('20');"/><br>
 		<input type="button" class="_ZB" value="19" onclick="subIwmZB('19');"/><br>
@@ -2712,7 +2749,7 @@ a.polyline-measure-clearControl:active
 		<input type="button" class="_ZB" value="5" onclick="subIwmZB('5');"/><br>
 		<input type="button" class="_ZB" value="4" onclick="subIwmZB('4');"/><br>
 		<input type="button" class="_ZB" value="3" onclick="subIwmZB('3');"/>
-		<div style="background:#999;border-radius:0 0 3px 3px;height:3px;width:26px;"></div>
+		<div style="background:#808080;border-radius:0 0 3px 3px;height:3px;width:26px;"></div>
 	</div>
 	<div id="__InputBL" style="top:-1000px;">
 		<input type="text" id="__IBL1" style="width:40px;" onclick="subIwmInput_BL_GetId(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 0);"/>°<input type="text" id="__IBL2" style="width:40px;" onclick="subIwmInput_BL_GetId(this.id);" onkeydown="subIwmInput_BL_Keydown(this.id, 0);"/>′<br>
@@ -2732,7 +2769,7 @@ a.polyline-measure-clearControl:active
 	</div>
 	<!-- __divMap -->
 	<div id="__divMap">
-	<script>
+	<script defer>
 		// 地図描写調整
 		subInitDisp();
 		// URLからアンカー(#Z/X/Y)取得
@@ -3023,7 +3060,7 @@ a.polyline-measure-clearControl:active
 					// 地図選択メニューから削除
 					$MapOverlays[e.name].remove($Map);
 				}
-				catch(e)
+				catch
 				{
 				}
 			});
@@ -3039,10 +3076,10 @@ a.polyline-measure-clearControl:active
 		new L.Control.MiniMap(
 			miniMapLayer,
 			{
-				height: 256,
+				height: 160,
 				position: "bottomright",
 				toggleDisplay: true,
-				width: 256,
+				width: 260,
 				zoomLevelOffset: -4
 			}
 		)
@@ -3143,7 +3180,7 @@ a.polyline-measure-clearControl:active
 			// ズームレベル変更
 			$BaseMarker.on(
 				"click",
-				function(e)
+				function()
 				{
 					// Double Click 排除
 					setTimeout(() => {
@@ -3163,7 +3200,7 @@ a.polyline-measure-clearControl:active
 			// ポップアップ非表示／ポップアップ閉じるで再読込
 			$BaseMarker.on(
 				"dragend",
-				function(e)
+				function()
 				{
 					const a1 = this.getLatLng();
 					subChangeUrl(a1.lat, a1.lng, "__NaviZoom");
@@ -3175,7 +3212,7 @@ a.polyline-measure-clearControl:active
 			// ポップアップ再表示
 			$BaseMarker.on(
 				"mouseover",
-				function(e)
+				function()
 				{
 					rtnMarkerPopup1(this._latlng.lat, this._latlng.lng);
 					subMarkerPopup(this, null);
@@ -3184,7 +3221,7 @@ a.polyline-measure-clearControl:active
 			// ポップアップ閉じる
 			$BaseMarker.on(
 				"mouseout",
-				function(e)
+				function()
 				{
 					// 再読込
 					rtnMarkerPopup1(this._latlng.lat, this._latlng.lng);
@@ -3233,7 +3270,7 @@ a.polyline-measure-clearControl:active
 			// ズームレベル補完
 			o1.on(
 				"click",
-				function(e)
+				function()
 				{
 					$iwmSV_Hash = this.getLatLng();
 					const mouseP = $Map.latLngToContainerPoint($iwmSV_Hash);
@@ -3250,7 +3287,7 @@ a.polyline-measure-clearControl:active
 			// $AryLocalMarker 消去
 			o1.on(
 				"contextmenu",
-				function(e)
+				function()
 				{
 					let i1 = $AryLocalMarker.length;
 					while(i1--)
@@ -3269,7 +3306,7 @@ a.polyline-measure-clearControl:active
 			// 先読みしておく
 			o1.on(
 				"dragend",
-				function(e)
+				function()
 				{
 					rtnMarkerPopup2($BaseMarker._latlng.lat, $BaseMarker._latlng.lng, this._latlng.lat, this._latlng.lng, this);
 				}
@@ -3277,7 +3314,7 @@ a.polyline-measure-clearControl:active
 			// 先読みしておく
 			o1.on(
 				"mouseover",
-				function(e)
+				function()
 				{
 					rtnMarkerPopup2($BaseMarker._latlng.lat, $BaseMarker._latlng.lng, this._latlng.lat, this._latlng.lng, this);
 				}
@@ -3285,7 +3322,7 @@ a.polyline-measure-clearControl:active
 			// ポップアップ再表示
 			o1.on(
 				"mouseout",
-				function(e)
+				function()
 				{
 					this.closePopup();
 					this.bindPopup(
@@ -3318,14 +3355,7 @@ a.polyline-measure-clearControl:active
 			// Click
 			// "click １回目" 300ms以内に "click ２回目" なければ発火
 			$Map_timerId = setTimeout(() => {
-				if($subNaviAllMarkerPopup_OpenFlg)
-				{
-					subNaviAllMarkerPopupClose();
-				}
-				else
-				{
-					subNaviAllMarkerPopupOpen();
-				}
+				// 他の動作に干渉するので何もしない
 				$Map_DblClickFlg = false;
 				return;
 			}, 300);
@@ -3336,7 +3366,7 @@ a.polyline-measure-clearControl:active
 			subMapOnRClick(e.latlng.lat, e.latlng.lng, null);
 			subGCircle_Draw();
 		});
-		$Map.on("zoomend", (e) => {
+		$Map.on("zoomend", () => {
 			subChangeUrl("__NaviLat", "__NaviLng", $Map.getZoom());
 			subIwmInput_Zoom_Change($Map.getZoom());
 		});
@@ -3390,7 +3420,7 @@ a.polyline-measure-clearControl:active
  </ol>
 </li>
 </textarea>
-<script async>
+<script defer>
 	document.getElementById("__SW01Doc").innerHTML = document.getElementById("__HDoc01").value;
 </script>
 </body>
