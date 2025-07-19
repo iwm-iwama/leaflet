@@ -1,4 +1,4 @@
-<!-- iwm_leaflet1.9.4 Ver.20250710 'U-2S' -->
+<!-- iwm_leaflet1.9.4 Ver.20250720 'U-2S' -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -1360,7 +1360,7 @@ a.polyline-measure-clearControl:active
 			{
 				_r.azi1 += 360.0;
 			}
-			str += _o1._latlng.lat.toFixed(8) + "\t" + _o1._latlng.lng.toFixed(8) + "\t" + _a1.join("\t") + "\t<span style=\"color:#3c3;\">点間の距離</span> " + (_r.s12 / 1000.0).toFixed(6) + "km <span style=\"color:#3c3;s\">方位角</span> " + _r.azi1.toFixed(6) + "°\n";
+			str += _o1._latlng.lat.toFixed(8) + "\t" + _o1._latlng.lng.toFixed(8) + "\t" + _a1.join("\t") + "\t<span style=\"color:#3c3;\">点間の距離</span>&nbsp;" + (_r.s12 / 1000.0).toFixed(6) + "km <span style=\"color:#3c3;s\">方位角</span>&nbsp;" + _r.azi1.toFixed(6) + "°\n";
 			oldLat = _o1._latlng.lat;
 			oldLng = _o1._latlng.lng;
 		}
@@ -1490,18 +1490,20 @@ a.polyline-measure-clearControl:active
 		return [parseInt(deg) * sign, parseInt(min), parseFloat(sec)];
 	}
 	// LatLng／Zoom => "z/x/y"
-	function rtnLatLngZoomToZXY(
-		$lat, // Dbl
-		$lng, // Dbl
-		$zoom // Int
-	)
-	{
-		$zoom = parseInt($zoom);
-		const z = 2 ** $zoom;
-		const x = Math.floor(($lng + 180) / 360 * z);
-		const y = Math.floor((1 - Math.log(Math.tan($lat * Math.PI / 180) + 1 / Math.cos($lat * Math.PI / 180)) / Math.PI) / 2 * z);
-		return $zoom + "/" + x + "/" + y;
-	}
+	/*
+		function rtnLatLngZoomToZXY(
+			$lat, // Dbl
+			$lng, // Dbl
+			$zoom // Int
+		)
+		{
+			$zoom = parseInt($zoom);
+			const z = 2 ** $zoom;
+			const x = Math.floor(($lng + 180) / 360 * z);
+			const y = Math.floor((1 - Math.log(Math.tan($lat * Math.PI / 180) + 1 / Math.cos($lat * Math.PI / 180)) / Math.PI) / 2 * z);
+			return $zoom + "/" + x + "/" + y;
+		}
+	*/
 	// 標高取得（同期）
 	function subGetElevation(
 		$lat,    // Dbl
@@ -1553,7 +1555,6 @@ a.polyline-measure-clearControl:active
 			"<span style=\"color:#88f;\">緯度</span>&nbsp;" + $lat.toFixed(8) + "°／" + latRem + "<br>" +
 			"<span style=\"color:#88f;\">経度</span>&nbsp;" + $lng.toFixed(8) + "°／" + lngRem + "<br>" +
 			"<span style=\"color:#88f;\">標高</span>&nbsp;" + $BaseMarker.elevation + "<br>" +
-			"<span style=\"color:#888;\">z/x/y</span>&nbsp;&nbsp;" + rtnLatLngZoomToZXY($lat, $lng, $Map.getZoom()) + "<br>" +
 			"<span style=\"color:#888;\">UTM</span>&nbsp;&nbsp;" + rtnLatLngToUTM($lat, $lng)
 		);
 	}
@@ -1582,7 +1583,6 @@ a.polyline-measure-clearControl:active
 			"<span style=\"color:#88f;\">緯度</span>&nbsp;" + $latTo.toFixed(8) + "°／" + sLatRem + "<br>" +
 			"<span style=\"color:#88f;\">経度</span>&nbsp;" + $lngTo.toFixed(8) + "°／" + sLngRem + "<br>" +
 			"<span style=\"color:#88f;\">標高</span>&nbsp;" + $oMarker.elevation + "<br>" +
-			"<span style=\"color:#888;\">z/x/y</span>&nbsp;&nbsp;" + rtnLatLngZoomToZXY($latTo, $lngTo, $Map.getZoom()) + "<br>" +
 			"<span style=\"color:#888;\">UTM</span>&nbsp;&nbsp;" + rtnLatLngToUTM($latTo, $lngTo) + "<br>" +
 			"<span style=\"color:#88f;\">始点からの距離</span>&nbsp;" + (_r.s12 / 1000.0).toFixed(6) + "km&nbsp;<span style=\"color:#88f;\">方位角</span>&nbsp;" + _r.azi1.toFixed(6) + "°"
 		);
@@ -2101,7 +2101,7 @@ a.polyline-measure-clearControl:active
 									let rtn = "";
 									for(let _key in layer.feature.properties)
 									{
-										rtn += "[" + _key + "]&nbsp;" + layer.feature.properties[_key] + "<br>";
+										rtn += _key + "：" + layer.feature.properties[_key] + "<br>";
 									}
 									return rtn;
 								})
@@ -2109,7 +2109,7 @@ a.polyline-measure-clearControl:active
 									let rtn = "";
 									for(let _key in layer.feature.properties)
 									{
-										rtn += "[" + _key + "]&nbsp;" + layer.feature.properties[_key] + "<br>";
+										rtn += _key + "：" + layer.feature.properties[_key] + "<br>";
 									}
 									return rtn;
 								});
@@ -2583,25 +2583,29 @@ a.polyline-measure-clearControl:active
 						}
 						else
 						{
-							const data = await fetch("https://msearch.gsi.go.jp/address-search/AddressSearch?q=" + _a1[0]);
-							const res = await data.json();
-							if(res.length > 0)
+							const f1 = await fetch("https://msearch.gsi.go.jp/address-search/AddressSearch?q=" + _a1[0]);
+							const r1 = await f1.json();
+							if(r1.length > 0)
 							{
-								const [lng, lat] = res[0].geometry.coordinates;
+								const [lng, lat] = r1[0].geometry.coordinates;
 								let _a2 = [];
 								_a2 = rtnGeo10toIBL(lat);
-								const _lat = "<span style=\"color:#88f;\">緯度</span> " + _a2[0] + "°" + _a2[1] + "′" + _a2[2].toFixed(4) + "″／" + lat.toFixed(8) + "°";
+								const _lat = "<span style=\"color:#88f;\">緯度</span>&nbsp;" + lat.toFixed(8) + "°／" + _a2[0] + "°" + _a2[1] + "′" + _a2[2].toFixed(4) + "″";
 								_a2 = rtnGeo10toIBL(lng);
-								const _lng = "<span style=\"color:#88f;\">経度</span> " + _a2[0] + "°" + _a2[1] + "′" + _a2[2].toFixed(4) + "″／" + lng.toFixed(8) + "°";
+								const _lng = "<span style=\"color:#88f;\">経度</span>&nbsp;" + lng.toFixed(8) + "°／" + _a2[0] + "°" + _a2[1] + "′" + _a2[2].toFixed(4) + "″";
 								if(typeof(_a1[1]) === "undefined")
 								{
 									_a1[1] = _a1[0];
 								}
-								rtn += lat.toFixed(8) + "\t" + lng.toFixed(8) + "\t<span style=\"color:#f66;\">" + _a1[1] + "</span>\t＠<span style=\"color:#333;\">" + _a1[0] + "</span>\t" + _lat + "\t" + _lng + "\t" + _a1.slice(2).join("\t");
+								let _elevation = "<span style=\"color:#88f;\">標高</span>&nbsp;";
+									const f2 = await fetch("https://cyberjapandata2.gsi.go.jp/general/dem/scripts/getelevation.php?lat=" + lat.toFixed(5) + "&lon=" + lng.toFixed(5) + "&outtype=JSON");
+									const r2 = await f2.json();
+								_elevation += r2.elevation + "m DEM" + r2.hsrc;
+								rtn += lat.toFixed(8) + "\t" + lng.toFixed(8) + "\t<span style=\"color:#f66;\">" + _a1[1] + "</span>\t＠<span style=\"color:#333;\">" + _a1[0] + "</span>\t" + _lat + "\t" + _lng + "\t" + _elevation + "\t" + _a1.slice(2).join("\t");
 							}
 							else
 							{
-								rtn += "// [Err] " + (res.length == 0 ? "該当なし" : "複数該当あり") + ": " + _s1;
+								rtn += "// [Err] " + (r1.length == 0 ? "該当なし" : "複数該当あり") + ": " + _s1;
 							}
 						}
 						rtn += "\n";
