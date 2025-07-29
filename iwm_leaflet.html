@@ -1,4 +1,4 @@
-<!-- iwm_leaflet1.9.4 Ver.20250720 'U-2S' -->
+<!-- iwm_leaflet1.9.4 Ver.20250730 'U-2S' -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -831,9 +831,9 @@ a.polyline-measure-clearControl:active
 		const _posX = ($posX == null || $posX == undefined ? rect.left + window.pageXOffset : ($posX + 25));
 		const _posY = ($posY == null || $posY == undefined ? rect.top + window.pageYOffset + e1.clientHeight : ($posY - 20));
 		const e2 = document.getElementById($inputId).style;
-		e2.display = "";
-		e2.left    = _posX + "px";
-		e2.top     = _posY + "px";
+			e2.display = "";
+			e2.left    = _posX + "px";
+			e2.top     = _posY + "px";
 		// 設定ミリ秒後に閉じる
 		if($autoHidden)
 		{
@@ -855,9 +855,10 @@ a.polyline-measure-clearControl:active
 		catch
 		{
 		}
-		// 初期化
-		$subIwmInput_BL_now = null;
 		document.onkeydown = function(){}
+		// 初期化（必要に応じて追記）
+		$subIwmInput_BL_now = null;
+		$subIwmInput_ZoomA_OpenFlg = false;
 	}
 	let $subIwmInput_StrPos = 0;
 	function subIwmInput_AddText(
@@ -1489,21 +1490,6 @@ a.polyline-measure-clearControl:active
 		}
 		return [parseInt(deg) * sign, parseInt(min), parseFloat(sec)];
 	}
-	// LatLng／Zoom => "z/x/y"
-	/*
-		function rtnLatLngZoomToZXY(
-			$lat, // Dbl
-			$lng, // Dbl
-			$zoom // Int
-		)
-		{
-			$zoom = parseInt($zoom);
-			const z = 2 ** $zoom;
-			const x = Math.floor(($lng + 180) / 360 * z);
-			const y = Math.floor((1 - Math.log(Math.tan($lat * Math.PI / 180) + 1 / Math.cos($lat * Math.PI / 180)) / Math.PI) / 2 * z);
-			return $zoom + "/" + x + "/" + y;
-		}
-	*/
 	// 標高取得（同期）
 	function subGetElevation(
 		$lat,    // Dbl
@@ -1551,11 +1537,11 @@ a.polyline-measure-clearControl:active
 		const lngRem = deg + "°" + min + "′" + parseFloat(sec).toFixed(4) + "″";
 		subGetElevation($lat, $lng, $BaseMarker);
 		return(
-			"<span style=\"color:#f66;\">" + $BaseMarker.options.title + "</span><br>" +
-			"<span style=\"color:#88f;\">緯度</span>&nbsp;" + $lat.toFixed(8) + "°／" + latRem + "<br>" +
-			"<span style=\"color:#88f;\">経度</span>&nbsp;" + $lng.toFixed(8) + "°／" + lngRem + "<br>" +
-			"<span style=\"color:#88f;\">標高</span>&nbsp;" + $BaseMarker.elevation + "<br>" +
-			"<span style=\"color:#888;\">UTM</span>&nbsp;&nbsp;" + rtnLatLngToUTM($lat, $lng)
+			"<span style=\"color:#f77;\">" + $BaseMarker.options.title + "</span><br>" +
+			"<span style=\"color:#77f;\">緯度</span>&nbsp;" + $lat.toFixed(8) + "°／" + latRem + "<br>" +
+			"<span style=\"color:#77f;\">経度</span>&nbsp;" + $lng.toFixed(8) + "°／" + lngRem + "<br>" +
+			"<span style=\"color:#77f;\">標高</span>&nbsp;" + $BaseMarker.elevation + "<br>" +
+			"<span style=\"color:#777;\">UTM</span>&nbsp;&nbsp;" + rtnLatLngToUTM($lat, $lng)
 		);
 	}
 	// $AryLocalMarker PopUp
@@ -1579,12 +1565,12 @@ a.polyline-measure-clearControl:active
 			_r.azi1 += 360.0;
 		}
 		return(
-			"<span style=\"color:#f66;\">" + $oMarker.options.title + "</span><br>" +
-			"<span style=\"color:#88f;\">緯度</span>&nbsp;" + $latTo.toFixed(8) + "°／" + sLatRem + "<br>" +
-			"<span style=\"color:#88f;\">経度</span>&nbsp;" + $lngTo.toFixed(8) + "°／" + sLngRem + "<br>" +
-			"<span style=\"color:#88f;\">標高</span>&nbsp;" + $oMarker.elevation + "<br>" +
-			"<span style=\"color:#888;\">UTM</span>&nbsp;&nbsp;" + rtnLatLngToUTM($latTo, $lngTo) + "<br>" +
-			"<span style=\"color:#88f;\">始点からの距離</span>&nbsp;" + (_r.s12 / 1000.0).toFixed(6) + "km&nbsp;<span style=\"color:#88f;\">方位角</span>&nbsp;" + _r.azi1.toFixed(6) + "°"
+			"<span style=\"color:#f77;\">" + $oMarker.options.title + "</span><br>" +
+			"<span style=\"color:#77f;\">緯度</span>&nbsp;" + $latTo.toFixed(8) + "°／" + sLatRem + "<br>" +
+			"<span style=\"color:#77f;\">経度</span>&nbsp;" + $lngTo.toFixed(8) + "°／" + sLngRem + "<br>" +
+			"<span style=\"color:#77f;\">標高</span>&nbsp;" + $oMarker.elevation + "<br>" +
+			"<span style=\"color:#777;\">UTM</span>&nbsp;&nbsp;" + rtnLatLngToUTM($latTo, $lngTo) + "<br>" +
+			"<span style=\"color:#77f;\">始点からの距離</span>&nbsp;" + (_r.s12 / 1000.0).toFixed(6) + "km&nbsp;<span style=\"color:#77f;\">方位角</span>&nbsp;" + _r.azi1.toFixed(6) + "°"
 		);
 	}
 	// [マーカー消去]ボタン 表示／非表示
@@ -2366,7 +2352,7 @@ a.polyline-measure-clearControl:active
 			<div class="_simpleWindowOutput" style="padding:6px;">
 				<input type="button" class="_btnNavi3" value="→マーカーから読込" onclick="subMapToPoint('__TA05');"/>
 				<input type="file" id="__readPointFile" accept=".tsv,.csv" style="margin-left:8px;width:460px;" oncancel="this.value='';" onchange="subAddFile(this.id,'__TA05',true);"/>
-				<textarea id="__TA05" class="_editTextBox" wrap="off" style="height:188px;width:584px;" placeholder="タブ(TSV)区切り／UTF-8N(BOMなし)&#10;&quot;//&quot; で始まる行はコメント行&#10;&quot;icon@[画像ファイルパス]&quot; でマーカーにアイコンを設定可能&#10;// 例&#10;35.68365900&#9;139.75408900&#9;皇居&#9;icon@./image.png"></textarea>
+				<textarea id="__TA05" class="_editTextBox" wrap="off" style="height:188px;width:584px;" placeholder="タブ(TSV)区切り／UTF-8N(BOMなし)&#10;&#9数値でない先頭行は列名と解釈する&#10;&#9;&quot;//&quot; で始まる行はコメント行&#10;&#9;&quot;icon@[画像ファイルパス]&quot; でマーカーにアイコンを設定可能&#10;(例)&#10;&#9;緯度&#9;経度&#9;所在地&#10;&#9;35.68365900&#9;139.75408900&#9;皇居&#9;icon@./image.png"></textarea>
 				<script defer>
 					document.getElementById("__TA05").onkeydown = function(e){ subAddTabCtrl(this, e); }
 				</script>
@@ -2420,8 +2406,24 @@ a.polyline-measure-clearControl:active
 				$AryPoint = [];
 				$Map.createPane("_pane230").style.zIndex = 230;
 				$Map.createPane("_pane250").style.zIndex = 250;
-				let str = "";
-				for(let _s1 of document.getElementById($textareaId).value.trimEnd().split("\n"))
+				// テキストを配列に変換
+				let aryData = [];
+				for(let _s1 of document.getElementById($textareaId).value.split("\n"))
+				{
+					_s1 = _s1.trim().replace(/\\n/g, "<br>");
+					if(_s1.length > 0 && _s1.substring(0, 2) != "//")
+					{
+						aryData.push(_s1);
+					}
+				}
+				// 列名を取得
+				let aryHeader = [];
+				if(! aryData[0].match(/[0-9]/))
+				{
+					aryHeader = aryData[0].split(/[\t,]/);
+					aryData.splice(0, 1);
+				}
+				for(let _s1 of aryData)
 				{
 					_s1 = _s1.trim().replace(/\\n/g, "<br>");
 					const _a1 = _s1.split(/[\t,]/);
@@ -2429,12 +2431,24 @@ a.polyline-measure-clearControl:active
 					let objIcon = null;
 					if(_a1.length >= 2)
 					{
+						let _s2 = "";
 						try
 						{
-							if(_a1.length >= 3)
+							if(_a1.length >= 2)
 							{
-								_s2 = _a1[2];
-								for(let _i1 = 3, _i2 = _a1.length; _i1 < _i2; _i1++)
+								// 既存データに 緯度・経度 情報が含まれていればスルー
+								if(! _s1.match(/>緯度<.+>経度</))
+								{
+									let [deg, min, sec] = rtnGeo10toIBL(_a1[0]);
+									const latRem = deg + "°" + min + "′" + parseFloat(sec).toFixed(4) + "″";
+									[deg, min, sec] = rtnGeo10toIBL(_a1[1]);
+									const lngRem = deg + "°" + min + "′" + parseFloat(sec).toFixed(4) + "″";
+									_s2 += (
+										"<span style=\"color:#77f;\">緯度</span>&nbsp;" + parseFloat(_a1[0]).toFixed(8) + "°／" + latRem + "<br>" +
+										"<span style=\"color:#77f;\">経度</span>&nbsp;" + parseFloat(_a1[1]).toFixed(8) + "°／" + lngRem + "<br>"
+									);
+								}
+								for(let _i1 = 2, _i2 = _a1.length; _i1 < _i2; _i1++)
 								{
 									const _s3 = _a1[_i1].match(/icon@(.+)/i);
 									if(_s3)
@@ -2449,13 +2463,13 @@ a.polyline-measure-clearControl:active
 									}
 									else
 									{
-										_s2 += "<br>" + _a1[_i1];
+										if(aryHeader.length && aryHeader[_i1])
+										{
+											_s2 += aryHeader[_i1] + "：";
+										}
+										_s2 += _a1[_i1] + "<br>";
 									}
 								}
-							}
-							else
-							{
-								_s2 = "<br>";
 							}
 							const p1 = DMS.DecodeLatLon(_a1[0], _a1[1]);
 							const o1 = (
@@ -2496,12 +2510,7 @@ a.polyline-measure-clearControl:active
 						catch
 						{
 						}
-						str += _s1 + "\n";
 					}
-				}
-				if(str)
-				{
-					document.getElementById($textareaId).value = str;
 				}
 			}
 			// 距離線描画
@@ -2590,18 +2599,18 @@ a.polyline-measure-clearControl:active
 								const [lng, lat] = r1[0].geometry.coordinates;
 								let _a2 = [];
 								_a2 = rtnGeo10toIBL(lat);
-								const _lat = "<span style=\"color:#88f;\">緯度</span>&nbsp;" + lat.toFixed(8) + "°／" + _a2[0] + "°" + _a2[1] + "′" + _a2[2].toFixed(4) + "″";
+								const _lat = "<span style=\"color:#77f;\">緯度</span>&nbsp;" + lat.toFixed(8) + "°／" + _a2[0] + "°" + _a2[1] + "′" + _a2[2].toFixed(4) + "″";
 								_a2 = rtnGeo10toIBL(lng);
-								const _lng = "<span style=\"color:#88f;\">経度</span>&nbsp;" + lng.toFixed(8) + "°／" + _a2[0] + "°" + _a2[1] + "′" + _a2[2].toFixed(4) + "″";
+								const _lng = "<span style=\"color:#77f;\">経度</span>&nbsp;" + lng.toFixed(8) + "°／" + _a2[0] + "°" + _a2[1] + "′" + _a2[2].toFixed(4) + "″";
 								if(typeof(_a1[1]) === "undefined")
 								{
 									_a1[1] = _a1[0];
 								}
-								let _elevation = "<span style=\"color:#88f;\">標高</span>&nbsp;";
+								let _elevation = "<span style=\"color:#77f;\">標高</span>&nbsp;";
 									const f2 = await fetch("https://cyberjapandata2.gsi.go.jp/general/dem/scripts/getelevation.php?lat=" + lat.toFixed(5) + "&lon=" + lng.toFixed(5) + "&outtype=JSON");
 									const r2 = await f2.json();
 								_elevation += r2.elevation + "m DEM" + r2.hsrc;
-								rtn += lat.toFixed(8) + "\t" + lng.toFixed(8) + "\t<span style=\"color:#f66;\">" + _a1[1] + "</span>\t＠<span style=\"color:#333;\">" + _a1[0] + "</span>\t" + _lat + "\t" + _lng + "\t" + _elevation + "\t" + _a1.slice(2).join("\t");
+								rtn += lat.toFixed(8) + "\t" + lng.toFixed(8) + "\t<span style=\"color:#f77;\">" + _a1[1] + "</span>\t＠<span style=\"color:#333;\">" + _a1[0] + "</span>\t" + _lat + "\t" + _lng + "\t" + _elevation + "\t" + _a1.slice(2).join("\t");
 							}
 							else
 							{
@@ -2722,7 +2731,7 @@ a.polyline-measure-clearControl:active
 		{
 			subIwmInput_ZoomA_Close();
 			subIwmInput_Zoom_Change($zoom);
-			subBaseMarkerNew("__NaviLat", "__NaviLng");
+			///subBaseMarkerNew("__NaviLat", "__NaviLng");
 			subIwmCU();
 			subIwmSV();
 		}
