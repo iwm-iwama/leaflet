@@ -5,8 +5,8 @@
 
 	・iwm_ImageViewer.exe
 		オプションツール
-		ローカル画像ファイル・ビューア (Win10)
-
+		ローカル画像ファイル・ビューア (.NET 10 Windows)
+			Runtime: https://dotnet.microsoft.com/ja-jp/download/dotnet/10.0
 【参考】
 
 	・Web地図ライブラリ
