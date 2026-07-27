@@ -4,7 +4,6 @@
 		地図タイル・ビューア
 
 	・iwm_ImageViewer.exe
-		オプションツール
 		ローカル画像ファイル・ビューア (.NET Desktop Runtime 10)
 			https://dotnet.microsoft.com/ja-jp/download/dotnet/10.0
 【参考】
